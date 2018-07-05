@@ -1,4 +1,4 @@
-package com.codecool.bread.bread;
+package com.codecool.bread;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
