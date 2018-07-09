@@ -6,21 +6,15 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "restaurant")
-public class Restaurant  {
+public class Restaurant extends POSObject {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
     private String name;
+    @Embedded
     private Address address;
     private String email;
     private int phone;
     @Column(name = "owner_id")
     private int ownerId;
-
-    public int getId(){
-        return id;
-    }
 
     public String getName() {
         return name;

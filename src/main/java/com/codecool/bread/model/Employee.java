@@ -5,11 +5,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "employee")
-public class Employee{
+public class Employee extends POSObject {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
     private String email;
     @Column(name = "first_name")
     private String firstName;
@@ -18,9 +15,6 @@ public class Employee{
     private Role role;
     private String password;
 
-    public int getId(){
-        return id;
-    }
 
     public String getEmail() {
       return email;

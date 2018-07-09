@@ -5,19 +5,13 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "seat")
-public class Seat {
+public class Seat extends POSObject{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
     @Column(name = "active")
     private boolean isActive;
     @Column(name = "table_id")
     private int tableId;
 
-    public int getId(){
-        return id;
-    }
 
     public boolean isActive() {
         return isActive;

@@ -6,17 +6,13 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "item")
-public class Item {
+public class Item extends POSObject {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
     private BigDecimal price;
     private String comment;
     private Category category;
     @Column(name = "restaurant_id")
     private int restaurantId;
-
 
     public BigDecimal getPrice() {
         return price;

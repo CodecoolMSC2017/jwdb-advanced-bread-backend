@@ -1,18 +1,14 @@
-/*package com.codecool.bread.model;
+package com.codecool.bread.model;
 
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 
 @MappedSuperclass
 public abstract class POSObject {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
-    public POSObject(int id) {
-        this.id = id;
-    }
 
     public int getId() {
         return id;
     }
-}*/
+}

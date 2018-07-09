@@ -5,19 +5,12 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "order_item")
-public class OrderItem {
+public class OrderItem  extends POSObject {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
     @Column(name = "item_id")
     private int itemId;
     private int quantity;
     private String comment;
-
-    public int getId(){
-        return id;
-    }
 
     public int getItemId() {
         return itemId;

@@ -5,19 +5,11 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "menu")
-public class Menu {
+public class Menu extends POSObject {
 
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
     private String title;
     @Column(name = "active")
     private boolean isActive;
-
-    public int getId(){
-        return id;
-    }
 
     public String getTitle() {
         return title;
