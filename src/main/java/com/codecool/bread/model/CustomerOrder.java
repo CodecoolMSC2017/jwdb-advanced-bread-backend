@@ -1,9 +1,11 @@
 package com.codecool.bread.model;
 
 import javax.persistence.*;
+import javax.persistence.Table;
 import java.sql.Date;
 
 @Entity
+@Table(name = "customer_order")
 public class CustomerOrder{
 
     @Id

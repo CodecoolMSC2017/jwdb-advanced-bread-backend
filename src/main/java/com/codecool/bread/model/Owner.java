@@ -1,9 +1,11 @@
 package com.codecool.bread.model;
 
 import javax.persistence.*;
+import javax.persistence.Table;
 import java.util.UUID;
 
 @Entity
+@Table(name = "owner")
 public class Owner {
 
     @Id

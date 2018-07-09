@@ -1,9 +1,11 @@
 package com.codecool.bread.model;
 
 import javax.persistence.*;
+import javax.persistence.Table;
 import java.math.BigDecimal;
 
 @Entity
+@Table(name = "item")
 public class Item {
 
     @Id

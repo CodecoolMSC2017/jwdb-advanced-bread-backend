@@ -1,8 +1,10 @@
 package com.codecool.bread.model;
 
 import javax.persistence.*;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "address")
 public class Address {
 
     @Id
@@ -10,7 +12,6 @@ public class Address {
     private int id;
     private String street;
     private String city;
-
     @Column(name = "postal_code")
     private String postalCode;
     private String state;

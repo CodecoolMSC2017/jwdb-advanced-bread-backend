@@ -4,6 +4,7 @@ package com.codecool.bread.model;
 import javax.persistence.*;
 
 @Entity
+@javax.persistence.Table(name = "table")
 public class Table {
 
     @Id

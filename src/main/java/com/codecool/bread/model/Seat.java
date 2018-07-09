@@ -1,8 +1,10 @@
 package com.codecool.bread.model;
 
 import javax.persistence.*;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "seat")
 public class Seat {
 
     @Id
