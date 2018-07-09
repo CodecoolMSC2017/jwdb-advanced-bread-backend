@@ -20,18 +20,6 @@ public class Owner {
     private String email;
     private String password;
 
-    public Owner(int id, UUID uuid, String firstName, String lastName, Address address, String email, String password) {
-        this.id = id;
-        this.uuid = uuid;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.address = address;
-        this.email = email;
-        this.password = password;
-    }
-    public Owner(){
-    }
-
     public int getId(){
         return id;
     }

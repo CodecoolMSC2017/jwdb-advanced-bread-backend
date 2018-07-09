@@ -17,21 +17,6 @@ public class Address {
     private String state;
     private String country;
 
-    public Address(int id, String street, String city, String postalCode, String state, String country) {
-        this.id = id;
-        this.street = street;
-        this.city = city;
-        this.postalCode = postalCode;
-        this.state = state;
-        this.country = country;
-
-
-    }
-
-    public Address(){
-
-    }
-
     public int getId(){
         return id;
     }

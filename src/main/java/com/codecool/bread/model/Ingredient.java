@@ -17,16 +17,6 @@ public class Ingredient {
     private String name;
     private String allergen;
 
-    public Ingredient(int id, String name, String allergen) {
-        this.id = id;
-        this.name = name;
-        this.allergen = allergen;
-    }
-
-    public Ingredient(){
-
-    }
-
     public int getId(){
         return id;
     }

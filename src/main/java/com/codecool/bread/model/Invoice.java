@@ -18,14 +18,6 @@ public class Invoice {
     private BigDecimal total;
     private Date date;
 
-    public Invoice(int id, BigDecimal total, Date date) {
-        this.id = id;
-        this.total = total;
-        this.date = date;
-    }
-
-    public Invoice(){
-    }
 
     public int getId(){
         return id;

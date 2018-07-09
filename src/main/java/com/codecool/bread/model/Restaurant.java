@@ -18,14 +18,6 @@ public class Restaurant  {
     @Column(name = "owner_id")
     private int ownerId;
 
-    public Restaurant(int id, String name, Address address, String email, int phone, int ownerId) {
-        this.id = id;
-        this.name = name;
-        this.address = address;
-        this.email = email;
-        this.phone = phone;
-        this.ownerId = ownerId;
-    }
     public int getId(){
         return id;
     }

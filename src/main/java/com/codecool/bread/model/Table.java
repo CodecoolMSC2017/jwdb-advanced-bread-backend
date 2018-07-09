@@ -18,16 +18,6 @@ public class Table {
     @Column(name = "employee_id")
     private int employeeId;
 
-    public Table(int id, String name, boolean isActive, int restaurantId, int employeeId) {
-        this.id = id;
-        this.name = name;
-        this.isActive = isActive;
-        this.restaurantId = restaurantId;
-        this.employeeId = employeeId;
-    }
-
-    public Table() {
-    }
 
     public int getId(){
         return id;

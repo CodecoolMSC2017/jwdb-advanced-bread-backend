@@ -18,18 +18,6 @@ public class Employee{
     private Role role;
     private String password;
 
-    public Employee(int id, String email, String firstName, String lastName, Role role, String password) {
-        this.id = id;
-        this.email = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.role = role;
-        this.password = password;
-    }
-
-    public Employee(){
-    }
-
     public int getId(){
         return id;
     }

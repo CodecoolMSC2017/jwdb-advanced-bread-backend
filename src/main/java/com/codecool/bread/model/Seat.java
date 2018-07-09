@@ -15,15 +15,6 @@ public class Seat {
     @Column(name = "table_id")
     private int tableId;
 
-    public Seat(int id, boolean isActive, int tableId) {
-        this.id = id;
-        this.isActive = isActive;
-        this.tableId = tableId;
-    }
-
-    public Seat() {
-    }
-
     public int getId(){
         return id;
     }

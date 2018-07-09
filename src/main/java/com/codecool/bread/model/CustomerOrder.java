@@ -23,18 +23,6 @@ public class CustomerOrder{
     @Column(name = "invoice_id")
     private int invoiceId;
 
-    public CustomerOrder(int id, int seatId, int employeeId, Date orderingTime, int orderItemId, int invoiceId) {
-        this.id = id;
-        this.seatId = seatId;
-        this.employeeId = employeeId;
-        this.orderingTime = orderingTime;
-        this.orderItemId = orderItemId;
-        this.invoiceId = invoiceId;
-    }
-
-    public CustomerOrder(){
-
-    }
 
     public int getId(){
         return id;

@@ -15,15 +15,6 @@ public class Menu {
     @Column(name = "active")
     private boolean isActive;
 
-    public Menu(int id, String title, boolean isActive) {
-        this.id = id;
-        this.title = title;
-        this.isActive = isActive;
-    }
-
-    public Menu(){
-    }
-
     public int getId(){
         return id;
     }

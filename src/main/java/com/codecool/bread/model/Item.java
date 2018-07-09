@@ -17,17 +17,6 @@ public class Item {
     @Column(name = "restaurant_id")
     private int restaurantId;
 
-    public Item(int id, BigDecimal price, String comment, Category category, int reastaurantId) {
-        this.id = id;
-        this.price = price;
-        this.comment = comment;
-        this.category = category;
-        this.restaurantId = reastaurantId;
-    }
-
-    public int getId(){
-        return id;
-    }
 
     public BigDecimal getPrice() {
         return price;
