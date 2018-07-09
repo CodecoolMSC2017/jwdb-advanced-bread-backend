@@ -1,16 +1,32 @@
 package com.codecool.bread.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.math.BigDecimal;
 import java.sql.Date;
 
-public final class Invoice extends POSObject{
+@Entity
+public class Invoice {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
     private BigDecimal total;
     private Date date;
 
     public Invoice(int id, BigDecimal total, Date date) {
-        super(id);
+        this.id = id;
         this.total = total;
         this.date = date;
+    }
+
+    public Invoice(){
+    }
+
+    public int getId(){
+        return id;
     }
 
     public BigDecimal getTotal() {
@@ -19,5 +35,13 @@ public final class Invoice extends POSObject{
 
     public Date getDate() {
         return date;
+    }
+
+    public void setTotal(BigDecimal total) {
+        this.total = total;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }

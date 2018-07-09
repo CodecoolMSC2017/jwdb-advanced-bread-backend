@@ -1,15 +1,23 @@
 package com.codecool.bread.model;
 
-public final class Employee extends POSObject{
+import javax.persistence.*;
 
+@Entity
+public class Employee{
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
     private String email;
+    @Column(name = "first_name")
     private String firstName;
+    @Column(name = "last_name")
     private String lastName;
     private Role role;
     private String password;
 
     public Employee(int id, String email, String firstName, String lastName, Role role, String password) {
-        super(id);
+        this.id = id;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -17,8 +25,15 @@ public final class Employee extends POSObject{
         this.password = password;
     }
 
+    public Employee(){
+    }
+
+    public int getId(){
+        return id;
+    }
+
     public String getEmail() {
-        return email;
+      return email;
     }
 
     public String getFirstName() {
@@ -35,5 +50,25 @@ public final class Employee extends POSObject{
 
     public String getPassword() {
         return password;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

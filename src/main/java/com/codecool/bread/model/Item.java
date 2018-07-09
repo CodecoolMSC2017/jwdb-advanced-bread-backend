@@ -1,19 +1,30 @@
 package com.codecool.bread.model;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 
-public final class Item extends POSObject {
+@Entity
+public class Item {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
     private BigDecimal price;
     private String comment;
     private Category category;
-    private int reasturantId;
+    @Column(name = "restaurant_id")
+    private int restaurantId;
 
-    public Item(int id, BigDecimal price, String comment, Category category, int reasturantId) {
-        super(id);
+    public Item(int id, BigDecimal price, String comment, Category category, int reastaurantId) {
+        this.id = id;
         this.price = price;
         this.comment = comment;
         this.category = category;
-        this.reasturantId = reasturantId;
+        this.restaurantId = reastaurantId;
+    }
+
+    public int getId(){
+        return id;
     }
 
     public BigDecimal getPrice() {
@@ -28,7 +39,23 @@ public final class Item extends POSObject {
         return category;
     }
 
-    public int getReasturantId() {
-        return reasturantId;
+    public int getRestaurantId() {
+        return restaurantId;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public void setRestaurantId(int restaurantId) {
+        this.restaurantId = restaurantId;
     }
 }

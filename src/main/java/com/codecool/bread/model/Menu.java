@@ -1,13 +1,29 @@
 package com.codecool.bread.model;
 
-public final class Menu extends POSObject{
+import javax.persistence.*;
+
+@Entity
+public class Menu {
+
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
     private String title;
+    @Column(name = "active")
     private boolean isActive;
 
     public Menu(int id, String title, boolean isActive) {
-        super(id);
+        this.id = id;
         this.title = title;
         this.isActive = isActive;
+    }
+
+    public Menu(){
+    }
+
+    public int getId(){
+        return id;
     }
 
     public String getTitle() {
@@ -16,5 +32,13 @@ public final class Menu extends POSObject{
 
     public boolean isActive() {
         return isActive;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 }

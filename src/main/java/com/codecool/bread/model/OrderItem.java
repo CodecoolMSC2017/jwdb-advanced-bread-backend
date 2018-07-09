@@ -1,16 +1,31 @@
 package com.codecool.bread.model;
 
-public final class OrderItem extends POSObject{
+import javax.persistence.*;
 
+@Entity
+public class OrderItem {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    @Column(name = "item_id")
     private int itemId;
     private int quantity;
     private String comment;
 
     public OrderItem(int id, int itemId, int quantity, String comment) {
-        super(id);
+        this.id = id;
         this.itemId = itemId;
         this.quantity = quantity;
         this.comment = comment;
+    }
+
+    public OrderItem(){
+
+    }
+
+    public int getId(){
+        return id;
     }
 
     public int getItemId() {
@@ -23,5 +38,17 @@ public final class OrderItem extends POSObject{
 
     public String getComment() {
         return comment;
+    }
+
+    public void setItemId(int itemId) {
+        this.itemId = itemId;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 }

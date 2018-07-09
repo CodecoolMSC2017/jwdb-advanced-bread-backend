@@ -1,20 +1,44 @@
 package com.codecool.bread.model;
 
-public final class Seat extends POSObject {
-    private boolean isActive;
-    private int table_id;
+import javax.persistence.*;
 
-    public Seat(int id, boolean isActive, int table_id) {
-        super(id);
+@Entity
+public class Seat {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    @Column(name = "active")
+    private boolean isActive;
+    @Column(name = "table_id")
+    private int tableId;
+
+    public Seat(int id, boolean isActive, int tableId) {
+        this.id = id;
         this.isActive = isActive;
-        this.table_id = table_id;
+        this.tableId = tableId;
+    }
+
+    public Seat() {
+    }
+
+    public int getId(){
+        return id;
     }
 
     public boolean isActive() {
         return isActive;
     }
 
-    public int getTable_id() {
-        return table_id;
+    public int getTableId() {
+        return tableId;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public void setTableId(int tableId) {
+        this.tableId = tableId;
     }
 }
