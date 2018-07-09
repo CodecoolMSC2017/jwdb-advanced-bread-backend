@@ -6,11 +6,7 @@ import java.sql.Date;
 
 @Entity
 @Table(name = "customer_order")
-public class CustomerOrder{
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+public class CustomerOrder extends POSObject{
 
     @Column(name = "seat_id")
     private int seatId;
@@ -22,11 +18,6 @@ public class CustomerOrder{
     private int orderItemId;
     @Column(name = "invoice_id")
     private int invoiceId;
-
-
-    public int getId(){
-        return id;
-    }
 
     public int getSeatId() {
         return seatId;

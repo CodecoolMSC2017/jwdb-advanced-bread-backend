@@ -3,24 +3,16 @@ package com.codecool.bread.model;
 import javax.persistence.*;
 import javax.persistence.Table;
 
-@Entity
+@Embeddable
 @Table(name = "address")
-public class Address {
+public class Address extends POSObject{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
     private String street;
     private String city;
     @Column(name = "postal_code")
     private String postalCode;
     private String state;
     private String country;
-
-    public int getId(){
-        return id;
-    }
-
 
     public String getStreet() {
         return street;

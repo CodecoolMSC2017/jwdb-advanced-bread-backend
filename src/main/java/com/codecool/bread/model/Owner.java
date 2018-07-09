@@ -6,23 +6,17 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "owner")
-public class Owner {
+public class Owner extends POSObject {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
     private UUID uuid;
     @Column(name = "first_name")
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
+    @Embedded
     private Address address;
     private String email;
     private String password;
-
-    public int getId(){
-        return id;
-    }
 
     public UUID getUuid() {
         return uuid;
