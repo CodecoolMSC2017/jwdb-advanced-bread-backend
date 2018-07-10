@@ -1,12 +1,10 @@
 package com.codecool.bread.service;
 
-import com.codecool.bread.exception.ServiceException;
+import com.codecool.bread.exception.OwnerNotFoundException;
 import com.codecool.bread.model.Owner;
 import com.codecool.bread.repository.OwnerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.Optional;
 
 @Component
 public class OwnerService {
@@ -18,11 +16,11 @@ public class OwnerService {
         return repository.findAll();
     }
 
-    public Owner getOwnerById(Integer id) throws ServiceException {
+    public Owner getOwnerById(Integer id) throws OwnerNotFoundException {
         if(repository.findById(id).isPresent()) {
             return repository.findById(id).get();
         }else {
-            throw new ServiceException("Not found");
+            throw new OwnerNotFoundException("Not found");
         }
     }
 }
