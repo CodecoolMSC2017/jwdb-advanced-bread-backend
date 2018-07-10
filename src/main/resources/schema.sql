@@ -28,9 +28,9 @@ CREATE TABLE owner (
 	uuid UUID,
 	first_name TEXT NOT NULL,
 	last_name TEXT NOT NULL,
-	address_id INTEGER NOT NULL,
+	address_id INTEGER,
 	email TEXT NOT NULL,
-	phone INTEGER NOT NULL,
+	phone INTEGER,
 	password TEXT NOT NULL,
 	CONSTRAINT email_not_empty CHECK (email <> ''),
 	CONSTRAINT first_name_not_empty CHECK (first_name <> ''),
@@ -132,7 +132,7 @@ CREATE TABLE order_item (
 );
 
 CREATE TABLE customer_order (
-	customer_order_id SERIAL PRIMARY KEY,
+	id SERIAL PRIMARY KEY,
 	seat_id INTEGER NOT NULL,
 	employee_id INTEGER NOT NULL,
 	ordering_time DATE DEFAULT current_date,

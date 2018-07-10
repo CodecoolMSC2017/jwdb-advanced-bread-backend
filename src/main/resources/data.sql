@@ -1,12 +1,9 @@
-INSERT INTO address(street,city,postal_code,state,country) VALUES
-    ('Szabó utca', 'Traktorda', 'H4011','SzSzB','Hungary'),
-    ('Kovács utca', 'Talicskás', 'H4011','SzSzB','Hungary');
+INSERT INTO owner(first_name, last_name, email, password ) VALUES
+	('Robert', 'King', 'robert.king@gmail.com', 'password'), --1
+	('Nancy', 'Davolio', 'nancy.davolio@gmail.com', 'password'); --2
 
-INSERT INTO owner(first_name ,last_name ,address_id ,email ,phone ,password) VALUES
-    ('Pista','Lakatos',1, 'pista@pista.com', 123456789,'asdasd'), --1
-    ('Sanyi','Lakatos',2, 'psanyi@sanyi.com', 987654321,'qwe');  --2
+INSERT INTO address(street, city, postcode, state, country) VALUES
+	('4110 Old Redmond Rd.', 'Redmond', 98502, 'Washington', 'USA'); --1
 
-INSERT INTO restaurant(name,address_id,email,phone,owner_id) VALUES
-    ('Pista faló', 1, 'falo@pista.com', 123456789,1),
-    ('Pista ivó', 1, 'ivo@pista.com', 987654321,1),
-    ('PSanyi faló', 2, 'falo@sanyi.com', 1354792468,2);
+INSERT INTO restaurant(owner_id, name, email, address_id, phone) VALUES
+	(1, 'King Bistro', 'info@kingbistro.com', 1, '5558121'); --1
