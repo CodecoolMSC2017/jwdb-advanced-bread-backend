@@ -8,8 +8,10 @@ import java.math.BigDecimal;
 @Table(name = "item")
 public class Item extends POSObject {
 
+    @Column(columnDefinition = "DECIMAL(9,2)")
     private BigDecimal price;
     private String comment;
+    @Enumerated(EnumType.STRING)
     private Category category;
     @Column(name = "restaurant_id")
     private int restaurantId;

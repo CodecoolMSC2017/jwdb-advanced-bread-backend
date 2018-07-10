@@ -12,6 +12,7 @@ public class Employee extends POSObject {
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
+    @Enumerated(EnumType.STRING)
     private Role role;
     private String password;
 
