@@ -9,8 +9,8 @@ import javax.persistence.Table;
 public class Restaurant extends POSObject {
 
     private String name;
-    @OneToOne(fetch = FetchType.LAZY)
-    @MapsId
+    @OneToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name="address_id")
     private Address address;
     private String email;
     private int phone;

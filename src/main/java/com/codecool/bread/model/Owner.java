@@ -13,8 +13,8 @@ public class Owner extends POSObject {
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
-    @OneToOne(fetch = FetchType.LAZY)
-    @MapsId
+    @OneToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name="address_id")
     private Address address;
     private String email;
     private String password;
@@ -34,7 +34,6 @@ public class Owner extends POSObject {
     public Address getAddress() {
         return address;
     }
-
 
     public String getEmail() {
         return email;
