@@ -15,7 +15,7 @@ DROP TABLE IF EXISTS address;
 
 
 CREATE TABLE address (
-	address_id SERIAL PRIMARY KEY,
+	id SERIAL PRIMARY KEY,
 	street TEXT,
 	city TEXT,
 	postal_code TEXT,
@@ -24,8 +24,8 @@ CREATE TABLE address (
 );
 
 CREATE TABLE owner (
-	owner_id SERIAL PRIMARY KEY,
-	uuid UUID NOT NULL,
+	id SERIAL PRIMARY KEY,
+	uuid UUID,
 	first_name TEXT NOT NULL,
 	last_name TEXT NOT NULL,
 	address_id INTEGER NOT NULL,
@@ -35,23 +35,23 @@ CREATE TABLE owner (
 	CONSTRAINT email_not_empty CHECK (email <> ''),
 	CONSTRAINT first_name_not_empty CHECK (first_name <> ''),
 	CONSTRAINT last_name_not_empty CHECK (last_name <> ''),
-	FOREIGN KEY (address_id) REFERENCES address(address_id)
+	FOREIGN KEY (address_id) REFERENCES address(id)
 );
 
 CREATE TABLE restaurant (
-	restaurant_id SERIAL PRIMARY KEY,
+	id SERIAL PRIMARY KEY,
 	name TEXT NOT NULL,
 	address_id INTEGER NOT NULL,
 	email TEXT NOT NULL,
 	phone INTEGER NOT NULL,
 	owner_id INTEGER NOT NULL,
 	CONSTRAINT email_not_empty CHECK (email <> ''),
-	FOREIGN KEY (owner_id) REFERENCES owner(owner_id),
-	FOREIGN KEY (address_id) REFERENCES address(address_id)
+	FOREIGN KEY (owner_id) REFERENCES owner(id),
+	FOREIGN KEY (address_id) REFERENCES address(id)
 );
 
 CREATE TABLE employee (
-	employee_id SERIAL PRIMARY KEY,
+	id SERIAL PRIMARY KEY,
 	email TEXT NOT NULL,
 	password TEXT NOT NULL,
 	first_name TEXT NOT NULL,
@@ -62,33 +62,33 @@ CREATE TABLE employee (
 	CONSTRAINT email_not_empty CHECK (email <> ''),
 	CONSTRAINT first_name_not_empty CHECK (first_name <> ''),
 	CONSTRAINT last_name_not_empty CHECK (last_name <> ''),
-	FOREIGN KEY (restaurant_id) REFERENCES restaurant(restaurant_id)
+	FOREIGN KEY (restaurant_id) REFERENCES restaurant(id)
 );
 
 CREATE TABLE ingredient (
-	ingredient_id SERIAL PRIMARY KEY,
+	id SERIAL PRIMARY KEY,
 	name TEXT NOT NULL,
 	allergen TEXT
 );
 
 CREATE TABLE item (
-	item_id SERIAL PRIMARY KEY,
+	id SERIAL PRIMARY KEY,
 	price NUMERIC NOT NULL,
 	comment TEXT,
 	category TEXT NOT NULL,
 	restaurant_id INTEGER NOT NULL,
-	FOREIGN KEY (restaurant_id) REFERENCES restaurant(restaurant_id)
+	FOREIGN KEY (restaurant_id) REFERENCES restaurant(id)
 );
 
 CREATE TABLE item_ingredient (
 	item_id INTEGER,
 	ingredient_id INTEGER,
-	FOREIGN KEY (item_id) REFERENCES item(item_id),
-	FOREIGN KEY (ingredient_id) REFERENCES ingredient(ingredient_id)
+	FOREIGN KEY (item_id) REFERENCES item(id),
+	FOREIGN KEY (ingredient_id) REFERENCES ingredient(id)
 );
 
 CREATE TABLE menu (
-	menu_id SERIAL PRIMARY KEY,
+	id SERIAL PRIMARY KEY,
 	title TEXT NOT NULL,
 	active BOOLEAN DEFAULT FALSE
 );
@@ -96,39 +96,39 @@ CREATE TABLE menu (
 CREATE TABLE menu_item (
 	menu_id INTEGER,
 	item_id INTEGER,
-	FOREIGN KEY (menu_id) REFERENCES menu(menu_id),
-	FOREIGN KEY (item_id) REFERENCES item(item_id)
+	FOREIGN KEY (menu_id) REFERENCES menu(id),
+	FOREIGN KEY (item_id) REFERENCES item(id)
 );
 
 CREATE TABLE restaurant_table (
-	restaurant_table_id SERIAL PRIMARY KEY,
+	id SERIAL PRIMARY KEY,
 	name TEXT NOT NULL,
 	active BOOLEAN DEFAULT FALSE,
 	restaurant_id INTEGER NOT NULL,
 	employee_id INTEGER DEFAULT NULL,
-	FOREIGN KEY (restaurant_id) REFERENCES restaurant(restaurant_id),
-	FOREIGN KEY (employee_id) REFERENCES employee(employee_id)
+	FOREIGN KEY (restaurant_id) REFERENCES restaurant(id),
+	FOREIGN KEY (employee_id) REFERENCES employee(id)
 );
 
 CREATE TABLE seat (
-	seat_id SERIAL PRIMARY KEY,
+	id SERIAL PRIMARY KEY,
 	active BOOLEAN,
 	restaurant_table_id INTEGER NOT NULL,
-	FOREIGN KEY (restaurant_table_id) REFERENCES restaurant_table(restaurant_table_id)
+	FOREIGN KEY (restaurant_table_id) REFERENCES restaurant_table(id)
 );
 
 CREATE TABLE invoice (
-	invoice_id SERIAL PRIMARY KEY,
+	id SERIAL PRIMARY KEY,
 	total NUMERIC NOT NULL,
 	date DATE DEFAULT current_date
 );
 
 CREATE TABLE order_item (
-	order_item_id SERIAL PRIMARY KEY,
+	id SERIAL PRIMARY KEY,
 	item_id SERIAL NOT NULL,
 	quantity INTEGER NOT NULL,
 	comment TEXT,
-	FOREIGN KEY (item_id) REFERENCES item(item_id)
+	FOREIGN KEY (item_id) REFERENCES item(id)
 );
 
 CREATE TABLE customer_order (
@@ -138,8 +138,8 @@ CREATE TABLE customer_order (
 	ordering_time DATE DEFAULT current_date,
 	order_item_id INTEGER NOT NULL,
 	invoice_id INTEGER DEFAULT NULL,
-	FOREIGN KEY (seat_id) REFERENCES seat(seat_id),
-	FOREIGN KEY (employee_id) REFERENCES employee(employee_id),
-	FOREIGN KEY (order_item_id) REFERENCES order_item(order_item_id),
-	FOREIGN KEY (invoice_id) REFERENCES invoice(invoice_id)
+	FOREIGN KEY (seat_id) REFERENCES seat(id),
+	FOREIGN KEY (employee_id) REFERENCES employee(id),
+	FOREIGN KEY (order_item_id) REFERENCES order_item(id),
+	FOREIGN KEY (invoice_id) REFERENCES invoice(id)
 );
