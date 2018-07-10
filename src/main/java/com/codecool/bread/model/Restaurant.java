@@ -9,7 +9,8 @@ import javax.persistence.Table;
 public class Restaurant extends POSObject {
 
     private String name;
-    @Embedded
+    @OneToOne(fetch = FetchType.LAZY)
+    @MapsId
     private Address address;
     private String email;
     private int phone;

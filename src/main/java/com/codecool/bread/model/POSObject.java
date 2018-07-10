@@ -2,8 +2,7 @@ package com.codecool.bread.model;
 
 import javax.persistence.*;
 
-@Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@MappedSuperclass
 public abstract class POSObject {
 
     @Id
@@ -12,5 +11,9 @@ public abstract class POSObject {
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

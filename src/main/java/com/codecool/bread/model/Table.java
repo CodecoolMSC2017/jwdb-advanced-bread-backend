@@ -4,7 +4,7 @@ package com.codecool.bread.model;
 import javax.persistence.*;
 
 @Entity
-@javax.persistence.Table(name = "table")
+@javax.persistence.Table(name = "restaurant_table")
 public class Table  extends POSObject {
 
     private String name;

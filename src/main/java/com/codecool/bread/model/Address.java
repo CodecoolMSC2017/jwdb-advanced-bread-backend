@@ -3,7 +3,7 @@ package com.codecool.bread.model;
 import javax.persistence.*;
 import javax.persistence.Table;
 
-@Embeddable
+@Entity
 @Table(name = "address")
 public class Address extends POSObject{
 

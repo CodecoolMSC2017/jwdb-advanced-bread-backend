@@ -13,7 +13,8 @@ public class Owner extends POSObject {
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
-    @Embedded
+    @OneToOne(fetch = FetchType.LAZY)
+    @MapsId
     private Address address;
     private String email;
     private String password;

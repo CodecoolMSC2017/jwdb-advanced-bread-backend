@@ -9,7 +9,7 @@ public class Seat extends POSObject{
 
     @Column(name = "active")
     private boolean isActive;
-    @Column(name = "table_id")
+    @Column(name = "restaurant_table_id")
     private int tableId;
 
 
