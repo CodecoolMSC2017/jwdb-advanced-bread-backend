@@ -1,6 +1,6 @@
 package com.codecool.bread.controller;
 
-import com.codecool.bread.exception.ServiceException;
+import com.codecool.bread.exception.OwnerNotFoundException;
 import com.codecool.bread.model.Owner;
 import com.codecool.bread.service.OwnerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,16 +14,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class RestOwnerController {
 
     @Autowired
-    private OwnerService service;
+    private OwnerService ownerService;
 
 
     @GetMapping("/all")
     public Iterable<Owner> getAllOwners() {
-        return service.getAllOwners();
+        return ownerService.getAllOwners();
     }
 
     @GetMapping("{ownerId}")
-    public Owner getOwnerById(@PathVariable("ownerId") int ownerId) throws ServiceException {
-        return service.getOwnerById(ownerId);
+    public Owner getOwnerById(@PathVariable("ownerId") int ownerId) throws OwnerNotFoundException {
+        return ownerService.getOwnerById(ownerId);
     }
 }
