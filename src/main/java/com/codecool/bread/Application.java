@@ -1,4 +1,4 @@
-package com.codecool.bread.service;
+package com.codecool.bread;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
