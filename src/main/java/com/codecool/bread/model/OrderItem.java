@@ -7,13 +7,18 @@ import javax.persistence.Table;
 @Table(name = "order_item")
 public class OrderItem  extends POSObject {
 
-    @Column(name = "item_id")
-    private int itemId;
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "item_id")
+    private Item item;
     private int quantity;
     private String comment;
 
-    public int getItemId() {
-        return itemId;
+    public Item getItem() {
+        return item;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
     }
 
     public int getQuantity() {
@@ -22,10 +27,6 @@ public class OrderItem  extends POSObject {
 
     public String getComment() {
         return comment;
-    }
-
-    public void setItemId(int itemId) {
-        this.itemId = itemId;
     }
 
     public void setQuantity(int quantity) {

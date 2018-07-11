@@ -7,6 +7,9 @@ import javax.persistence.Table;
 @Table(name = "employee")
 public class Employee extends POSObject {
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "username")
+    private User user;
     private String email;
     @Column(name = "first_name")
     private String firstName;
@@ -14,7 +17,6 @@ public class Employee extends POSObject {
     private String lastName;
     @Enumerated(EnumType.STRING)
     private Role role;
-    private String password;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "restaurant_id", nullable = false)
     private Restaurant restaurant;
@@ -36,8 +38,8 @@ public class Employee extends POSObject {
         return role;
     }
 
-    public String getPassword() {
-        return password;
+    public Restaurant getRestaurant() {
+        return restaurant;
     }
 
     public void setEmail(String email) {
@@ -56,7 +58,15 @@ public class Employee extends POSObject {
         this.role = role;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
