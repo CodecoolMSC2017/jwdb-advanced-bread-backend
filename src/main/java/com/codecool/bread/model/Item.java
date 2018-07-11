@@ -3,6 +3,8 @@ package com.codecool.bread.model;
 import javax.persistence.*;
 import javax.persistence.Table;
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "item")
