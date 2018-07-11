@@ -27,21 +27,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication().dataSource(dataSource);
     }
-/*
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/error", "/", "/index").permitAll()
+                .antMatchers("/", "/index").permitAll()
                 .antMatchers("/owner/**").access("hasRole('ADMIN')")
                 .and()
                 .formLogin().permitAll()
                 .and()
                 .logout().permitAll()
                 .and()
-                .exceptionHandling().accessDeniedPage("/403")
-                .and()
-                .csrf();
+                .exceptionHandling().accessDeniedPage("/403");
+        http.csrf().disable();
 
+    }
         /*
         http.authorizeRequests()
                 .antMatchers("/error", "/", "/index").permitAll()
