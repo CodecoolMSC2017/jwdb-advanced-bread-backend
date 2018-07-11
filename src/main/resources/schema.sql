@@ -40,7 +40,6 @@ CREATE TABLE address (
 
 CREATE TABLE owner (
 	id SERIAL PRIMARY KEY,
-	uuid UUID,
 	username TEXT NOT NULL,
 	first_name TEXT NOT NULL,
 	last_name TEXT NOT NULL,
