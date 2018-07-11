@@ -13,11 +13,15 @@ import java.util.List;
 public class RestaurantServiceImpl implements RestaurantService {
 
     @Autowired
-    RestaurantRepository restaurantRepository;
+    private RestaurantRepository restaurantRepository;
 
     @Override
     public List<Restaurant> getAllRestaurants() {
         return restaurantRepository.findAll();
+    }
+
+    public Iterable<Restaurant> getRestaurantsByOwnerId(int id){
+        return restaurantRepository.findByOwnerId(id);
     }
 
     @Override
