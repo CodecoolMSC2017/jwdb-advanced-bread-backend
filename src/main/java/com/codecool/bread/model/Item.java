@@ -8,13 +8,15 @@ import java.math.BigDecimal;
 @Table(name = "item")
 public class Item extends POSObject {
 
+    private String name;
     @Column(columnDefinition = "DECIMAL(9,2)")
     private BigDecimal price;
     private String comment;
     @Enumerated(EnumType.STRING)
     private Category category;
-    @Column(name = "restaurant_id")
-    private int restaurantId;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "restaurant_id", nullable = false)
+    private Restaurant restaurant;
 
     public BigDecimal getPrice() {
         return price;
@@ -26,10 +28,6 @@ public class Item extends POSObject {
 
     public Category getCategory() {
         return category;
-    }
-
-    public int getRestaurantId() {
-        return restaurantId;
     }
 
     public void setPrice(BigDecimal price) {
@@ -44,7 +42,11 @@ public class Item extends POSObject {
         this.category = category;
     }
 
-    public void setRestaurantId(int restaurantId) {
-        this.restaurantId = restaurantId;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

@@ -1,6 +1,7 @@
 package com.codecool.bread.service;
 
 import com.codecool.bread.exception.OwnerNotFoundException;
+import com.codecool.bread.exception.RestaurantAccessDeniedException;
 import com.codecool.bread.exception.RestaurantNotFoundException;
 import com.codecool.bread.model.Restaurant;
 import com.codecool.bread.repository.RestaurantRepository;
@@ -20,16 +21,20 @@ public class RestaurantServiceImpl implements RestaurantService {
         return restaurantRepository.findAll();
     }
 
-    public Iterable<Restaurant> getRestaurantsByOwnerId(int id){
+    public List<Restaurant> getRestaurantsByOwnerId(int id){
         return restaurantRepository.findByOwnerId(id);
     }
 
     @Override
-    public Restaurant getRestaurantById(int id) {
-        if(restaurantRepository.findById(id).isPresent()) {
-            return restaurantRepository.findById(id).get();
+    public Restaurant getRestaurantById(int restaurantId, int ownerId) throws RestaurantAccessDeniedException, RestaurantNotFoundException {
+        if(restaurantRepository.findById(restaurantId).isPresent()) {
+            if(restaurantRepository.findByOwnerId(ownerId).contains(restaurantRepository.findById(restaurantId).get())) {
+                return restaurantRepository.findById(restaurantId).get();
+            } else {
+                throw new RestaurantAccessDeniedException();
+            }
         }else {
-            throw new RestaurantNotFoundException("Not found");
+            throw new RestaurantNotFoundException();
         }
     }
 }

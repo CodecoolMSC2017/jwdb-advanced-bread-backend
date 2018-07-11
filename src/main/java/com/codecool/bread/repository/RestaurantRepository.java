@@ -6,7 +6,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository("restaurantRepository")
 public interface RestaurantRepository extends JpaRepository<Restaurant, Integer> {
-    Iterable<Restaurant> findByOwnerId(int id);
+    List<Restaurant> findByOwnerId(int id);
 }
