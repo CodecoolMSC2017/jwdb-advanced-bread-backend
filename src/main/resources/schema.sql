@@ -72,7 +72,7 @@ CREATE TABLE employee (
 	email TEXT NOT NULL,
 	first_name TEXT NOT NULL,
 	last_name TEXT NOT NULL,
-	role TEXT NOT NULL,
+	title TEXT NOT NULL,
 	restaurant_id INTEGER NOT NULL,
 	hour_rate INTEGER DEFAULT NULL,
 	CONSTRAINT email_not_empty CHECK (email <> ''),
