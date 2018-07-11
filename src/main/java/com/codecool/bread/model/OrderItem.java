@@ -6,26 +6,26 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "order_item")
 public class OrderItem  extends POSObject {
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "item_id" )
-    private Item item;
+
+    @Column(name = "item_id")
+    private int itemId;
     private int quantity;
     private String comment;
 
-    public int getQuantity() {
-        return quantity;
+    public int getItemId() {
+        return itemId;
     }
 
-    public Item getItem() {
-        return item;
+    public int getQuantity() {
+        return quantity;
     }
 
     public String getComment() {
         return comment;
     }
 
-    public void setItem(Item item) {
-        this.item = item;
+    public void setItemId(int itemId) {
+        this.itemId = itemId;
     }
 
     public void setQuantity(int quantity) {

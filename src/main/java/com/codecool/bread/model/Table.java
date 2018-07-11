@@ -2,62 +2,49 @@ package com.codecool.bread.model;
 
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @javax.persistence.Table(name = "restaurant_table")
-public class Table extends POSObject {
+public class Table  extends POSObject {
 
     private String name;
     @Column(name = "active")
     private boolean isActive;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "restaurant_id")
-    private Restaurant restaurant;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "employee_id")
-    private Employee employee;
-    @OneToMany(mappedBy = "table")
-    private Set<Seat> seats = new HashSet<>();
+    @Column(name = "restaurant_id")
+    private int restaurantId;
+    @Column(name = "employee_id")
+    private int employeeId;
+
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public boolean isActive() {
         return isActive;
     }
 
+    public int getRestaurantId() {
+        return restaurantId;
+    }
+
+    public int getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public void setActive(boolean active) {
         isActive = active;
     }
 
-    public Restaurant getRestaurant() {
-        return restaurant;
+    public void setRestaurantId(int restaurantId) {
+        this.restaurantId = restaurantId;
     }
 
-    public void setRestaurant(Restaurant restaurant) {
-        this.restaurant = restaurant;
-    }
-
-    public Employee getEmployee() {
-        return employee;
-    }
-
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
-    }
-
-    public Set<Seat> getSeats() {
-        return seats;
-    }
-
-    public void setSeats(Set<Seat> seats) {
-        this.seats = seats;
+    public void setEmployeeId(int employeeId) {
+        this.employeeId = employeeId;
     }
 }

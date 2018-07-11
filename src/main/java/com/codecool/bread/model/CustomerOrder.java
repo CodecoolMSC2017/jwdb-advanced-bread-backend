@@ -7,66 +7,55 @@ import java.sql.Date;
 @Entity
 @Table(name = "customer_order")
 public class CustomerOrder extends POSObject{
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "seat_id")
-    private Seat seat;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "employee_id")
-    private Employee employee;
+
+    @Column(name = "seat_id")
+    private int seatId;
+    @Column(name = "employee_id")
+    private int employeeId;
     @Column(name = "ordering_time")
     private Date orderingTime;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_item_id")
-    private OrderItem order;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "invoice_id")
-    private Invoice invoice;
+    @Column(name = "order_item_id")
+    private int orderItemId;
+    @Column(name = "invoice_id")
+    private int invoiceId;
 
-    public OrderItem getOrder() {
-        return order;
+    public int getSeatId() {
+        return seatId;
     }
 
-    public void setOrder(OrderItem order) {
-        this.order = order;
-    }
-
-    public Seat getSeat() {
-        return seat;
-    }
-
-    public void setSeat(Seat seat) {
-        this.seat = seat;
-    }
-
-    public Employee getEmployee() {
-        return employee;
-    }
-
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
+    public int getEmployeeId() {
+        return employeeId;
     }
 
     public Date getOrderingTime() {
         return orderingTime;
     }
 
+    public int getOrderItemId() {
+        return orderItemId;
+    }
+
+    public int getInvoiceId() {
+        return invoiceId;
+    }
+
+    public void setSeatId(int seatId) {
+        this.seatId = seatId;
+    }
+
+    public void setEmployeeId(int employeeId) {
+        this.employeeId = employeeId;
+    }
+
     public void setOrderingTime(Date orderingTime) {
         this.orderingTime = orderingTime;
     }
 
-    public OrderItem getOrderItem() {
-        return order;
+    public void setOrderItemId(int orderItemId) {
+        this.orderItemId = orderItemId;
     }
 
-    public void setOrderItem(OrderItem order) {
-        this.order = order;
-    }
-
-    public Invoice getInvoice() {
-        return invoice;
-    }
-
-    public void setInvoice(Invoice invoice) {
-        this.invoice = invoice;
+    public void setInvoiceId(int invoiceId) {
+        this.invoiceId = invoiceId;
     }
 }
