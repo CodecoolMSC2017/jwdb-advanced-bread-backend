@@ -3,6 +3,8 @@ package com.codecool.bread.model;
 import javax.persistence.*;
 import javax.persistence.Table;
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "item")
@@ -13,6 +15,9 @@ public class Item extends POSObject {
     private String comment;
     @Enumerated(EnumType.STRING)
     private Category category;
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinTable(name = "item_ingredient", joinColumns = { @JoinColumn(name = "item_id")},inverseJoinColumns = {@JoinColumn(name = "ingredient_id")})
+    private Set<Ingredient> ingredients = new HashSet<>();
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;
@@ -29,6 +34,10 @@ public class Item extends POSObject {
         return category;
     }
 
+    public Set<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
     public Restaurant getRestaurant() {
         return restaurant;
     }
@@ -43,6 +52,10 @@ public class Item extends POSObject {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public void setIngredients(Set<Ingredient> ingredients) {
+        this.ingredients = ingredients;
     }
 
     public void setRestaurant(Restaurant restaurant) {
