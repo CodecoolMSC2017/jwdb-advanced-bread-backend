@@ -40,6 +40,10 @@ public class Employee extends POSObject {
         return password;
     }
 
+    public Restaurant getRestaurant() {
+        return restaurant;
+    }
+
     public void setEmail(String email) {
         this.email = email;
     }
@@ -58,5 +62,9 @@ public class Employee extends POSObject {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
     }
 }

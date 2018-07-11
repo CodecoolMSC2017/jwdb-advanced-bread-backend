@@ -2,6 +2,7 @@ package com.codecool.bread.model;
 
 import javax.persistence.*;
 import javax.persistence.Table;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -18,6 +19,9 @@ public class Owner extends POSObject {
     private Address address;
     private String email;
     private String password;
+    @OneToMany(mappedBy = "owner")
+    private Set<Restaurant> restaurants;
+
 
     public UUID getUuid() {
         return uuid;
@@ -43,6 +47,10 @@ public class Owner extends POSObject {
         return password;
     }
 
+    public Set<Restaurant> getRestaurants() {
+        return restaurants;
+    }
+
     public void setUuid(UUID uuid) {
         this.uuid = uuid;
     }
@@ -65,5 +73,9 @@ public class Owner extends POSObject {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setRestaurants(Set<Restaurant> restaurants) {
+        this.restaurants = restaurants;
     }
 }

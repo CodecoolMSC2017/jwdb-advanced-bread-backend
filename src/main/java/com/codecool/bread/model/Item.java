@@ -13,8 +13,9 @@ public class Item extends POSObject {
     private String comment;
     @Enumerated(EnumType.STRING)
     private Category category;
-    @Column(name = "restaurant_id")
-    private int restaurantId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "restaurant_id")
+    private Restaurant restaurant;
 
     public BigDecimal getPrice() {
         return price;
@@ -28,8 +29,8 @@ public class Item extends POSObject {
         return category;
     }
 
-    public int getRestaurantId() {
-        return restaurantId;
+    public Restaurant getRestaurant() {
+        return restaurant;
     }
 
     public void setPrice(BigDecimal price) {
@@ -44,7 +45,7 @@ public class Item extends POSObject {
         this.category = category;
     }
 
-    public void setRestaurantId(int restaurantId) {
-        this.restaurantId = restaurantId;
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
     }
 }
