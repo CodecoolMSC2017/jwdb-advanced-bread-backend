@@ -22,6 +22,14 @@ public class CustomerOrder extends POSObject{
     @JoinColumn(name = "invoice_id")
     private Invoice invoice;
 
+    public OrderItem getOrder() {
+        return order;
+    }
+
+    public void setOrder(OrderItem order) {
+        this.order = order;
+    }
+
     public Seat getSeat() {
         return seat;
     }
