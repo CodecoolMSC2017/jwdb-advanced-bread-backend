@@ -1,25 +1,33 @@
 package com.codecool.bread.controller;
 
-import com.codecool.bread.model.Employee;
 import com.codecool.bread.model.Restaurant;
+import com.codecool.bread.service.OwnerService;
 import com.codecool.bread.service.RestaurantService;
+import com.codecool.bread.service.exception.RestaurantNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/owner/{ownerId}/restaurants")
 public class RestRestaurantController {
 
     @Autowired
     private RestaurantService restaurantService;
 
-    @GetMapping("/restaurant")
-    public List<Restaurant> getRestaurant() {
-        return restaurantService.getAllRestaurants();
+    @Autowired
+    private OwnerService ownerService;
+
+    @GetMapping("/all")
+    public Iterable<Restaurant> getRestaurantsByOwnerId(@PathVariable("ownerId") int ownerId) {
+        return restaurantService.getRestaurantsByOwnerId(ownerId);
     }
 
-    @GetMapping("/restaurant/{id}")
-    public Restaurant getRestaurant(@PathVariable("id") int id) {
-        return restaurantService.getRestaurantById(id);
+    @GetMapping("/{restaurantId}")
+    public Restaurant getRestaurantById(@PathVariable("ownerId") int ownerId,@PathVariable("restaurantId") int restaurantId) throws RestaurantNotFoundException {
+        return restaurantService.getRestaurantById(restaurantId);
     }
 }
+
