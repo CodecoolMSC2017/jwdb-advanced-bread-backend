@@ -15,6 +15,9 @@ public class Employee extends POSObject {
     @Enumerated(EnumType.STRING)
     private Role role;
     private String password;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "restaurant_id", nullable = false)
+    private Restaurant restaurant;
 
 
     public String getEmail() {
