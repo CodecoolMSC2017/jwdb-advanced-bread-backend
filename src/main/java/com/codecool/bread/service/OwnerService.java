@@ -20,7 +20,7 @@ public class OwnerService {
         if(repository.findById(id).isPresent()) {
             return repository.findById(id).get();
         }else {
-            throw new OwnerNotFoundException("Not found");
+            throw new OwnerNotFoundException();
         }
     }
 }

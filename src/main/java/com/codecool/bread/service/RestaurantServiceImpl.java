@@ -29,7 +29,7 @@ public class RestaurantServiceImpl implements RestaurantService {
         if(restaurantRepository.findById(id).isPresent()) {
             return restaurantRepository.findById(id).get();
         }else {
-            throw new RestaurantNotFoundException("Not found");
+            throw new RestaurantNotFoundException();
         }
     }
 }

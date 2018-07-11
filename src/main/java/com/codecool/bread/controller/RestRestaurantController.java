@@ -1,9 +1,9 @@
 package com.codecool.bread.controller;
 
+import com.codecool.bread.exception.RestaurantNotFoundException;
 import com.codecool.bread.model.Restaurant;
 import com.codecool.bread.service.OwnerService;
 import com.codecool.bread.service.RestaurantService;
-import com.codecool.bread.service.exception.RestaurantNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
