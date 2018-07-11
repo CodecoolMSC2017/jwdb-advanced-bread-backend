@@ -15,9 +15,9 @@ INSERT INTO address(street, city, postal_code, state, country) VALUES
 	('16551 NE 74th St.', 'Redmond', '98052', 'Washington', 'USA'), --2
 	('41305 Kalahari Dr.', 'Wisconsin Dells', '53965', 'Wisconsin', 'USA'), --3
 	('908 W. Capital Way', 'Tacoma', '98401', 'Washington', 'USA'), --4
-	('507 - 20th Ave. E.\nApt. 2A', 'Seattle', '98122', 'Washington', 'USA'), --5
+	('507 - 20th Ave. E. Apt. 2A', 'Seattle', '98122', 'Washington', 'USA'), --5
 	('14 Garrett Hill', 'London', 'SW1 8JR', '', 'UK'), --6
-	('Coventry House\nMiner Rd.', 'London', 'EC2 7JR', '', 'UK'); --7
+	('Coventry House Miner Rd.', 'London', 'EC2 7JR', '', 'UK'); --7
 
 INSERT INTO owner(username, first_name, last_name, address_id ,email) VALUES
 	('robking', 'Robert', 'King', 1,'robert.king@gmail.com'), --1
