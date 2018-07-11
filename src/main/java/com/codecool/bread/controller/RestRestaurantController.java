@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/owner/{ownerId}/restaurants")
+@RequestMapping("/owner/{ownerId}/restaurant")
 public class RestRestaurantController {
 
     @Autowired
@@ -20,14 +20,14 @@ public class RestRestaurantController {
     @Autowired
     private OwnerService ownerService;
 
-    @GetMapping("/all")
+    @GetMapping("")
     public Iterable<Restaurant> getRestaurantsByOwnerId(@PathVariable("ownerId") int ownerId) {
         return restaurantService.getRestaurantsByOwnerId(ownerId);
     }
 
     @GetMapping("/{restaurantId}")
     public Restaurant getRestaurantById(@PathVariable("ownerId") int ownerId,@PathVariable("restaurantId") int restaurantId) throws RestaurantNotFoundException {
-        return restaurantService.getRestaurantById(restaurantId);
+        return restaurantService.getRestaurantById(restaurantId, ownerId);
     }
 }
 
