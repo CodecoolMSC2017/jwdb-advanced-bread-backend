@@ -21,7 +21,7 @@ public class RestItemController {
     @Autowired
     private RestaurantService restaurantService;
 
-    @GetMapping("/")
+    @GetMapping("")
     public List<Item> getItemsByRestaurantId(@PathVariable("restaurantId") int restaurantId) {
         return itemService.getItemsByRestaurantId(restaurantId);
     }
