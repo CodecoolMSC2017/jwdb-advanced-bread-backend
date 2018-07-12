@@ -1,8 +1,8 @@
 INSERT INTO users(username, password, enabled) VALUES
-    ('robking', 'password', true),
-    ('davolio', 'password', true),
-    ('a.fuller', 'password', true),
-    ('leverling', 'password', true);
+    ('robking', '$2a$04$mrVOIvQZKlIPW0BYXwtaWuV1sZDsoSLSixtxYUhRZh3jpjfKDf736', true),
+    ('davolio', '$2a$04$mrVOIvQZKlIPW0BYXwtaWuV1sZDsoSLSixtxYUhRZh3jpjfKDf736', true),
+    ('a.fuller', '$2a$04$mrVOIvQZKlIPW0BYXwtaWuV1sZDsoSLSixtxYUhRZh3jpjfKDf736', true),
+    ('leverling', '$2a$04$mrVOIvQZKlIPW0BYXwtaWuV1sZDsoSLSixtxYUhRZh3jpjfKDf736', true);
 
 INSERT INTO authorities(username, authority) VALUES
 	('robking', 'ROLE_ADMIN'),
