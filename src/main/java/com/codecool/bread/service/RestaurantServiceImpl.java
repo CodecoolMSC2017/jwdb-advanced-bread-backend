@@ -4,6 +4,7 @@ import com.codecool.bread.exception.OwnerNotFoundException;
 import com.codecool.bread.exception.RestaurantAccessDeniedException;
 import com.codecool.bread.exception.RestaurantNotFoundException;
 import com.codecool.bread.model.Restaurant;
+import com.codecool.bread.model.Table;
 import com.codecool.bread.repository.RestaurantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,5 +37,10 @@ public class RestaurantServiceImpl implements RestaurantService {
         }else {
             throw new RestaurantNotFoundException();
         }
+    }
+
+    @Override
+    public List<Table> getAllTablesByRestaurantId(int ownerId, int restaurantId) {
+        return null;
     }
 }
