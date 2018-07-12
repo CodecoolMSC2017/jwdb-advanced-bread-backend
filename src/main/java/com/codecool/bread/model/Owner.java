@@ -31,6 +31,14 @@ public class Owner extends POSObject {
         this.user = user;
     }
 
+    public Set<Restaurant> getRestaurants() {
+        return restaurants;
+    }
+
+    public void setRestaurants(Set<Restaurant> restaurants) {
+        this.restaurants = restaurants;
+    }
+
     public String getFirstName() {
         return firstName;
     }
