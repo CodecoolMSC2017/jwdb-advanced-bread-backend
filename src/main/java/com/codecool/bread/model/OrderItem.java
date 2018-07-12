@@ -1,5 +1,7 @@
 package com.codecool.bread.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import javax.persistence.Table;
 
@@ -9,6 +11,7 @@ public class OrderItem extends POSObject {
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "item_id")
+    @JsonBackReference
     private Item item;
     private int quantity;
     private String comment;

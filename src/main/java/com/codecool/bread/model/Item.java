@@ -1,5 +1,7 @@
 package com.codecool.bread.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import javax.persistence.Table;
 import java.math.BigDecimal;
@@ -20,6 +22,7 @@ public class Item extends POSObject {
     private Set<Ingredient> ingredients = new HashSet<>();
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id")
+    @JsonBackReference
     private Restaurant restaurant;
 
     public BigDecimal getPrice() {

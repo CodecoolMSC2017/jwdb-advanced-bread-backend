@@ -1,5 +1,7 @@
 package com.codecool.bread.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import javax.persistence.Table;
 import java.sql.Date;
@@ -9,17 +11,21 @@ import java.sql.Date;
 public class CustomerOrder extends POSObject {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "seat_id")
+    @JsonBackReference
     private Seat seat;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "employee_id")
+    @JsonBackReference
     private Employee employee;
     @Column(name = "ordering_time")
     private Date orderingTime;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "order_item_id")
+    @JsonBackReference
     private OrderItem order;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "invoice_id")
+    @JsonBackReference
     private Invoice invoice;
 
     public Seat getSeat() {

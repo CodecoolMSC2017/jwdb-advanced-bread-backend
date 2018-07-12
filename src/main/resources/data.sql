@@ -30,8 +30,8 @@ INSERT INTO restaurant(owner_id, name, email, address_id, phone) VALUES
 	(2, 'Davolio Tavern', 'contact@davoliotavern.com', 7, '5553119'); --3
 
 INSERT INTO employee(username, email, first_name, last_name, title, restaurant_id) VALUES
-	('a.fuller', 'andrew.fuller@gmail.com', 'Andrew', 'Fuller', 'Chef', 1), --1
-	('leverling', 'janet.leverling@gmail.com', 'Janet', 'Leverling', 'Waiter', 1); --2
+	('a.fuller', 'andrew.fuller@gmail.com', 'Andrew', 'Fuller', 'CHEF', 1), --1
+	('leverling', 'janet.leverling@gmail.com', 'Janet', 'Leverling', 'WAITER', 1); --2
 
 INSERT INTO restaurant_table(name, active, restaurant_id) VALUES
 	('Table ONE', TRUE, 1), --1

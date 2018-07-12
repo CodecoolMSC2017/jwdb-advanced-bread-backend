@@ -1,5 +1,7 @@
 package com.codecool.bread.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import javax.persistence.Table;
 import java.util.HashSet;
@@ -21,6 +23,7 @@ public class Owner extends POSObject {
     private Address address;
     private String email;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "owner")
+    @JsonManagedReference
     private Set<Restaurant> restaurants = new HashSet<>();
 
     public User getUser() {
