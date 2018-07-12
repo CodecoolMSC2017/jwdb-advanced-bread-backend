@@ -5,9 +5,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "order_item")
-public class OrderItem  extends POSObject {
+public class OrderItem extends POSObject {
 
-    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "item_id")
     private Item item;
     private int quantity;
@@ -25,12 +25,12 @@ public class OrderItem  extends POSObject {
         return quantity;
     }
 
-    public String getComment() {
-        return comment;
-    }
-
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public String getComment() {
+        return comment;
     }
 
     public void setComment(String comment) {

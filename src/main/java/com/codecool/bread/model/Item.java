@@ -15,8 +15,8 @@ public class Item extends POSObject {
     private String comment;
     @Enumerated(EnumType.STRING)
     private Category category;
-    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JoinTable(name = "item_ingredient", joinColumns = { @JoinColumn(name = "item_id")},inverseJoinColumns = {@JoinColumn(name = "ingredient_id")})
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "item_ingredient", joinColumns = {@JoinColumn(name = "item_id")}, inverseJoinColumns = {@JoinColumn(name = "ingredient_id")})
     private Set<Ingredient> ingredients = new HashSet<>();
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id")
@@ -26,36 +26,36 @@ public class Item extends POSObject {
         return price;
     }
 
-    public String getComment() {
-        return comment;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public Set<Ingredient> getIngredients() {
-        return ingredients;
-    }
-
-    public Restaurant getRestaurant() {
-        return restaurant;
-    }
-
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public String getComment() {
+        return comment;
     }
 
     public void setComment(String comment) {
         this.comment = comment;
     }
 
+    public Category getCategory() {
+        return category;
+    }
+
     public void setCategory(Category category) {
         this.category = category;
     }
 
+    public Set<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
     public void setIngredients(Set<Ingredient> ingredients) {
         this.ingredients = ingredients;
+    }
+
+    public Restaurant getRestaurant() {
+        return restaurant;
     }
 
     public void setRestaurant(Restaurant restaurant) {

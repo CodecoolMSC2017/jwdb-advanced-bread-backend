@@ -4,7 +4,6 @@ import javax.persistence.*;
 import javax.persistence.Table;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
 
 @Entity
 @Table(name = "owner")
@@ -17,11 +16,11 @@ public class Owner extends POSObject {
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
-    @OneToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name="address_id")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id")
     private Address address;
     private String email;
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "owner")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "owner")
     private Set<Restaurant> restaurants = new HashSet<>();
 
     public User getUser() {

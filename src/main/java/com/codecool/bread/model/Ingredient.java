@@ -8,12 +8,12 @@ import java.util.Set;
 
 @Entity
 @Table(name = "ingredient")
-public class Ingredient  extends POSObject {
+public class Ingredient extends POSObject {
 
     private String name;
     private String allergen;
-    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JoinTable(name = "item_ingredient",joinColumns = {@JoinColumn(name = "ingredient_id")},inverseJoinColumns = {@JoinColumn(name = "item_id")})
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "item_ingredient", joinColumns = {@JoinColumn(name = "ingredient_id")}, inverseJoinColumns = {@JoinColumn(name = "item_id")})
     private Set<Item> items = new HashSet<>();
 
     public Set<Item> getItems() {
@@ -28,12 +28,12 @@ public class Ingredient  extends POSObject {
         return name;
     }
 
-    public String getAllergen() {
-        return allergen;
-    }
-
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getAllergen() {
+        return allergen;
     }
 
     public void setAllergen(String allergen) {

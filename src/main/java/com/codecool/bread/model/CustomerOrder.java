@@ -6,7 +6,7 @@ import java.sql.Date;
 
 @Entity
 @Table(name = "customer_order")
-public class CustomerOrder extends POSObject{
+public class CustomerOrder extends POSObject {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "seat_id")
     private Seat seat;

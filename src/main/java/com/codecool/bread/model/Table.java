@@ -18,7 +18,7 @@ public class Table extends POSObject {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "employee_id")
     private Employee employee;
-    @OneToMany(mappedBy = "table",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "table", fetch = FetchType.LAZY)
     private Set<Seat> seats = new HashSet<>();
 
     public String getName() {
