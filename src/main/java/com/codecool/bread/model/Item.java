@@ -1,6 +1,6 @@
 package com.codecool.bread.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.persistence.Table;
@@ -19,10 +19,11 @@ public class Item extends POSObject {
     private Category category;
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "item_ingredient", joinColumns = {@JoinColumn(name = "item_id")}, inverseJoinColumns = {@JoinColumn(name = "ingredient_id")})
+    @JsonIgnore
     private Set<Ingredient> ingredients = new HashSet<>();
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id")
-    @JsonBackReference
+    @JsonIgnore
     private Restaurant restaurant;
 
     public BigDecimal getPrice() {

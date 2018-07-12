@@ -1,5 +1,7 @@
 package com.codecool.bread.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.persistence.Table;
 import java.util.HashSet;
@@ -15,6 +17,7 @@ public class Menu extends POSObject {
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "menu_item", joinColumns = {@JoinColumn(name = "menu_id")},
             inverseJoinColumns = {@JoinColumn(name = "item_id")})
+    @JsonIgnore
     private Set<Item> items = new HashSet<>();
 
     public String getTitle() {

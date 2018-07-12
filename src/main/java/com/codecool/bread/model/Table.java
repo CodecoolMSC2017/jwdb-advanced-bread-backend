@@ -1,8 +1,7 @@
 package com.codecool.bread.model;
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -17,14 +16,14 @@ public class Table extends POSObject {
     private boolean isActive;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "restaurant_id")
-    @JsonBackReference
+    @JsonIgnore
     private Restaurant restaurant;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "employee_id")
-    @JsonBackReference
+    @JsonIgnore
     private Employee employee;
     @OneToMany(mappedBy = "table", fetch = FetchType.LAZY)
-    @JsonManagedReference
+    @JsonIgnore
     private Set<Seat> seats = new HashSet<>();
 
     public String getName() {

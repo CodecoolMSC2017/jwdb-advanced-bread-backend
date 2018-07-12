@@ -1,6 +1,6 @@
 package com.codecool.bread.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.persistence.Table;
@@ -22,7 +22,7 @@ public class Employee extends POSObject {
     private Role role;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "restaurant_id", nullable = false)
-    @JsonBackReference
+    @JsonIgnore
     private Restaurant restaurant;
 
 

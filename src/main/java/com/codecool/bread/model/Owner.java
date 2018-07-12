@@ -1,6 +1,6 @@
 package com.codecool.bread.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.persistence.Table;
@@ -23,7 +23,7 @@ public class Owner extends POSObject {
     private Address address;
     private String email;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "owner")
-    @JsonManagedReference
+    @JsonIgnore
     private Set<Restaurant> restaurants = new HashSet<>();
 
     public User getUser() {

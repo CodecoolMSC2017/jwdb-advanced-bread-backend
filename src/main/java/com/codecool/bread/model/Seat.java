@@ -1,7 +1,6 @@
 package com.codecool.bread.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.persistence.Table;
@@ -16,10 +15,10 @@ public class Seat extends POSObject {
     private boolean isActive;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "restaurant_table_id", nullable = false)
-    @JsonBackReference
+    @JsonIgnore
     private com.codecool.bread.model.Table table;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "seat")
-    @JsonManagedReference
+    @JsonIgnore
     private Set<CustomerOrder> orders = new HashSet<>();
 
     public boolean isActive() {
