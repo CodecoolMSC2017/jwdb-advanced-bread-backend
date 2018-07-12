@@ -7,7 +7,7 @@ import javax.persistence.Table;
 @Table(name = "employee")
 public class Employee extends POSObject {
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "username")
     private User user;
     private String email;

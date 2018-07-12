@@ -11,7 +11,7 @@ public class Seat extends POSObject{
 
     @Column(name = "active")
     private boolean isActive;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "restaurant_table_id",nullable = false)
     private com.codecool.bread.model.Table table;
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "seat")

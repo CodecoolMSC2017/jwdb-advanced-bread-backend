@@ -7,7 +7,7 @@ import javax.persistence.Table;
 @Table(name = "order_item")
 public class OrderItem  extends POSObject {
 
-    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "item_id")
     private Item item;
     private int quantity;

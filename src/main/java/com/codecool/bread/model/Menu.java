@@ -12,7 +12,7 @@ public class Menu extends POSObject {
     private String title;
     @Column(name = "active")
     private boolean isActive;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinTable(name = "menu_item",joinColumns = {@JoinColumn(name = "menu_id")},
             inverseJoinColumns = {@JoinColumn(name = "item_id")})
     private Set<Item> items = new HashSet<>();
