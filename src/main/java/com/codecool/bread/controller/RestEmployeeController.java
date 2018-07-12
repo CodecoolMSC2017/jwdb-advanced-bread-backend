@@ -17,9 +17,6 @@ public class RestEmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
-    @Autowired
-    private RestaurantService restaurantService;
-
     @GetMapping("/employee")
     public Iterable<Employee> getEmployeesByRestaurantId(@PathVariable("restaurantId") int restaurantId) throws SQLException {
         return employeeService.getAllEmployeesByRestaurantId(restaurantId);
@@ -34,8 +31,7 @@ public class RestEmployeeController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public Employee addNewEmployee(@RequestBody Employee employee, @PathVariable("restaurantId") int restaurantId, @PathVariable("ownerId") int ownerId) throws SQLException {
-        employee.setRestaurant(restaurantService.getRestaurantById(restaurantId, ownerId));
-        employeeService.addNewEmployeeToDb(employee);
+        employeeService.addNewEmployeeToDb(employee, ownerId, restaurantId);
         return employee;
     }
 

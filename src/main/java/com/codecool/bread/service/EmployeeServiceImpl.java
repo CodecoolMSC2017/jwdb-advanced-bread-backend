@@ -16,6 +16,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
+    @Autowired
+    private RestaurantService restaurantService;
+
     @Override
     public List<Employee> getAllEmployees() throws SQLException {
         return employeeRepository.findAll();
@@ -40,7 +43,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public void addNewEmployeeToDb(Employee employee) throws SQLException {
+    public void addNewEmployeeToDb(Employee employee, int ownerId, int restaurantId) throws SQLException {
+        employee.setRestaurant(restaurantService.getRestaurantById(restaurantId, ownerId));
         employeeRepository.save(employee);
     }
 

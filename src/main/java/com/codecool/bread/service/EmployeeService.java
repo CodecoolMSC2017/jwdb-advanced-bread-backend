@@ -15,7 +15,7 @@ public interface EmployeeService {
 
     Employee getEmployeeById(int restaurantId,int employeeId) throws RestaurantAccessDeniedException, EmployeeNotFoundException, SQLException;
 
-    void addNewEmployeeToDb(Employee employee) throws SQLException;
+    void addNewEmployeeToDb(Employee employee, int ownerId, int restaurantId) throws SQLException;
 
     void deleteEmployeeFromDb(int restaurantId, int employeeId) throws RestaurantAccessDeniedException, EmployeeNotFoundException, SQLException;
 }
