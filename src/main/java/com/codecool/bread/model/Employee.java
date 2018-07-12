@@ -1,6 +1,7 @@
 package com.codecool.bread.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import javax.persistence.Table;
@@ -58,10 +59,12 @@ public class Employee extends POSObject {
         this.role = role;
     }
 
+    @JsonIgnore
     public Restaurant getRestaurant() {
         return restaurant;
     }
 
+    @JsonProperty("restaurant")
     public void setRestaurant(Restaurant restaurant) {
         this.restaurant = restaurant;
     }
