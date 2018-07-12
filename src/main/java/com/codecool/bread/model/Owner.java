@@ -2,7 +2,8 @@ package com.codecool.bread.model;
 
 import javax.persistence.*;
 import javax.persistence.Table;
-import java.util.UUID;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "owner")
@@ -15,10 +16,12 @@ public class Owner extends POSObject {
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
-    @OneToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name="address_id")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id")
     private Address address;
     private String email;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "owner")
+    private Set<Restaurant> restaurants = new HashSet<>();
 
     public User getUser() {
         return user;
@@ -26,6 +29,14 @@ public class Owner extends POSObject {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Set<Restaurant> getRestaurants() {
+        return restaurants;
+    }
+
+    public void setRestaurants(Set<Restaurant> restaurants) {
+        this.restaurants = restaurants;
     }
 
     public String getFirstName() {

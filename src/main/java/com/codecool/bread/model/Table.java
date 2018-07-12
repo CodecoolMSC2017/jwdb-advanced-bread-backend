@@ -12,13 +12,13 @@ public class Table extends POSObject {
     private String name;
     @Column(name = "active")
     private boolean isActive;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "employee_id")
     private Employee employee;
-    @OneToMany(mappedBy = "table")
+    @OneToMany(mappedBy = "table", fetch = FetchType.LAZY)
     private Set<Seat> seats = new HashSet<>();
 
     public String getName() {

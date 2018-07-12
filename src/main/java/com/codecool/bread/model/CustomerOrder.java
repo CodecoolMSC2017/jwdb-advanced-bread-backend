@@ -6,19 +6,19 @@ import java.sql.Date;
 
 @Entity
 @Table(name = "customer_order")
-public class CustomerOrder extends POSObject{
-    @ManyToOne(fetch = FetchType.LAZY)
+public class CustomerOrder extends POSObject {
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "seat_id")
     private Seat seat;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "employee_id")
     private Employee employee;
     @Column(name = "ordering_time")
     private Date orderingTime;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "order_item_id")
     private OrderItem order;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "invoice_id")
     private Invoice invoice;
 

@@ -12,28 +12,29 @@ public class Menu extends POSObject {
     private String title;
     @Column(name = "active")
     private boolean isActive;
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "menu_item",joinColumns = {@JoinColumn(name = "menu_id")},
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "menu_item", joinColumns = {@JoinColumn(name = "menu_id")},
             inverseJoinColumns = {@JoinColumn(name = "item_id")})
     private Set<Item> items = new HashSet<>();
+
     public String getTitle() {
         return title;
-    }
-
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public Set<Item> getItems() {
-        return items;
     }
 
     public void setTitle(String title) {
         this.title = title;
     }
 
+    public boolean isActive() {
+        return isActive;
+    }
+
     public void setActive(boolean active) {
         isActive = active;
+    }
+
+    public Set<Item> getItems() {
+        return items;
     }
 
     public void setItems(Set<Item> items) {

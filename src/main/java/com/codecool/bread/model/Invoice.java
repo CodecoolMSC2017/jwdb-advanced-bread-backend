@@ -8,7 +8,7 @@ import java.sql.Date;
 
 @Entity
 @Table(name = "invoice")
-public class Invoice  extends POSObject {
+public class Invoice extends POSObject {
 
     @Column(columnDefinition = "DECIMAL(9,2)")
     private BigDecimal total;
@@ -18,12 +18,12 @@ public class Invoice  extends POSObject {
         return total;
     }
 
-    public Date getDate() {
-        return date;
-    }
-
     public void setTotal(BigDecimal total) {
         this.total = total;
+    }
+
+    public Date getDate() {
+        return date;
     }
 
     public void setDate(Date date) {
