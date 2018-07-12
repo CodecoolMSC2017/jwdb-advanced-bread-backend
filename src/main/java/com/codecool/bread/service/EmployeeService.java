@@ -9,13 +9,15 @@ import java.util.List;
 
 public interface EmployeeService {
 
-    List<Employee> getAllEmployees() throws SQLException;
 
-    List<Employee> getAllEmployeesByRestaurantId(int restaurantId) throws SQLException;
+    List<Employee> getAllByRestaurantIdFromDb(int restaurantId) throws SQLException;
 
-    Employee getEmployeeById(int restaurantId,int employeeId) throws RestaurantAccessDeniedException, EmployeeNotFoundException, SQLException;
+    Employee getByIdFromDb(int restaurantId, int employeeId) throws RestaurantAccessDeniedException, EmployeeNotFoundException, SQLException;
 
-    void addNewEmployeeToDb(Employee employee, int ownerId, int restaurantId) throws SQLException;
+    void addNewToDb(Employee employee, int ownerId, int restaurantId) throws SQLException;
 
-    void deleteEmployeeFromDb(int restaurantId, int employeeId) throws RestaurantAccessDeniedException, EmployeeNotFoundException, SQLException;
+    void deleteFromDb(int restaurantId, int employeeId) throws RestaurantAccessDeniedException, EmployeeNotFoundException, SQLException;
+
+    Employee saveChanges(Employee employee, int restaurantId, int ownerId) throws SQLException;
+
 }
