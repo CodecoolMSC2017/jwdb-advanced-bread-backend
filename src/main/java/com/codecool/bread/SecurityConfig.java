@@ -1,5 +1,5 @@
 package com.codecool.bread;
-
+/*
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -41,7 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().accessDeniedPage("/403");
         http.csrf().disable();
 
-    }
+    }*/
         /*
         http.authorizeRequests()
                 .antMatchers("/error", "/", "/index").permitAll()
@@ -63,7 +63,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 */
 
-    @Bean
+   /* @Bean
     public PasswordEncoder passwordEncoder() {
         return new PasswordEncoder() {
             @Override
@@ -77,4 +77,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             }
         };
     }
-}
+}*/
