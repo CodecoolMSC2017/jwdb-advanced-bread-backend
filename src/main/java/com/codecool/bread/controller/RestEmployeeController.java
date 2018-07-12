@@ -5,6 +5,7 @@ import com.codecool.bread.model.Employee;
 import com.codecool.bread.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
@@ -18,24 +19,29 @@ public class RestEmployeeController {
 
     @GetMapping("")
     public Iterable<Employee> getEmployeesByRestaurantId(@PathVariable("restaurantId") int restaurantId) throws SQLException {
-        return employeeService.getAllEmployeesByRestaurantId(restaurantId);
+        return employeeService.getAllByRestaurantIdFromDb(restaurantId);
     }
 
     @GetMapping("/{employeeId}")
     public Employee getEmployeeById(@PathVariable("restaurantId") int restaurantId, @PathVariable("employeeId") int employeeId) throws EmployeeNotFoundException, SQLException {
-        return employeeService.getEmployeeById(restaurantId, employeeId);
+        return employeeService.getByIdFromDb(restaurantId, employeeId);
     }
 
     @PostMapping(path = "",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public Employee addNewEmployee(@RequestBody Employee employee) throws SQLException {
-        employeeService.addNewEmployeeToDb(employee);
+    public Employee addNewEmployee(@RequestBody Employee employee, @PathVariable("restaurantId") int restaurantId, @PathVariable("ownerId") int ownerId) throws SQLException {
+        employeeService.addNewToDb(employee, ownerId, restaurantId);
         return employee;
     }
 
     @DeleteMapping("/{employeeId}")
     public void deleteEmployeeById(@PathVariable("restaurantId") int restaurantId, @PathVariable("employeeId") int employeeId) throws SQLException {
-        employeeService.deleteEmployeeFromDb(restaurantId, employeeId);
+        employeeService.deleteFromDb(restaurantId, employeeId);
+    }
+
+    @PutMapping("/{employeeId}")
+    public Employee changeDetails(@RequestBody Employee employee, @PathVariable("restaurantId") int restaurantId, @PathVariable("ownerId") int ownerId) throws SQLException {
+        return employeeService.saveChanges(employee, restaurantId, ownerId);
     }
 }
