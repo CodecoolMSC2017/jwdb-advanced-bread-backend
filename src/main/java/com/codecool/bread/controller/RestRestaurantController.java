@@ -2,6 +2,7 @@ package com.codecool.bread.controller;
 
 import com.codecool.bread.exception.RestaurantNotFoundException;
 import com.codecool.bread.model.Restaurant;
+import com.codecool.bread.model.Table;
 import com.codecool.bread.service.OwnerService;
 import com.codecool.bread.service.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,5 +30,11 @@ public class RestRestaurantController {
     public Restaurant getRestaurantById(@PathVariable("ownerId") int ownerId,@PathVariable("restaurantId") int restaurantId) throws RestaurantNotFoundException {
         return restaurantService.getRestaurantById(restaurantId, ownerId);
     }
+
+    @GetMapping("/table")
+    public Table getAllTablesByRestaurantId(@PathVariable("ownerId") int ownerId, @PathVariable("restaurantId") int restaurantId) {
+        return null;
+    }
+
 }
 

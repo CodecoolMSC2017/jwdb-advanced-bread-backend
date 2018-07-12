@@ -12,7 +12,22 @@ DROP TABLE IF EXISTS employee;
 DROP TABLE IF EXISTS restaurant;
 DROP TABLE IF EXISTS owner;
 DROP TABLE IF EXISTS address;
+DROP TABLE IF EXISTS authorities;
+DROP TABLE IF EXISTS users;
 
+CREATE TABLE users (
+	username TEXT NOT NULL PRIMARY KEY,
+	password TEXT NOT NULL,
+	enabled BOOLEAN NOT NULL
+);
+
+CREATE TABLE authorities (
+	username TEXT NOT NULL,
+	authority TEXT NOT NULL,
+	CONSTRAINT fk_authorities_users FOREIGN KEY(username) REFERENCES users(username)
+);
+
+CREATE UNIQUE INDEX ix_auth_username ON authorities (username,authority);
 
 CREATE TABLE address (
 	id SERIAL PRIMARY KEY,
@@ -25,16 +40,16 @@ CREATE TABLE address (
 
 CREATE TABLE owner (
 	id SERIAL PRIMARY KEY,
-	uuid UUID,
+	username TEXT NOT NULL,
 	first_name TEXT NOT NULL,
 	last_name TEXT NOT NULL,
 	address_id INTEGER,
 	email TEXT NOT NULL,
 	phone INTEGER,
-	password TEXT NOT NULL,
 	CONSTRAINT email_not_empty CHECK (email <> ''),
 	CONSTRAINT first_name_not_empty CHECK (first_name <> ''),
 	CONSTRAINT last_name_not_empty CHECK (last_name <> ''),
+	FOREIGN KEY (username) REFERENCES users(username),
 	FOREIGN KEY (address_id) REFERENCES address(id)
 );
 
@@ -52,16 +67,17 @@ CREATE TABLE restaurant (
 
 CREATE TABLE employee (
 	id SERIAL PRIMARY KEY,
+	username TEXT NOT NULL,
 	email TEXT NOT NULL,
-	password TEXT NOT NULL,
 	first_name TEXT NOT NULL,
 	last_name TEXT NOT NULL,
-	role TEXT NOT NULL,
+	title TEXT NOT NULL,
 	restaurant_id INTEGER NOT NULL,
 	hour_rate INTEGER DEFAULT NULL,
 	CONSTRAINT email_not_empty CHECK (email <> ''),
 	CONSTRAINT first_name_not_empty CHECK (first_name <> ''),
 	CONSTRAINT last_name_not_empty CHECK (last_name <> ''),
+	FOREIGN KEY (username) REFERENCES users(username),
 	FOREIGN KEY (restaurant_id) REFERENCES restaurant(id)
 );
 

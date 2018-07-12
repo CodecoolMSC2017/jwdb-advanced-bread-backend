@@ -17,12 +17,12 @@ public class RestOwnerController {
     private OwnerService ownerService;
 
 
-    @GetMapping("/all")
+    @GetMapping("")
     public Iterable<Owner> getAllOwners() {
         return ownerService.getAllOwners();
     }
 
-    @GetMapping("{ownerId}")
+    @GetMapping("/{ownerId}")
     public Owner getOwnerById(@PathVariable("ownerId") int ownerId) throws OwnerNotFoundException {
         return ownerService.getOwnerById(ownerId);
     }
