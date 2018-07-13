@@ -1,5 +1,7 @@
 package com.codecool.bread.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -12,8 +14,10 @@ public class User {
     @Column(name = "username", nullable = false, unique = true)
     private String username;
 
+    @JsonIgnore
     private String password;
 
+    @JsonIgnore
     private boolean enabled;
 
     public String getUsername() {
