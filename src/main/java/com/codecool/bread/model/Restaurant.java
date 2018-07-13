@@ -13,21 +13,28 @@ import java.util.Set;
 public class Restaurant extends POSObject {
 
     private String name;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
     private Address address;
+
     private String email;
+
     private int phone;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "owner_id", nullable = false)
     @JsonIgnore
     private Owner owner;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
     @JsonIgnore
     private Set<com.codecool.bread.model.Table> tables = new HashSet<>();
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
     @JsonIgnore
     private Set<Employee> employees = new HashSet<>();
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
     @JsonIgnore
     private Set<Item> items = new HashSet<>();
