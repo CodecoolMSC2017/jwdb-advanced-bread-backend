@@ -14,8 +14,8 @@ public class Ingredient extends POSObject {
 
     private String name;
     private String allergen;
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinTable(name = "item_ingredient", joinColumns = {@JoinColumn(name = "ingredient_id")}, inverseJoinColumns = {@JoinColumn(name = "item_id")})
+    @ManyToMany(mappedBy = "ingredients"/*,cascade = CascadeType.ALL, fetch = FetchType.LAZY*/)
+    //@JoinTable(name = "item_ingredient", joinColumns = {@JoinColumn(name = "ingredient_id")}, inverseJoinColumns = {@JoinColumn(name = "item_id")})
     @JsonIgnore
     private Set<Item> items = new HashSet<>();
 
