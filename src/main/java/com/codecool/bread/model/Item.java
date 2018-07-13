@@ -1,6 +1,7 @@
 package com.codecool.bread.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import javax.persistence.Table;
@@ -8,10 +9,14 @@ import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
+import static org.hibernate.annotations.QueryHints.READ_ONLY;
+
 @Entity
 @Table(name = "item")
 public class Item extends POSObject {
 
+
+    private String name;
     @Column(columnDefinition = "DECIMAL(9,2)")
     private BigDecimal price;
     private String comment;
@@ -19,7 +24,7 @@ public class Item extends POSObject {
     private Category category;
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "item_ingredient", joinColumns = {@JoinColumn(name = "item_id")}, inverseJoinColumns = {@JoinColumn(name = "ingredient_id")})
-    @JsonIgnore
+    //@JsonIgnore
     private Set<Ingredient> ingredients = new HashSet<>();
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id")
@@ -64,5 +69,13 @@ public class Item extends POSObject {
 
     public void setRestaurant(Restaurant restaurant) {
         this.restaurant = restaurant;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
