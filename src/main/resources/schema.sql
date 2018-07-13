@@ -84,7 +84,7 @@ CREATE TABLE employee (
 CREATE TABLE ingredient (
 	id SERIAL PRIMARY KEY,
 	name TEXT NOT NULL,
-	allergen TEXT
+	allergen TEXT DEFAULT NULL
 );
 
 CREATE TABLE item (
@@ -98,10 +98,8 @@ CREATE TABLE item (
 );
 
 CREATE TABLE item_ingredient (
-	item_id INTEGER,
-	ingredient_id INTEGER,
-	FOREIGN KEY (item_id) REFERENCES item(id),
-	FOREIGN KEY (ingredient_id) REFERENCES ingredient(id)
+	item_id INTEGER REFERENCES item ON DELETE CASCADE,
+	ingredient_id INTEGER REFERENCES ingredient ON DELETE CASCADE
 );
 
 CREATE TABLE menu (

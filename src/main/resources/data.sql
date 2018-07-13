@@ -40,3 +40,155 @@ INSERT INTO restaurant_table(name, active, restaurant_id) VALUES
 	('Bar', TRUE, 1), --4
 	('Table CORNER', TRUE, 1), --5
 	('Table VIP', TRUE, 1); --6
+
+INSERT INTO ingredient(name) VALUES
+    ('paradicsomszósz'), --1
+    ('sajt'), --2
+    ('oregano'), --3
+    ('sonka'), --4
+    ('gomba'), --5
+    ('szalámi'), --6
+    ('füstölt csülök'), --7
+    ('juhtúró'), --8
+    ('bacon'), --9
+    ('tenger gyümölcsei'), --10
+    ('citrom'), --11
+    ('tonhal'), --12
+    ('kukorica'), --13
+    ('kolbász'), --14
+    ('zöldborsó'), --15
+    ('csirkemell'), --16
+    ('pármai sonka'), --17
+    ('hagyma'), --18
+    ('bab'), --19
+    ('füstölt sajt'), --20
+    ('tarja'); --21
+
+INSERT INTO item(name ,price ,category ,restaurant_id) VALUES
+    ('Pizza Margareta', 1150,'PIZZA',1),
+    ('Pizza Prosciutto',1350,'PIZZA',1),
+    ('Pizza Funghi', 1150,'PIZZA',1),
+    ('Pizza Salami', 1350,'PIZZA',1),
+    ('Pizza Hawaii', 1350,'PIZZA',1),
+    ('Tárkonyos vadmalac leves', 1290,'SOUP',1),
+    ('Jókai bableves', 1100,'SOUP',1),
+    ('Harcsapaprikás kapros túrós sztrapacskával', 2590,'FISH_MAIN',1),
+    ('Rántott halfilé, rizs, tartármártás', 1900,'FISH_MAIN',1),
+    ('Rántott csirkemell hasábburgonyával', 1750,'CHICKEN_DISH',1),
+    ('Juhtúróval-baconnel töltött csirkemell parázs burgonya', 2200,'CHICKEN_DISH',1),
+    ('Zöldséges marharagu óriás zsemlegombóccal', 1900,'BEEF_DISH',1),
+    ('Zöldséges marharagu óriás zsemlegombóccal', 1900,'BEEF_DISH',1),
+    ('Rántott szelet, hasábburgonyával', 1690,'PORK_DISH',1),
+    ('Pizza kenyérben sült kemencés csülök lyoni hagymával', 2390,'PORK_DISH',1),
+    ('Rántott gomba, rizs, tartármártás', 1690,'VEGETARIAN',1),
+    ('Rántott sajt, hasábburgonya, tartár mártás', 1690,'VEGETARIAN',1),
+    ('Coors Light Lager', 390, 'ALCOHOLIC',1),
+    ('Chivas Regal', 790, 'ALCOHOLIC',1),
+    ('Coca Cola', 390, 'BEVERAGE',1),
+    ('Fanta', 390, 'BEVERAGE',1),
+    ('Espresso', 290, 'COFFEE',1),
+    ('Latte Machiato', 290, 'COFFEE',1),
+    ('Earl Grey', 290, 'TEA',1),
+    ('Rooibos', 290, 'TEA',1);
+
+INSERT INTO item_ingredient (item_id, ingredient_id) VALUES
+     (15, 21),
+     (8, 4),
+     (18, 19),
+     (21, 13),
+     (17, 11),
+     (15, 19),
+     (20, 20),
+     (12, 10),
+     (14, 19),
+     (13, 4),
+     (10, 19),
+     (4, 18),
+     (16, 17),
+     (17, 19),
+     (12, 4),
+     (5, 11),
+     (7, 21),
+     (15, 10),
+     (15, 16),
+     (23, 12),
+     (20, 15),
+     (22, 9),
+     (19, 19),
+     (3, 16),
+     (17, 19),
+     (10, 17),
+     (4, 4),
+     (17, 18),
+     (8, 3),
+     (12, 15),
+     (8, 14),
+     (15, 5),
+     (13, 12),
+     (22, 3),
+     (1, 15),
+     (25, 14),
+     (4, 20),
+     (17, 18),
+     (22, 8),
+     (12, 6),
+     (21, 5),
+     (2, 19),
+     (1, 11),
+     (10, 4),
+     (7, 8),
+     (15, 9),
+     (25, 13),
+     (2, 10),
+     (12, 7),
+     (4, 17),
+     (21, 21),
+     (14, 1),
+     (3, 14),
+     (16, 7),
+     (24, 10),
+     (22, 16),
+     (5, 3),
+     (7, 14),
+     (12, 12),
+     (12, 6),
+     (18, 13),
+     (15, 17),
+     (10, 8),
+     (25, 13),
+     (22, 21),
+     (7, 4),
+     (12, 16),
+     (22, 17),
+     (11, 13),
+     (23, 12),
+     (6, 4),
+     (4, 3),
+     (5, 21),
+     (24, 20),
+     (24, 10),
+     (8, 3),
+     (21, 8),
+     (19, 6),
+     (21, 5),
+     (3, 9),
+     (3, 13),
+     (23, 8),
+     (18, 7),
+     (22, 7),
+     (12, 2),
+     (5, 12),
+     (17, 4),
+     (1, 13),
+     (22, 8),
+     (4, 1),
+     (21, 7),
+     (12, 17),
+     (11, 18),
+     (8, 13),
+     (11, 21),
+     (15, 20),
+     (23, 3),
+     (13, 17),
+     (5, 12),
+     (3, 20);
