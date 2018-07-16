@@ -1,4 +1,4 @@
-package com.codecool.bread.service;
+package com.codecool.bread.service.simple;
 
 import com.codecool.bread.exception.IngredientNotFoundException;
 import com.codecool.bread.model.Ingredient;

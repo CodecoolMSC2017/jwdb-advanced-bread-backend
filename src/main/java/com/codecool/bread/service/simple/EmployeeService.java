@@ -1,4 +1,4 @@
-package com.codecool.bread.service;
+package com.codecool.bread.service.simple;
 
 import com.codecool.bread.exception.EmployeeNotFoundException;
 import com.codecool.bread.exception.RestaurantAccessDeniedException;
@@ -9,10 +9,9 @@ import java.util.List;
 
 public interface EmployeeService {
 
+    List<Employee> getAllByRestaurantIdFromDb(int ownerId, int restaurantId) throws SQLException;
 
-    List<Employee> getAllByRestaurantIdFromDb(int restaurantId) throws SQLException;
-
-    Employee getByIdFromDb(int restaurantId, int employeeId) throws RestaurantAccessDeniedException, EmployeeNotFoundException, SQLException;
+    Employee getByIdFromDb(int ownerId, int restaurantId, int employeeId) throws RestaurantAccessDeniedException, EmployeeNotFoundException, SQLException;
 
     void addNewToDb(Employee employee, int ownerId, int restaurantId) throws SQLException;
 

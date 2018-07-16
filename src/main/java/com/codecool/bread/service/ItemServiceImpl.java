@@ -7,6 +7,9 @@ import com.codecool.bread.exception.RestaurantAccessDeniedException;
 import com.codecool.bread.model.Item;
 import com.codecool.bread.model.Restaurant;
 import com.codecool.bread.repository.ItemRepository;
+import com.codecool.bread.service.simple.IngredientService;
+import com.codecool.bread.service.simple.ItemService;
+import com.codecool.bread.service.simple.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

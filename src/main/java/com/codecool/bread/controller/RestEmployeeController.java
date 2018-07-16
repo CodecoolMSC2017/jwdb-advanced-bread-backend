@@ -2,10 +2,9 @@ package com.codecool.bread.controller;
 
 import com.codecool.bread.exception.EmployeeNotFoundException;
 import com.codecool.bread.model.Employee;
-import com.codecool.bread.service.EmployeeService;
+import com.codecool.bread.service.simple.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
@@ -18,13 +17,13 @@ public class RestEmployeeController {
     private EmployeeService employeeService;
 
     @GetMapping("")
-    public Iterable<Employee> getEmployeesByRestaurantId(@PathVariable("restaurantId") int restaurantId) throws SQLException {
-        return employeeService.getAllByRestaurantIdFromDb(restaurantId);
+    public Iterable<Employee> getEmployeesByRestaurantId(@PathVariable("ownerId") int ownerId, @PathVariable("restaurantId") int restaurantId) throws SQLException {
+        return employeeService.getAllByRestaurantIdFromDb(ownerId, restaurantId);
     }
 
     @GetMapping("/{employeeId}")
-    public Employee getEmployeeById(@PathVariable("restaurantId") int restaurantId, @PathVariable("employeeId") int employeeId) throws EmployeeNotFoundException, SQLException {
-        return employeeService.getByIdFromDb(restaurantId, employeeId);
+    public Employee getEmployeeById(@PathVariable("ownerId") int ownerId, @PathVariable("restaurantId") int restaurantId, @PathVariable("employeeId") int employeeId) throws EmployeeNotFoundException, SQLException {
+        return employeeService.getByIdFromDb(ownerId, restaurantId, employeeId);
     }
 
     @PostMapping(path = "",

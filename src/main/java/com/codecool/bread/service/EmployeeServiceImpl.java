@@ -4,6 +4,8 @@ import com.codecool.bread.exception.EmployeeNotFoundException;
 import com.codecool.bread.exception.RestaurantAccessDeniedException;
 import com.codecool.bread.model.Employee;
 import com.codecool.bread.repository.EmployeeRepository;
+import com.codecool.bread.service.simple.EmployeeService;
+import com.codecool.bread.service.simple.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,12 +23,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 
     @Override
-    public List<Employee> getAllByRestaurantIdFromDb(int restaurantId) throws SQLException {
+    public List<Employee> getAllByRestaurantIdFromDb(int ownerId, int restaurantId) throws SQLException {
+        restaurantService.getRestaurantById(restaurantId, ownerId);
         return employeeRepository.findByRestaurantId(restaurantId);
     }
 
     @Override
-    public Employee getByIdFromDb(int restaurantId, int employeeId) throws RestaurantAccessDeniedException, EmployeeNotFoundException, SQLException {
+    public Employee getByIdFromDb(int ownerId, int restaurantId, int employeeId) throws RestaurantAccessDeniedException, EmployeeNotFoundException, SQLException {
         if (employeeRepository.findById(employeeId).isPresent()) {
             if (employeeRepository.findByRestaurantId(restaurantId).contains(employeeRepository.findById(employeeId).get())) {
                 return employeeRepository.findById(employeeId).get();

@@ -1,9 +1,8 @@
 package com.codecool.bread.controller;
 
-import com.codecool.bread.model.Employee;
 import com.codecool.bread.model.Item;
-import com.codecool.bread.service.ItemService;
-import com.codecool.bread.service.RestaurantService;
+import com.codecool.bread.service.simple.ItemService;
+import com.codecool.bread.service.simple.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
