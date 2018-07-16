@@ -13,7 +13,9 @@ Restaurant Point-Of-Sale system backend
 * DELETE /owner/{id}/restaurant/{id} - Deletes a restaurant with the given ID. If no restaurant exists, an HTTP 404 status is returned. If the restaurant exists, it is deleted, and an HTTP 204 (No Content) status is returned.
 
 Endpoint:
+
     RestEmployeeController
+
         Iterable<Employee> getEmployeesByRestaurantId
             GET owner/{ownerId}/restaurant/{restaurantId}/employee
         Employee getEmployeeById
@@ -24,6 +26,7 @@ Endpoint:
             PUT owner/{ownerId}/restaurant/{restaurantId}/employee/{employeeId}
 
     RestOwnerController
+
         Iterable<Restaurant> getRestaurantsByOwnerId
             GET /owner
         Owner getOwnerById
@@ -32,3 +35,9 @@ Endpoint:
             GET /owner/{ownerId/restaurant/{restaurantId}
         Iterable<Table> getAllTablesByRestaurantId
             GET /{ownerId}/restaurant/{restaurantId}/table
+        Table getTableById
+            GET owner//{ownerId/restaurant/{restaurantId}/table/{tableId}
+        Iterable<Seat>
+            GET seat/{ownerId/restaurant/{restaurantId}/table/{tableId}/seat
+        Seat getSeatById
+            GET seat/{ownerId/restaurant/{restaurantId}/table/{tableId}/seat/{seatId}
