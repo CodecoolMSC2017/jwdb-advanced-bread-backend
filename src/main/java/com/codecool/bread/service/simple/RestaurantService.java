@@ -1,8 +1,5 @@
 package com.codecool.bread.service.simple;
 
-import com.codecool.bread.exception.RestaurantAccessDeniedException;
-import com.codecool.bread.exception.RestaurantNotFoundException;
-import com.codecool.bread.model.Restaurant;
 import com.codecool.bread.model.Seat;
 import com.codecool.bread.model.Table;
 
@@ -19,4 +16,7 @@ public interface RestaurantService {
 
     Seat getSeatByIdFromDb(int restaurantId, int tableId, int seatId);
 
+    Table addOrModifyTableToDb(Table table, int ownerId, int restaurantId);
+
+    Seat addOrModifySeatToDb(Seat seat, int restaurantId, int tableId);
 }
