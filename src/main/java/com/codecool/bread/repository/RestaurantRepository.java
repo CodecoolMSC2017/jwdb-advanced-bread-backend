@@ -10,5 +10,6 @@ import java.util.List;
 
 @Repository("restaurantRepository")
 public interface RestaurantRepository extends JpaRepository<Restaurant, Integer> {
-    List<Restaurant> findByOwnerId(int id);
+    List<Restaurant> findByOwnerId(Integer id);
+    Restaurant findByIdAndOwnerId(Integer ownerId, Integer restaurantId);
 }

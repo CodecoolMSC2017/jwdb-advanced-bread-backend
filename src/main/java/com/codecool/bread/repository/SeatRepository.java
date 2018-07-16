@@ -8,6 +8,6 @@ import java.util.List;
 
 @Repository
 public interface SeatRepository extends JpaRepository<Seat, Integer> {
-    List<Seat> findByTableId(int id);
-    Seat findByidAndTableId(Integer seatId, Integer tableId);
+    List<Seat> findByTableId(Integer id);
+    Seat findByIdAndTableId(Integer seatId, Integer tableId);
 }

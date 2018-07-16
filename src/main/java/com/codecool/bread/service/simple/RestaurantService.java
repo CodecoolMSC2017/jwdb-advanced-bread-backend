@@ -6,11 +6,10 @@ import com.codecool.bread.model.Restaurant;
 import com.codecool.bread.model.Seat;
 import com.codecool.bread.model.Table;
 
+import java.util.List;
 import java.util.Set;
 
 public interface RestaurantService {
-
-    Restaurant getRestaurantById(int restaurantId, int ownerId) throws RestaurantAccessDeniedException, RestaurantNotFoundException;
 
     Set<Table> getAllTableByRestaurantIdFromDb(int restaurantId, int ownerId);
 

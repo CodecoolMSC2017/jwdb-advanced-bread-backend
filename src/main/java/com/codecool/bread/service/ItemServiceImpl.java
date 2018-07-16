@@ -9,6 +9,7 @@ import com.codecool.bread.model.Restaurant;
 import com.codecool.bread.repository.ItemRepository;
 import com.codecool.bread.service.simple.IngredientService;
 import com.codecool.bread.service.simple.ItemService;
+import com.codecool.bread.service.simple.OwnerService;
 import com.codecool.bread.service.simple.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,10 +23,10 @@ public class ItemServiceImpl implements ItemService {
     ItemRepository itemRepository;
 
     @Autowired
-    RestaurantService restaurantService;
+    IngredientService ingredientService;
 
     @Autowired
-    IngredientService ingredientService;
+    OwnerService ownerService;
 
 
     public List<Item> getItemsByRestaurantId(Integer restaurantId) throws NoItemsFoundException {
@@ -52,7 +53,7 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public Item addNewItem(Item item, int restaurantId, int ownerId) {
 
-        Restaurant restaurant = restaurantService.getRestaurantById(restaurantId,ownerId);
+        Restaurant restaurant = ownerService.getRestaurantById(restaurantId,ownerId);
         item.setRestaurant(restaurant);
         //ingredientService.addNewIngredients(item.getIngredients());
         return itemRepository.save(item);
@@ -73,7 +74,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public Item saveItemChanges(Item item, int restaurantId, int ownerId) {
-        Restaurant restaurant = restaurantService.getRestaurantById(restaurantId, ownerId);
+        Restaurant restaurant = ownerService.getRestaurantById(restaurantId, ownerId);
         item.setRestaurant(restaurant);
         return itemRepository.save(item);
     }

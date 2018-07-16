@@ -29,11 +29,11 @@ public class RestOwnerController {
 
     @GetMapping("/restaurant")
     public Iterable<Restaurant> getRestaurantsByOwnerId(@PathVariable("ownerId") int ownerId) {
-        return null;
+        return ownerService.getRestaurantsByOwnerIdFromDb(ownerId);
     }
 
     @GetMapping("/restaurant/{restaurantId}")
     public Restaurant getRestaurantById(@PathVariable("ownerId") int ownerId, @PathVariable("restaurantId") int restaurantId) throws RestaurantNotFoundException {
-        return restaurantService.getRestaurantById(restaurantId, ownerId);
+        return ownerService.getRestaurantById(restaurantId, ownerId);
     }
 }
