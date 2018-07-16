@@ -4,12 +4,14 @@ import com.codecool.bread.exception.RestaurantAccessDeniedException;
 import com.codecool.bread.exception.RestaurantNotFoundException;
 import com.codecool.bread.model.Restaurant;
 import com.codecool.bread.model.Table;
+import com.codecool.bread.repository.OwnerRepository;
 import com.codecool.bread.repository.RestaurantRepository;
 import com.codecool.bread.repository.TableRepository;
 import com.codecool.bread.service.simple.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -22,9 +24,15 @@ public class RestaurantServiceImpl implements RestaurantService {
     @Autowired
     private TableRepository tableRepository;
 
+    @Autowired
+    private OwnerRepository ownerRepository;
 
     public List<Restaurant> getRestaurantsByOwnerId(int id){
-        return restaurantRepository.findByOwnerId(id);
+        if (ownerRepository.findById(id).isPresent()) {
+            return new ArrayList<>(ownerRepository.findById(id).get().getRestaurants());
+        } else {
+            throw new RestaurantNotFoundException();
+        }
     }
 
     @Override

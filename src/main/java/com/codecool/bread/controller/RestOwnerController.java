@@ -29,7 +29,7 @@ public class RestOwnerController {
 
     @GetMapping("/restaurant")
     public Iterable<Restaurant> getRestaurantsByOwnerId(@PathVariable("ownerId") int ownerId) {
-        return null;
+        return restaurantService.getRestaurantsByOwnerId(ownerId);
     }
 
     @GetMapping("/restaurant/{restaurantId}")

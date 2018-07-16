@@ -5,11 +5,14 @@ import com.codecool.bread.exception.RestaurantNotFoundException;
 import com.codecool.bread.model.Restaurant;
 import com.codecool.bread.model.Table;
 
+import java.util.List;
 import java.util.Set;
 
 public interface RestaurantService {
 
     Restaurant getRestaurantById(int restaurantId, int ownerId) throws RestaurantAccessDeniedException, RestaurantNotFoundException;
+
+    List<Restaurant> getRestaurantsByOwnerId(int id);
 
     Set<Table> getAllTableByRestaurantIdFromDb(int restaurantId, int ownerId);
 
