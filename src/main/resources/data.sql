@@ -2,13 +2,15 @@ INSERT INTO users(username, password, enabled) VALUES
     ('robking', '$2a$04$mrVOIvQZKlIPW0BYXwtaWuV1sZDsoSLSixtxYUhRZh3jpjfKDf736', true),
     ('davolio', '$2a$04$mrVOIvQZKlIPW0BYXwtaWuV1sZDsoSLSixtxYUhRZh3jpjfKDf736', true),
     ('a.fuller', '$2a$04$mrVOIvQZKlIPW0BYXwtaWuV1sZDsoSLSixtxYUhRZh3jpjfKDf736', true),
-    ('leverling', '$2a$04$mrVOIvQZKlIPW0BYXwtaWuV1sZDsoSLSixtxYUhRZh3jpjfKDf736', true);
+    ('leverling', '$2a$04$mrVOIvQZKlIPW0BYXwtaWuV1sZDsoSLSixtxYUhRZh3jpjfKDf736', true),
+    ('stan', '$2a$04$mrVOIvQZKlIPW0BYXwtaWuV1sZDsoSLSixtxYUhRZh3jpjfKDf736', true);
 
 INSERT INTO authorities(username, authority) VALUES
 	('robking', 'ROLE_ADMIN'),
 	('davolio', 'ROLE_ADMIN'),
 	('a.fuller', 'ROLE_USER'),
-	('leverling', 'ROLE_USER');
+	('leverling', 'ROLE_USER'),
+	('stan', 'ROLE_USER');
 
 INSERT INTO address(street, city, postal_code, state, country) VALUES
 	('4110 Old Redmond Rd.', 'Redmond', '98502', 'Washington', 'USA'), --1
@@ -31,7 +33,8 @@ INSERT INTO restaurant(owner_id, name, email, address_id, phone) VALUES
 
 INSERT INTO employee(username, email, first_name, last_name, title, restaurant_id) VALUES
 	('a.fuller', 'andrew.fuller@gmail.com', 'Andrew', 'Fuller', 'CHEF', 1), --1
-	('leverling', 'janet.leverling@gmail.com', 'Janet', 'Leverling', 'WAITER', 1); --2
+	('leverling', 'janet.leverling@gmail.com', 'Janet', 'Leverling', 'WAITER', 1), --2
+	('stan', 'stan.super@gmail.com', 'Stan', 'Super', 'WAITER', 3); --3
 
 INSERT INTO restaurant_table(name, active, restaurant_id) VALUES
 	('Table ONE', TRUE, 1), --1
@@ -39,7 +42,24 @@ INSERT INTO restaurant_table(name, active, restaurant_id) VALUES
 	('Table THREE', TRUE, 1), --3
 	('Bar', TRUE, 1), --4
 	('Table CORNER', TRUE, 1), --5
-	('Table VIP', TRUE, 1); --6
+	('Table VIP', TRUE, 1), --6
+	('Second restaurant First Table', TRUE, 3); --7
+
+INSERT INTO seat(active, restaurant_table_id) VALUES
+    (TRUE, 1), --1
+    (TRUE, 1), --2
+    (TRUE, 2), --3
+    (TRUE, 2), --4
+    (TRUE, 3), --5
+    (TRUE, 3), --6
+    (TRUE, 4), --7
+    (TRUE, 4), --8
+    (TRUE, 5), --9
+    (TRUE, 5), --10
+    (TRUE, 6), --11
+    (TRUE, 6), --12
+    (TRUE, 7), --13
+    (TRUE, 7); --14
 
 INSERT INTO ingredient(name) VALUES
     ('paradicsomszósz'), --1

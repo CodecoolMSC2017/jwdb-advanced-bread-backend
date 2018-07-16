@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface TableRepository extends JpaRepository<Table, Integer> {
     List<Table> findByRestaurantId(int id);
+    Table findByIdAndRestaurantId(Integer id, Integer restaurantId);
 }

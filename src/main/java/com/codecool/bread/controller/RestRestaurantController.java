@@ -22,18 +22,18 @@ public class RestRestaurantController {
     }
 
     @GetMapping("/table/{tableId}")
-    public Table getTableById(@PathVariable("ownerId") int ownerId, @PathVariable("restaurantId") int restaurantId, @PathVariable("tableId") int tableId) {
-        return null;
+    public Table getTableById(@PathVariable("restaurantId") int restaurantId, @PathVariable("tableId") int tableId) {
+        return restaurantService.getTableByIdFromDb(tableId, restaurantId);
     }
 
     @GetMapping("/table/{tableId}/seat")
-    public Iterable<Seat> getAllSeatsByRestaurantId(@PathVariable("ownerId") int ownerId, @PathVariable("restaurantId") int restaurantId) {
-        return null;
+    public Iterable<Seat> getAllSeatsByRestaurantId(@PathVariable("restaurantId") int restaurantId, @PathVariable("tableId") int tableId) {
+        return restaurantService.getAllSeatByTableIdFromDb(restaurantId, tableId);
     }
 
     @GetMapping("/table/{tableId}/seat/{seatId}")
-    public Seat getSeatById(@PathVariable("ownerId") int ownerId, @PathVariable("restaurantId") int restaurantId, @PathVariable("seatId") int seatId) {
-        return null;
+    public Seat getSeatById(@PathVariable("restaurantId") int restaurantId, @PathVariable("tableId") int tableId, @PathVariable("seatId") int seatId) {
+        return restaurantService.getSeatByIdFromDb(restaurantId, tableId, seatId);
     }
 }
 
