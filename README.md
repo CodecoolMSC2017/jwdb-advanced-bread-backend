@@ -11,19 +11,10 @@ Restaurant Point-Of-Sale system backend
 * GET /owner/{id}/restaurant/{id} - Obtains the restaurant associated with the given ID. If no restaurant exists, an HTTP 404 (Not Found) status is returned. If the restaurant can be found, an HTTP 200 status is returned and the response body contains the information associated with the restaurant.
 * PUT /owner/{id}/restaurant/{id} - Updates an existing restaurant. If no restaurant with the given ID can be found, an HTTP 404 status is returned. If a restaurant exists with the given ID and the request body contains valid updates to the restaurant, the restaurant is updated and the updated restaurant is returned in the response body, along with an HTTP 200 status.
 * DELETE /owner/{id}/restaurant/{id} - Deletes a restaurant with the given ID. If no restaurant exists, an HTTP 404 status is returned. If the restaurant exists, it is deleted, and an HTTP 204 (No Content) status is returned.
-
-Endpoint:
-
-    RestEmployeeController
-
-        Iterable<Employee> getEmployeesByRestaurantId
-            GET owner/{ownerId}/restaurant/{restaurantId}/employee
-        Employee getEmployeeById
-            GET owner/{ownerId}/restaurant/{restaurantId}/employee/{employeeId}
-        Employee addNewEmployee
-            POST owner/{ownerId}/restaurant/{restaurantId}/employee
-        Employee changeDetails
-            PUT owner/{ownerId}/restaurant/{restaurantId}/employee/{employeeId}
+* GET owner/{ownerId}/restaurant/{restaurantId}/employee
+* GET owner/{ownerId}/restaurant/{restaurantId}/employee/{employeeId}
+* POST owner/{ownerId}/restaurant/{restaurantId}/employee
+* PUT owner/{ownerId}/restaurant/{restaurantId}/employee/{employeeId}
 
     RestOwnerController
 
