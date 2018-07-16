@@ -30,8 +30,7 @@ public class RestEmployeeController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public Employee addNewEmployee(@RequestBody Employee employee, @PathVariable("restaurantId") int restaurantId, @PathVariable("ownerId") int ownerId) throws SQLException {
-        employeeService.addNewToDb(employee, ownerId, restaurantId);
-        return employee;
+        return employeeService.addNewToDb(employee, ownerId, restaurantId);
     }
 
     @DeleteMapping("/{employeeId}")

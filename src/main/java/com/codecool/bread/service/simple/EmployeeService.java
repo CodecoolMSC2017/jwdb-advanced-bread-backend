@@ -13,7 +13,7 @@ public interface EmployeeService {
 
     Employee getByIdFromDb(int ownerId, int restaurantId, int employeeId) throws RestaurantAccessDeniedException, EmployeeNotFoundException, SQLException;
 
-    void addNewToDb(Employee employee, int ownerId, int restaurantId) throws SQLException;
+    Employee addNewToDb(Employee employee, int ownerId, int restaurantId) throws SQLException;
 
     void deleteFromDb(int restaurantId, int employeeId) throws RestaurantAccessDeniedException, EmployeeNotFoundException, SQLException;
 
