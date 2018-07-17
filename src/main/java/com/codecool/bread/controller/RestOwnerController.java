@@ -36,10 +36,8 @@ public class RestOwnerController {
         return ownerService.getRestaurantByIdFromDb(restaurantId, ownerId);
     }
 
-    @PostMapping(path = "/restaurant",
-            consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public Restaurant addRestaurant(@RequestBody Restaurant restaurant, @RequestBody Address address,@PathVariable("ownerId") int ownerId) {
+    @PostMapping("/restaurant")
+    public Restaurant addRestaurant(@RequestBody Restaurant restaurant, @PathVariable("ownerId") int ownerId) {
         return ownerService.addRestaurantToDb(restaurant, ownerId);
     }
 
