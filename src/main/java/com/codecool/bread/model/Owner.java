@@ -12,7 +12,7 @@ import java.util.Set;
 public class Owner extends POSObject {
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "username")
+    @JoinColumn(name = "user_id")
     private User user;
     @Column(name = "first_name")
     private String firstName;
