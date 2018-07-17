@@ -20,13 +20,13 @@ import java.util.List;
 public class ItemServiceImpl implements ItemService {
 
     @Autowired
-    ItemRepository itemRepository;
+    private ItemRepository itemRepository;
 
     @Autowired
-    IngredientService ingredientService;
+    private IngredientService ingredientService;
 
     @Autowired
-    OwnerService ownerService;
+    private OwnerService ownerService;
 
 
     public List<Item> getItemsByRestaurantId(Integer restaurantId) throws NoItemsFoundException {
@@ -38,18 +38,9 @@ public class ItemServiceImpl implements ItemService {
     }
 
     public Item getItemById(Integer id, Integer restaurantId) throws ItemAccessDeniedException, NoItemsFoundException {
-        if(itemRepository.findById(id).isPresent()) {
-            Item item = itemRepository.findById(id).get();
-            if(getItemsByRestaurantId(restaurantId).contains(item)) {
-                return item;
-            } else {
-                throw new ItemAccessDeniedException();
-            }
-        } else {
-            throw new ItemNotFoundException();
-        }
+        return itemRepository.findByIdAndRestaurantId(id,restaurantId);
     }
-    //TODO try to find out why not gets the generated id
+
     @Override
     public Item addNewItem(Item item, int restaurantId, int ownerId) {
 
@@ -61,6 +52,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public void deleteItem(int restaurantId, int itemId) throws RestaurantAccessDeniedException, ItemNotFoundException {
+
         if (itemRepository.findById(itemId).isPresent()) {
             if (itemRepository.findByRestaurantId(restaurantId).contains(itemRepository.findById(itemId).get())) {
                 itemRepository.deleteById(itemId);

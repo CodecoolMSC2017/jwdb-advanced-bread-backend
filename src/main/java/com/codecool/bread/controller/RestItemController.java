@@ -45,4 +45,5 @@ public class RestItemController {
     public Item changeItemDetails(@RequestBody Item item, @PathVariable("restaurantId") int restaurantId, @PathVariable("ownerId") int ownerId) throws SQLException {
         return itemService.saveItemChanges(item, restaurantId, ownerId);
     }
+
 }
