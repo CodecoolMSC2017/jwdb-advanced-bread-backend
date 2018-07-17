@@ -1,7 +1,9 @@
 package com.codecool.bread.controller;
 
 import com.codecool.bread.exception.EmployeeNotFoundException;
+import com.codecool.bread.exception.RestaurantAccessDeniedException;
 import com.codecool.bread.model.Employee;
+import com.codecool.bread.repository.EmployeeRepository;
 import com.codecool.bread.service.simple.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -17,6 +19,9 @@ public class RestEmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
+    @Autowired
+    private EmployeeRepository employeeRepository;
+
     @GetMapping("")
     public Iterable<Employee> getEmployeesByRestaurantId(@PathVariable("ownerId") int ownerId, @PathVariable("restaurantId") int restaurantId) throws SQLException {
         Iterable<Employee> employees = employeeService.getAllByRestaurantIdFromDb(ownerId, restaurantId);
@@ -27,8 +32,16 @@ public class RestEmployeeController {
     }
 
     @GetMapping("/{employeeId}")
-    public Employee getEmployeeById(@PathVariable("ownerId") int ownerId, @PathVariable("restaurantId") int restaurantId, @PathVariable("employeeId") int employeeId) throws EmployeeNotFoundException, SQLException {
-        return employeeService.getByIdFromDb(ownerId, restaurantId, employeeId);
+    public Employee getEmployeeById(@PathVariable("ownerId") int ownerId, @PathVariable("restaurantId") int restaurantId, @PathVariable("employeeId") int employeeId){
+        if (employeeRepository.findById(employeeId).isPresent()) {
+            if (employeeRepository.findByRestaurantId(restaurantId).contains(employeeRepository.findById(employeeId).get())) {
+                return employeeService.getByIdFromDb( restaurantId, employeeId);
+            } else {
+                throw new RestaurantAccessDeniedException();
+            }
+        } else {
+            throw new EmployeeNotFoundException();
+        }
     }
 
     @PostMapping(path = "",

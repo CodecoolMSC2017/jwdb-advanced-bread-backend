@@ -23,26 +23,18 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 
     @Override
-    public List<Employee> getAllByRestaurantIdFromDb(int ownerId, int restaurantId) throws SQLException {
+    public List<Employee> getAllByRestaurantIdFromDb(int ownerId, int restaurantId) {
         ownerService.getRestaurantByIdFromDb(restaurantId, ownerId);
         return employeeRepository.findByRestaurantId(restaurantId);
     }
 
     @Override
-    public Employee getByIdFromDb(int ownerId, int restaurantId, int employeeId) throws RestaurantAccessDeniedException, EmployeeNotFoundException, SQLException {
-        if (employeeRepository.findById(employeeId).isPresent()) {
-            if (employeeRepository.findByRestaurantId(restaurantId).contains(employeeRepository.findById(employeeId).get())) {
-                return employeeRepository.findById(employeeId).get();
-            } else {
-                throw new RestaurantAccessDeniedException();
-            }
-        } else {
-            throw new EmployeeNotFoundException();
-        }
+    public Employee getByIdFromDb(int restaurantId, int employeeId) throws RestaurantAccessDeniedException, EmployeeNotFoundException {
+        return employeeRepository.findByIdAndRestaurantId(employeeId, restaurantId);
     }
 
     @Override
-    public Employee addNewToDb(Employee employee, int ownerId, int restaurantId) throws SQLException {
+    public Employee addNewToDb(Employee employee, int ownerId, int restaurantId) {
         employee.setRestaurant(ownerService.getRestaurantByIdFromDb(restaurantId, ownerId));
         employeeRepository.save(employee);
         return employee;
@@ -50,19 +42,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public void deleteFromDb(int restaurantId, int employeeId) throws RestaurantAccessDeniedException, EmployeeNotFoundException, SQLException {
-        if (employeeRepository.findById(employeeId).isPresent()) {
-            if (employeeRepository.findByRestaurantId(restaurantId).contains(employeeRepository.findById(employeeId).get())) {
-                employeeRepository.deleteById(employeeId);
-            } else {
-                throw new RestaurantAccessDeniedException();
-            }
-        } else {
-            throw new EmployeeNotFoundException();
-        }
+        employeeRepository.delete(employeeRepository.findByIdAndRestaurantId(employeeId, restaurantId));
     }
 
     @Override
-    public Employee saveChanges(Employee employee, int restaurantId, int ownerId) throws SQLException {
+    public Employee saveChanges(Employee employee, int restaurantId, int ownerId) {
         employee.setRestaurant(ownerService.getRestaurantByIdFromDb(restaurantId, ownerId));
         employeeRepository.save(employee);
         return employee;

@@ -23,9 +23,6 @@ public class IngredientServiceImpl implements IngredientService {
     }
 
     public Ingredient getIngredientById(int ingredientId) throws IngredientNotFoundException {
-        if(!ingredientRepository.findById(ingredientId).isPresent()) {
-            throw new IngredientNotFoundException();
-        }
         return ingredientRepository.findById(ingredientId).get();
     }
 
