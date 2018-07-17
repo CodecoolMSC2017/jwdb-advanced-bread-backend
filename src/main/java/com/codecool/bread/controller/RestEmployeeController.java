@@ -1,7 +1,9 @@
 package com.codecool.bread.controller;
 
 import com.codecool.bread.exception.EmployeeNotFoundException;
+import com.codecool.bread.exception.RestaurantAccessDeniedException;
 import com.codecool.bread.model.Employee;
+import com.codecool.bread.repository.EmployeeRepository;
 import com.codecool.bread.service.simple.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -33,7 +35,7 @@ public class RestEmployeeController {
     public Employee getEmployeeById(@PathVariable("ownerId") int ownerId, @PathVariable("restaurantId") int restaurantId, @PathVariable("employeeId") int employeeId){
         if (employeeRepository.findById(employeeId).isPresent()) {
             if (employeeRepository.findByRestaurantId(restaurantId).contains(employeeRepository.findById(employeeId).get())) {
-                return employeeService.getByIdFromDb(ownerId, restaurantId, employeeId);
+                return employeeService.getByIdFromDb( restaurantId, employeeId);
             } else {
                 throw new RestaurantAccessDeniedException();
             }

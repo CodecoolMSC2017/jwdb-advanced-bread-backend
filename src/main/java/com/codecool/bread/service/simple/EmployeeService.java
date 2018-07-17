@@ -11,7 +11,7 @@ public interface EmployeeService {
 
     List<Employee> getAllByRestaurantIdFromDb(int ownerId, int restaurantId) throws SQLException;
 
-    Employee getByIdFromDb(int ownerId, int restaurantId, int employeeId) throws RestaurantAccessDeniedException, EmployeeNotFoundException;
+    Employee getByIdFromDb(int restaurantId, int employeeId) throws RestaurantAccessDeniedException, EmployeeNotFoundException;
 
     Employee addNewToDb(Employee employee, int ownerId, int restaurantId) throws SQLException;
 

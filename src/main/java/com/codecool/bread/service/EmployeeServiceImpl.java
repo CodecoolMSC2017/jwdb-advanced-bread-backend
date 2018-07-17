@@ -23,15 +23,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 
     @Override
-    public List<Employee> getAllByRestaurantIdFromDb(int ownerId, int restaurantId) throws SQLException {
+    public List<Employee> getAllByRestaurantIdFromDb(int ownerId, int restaurantId) {
         ownerService.getRestaurantByIdFromDb(restaurantId, ownerId);
         return employeeRepository.findByRestaurantId(restaurantId);
     }
 
     @Override
-    public Employee getByIdFromDb(int ownerId, int restaurantId, int employeeId) throws RestaurantAccessDeniedException, EmployeeNotFoundException{
-        return employeeRepository.findById(employeeId).get();
-    public Employee getByIdFromDb(int restaurantId, int employeeId) throws RestaurantAccessDeniedException, EmployeeNotFoundException, SQLException {
+    public Employee getByIdFromDb(int restaurantId, int employeeId) throws RestaurantAccessDeniedException, EmployeeNotFoundException {
         return employeeRepository.findByIdAndRestaurantId(employeeId, restaurantId);
     }
 
