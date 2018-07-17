@@ -27,8 +27,8 @@ public class RestEmployeeController {
     }
 
     @GetMapping("/{employeeId}")
-    public Employee getEmployeeById(@PathVariable("ownerId") int ownerId, @PathVariable("restaurantId") int restaurantId, @PathVariable("employeeId") int employeeId) throws EmployeeNotFoundException, SQLException {
-        return employeeService.getByIdFromDb(ownerId, restaurantId, employeeId);
+    public Employee getEmployeeById(@PathVariable("restaurantId") int restaurantId, @PathVariable("employeeId") int employeeId) throws EmployeeNotFoundException, SQLException {
+        return employeeService.getByIdFromDb(restaurantId, employeeId);
     }
 
     @PostMapping(path = "",
