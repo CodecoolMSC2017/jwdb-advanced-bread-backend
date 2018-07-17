@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
+import java.util.List;
 
 @RestController
 @RequestMapping("owner/{ownerId}/restaurant/{restaurantId}/employee")
@@ -18,7 +19,11 @@ public class RestEmployeeController {
 
     @GetMapping("")
     public Iterable<Employee> getEmployeesByRestaurantId(@PathVariable("ownerId") int ownerId, @PathVariable("restaurantId") int restaurantId) throws SQLException {
-        return employeeService.getAllByRestaurantIdFromDb(ownerId, restaurantId);
+        Iterable<Employee> employees = employeeService.getAllByRestaurantIdFromDb(ownerId, restaurantId);
+        if(((List<Employee>) employees).size() == 0) {
+            throw new EmployeeNotFoundException("s");
+        }
+        return employees;
     }
 
     @GetMapping("/{employeeId}")
