@@ -4,10 +4,7 @@ import com.codecool.bread.model.Seat;
 import com.codecool.bread.model.Table;
 import com.codecool.bread.service.simple.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/owner/{ownerId}/restaurant/{restaurantId}")
@@ -34,6 +31,26 @@ public class RestRestaurantController {
     @GetMapping("/table/{tableId}/seat/{seatId}")
     public Seat getSeatById(@PathVariable("restaurantId") int restaurantId, @PathVariable("tableId") int tableId, @PathVariable("seatId") int seatId) {
         return restaurantService.getSeatByIdFromDb(restaurantId, tableId, seatId);
+    }
+
+    @PostMapping("table")
+    public Table addTable(@RequestBody Table table, @PathVariable("ownerId") int ownerId, @PathVariable("restaurantId") int restaurantId) {
+        return restaurantService.addOrModifyTableToDb(table, ownerId, restaurantId);
+    }
+
+    @PostMapping("/table/{tableId}/seat")
+    public Seat addSeat(@RequestBody Seat seat, @PathVariable("tableId") int tableId, @PathVariable("restaurantId") int restaurantId) {
+        return restaurantService.addOrModifySeatToDb(seat, restaurantId, tableId);
+    }
+
+    @PutMapping("table/{tableId}")
+    public Table modifyTable(@RequestBody Table table, @PathVariable("ownerId") int ownerId, @PathVariable("restaurantId") int restaurantId) {
+        return restaurantService.addOrModifyTableToDb(table, ownerId, restaurantId);
+    }
+
+    @PutMapping("table/{tableId}/seat/{seatId}")
+    public Seat modifySeat(@RequestBody Seat seat, @PathVariable("tableId") int tableId, @PathVariable("restaurantId") int restaurantId) {
+        return restaurantService.addOrModifySeatToDb(seat, restaurantId, tableId);
     }
 }
 

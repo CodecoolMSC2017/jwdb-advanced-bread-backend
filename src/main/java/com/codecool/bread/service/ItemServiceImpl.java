@@ -53,7 +53,7 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public Item addNewItem(Item item, int restaurantId, int ownerId) {
 
-        Restaurant restaurant = ownerService.getRestaurantById(restaurantId,ownerId);
+        Restaurant restaurant = ownerService.getRestaurantByIdFromDb(restaurantId,ownerId);
         item.setRestaurant(restaurant);
         //ingredientService.addNewIngredients(item.getIngredients());
         return itemRepository.save(item);
@@ -74,7 +74,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public Item saveItemChanges(Item item, int restaurantId, int ownerId) {
-        Restaurant restaurant = ownerService.getRestaurantById(restaurantId, ownerId);
+        Restaurant restaurant = ownerService.getRestaurantByIdFromDb(restaurantId, ownerId);
         item.setRestaurant(restaurant);
         return itemRepository.save(item);
     }

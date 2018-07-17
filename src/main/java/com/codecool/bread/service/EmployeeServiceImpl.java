@@ -6,7 +6,6 @@ import com.codecool.bread.model.Employee;
 import com.codecool.bread.repository.EmployeeRepository;
 import com.codecool.bread.service.simple.EmployeeService;
 import com.codecool.bread.service.simple.OwnerService;
-import com.codecool.bread.service.simple.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +24,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<Employee> getAllByRestaurantIdFromDb(int ownerId, int restaurantId) throws SQLException {
-        ownerService.getRestaurantById(restaurantId, ownerId);
+        ownerService.getRestaurantByIdFromDb(restaurantId, ownerId);
         return employeeRepository.findByRestaurantId(restaurantId);
     }
 
@@ -43,9 +42,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public void addNewToDb(Employee employee, int ownerId, int restaurantId) throws SQLException {
-        employee.setRestaurant(ownerService.getRestaurantById(restaurantId, ownerId));
+    public Employee addNewToDb(Employee employee, int ownerId, int restaurantId) throws SQLException {
+        employee.setRestaurant(ownerService.getRestaurantByIdFromDb(restaurantId, ownerId));
         employeeRepository.save(employee);
+        return employee;
     }
 
     @Override
@@ -63,7 +63,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee saveChanges(Employee employee, int restaurantId, int ownerId) throws SQLException {
-        employee.setRestaurant(ownerService.getRestaurantById(restaurantId, ownerId));
-        return employeeRepository.save(employee);
+        employee.setRestaurant(ownerService.getRestaurantByIdFromDb(restaurantId, ownerId));
+        employeeRepository.save(employee);
+        return employee;
     }
 }
