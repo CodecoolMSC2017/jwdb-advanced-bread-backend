@@ -1,7 +1,7 @@
 package com.codecool.bread.controller;
 
 import com.codecool.bread.model.User;
-import com.codecool.bread.service.UserService;
+import com.codecool.bread.service.simple.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +13,7 @@ import java.util.Optional;
 public class UserController {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @GetMapping("")
     public Iterable<User> getAll() {

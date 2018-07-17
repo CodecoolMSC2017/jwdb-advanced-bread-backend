@@ -3,6 +3,7 @@ package com.codecool.bread.service;
 import com.codecool.bread.exception.UserNotFoundException;
 import com.codecool.bread.model.User;
 import com.codecool.bread.repository.UserRepository;
+import com.codecool.bread.service.simple.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class UserServiceImpl {
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
