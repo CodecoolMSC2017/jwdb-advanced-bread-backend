@@ -16,7 +16,8 @@ DROP TABLE IF EXISTS authorities;
 DROP TABLE IF EXISTS users;
 
 CREATE TABLE users (
-	username TEXT NOT NULL PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
+	username TEXT NOT NULL UNIQUE,
 	password TEXT NOT NULL,
 	enabled BOOLEAN NOT NULL
 );
@@ -40,7 +41,7 @@ CREATE TABLE address (
 
 CREATE TABLE owner (
 	id SERIAL PRIMARY KEY,
-	username TEXT NOT NULL,
+	user_id INTEGER NOT NULL,
 	first_name TEXT NOT NULL,
 	last_name TEXT NOT NULL,
 	address_id INTEGER,
@@ -49,7 +50,7 @@ CREATE TABLE owner (
 	CONSTRAINT email_not_empty CHECK (email <> ''),
 	CONSTRAINT first_name_not_empty CHECK (first_name <> ''),
 	CONSTRAINT last_name_not_empty CHECK (last_name <> ''),
-	FOREIGN KEY (username) REFERENCES users(username),
+	FOREIGN KEY (user_id) REFERENCES users(id),
 	FOREIGN KEY (address_id) REFERENCES address(id)
 );
 
@@ -67,7 +68,7 @@ CREATE TABLE restaurant (
 
 CREATE TABLE employee (
 	id SERIAL PRIMARY KEY,
-	username TEXT NOT NULL,
+	user_id INTEGER NOT NULL,
 	email TEXT NOT NULL,
 	first_name TEXT NOT NULL,
 	last_name TEXT NOT NULL,
@@ -77,7 +78,7 @@ CREATE TABLE employee (
 	CONSTRAINT email_not_empty CHECK (email <> ''),
 	CONSTRAINT first_name_not_empty CHECK (first_name <> ''),
 	CONSTRAINT last_name_not_empty CHECK (last_name <> ''),
-	FOREIGN KEY (username) REFERENCES users(username),
+	FOREIGN KEY (user_id) REFERENCES users(id),
 	FOREIGN KEY (restaurant_id) REFERENCES restaurant(id)
 );
 
