@@ -3,7 +3,6 @@ package com.codecool.bread.service;
 import com.codecool.bread.exception.OwnerNotFoundException;
 import com.codecool.bread.exception.RestaurantAccessDeniedException;
 import com.codecool.bread.exception.RestaurantNotFoundException;
-import com.codecool.bread.model.Address;
 import com.codecool.bread.model.Owner;
 import com.codecool.bread.model.Restaurant;
 import com.codecool.bread.repository.AddressRepository;
@@ -28,11 +27,7 @@ public class OwnerServiceImpl implements OwnerService {
     private AddressRepository addressRepository;
 
     public Owner getOwnerByIdFromDb(Integer id) throws OwnerNotFoundException {
-        if(ownerRepository.findById(id).isPresent()) {
-            return ownerRepository.findById(id).get();
-        }else {
-            throw new OwnerNotFoundException();
-        }
+        return ownerRepository.findById(id).get();
     }
 
     public List<Restaurant> getRestaurantsByOwnerIdFromDb(int id) {
