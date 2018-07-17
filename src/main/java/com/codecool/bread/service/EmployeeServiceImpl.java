@@ -31,6 +31,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee getByIdFromDb(int ownerId, int restaurantId, int employeeId) throws RestaurantAccessDeniedException, EmployeeNotFoundException{
         return employeeRepository.findById(employeeId).get();
+    public Employee getByIdFromDb(int restaurantId, int employeeId) throws RestaurantAccessDeniedException, EmployeeNotFoundException, SQLException {
+        return employeeRepository.findByIdAndRestaurantId(employeeId, restaurantId);
     }
 
     @Override
@@ -41,16 +43,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public void deleteFromDb(int restaurantId, int employeeId) throws RestaurantAccessDeniedException, EmployeeNotFoundException {
-        if (employeeRepository.findById(employeeId).isPresent()) {
-            if (employeeRepository.findByRestaurantId(restaurantId).contains(employeeRepository.findById(employeeId).get())) {
-                employeeRepository.deleteById(employeeId);
-            } else {
-                throw new RestaurantAccessDeniedException();
-            }
-        } else {
-            throw new EmployeeNotFoundException();
-        }
+    public void deleteFromDb(int restaurantId, int employeeId) throws RestaurantAccessDeniedException, EmployeeNotFoundException, SQLException {
+        employeeRepository.delete(employeeRepository.findByIdAndRestaurantId(employeeId, restaurantId));
     }
 
     @Override

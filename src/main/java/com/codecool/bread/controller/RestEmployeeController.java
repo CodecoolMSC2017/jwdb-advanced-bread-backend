@@ -1,9 +1,7 @@
 package com.codecool.bread.controller;
 
 import com.codecool.bread.exception.EmployeeNotFoundException;
-import com.codecool.bread.exception.RestaurantAccessDeniedException;
 import com.codecool.bread.model.Employee;
-import com.codecool.bread.repository.EmployeeRepository;
 import com.codecool.bread.service.simple.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
