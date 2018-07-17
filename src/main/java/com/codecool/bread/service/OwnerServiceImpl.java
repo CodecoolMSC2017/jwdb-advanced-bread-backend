@@ -6,6 +6,7 @@ import com.codecool.bread.exception.RestaurantNotFoundException;
 import com.codecool.bread.model.Address;
 import com.codecool.bread.model.Owner;
 import com.codecool.bread.model.Restaurant;
+import com.codecool.bread.repository.AddressRepository;
 import com.codecool.bread.repository.OwnerRepository;
 import com.codecool.bread.repository.RestaurantRepository;
 import com.codecool.bread.service.simple.OwnerService;
@@ -22,6 +23,9 @@ public class OwnerServiceImpl implements OwnerService {
 
     @Autowired
     private RestaurantRepository restaurantRepository;
+
+    @Autowired
+    private AddressRepository addressRepository;
 
     public Owner getOwnerByIdFromDb(Integer id) throws OwnerNotFoundException {
         if(ownerRepository.findById(id).isPresent()) {
@@ -42,6 +46,7 @@ public class OwnerServiceImpl implements OwnerService {
 
     @Override
     public Restaurant addRestaurantToDb(Restaurant restaurant, int ownerId) {
+        addressRepository.save(restaurant.getAddress());
         restaurant.setOwner(getOwnerByIdFromDb(ownerId));
         getOwnerByIdFromDb(ownerId).getRestaurants().add(restaurant);
         restaurantRepository.save(restaurant);
