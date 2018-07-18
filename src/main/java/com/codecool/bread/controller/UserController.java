@@ -33,7 +33,7 @@ public class UserController {
         return userService.add(username, password, confirmationPassword);
     }
 
-    @PostMapping("/{userId}/change-password")
+    @PostMapping("/change-password")
     public void changePassword(@RequestBody Map<String, String> map) {
         String oldPassword = map.get("oldPassword");
         String newPassword = map.get("newPassword");
