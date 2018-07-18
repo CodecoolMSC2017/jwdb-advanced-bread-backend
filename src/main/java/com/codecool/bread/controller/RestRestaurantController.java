@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/owner/{ownerId}/restaurant/{restaurantId}")
@@ -17,8 +18,8 @@ public class RestRestaurantController {
     private RestaurantService restaurantService;
 
     @GetMapping("/table")
-    public Iterable<Table> getAllTablesByRestaurantId(@PathVariable("ownerId") int ownerId, @PathVariable("restaurantId") int restaurantId) {
-        List<Table> tables = (List<Table>) restaurantService.getAllTableByRestaurantIdFromDb(restaurantId, ownerId);
+    public Set<Table> getAllTablesByRestaurantId(@PathVariable("ownerId") int ownerId, @PathVariable("restaurantId") int restaurantId) {
+        Set<Table> tables = restaurantService.getAllTableByRestaurantIdFromDb(restaurantId, ownerId);
         if (tables.size() == 0) {
             throw new NoTablesFoundException();
         } else
@@ -27,8 +28,8 @@ public class RestRestaurantController {
 
     @GetMapping("/table/{tableId}")
     public Table getTableById(@PathVariable("ownerId")int ownerId, @PathVariable("restaurantId") int restaurantId, @PathVariable("tableId") int tableId) {
+        Set<Table> tables = restaurantService.getAllTableByRestaurantIdFromDb(restaurantId, ownerId);
         Table table = restaurantService.getTableByIdFromDb(tableId, restaurantId);
-        List<Table> tables = (List<Table>) getAllTablesByRestaurantId(restaurantId,ownerId);
         if(table == null){
             throw new TableNotFoundException();
         }
@@ -39,9 +40,9 @@ public class RestRestaurantController {
     }
 
     @GetMapping("/table/{tableId}/seat")
-    public Iterable<Seat> getAllSeatsByRestaurantId(@PathVariable("restaurantId") int restaurantId, @PathVariable("tableId") int tableId) {
-        List<Seat> seats = (List<Seat>) restaurantService.getAllSeatByTableIdFromDb(restaurantId, tableId);
-        if(seats.size() == 0){
+    public Set<Seat> getAllSeatsByRestaurantId(@PathVariable("restaurantId") int restaurantId, @PathVariable("tableId") int tableId) {
+        Set<Seat> seats = restaurantService.getAllSeatByTableIdFromDb(restaurantId, tableId);
+        if(seats.size() != 0){
             return seats;
         }else
             throw new NoSeatsFoundException();
@@ -50,7 +51,8 @@ public class RestRestaurantController {
     @GetMapping("/table/{tableId}/seat/{seatId}")
     public Seat getSeatById(@PathVariable("restaurantId") int restaurantId, @PathVariable("tableId") int tableId, @PathVariable("seatId") int seatId) {
         Seat seat = restaurantService.getSeatByIdFromDb(restaurantId, tableId, seatId);
-        if(((List<Seat>)getAllSeatsByRestaurantId(restaurantId,tableId)).contains(seat)){
+        Set<Seat> seats = restaurantService.getAllSeatByTableIdFromDb(restaurantId, tableId);
+        if(seats.contains(seat)){
             return seat;
         }
         throw new SeatNotFoundException();

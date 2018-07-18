@@ -1,13 +1,11 @@
 package com.codecool.bread.service;
 
-import com.codecool.bread.model.CustomerOrder;
-import com.codecool.bread.model.Item;
-import com.codecool.bread.model.OrderItem;
-import com.codecool.bread.model.Seat;
+import com.codecool.bread.model.*;
 import com.codecool.bread.model.dto.OrderDto;
 import com.codecool.bread.repository.CustomerOrderRepository;
 import com.codecool.bread.repository.OrderItemRepository;
 import com.codecool.bread.repository.SeatRepository;
+import com.codecool.bread.repository.TableRepository;
 import com.codecool.bread.service.simple.EmployeeService;
 import com.codecool.bread.service.simple.ItemService;
 import com.codecool.bread.service.simple.OrderService;
@@ -37,6 +35,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private ItemService itemService;
+
+    @Autowired
+    private TableRepository tableRepository;
 
     @Override
     public Set<CustomerOrder> getAllCustomerOrderBySeatFromDb(int restaurantId, int tableId, int seatId) {
@@ -70,5 +71,13 @@ public class OrderServiceImpl implements OrderService {
         seat.getOrders().add(customerOrder);
         seatRepository.save(seat);
         return orderDto;
+    }
+
+    @Override
+    public void setEmployeeToTableInDb(int employeeId, int tableId, int restaurantId) {
+        Employee employee = employeeService.getByIdFromDb(restaurantId, employeeId);
+        Table table =tableRepository.findByIdAndRestaurantId(tableId, restaurantId);
+        table.setEmployee(employee);
+        tableRepository.save(table);
     }
 }

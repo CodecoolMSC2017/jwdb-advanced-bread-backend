@@ -14,4 +14,6 @@ public interface OrderService {
     OrderItem getOrderItem(int seatId, int customerOrderId);
 
     OrderDto addOrderToDb(OrderDto orderDto, int restaurantId, int employeeId, int tableId, int seatId);
+
+    void setEmployeeToTableInDb(int employeeId, int tableId, int restaurantId);
 }
