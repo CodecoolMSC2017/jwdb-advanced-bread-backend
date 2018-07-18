@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/owner/{ownerId}/restaurant/{restaurantId}")
+@RequestMapping("/restaurant/{restaurantId}")
 public class RestRestaurantController {
 
     @Autowired
