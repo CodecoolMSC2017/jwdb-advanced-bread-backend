@@ -1,13 +1,12 @@
 package com.codecool.bread.controller;
 
 import com.codecool.bread.model.CustomerOrder;
+import com.codecool.bread.model.Item;
 import com.codecool.bread.model.OrderItem;
+import com.codecool.bread.model.dto.OrderDto;
 import com.codecool.bread.service.simple.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
 
@@ -28,8 +27,14 @@ public class RestOrderController {
         return orderService.getCustomerOrderByIdFromDb(seatId, customerOrderId);
     }
 
-    @GetMapping("/customerOrder/{customerOrderId}/orderitem")
+    @GetMapping("/orderitem")
     public OrderItem getOrderItem(@PathVariable("seatId") int seatId, @PathVariable("customerOrderId") int customerOrderId) {
         return orderService.getOrderItem(seatId, customerOrderId);
     }
+
+    @PostMapping("order")
+    public OrderDto addOrder(@RequestBody OrderDto orderDto, @PathVariable("restaurantId") int restaurantId, @PathVariable("employeeId") int employeeId, @PathVariable("tableId") int tableId, @PathVariable("seatId") int seatId) {
+        return orderService.addOrderToDb(orderDto, restaurantId, employeeId, tableId, seatId);
+    }
+
 }

@@ -212,3 +212,6 @@ INSERT INTO item_ingredient (item_id, ingredient_id) VALUES
      (13, 17),
      (5, 12),
      (3, 20);
+
+INSERT INTO order_item (item_id, quantity, comment) VALUES
+    (1, 2, 'fasz');

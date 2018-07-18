@@ -141,7 +141,7 @@ CREATE TABLE invoice (
 
 CREATE TABLE order_item (
 	id SERIAL PRIMARY KEY,
-	item_id SERIAL NOT NULL,
+	item_id INTEGER NOT NULL,
 	quantity INTEGER NOT NULL,
 	comment TEXT,
 	FOREIGN KEY (item_id) REFERENCES item(id)
