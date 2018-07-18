@@ -18,7 +18,7 @@ public class CustomerOrder extends POSObject {
     @JsonIgnore
     private Employee employee;
     @Column(name = "ordering_time")
-    private Date orderingTime;
+    private Date orderingTime = new Date(new java.util.Date().getTime());
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "order_item_id")
     @JsonIgnore
@@ -47,11 +47,7 @@ public class CustomerOrder extends POSObject {
     public Date getOrderingTime() {
         return orderingTime;
     }
-
-    public void setOrderingTime(Date orderingTime) {
-        this.orderingTime = orderingTime;
-    }
-
+    
     public OrderItem getOrderItem() {
         return order;
     }
