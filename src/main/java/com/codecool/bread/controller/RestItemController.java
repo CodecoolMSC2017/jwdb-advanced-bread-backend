@@ -15,7 +15,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/owner/{ownerId}/restaurant/{restaurantId}/item")
+@RequestMapping("/restaurant/{restaurantId}/item")
 public class RestItemController {
 
     @Autowired
