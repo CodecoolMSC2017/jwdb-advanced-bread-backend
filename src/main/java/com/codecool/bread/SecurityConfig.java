@@ -58,15 +58,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     UserDetailsManager userDetailsManager(
-            @Autowired DataSource dataSource,
-            @Autowired JdbcTemplate jdbcTemplate,
-            @Autowired AuthenticationManager authenticationManager) {
-        JdbcUserDetailsManager userDetailsManager = new JdbcUserDetailsManager();
-        userDetailsManager.setJdbcTemplate(jdbcTemplate);
-        userDetailsManager.setDataSource(dataSource);
-        // Using AuthenticationManager re-authenticates the session on password change.
-        userDetailsManager.setAuthenticationManager(authenticationManager);
-        return userDetailsManager;
+        @Autowired DataSource dataSource,
+        @Autowired JdbcTemplate jdbcTemplate,
+        @Autowired AuthenticationManager authenticationManager) {
+            JdbcUserDetailsManager userDetailsManager = new JdbcUserDetailsManager();
+            userDetailsManager.setJdbcTemplate(jdbcTemplate);
+            userDetailsManager.setDataSource(dataSource);
+            // Using AuthenticationManager re-authenticates the session on password change.
+            userDetailsManager.setAuthenticationManager(authenticationManager);
+            return userDetailsManager;
     }
     @Bean
     public BCryptPasswordEncoder encoder() {
