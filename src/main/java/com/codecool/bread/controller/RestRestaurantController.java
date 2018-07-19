@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/restaurant/{restaurantId}")
+@RequestMapping("/restaurant/{restaurantId}") // TODO ???? service methods don't work without ownerID, have to be fixed
 public class RestRestaurantController {
 
     @Autowired
