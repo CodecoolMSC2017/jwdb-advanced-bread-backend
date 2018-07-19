@@ -10,5 +10,5 @@ import java.util.List;
 public interface RestaurantRepository extends JpaRepository<Restaurant, Integer> {
     List<Restaurant> findByOwnerId(Integer id);
 
-    Restaurant findByIdAndOwnerId(Integer ownerId, Integer restaurantId);
+    Restaurant findByIdAndOwnerId(Integer restaurantId, Integer ownerId);
 }

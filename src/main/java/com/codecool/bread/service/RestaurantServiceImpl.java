@@ -27,7 +27,7 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     public Set<Table> getAllTableByRestaurantIdFromDb(int restaurantId, int ownerId) {
-        return restaurantRepository.findByIdAndOwnerId(ownerId, restaurantId).getTables();
+        return restaurantRepository.findByIdAndOwnerId(restaurantId, ownerId).getTables();
     }
 
     @Override
@@ -47,7 +47,7 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     public Table addOrModifyTableToDb(Table table, int ownerId, int restaurantId) {
-        Restaurant restaurant = restaurantRepository.findByIdAndOwnerId(ownerId, restaurantId);
+        Restaurant restaurant = restaurantRepository.findByIdAndOwnerId(restaurantId, ownerId);
         restaurant.getTables().add(table);
         table.setRestaurant(restaurant);
         tableRepository.save(table);

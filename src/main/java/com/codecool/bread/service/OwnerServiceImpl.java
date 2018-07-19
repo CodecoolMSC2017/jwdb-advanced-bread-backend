@@ -36,7 +36,7 @@ public class OwnerServiceImpl implements OwnerService {
 
     @Override
     public Restaurant getRestaurantByIdFromDb(int restaurantId, int ownerId) throws RestaurantAccessDeniedException, RestaurantNotFoundException {
-        return restaurantRepository.findByIdAndOwnerId(ownerId, restaurantId);
+        return restaurantRepository.findByIdAndOwnerId(restaurantId, ownerId);
     }
 
     @Override
