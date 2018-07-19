@@ -13,7 +13,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/restaurant/{restaurantId}/employee")
+@RequestMapping("owner/{ownerId}/restaurant/{restaurantId}/employee")
 public class RestEmployeeController {
 
     @Autowired
