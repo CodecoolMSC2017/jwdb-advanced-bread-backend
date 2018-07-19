@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/restaurant/{restaurantId}/employee/{employeeId}/table/{tableId}")
+@RequestMapping("/restaurant/{restaurantId}/employee/{employeeId}/table/{tableId}") // TODO too many IDs
 public class RestOrderController {
 
     @Autowired
