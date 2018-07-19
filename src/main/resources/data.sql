@@ -214,4 +214,4 @@ INSERT INTO item_ingredient (item_id, ingredient_id) VALUES
      (3, 20);
 
 INSERT INTO order_item (item_id, quantity, comment) VALUES
-    (1, 2, 'fasz');
+    (1, 2, 'no chili');
