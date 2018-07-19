@@ -1,7 +1,11 @@
 package com.codecool.bread.service;
 
 import com.codecool.bread.exception.UserNotFoundException;
+import com.codecool.bread.model.Employee;
+import com.codecool.bread.model.Owner;
 import com.codecool.bread.model.User;
+import com.codecool.bread.repository.EmployeeRepository;
+import com.codecool.bread.repository.OwnerRepository;
 import com.codecool.bread.repository.UserRepository;
 import com.codecool.bread.service.simple.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +28,12 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private OwnerRepository ownerRepository;
+
+    @Autowired
+    private EmployeeRepository employeeRepository;
+
     public Optional<User> get(Integer id) {
         return userRepository.findById(id);
     }
@@ -36,8 +46,14 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll();
     }
 
-    public Optional<User> get(String username) {
-        return userRepository.findByUsername(username);
+    public Optional<Object> get(String username) {
+        User user = userRepository.findByUsername(username).get();
+        Optional<Object> owner = ownerRepository.findByUserId(user.getId());
+        Optional<Object> employee = employeeRepository.findByUserId(user.getId());
+        if(owner.isPresent()) {
+            return owner;
+        }
+        return employee;
     }
 
     public User add(String username, String password, String confirmationPassword) {

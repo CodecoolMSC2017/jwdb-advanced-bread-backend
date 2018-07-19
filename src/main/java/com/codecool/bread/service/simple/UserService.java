@@ -12,7 +12,7 @@ public interface UserService {
 
     Iterable<User> getAll();
 
-    Optional<User> get(String username);
+    Optional<Object> get(String username);
 
     User add(String username, String password, String confirmationPassword);
 
