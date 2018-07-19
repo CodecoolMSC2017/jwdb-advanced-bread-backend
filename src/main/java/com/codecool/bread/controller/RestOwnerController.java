@@ -4,6 +4,7 @@ import com.codecool.bread.exception.OwnerNotFoundException;
 import com.codecool.bread.exception.RestaurantNotFoundException;
 import com.codecool.bread.model.Owner;
 import com.codecool.bread.model.Restaurant;
+import com.codecool.bread.model.Table;
 import com.codecool.bread.service.OwnerServiceImpl;
 import com.codecool.bread.service.simple.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +52,11 @@ public class RestOwnerController {
     @PostMapping("/restaurant")
     public Restaurant addRestaurant(@RequestBody Restaurant restaurant, @PathVariable("ownerId") int ownerId) {
         return ownerService.addRestaurantToDb(restaurant, ownerId);
+    }
+
+    @PostMapping("/restaurant/{restaurantId}/table")
+    public Table addTable(@RequestBody Table table, @PathVariable("ownerId") int ownerId, @PathVariable("restaurantId") int restaurantId) {
+        return restaurantService.addOrModifyTableToDb(table, ownerId, restaurantId);
     }
 
     @PutMapping("/restaurant/{restaurantId}")

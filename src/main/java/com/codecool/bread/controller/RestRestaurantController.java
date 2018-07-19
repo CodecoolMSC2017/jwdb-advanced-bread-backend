@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/owner/{ownerId}/restaurant/{restaurantId}")
+@RequestMapping("/restaurant/{restaurantId}")
 public class RestRestaurantController {
 
     @Autowired
@@ -57,11 +57,6 @@ public class RestRestaurantController {
         }
         throw new SeatNotFoundException();
 
-    }
-
-    @PostMapping("table")
-    public Table addTable(@RequestBody Table table, @PathVariable("ownerId") int ownerId, @PathVariable("restaurantId") int restaurantId) {
-        return restaurantService.addOrModifyTableToDb(table, ownerId, restaurantId);
     }
 
     @PostMapping("/table/{tableId}/seat")
