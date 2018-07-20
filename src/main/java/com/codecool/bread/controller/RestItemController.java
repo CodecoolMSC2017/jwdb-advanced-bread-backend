@@ -50,9 +50,7 @@ public class RestItemController {
         }
     }
 
-    @PostMapping(path = "",
-            consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "")
     public Item addNewItem(@RequestBody Item item, @PathVariable("restaurantId") int restaurantId, @PathVariable("ownerId") int ownerId) throws SQLException {
         return itemService.addNewItem(item, restaurantId, ownerId);
     }

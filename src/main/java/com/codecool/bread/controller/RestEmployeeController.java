@@ -6,7 +6,6 @@ import com.codecool.bread.model.Employee;
 import com.codecool.bread.repository.EmployeeRepository;
 import com.codecool.bread.service.simple.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
@@ -44,9 +43,7 @@ public class RestEmployeeController {
         }
     }
 
-    @PostMapping(path = "",
-            consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping("")
     public Employee addNewEmployee(@RequestBody Employee employee, @PathVariable("restaurantId") int restaurantId, @PathVariable("ownerId") int ownerId) throws SQLException {
         return employeeService.addNewToDb(employee, ownerId, restaurantId);
     }
