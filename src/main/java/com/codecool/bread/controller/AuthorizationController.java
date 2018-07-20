@@ -20,7 +20,7 @@ public class AuthorizationController {
     private UserService userService;
 
     @GetMapping("")
-    public Optional<Object> get(Principal principal) {
+    public Optional get(Principal principal) {
         return userService.get(principal.getName());
     }
 

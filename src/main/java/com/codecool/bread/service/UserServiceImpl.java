@@ -46,10 +46,10 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll();
     }
 
-    public Optional<Object> get(String username) {
+    public Optional get(String username) {
         User user = userRepository.findByUsername(username).get();
-        Optional<Object> owner = ownerRepository.findByUserId(user.getId());
-        Optional<Object> employee = employeeRepository.findByUserId(user.getId());
+        Optional owner = ownerRepository.findByUserId(user.getId());
+        Optional employee = employeeRepository.findByUserId(user.getId());
         if(owner.isPresent()) {
             return owner;
         }
