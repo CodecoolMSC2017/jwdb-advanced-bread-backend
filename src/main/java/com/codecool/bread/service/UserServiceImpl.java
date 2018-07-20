@@ -10,6 +10,7 @@ import com.codecool.bread.repository.UserRepository;
 import com.codecool.bread.service.simple.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Service;
@@ -52,8 +53,12 @@ public class UserServiceImpl implements UserService {
         Optional employee = employeeRepository.findByUserId(user.getId());
         if(owner.isPresent()) {
             return owner;
+        } if(employee.isPresent()) {
+            return employee;
+        } else {
+            throw new UserNotFoundException();
         }
-        return employee;
+
     }
 
     public User add(String username, String password, String confirmationPassword) {
