@@ -1,17 +1,13 @@
-package com.codecool.bread.service;
+package com.codecool.bread.service.simple;
 
-import com.codecool.bread.exception.OwnerNotFoundException;
 import com.codecool.bread.exception.UserNotFoundException;
-import com.codecool.bread.model.Employee;
-import com.codecool.bread.model.Owner;
 import com.codecool.bread.model.User;
 import com.codecool.bread.repository.EmployeeRepository;
 import com.codecool.bread.repository.OwnerRepository;
 import com.codecool.bread.repository.UserRepository;
-import com.codecool.bread.service.simple.UserService;
+import com.codecool.bread.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Service;

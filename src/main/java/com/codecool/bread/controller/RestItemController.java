@@ -5,8 +5,8 @@ import com.codecool.bread.exception.ItemNotFoundException;
 import com.codecool.bread.exception.NoItemsFoundException;
 import com.codecool.bread.model.Item;
 import com.codecool.bread.repository.ItemRepository;
-import com.codecool.bread.service.simple.ItemService;
-import com.codecool.bread.service.simple.RestaurantService;
+import com.codecool.bread.service.ItemService;
+import com.codecool.bread.service.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,7 +1,7 @@
 package com.codecool.bread.controller;
 
 import com.codecool.bread.model.User;
-import com.codecool.bread.service.simple.UserService;
+import com.codecool.bread.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,11 +1,10 @@
 package com.codecool.bread.controller;
 
 import com.codecool.bread.exception.RestaurantNotFoundException;
-import com.codecool.bread.model.Owner;
 import com.codecool.bread.model.Restaurant;
-import com.codecool.bread.service.simple.OwnerService;
-import com.codecool.bread.service.simple.RestaurantService;
-import com.codecool.bread.service.simple.UserService;
+import com.codecool.bread.service.OwnerService;
+import com.codecool.bread.service.RestaurantService;
+import com.codecool.bread.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,13 +27,13 @@ public class RestaurantController {
     @GetMapping("")
     public Set<Restaurant> getRestaurantsByOwnerId(Principal principal) {
         int ownerId = ownerService.getOwnerByIdFromDb(ownerService.getOwner(principal.getName()).getId()).getId();
-        return restaurantService.getRestaurantsByOwnerIdFromDb(ownerId);
+        return restaurantService.findAllByOwnerId(ownerId);
     }
 
     @GetMapping("/{restaurantId}")
-    public Restaurant getRestaurantById(@PathVariable("restaurantId") int restaurantId, Principal principal) throws RestaurantNotFoundException {
+    public Restaurant findById(@PathVariable("restaurantId") int restaurantId, Principal principal) throws RestaurantNotFoundException {
         int ownerId = ownerService.getOwnerByIdFromDb(ownerService.getOwner(principal.getName()).getId()).getId();
-        Restaurant restaurant = ownerService.getRestaurantByIdFromDb(restaurantId, ownerId);
+        Restaurant restaurant = restaurantService.findById(restaurantId, ownerId);
         if (restaurant == null) {
             throw new RestaurantNotFoundException();
         } else
@@ -42,14 +41,14 @@ public class RestaurantController {
     }
 
     @PostMapping("")
-    public Restaurant addRestaurant(@RequestBody Restaurant restaurant, Principal principal) {
+    public Restaurant add(@RequestBody Restaurant restaurant, Principal principal) {
         int ownerId = ownerService.getOwnerByIdFromDb(ownerService.getOwner(principal.getName()).getId()).getId();
-        return ownerService.addRestaurantToDb(restaurant, ownerId);
+        return restaurantService.add(restaurant, ownerId);
     }
 
     @PutMapping("/{restaurantId}")
-    public Restaurant changeRestaurantDetails(@RequestBody Restaurant restaurant, Principal principal) {
+    public Restaurant editDetails(@RequestBody Restaurant restaurant, Principal principal) {
         int ownerId = ownerService.getOwnerByIdFromDb(ownerService.getOwner(principal.getName()).getId()).getId();
-        return ownerService.editRestaurantDb(restaurant, ownerId);
+        return restaurantService.edit(restaurant, ownerId);
     }
 }

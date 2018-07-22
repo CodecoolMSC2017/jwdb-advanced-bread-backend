@@ -1,16 +1,11 @@
 package com.codecool.bread.controller;
 
 import com.codecool.bread.exception.OwnerNotFoundException;
-import com.codecool.bread.exception.RestaurantNotFoundException;
 import com.codecool.bread.model.Owner;
-import com.codecool.bread.model.Restaurant;
-import com.codecool.bread.model.Table;
-import com.codecool.bread.service.OwnerServiceImpl;
-import com.codecool.bread.service.simple.RestaurantService;
+import com.codecool.bread.service.simple.OwnerServiceImpl;
+import com.codecool.bread.service.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/owner")

@@ -3,7 +3,7 @@ package com.codecool.bread.controller;
 import com.codecool.bread.model.CustomerOrder;
 import com.codecool.bread.model.OrderItem;
 import com.codecool.bread.model.dto.OrderDto;
-import com.codecool.bread.service.simple.OrderService;
+import com.codecool.bread.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
