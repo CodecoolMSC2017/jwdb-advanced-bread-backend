@@ -13,7 +13,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/owner/restaurant")
-public class RestaurantController {
+public class RestaurantController extends AbstractController {
 
     @Autowired
     private RestaurantService restaurantService;
@@ -26,14 +26,12 @@ public class RestaurantController {
 
     @GetMapping("")
     public Set<Restaurant> findAllByOwnerId(Principal principal) {
-        int ownerId = ownerService.getOwnerById(ownerService.getOwnerByUsername(principal.getName()).getId()).getId();
-        return restaurantService.getAllByOwnerId(ownerId);
+        return restaurantService.getAllByOwnerId(getLoggedInOwnerId(principal));
     }
 
     @GetMapping("/{restaurantId}")
     public Restaurant findById(@PathVariable("restaurantId") int restaurantId, Principal principal) throws RestaurantNotFoundException {
-        int ownerId = ownerService.getOwnerById(ownerService.getOwnerByUsername(principal.getName()).getId()).getId();
-        Restaurant restaurant = restaurantService.getById(restaurantId, ownerId);
+        Restaurant restaurant = restaurantService.getById(restaurantId, getLoggedInOwnerId(principal));
         if (restaurant == null) {
             throw new RestaurantNotFoundException();
         } else
@@ -42,13 +40,11 @@ public class RestaurantController {
 
     @PostMapping("")
     public Restaurant add(@RequestBody Restaurant restaurant, Principal principal) {
-        int ownerId = ownerService.getOwnerById(ownerService.getOwnerByUsername(principal.getName()).getId()).getId();
-        return restaurantService.add(restaurant, ownerId);
+        return restaurantService.add(restaurant, getLoggedInOwnerId(principal));
     }
 
     @PutMapping("/{restaurantId}")
     public Restaurant editDetails(@RequestBody Restaurant restaurant, Principal principal) {
-        int ownerId = ownerService.getOwnerById(ownerService.getOwnerByUsername(principal.getName()).getId()).getId();
-        return restaurantService.edit(restaurant, ownerId);
+        return restaurantService.edit(restaurant, getLoggedInOwnerId(principal));
     }
 }

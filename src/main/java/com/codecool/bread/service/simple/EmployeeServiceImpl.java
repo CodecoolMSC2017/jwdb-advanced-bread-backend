@@ -1,7 +1,9 @@
 package com.codecool.bread.service.simple;
 
 import com.codecool.bread.exception.EmployeeNotFoundException;
+import com.codecool.bread.exception.NoEmployeeForRestaurantException;
 import com.codecool.bread.exception.RestaurantAccessDeniedException;
+import com.codecool.bread.exception.RestaurantNotFoundException;
 import com.codecool.bread.model.Employee;
 import com.codecool.bread.repository.EmployeeRepository;
 import com.codecool.bread.service.EmployeeService;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Set;
 
 @Service("employeeService")
 public class EmployeeServiceImpl implements EmployeeService {
@@ -25,11 +28,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Autowired
     private RestaurantService restaurantService;
 
-
     @Override
-    public List<Employee> getAllByRestaurantId(int ownerId, int restaurantId) {
-        restaurantService.getById(restaurantId, ownerId);
-        return employeeRepository.findByRestaurantId(restaurantId);
+    public Set<Employee> getAllByRestaurantId(int ownerId, int restaurantId) throws NoEmployeeForRestaurantException {
+        Set<Employee> result = employeeRepository.findByRestaurantIdAndRestaurantOwnerId(restaurantId, ownerId);
+        if (result.isEmpty()) {
+            throw new NoEmployeeForRestaurantException();
+        } else {
+            return result;
+        }
     }
 
     @Override
@@ -45,7 +51,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public void delete(int restaurantId, int employeeId) throws RestaurantAccessDeniedException, EmployeeNotFoundException, SQLException {
+    public void delete(int restaurantId, int employeeId) throws RestaurantAccessDeniedException, EmployeeNotFoundException {
         employeeRepository.delete(employeeRepository.findByIdAndRestaurantId(employeeId, restaurantId));
     }
 

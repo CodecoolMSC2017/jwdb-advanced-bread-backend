@@ -6,10 +6,14 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
-    List<Employee> findByRestaurantId(Integer restaurantId);
+
+    Set<Employee> findByRestaurantIdAndRestaurantOwnerId(Integer restaurantId, Integer restaurantOwnerId);
+
     Employee findByIdAndRestaurantId(Integer id, Integer restaurantId);
+
     Optional<Employee> findByUserId(Integer id);
 }

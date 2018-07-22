@@ -8,12 +8,14 @@ import com.codecool.bread.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Set;
 
 @RestController
-@RequestMapping("owner/{ownerId}/restaurant/{restaurantId}/employee")
-public class RestEmployeeController {
+@RequestMapping("owner/restaurant/{restaurantId}/employee")
+public class RestEmployeeController extends AbstractController {
 
     @Autowired
     private EmployeeService employeeService;
@@ -22,18 +24,14 @@ public class RestEmployeeController {
     private EmployeeRepository employeeRepository;
 
     @GetMapping("")
-    public Iterable<Employee> getEmployeesByRestaurantId(@PathVariable("ownerId") int ownerId, @PathVariable("restaurantId") int restaurantId) throws SQLException {
-        Iterable<Employee> employees = employeeService.getAllByRestaurantId(ownerId, restaurantId);
-        if(((List<Employee>) employees).size() == 0) {
-            throw new EmployeeNotFoundException("s");
-        }
-        return employees;
+    public Set<Employee> getEmployeesByRestaurantId(@PathVariable("restaurantId") int restaurantId, Principal principal) {
+        return employeeService.getAllByRestaurantId(restaurantId, getLoggedInOwnerId(principal));
     }
 
     @GetMapping("/{employeeId}")
     public Employee getEmployeeById(@PathVariable("ownerId") int ownerId, @PathVariable("restaurantId") int restaurantId, @PathVariable("employeeId") int employeeId){
         if (employeeRepository.findById(employeeId).isPresent()) {
-            if (employeeRepository.findByRestaurantId(restaurantId).contains(employeeRepository.findById(employeeId).get())) {
+            if (employeeRepository.findByRestaurantIdAndRestaurantOwnerId(ownerId, restaurantId).contains(employeeRepository.findById(employeeId).get())) {
                 return employeeService.getById( restaurantId, employeeId);
             } else {
                 throw new RestaurantAccessDeniedException();
