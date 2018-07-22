@@ -5,14 +5,18 @@ import com.codecool.bread.exception.RestaurantAccessDeniedException;
 import com.codecool.bread.exception.RestaurantNotFoundException;
 import com.codecool.bread.model.Owner;
 import com.codecool.bread.model.Restaurant;
+import com.codecool.bread.model.User;
 import com.codecool.bread.repository.AddressRepository;
 import com.codecool.bread.repository.OwnerRepository;
 import com.codecool.bread.repository.RestaurantRepository;
+import com.codecool.bread.repository.UserRepository;
 import com.codecool.bread.service.simple.OwnerService;
+import com.codecool.bread.service.simple.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OwnerServiceImpl implements OwnerService {
@@ -21,18 +25,24 @@ public class OwnerServiceImpl implements OwnerService {
     private OwnerRepository ownerRepository;
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
     private RestaurantRepository restaurantRepository;
 
     @Autowired
     private AddressRepository addressRepository;
 
     public Owner getOwnerByIdFromDb(Integer id) throws OwnerNotFoundException {
-        return ownerRepository.findById(id).get();
+        Optional<Owner> result = ownerRepository.findById(id);
+        if (result.isPresent()) {
+            return result.get();
+        } else {
+            throw new OwnerNotFoundException();
+        }
     }
 
-    public List<Restaurant> getRestaurantsByOwnerIdFromDb(int id) {
-        return restaurantRepository.findByOwnerId(id);
-    }
+
 
     @Override
     public Restaurant getRestaurantByIdFromDb(int restaurantId, int ownerId) throws RestaurantAccessDeniedException, RestaurantNotFoundException {
@@ -53,5 +63,15 @@ public class OwnerServiceImpl implements OwnerService {
         restaurant.setOwner(getOwnerByIdFromDb(ownerId));
         restaurantRepository.save(restaurant);
         return restaurant;
+    }
+
+    public Owner getOwner(String username) throws OwnerNotFoundException {
+        User user = userService.get(username);
+        Optional<Owner> owner = ownerRepository.findById(user.getId());
+        if (owner.isPresent()) {
+            return owner.get();
+        } else {
+            throw new OwnerNotFoundException();
+        }
     }
 }

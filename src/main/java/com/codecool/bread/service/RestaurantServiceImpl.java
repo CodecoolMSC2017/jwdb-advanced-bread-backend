@@ -1,5 +1,6 @@
 package com.codecool.bread.service;
 
+import com.codecool.bread.exception.RestaurantNotFoundException;
 import com.codecool.bread.model.Restaurant;
 import com.codecool.bread.model.Seat;
 import com.codecool.bread.model.Table;
@@ -10,6 +11,10 @@ import com.codecool.bread.service.simple.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service("restaurantService")
@@ -24,6 +29,16 @@ public class RestaurantServiceImpl implements RestaurantService {
     @Autowired
     private SeatRepository seatRepository;
 
+    public Set<Restaurant> getRestaurantsByOwnerIdFromDb(int ownerId) {
+        Set<Restaurant> restaurants= new HashSet<>();
+        Optional<Restaurant> result = restaurantRepository.findByOwnerId(ownerId);
+        if (result.isPresent()) {
+            restaurants.add(result.get());
+        } else {
+            throw new RestaurantNotFoundException();
+        }
+        return restaurants;
+    }
 
     @Override
     public Set<Table> getAllTableByRestaurantIdFromDb(int restaurantId, int ownerId) {

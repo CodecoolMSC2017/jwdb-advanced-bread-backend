@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/owner/{ownerId}")
+@RequestMapping("/owners")
 public class RestOwnerController {
 
     @Autowired
@@ -22,45 +22,12 @@ public class RestOwnerController {
     @Autowired
     private OwnerServiceImpl ownerService;
 
-    @GetMapping("")
+    @GetMapping("/{ownerId}")
     public Owner getOwnerById(@PathVariable("ownerId") int ownerId) throws OwnerNotFoundException {
         Owner owner = ownerService.getOwnerByIdFromDb(ownerId);
         if (owner == null) {
             throw new OwnerNotFoundException();
         } else
             return owner;
-    }
-
-    @GetMapping("/restaurant")
-    public Iterable<Restaurant> getRestaurantsByOwnerId(@PathVariable("ownerId") int ownerId) {
-        List<Restaurant> restaurants = ownerService.getRestaurantsByOwnerIdFromDb(ownerId);
-        if (restaurants.size() == 0) {
-            throw new RestaurantNotFoundException();
-        } else
-            return restaurants;
-    }
-
-    @GetMapping("/restaurant/{restaurantId}")
-    public Restaurant getRestaurantById(@PathVariable("ownerId") int ownerId, @PathVariable("restaurantId") int restaurantId) throws RestaurantNotFoundException {
-        Restaurant restaurant = ownerService.getRestaurantByIdFromDb(restaurantId, ownerId);
-        if (restaurant == null) {
-            throw new RestaurantNotFoundException();
-        } else
-            return restaurant;
-    }
-
-    @PostMapping("/restaurant")
-    public Restaurant addRestaurant(@RequestBody Restaurant restaurant, @PathVariable("ownerId") int ownerId) {
-        return ownerService.addRestaurantToDb(restaurant, ownerId);
-    }
-
-    @PostMapping("/restaurant/{restaurantId}/table")
-    public Table addTable(@RequestBody Table table, @PathVariable("ownerId") int ownerId, @PathVariable("restaurantId") int restaurantId) {
-        return restaurantService.addOrModifyTableToDb(table, ownerId, restaurantId);
-    }
-
-    @PutMapping("/restaurant/{restaurantId}")
-    public Restaurant changeRestaurantDetails(@RequestBody Restaurant restaurant, @PathVariable("ownerId") int ownerId) {
-        return ownerService.editRestaurantDb(restaurant, ownerId);
     }
 }

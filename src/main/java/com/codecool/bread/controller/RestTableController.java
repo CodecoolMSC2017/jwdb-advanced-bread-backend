@@ -7,12 +7,11 @@ import com.codecool.bread.service.simple.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Set;
 
 @RestController
 @RequestMapping("/restaurant/{restaurantId}") // TODO ???? service methods don't work without ownerID, have to be fixed
-public class RestRestaurantController {
+public class RestTableController {
 
     @Autowired
     private RestaurantService restaurantService;

@@ -13,12 +13,13 @@ public interface OwnerService {
 
     Owner getOwnerByIdFromDb(Integer id) throws OwnerNotFoundException;
 
-    List<Restaurant> getRestaurantsByOwnerIdFromDb(int id);
-
     Restaurant getRestaurantByIdFromDb(int restaurantId, int ownerId) throws RestaurantAccessDeniedException, RestaurantNotFoundException;
 
     Restaurant addRestaurantToDb(Restaurant restaurant, int ownerId);
 
     Restaurant editRestaurantDb(Restaurant restaurant, int ownerId);
+
+    Owner getOwner(String username) throws OwnerNotFoundException;
+
 
 }

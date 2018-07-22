@@ -8,7 +8,6 @@ import com.codecool.bread.repository.ItemRepository;
 import com.codecool.bread.service.simple.ItemService;
 import com.codecool.bread.service.simple.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;

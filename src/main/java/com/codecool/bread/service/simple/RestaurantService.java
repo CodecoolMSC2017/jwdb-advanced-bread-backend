@@ -1,12 +1,16 @@
 package com.codecool.bread.service.simple;
 
+import com.codecool.bread.model.Restaurant;
 import com.codecool.bread.model.Seat;
 import com.codecool.bread.model.Table;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Set;
 
 public interface RestaurantService {
+
+    Set<Restaurant> getRestaurantsByOwnerIdFromDb(int ownerId);
 
     Set<Table> getAllTableByRestaurantIdFromDb(int restaurantId, int ownerId);
 

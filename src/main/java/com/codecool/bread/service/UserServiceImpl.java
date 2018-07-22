@@ -1,5 +1,6 @@
 package com.codecool.bread.service;
 
+import com.codecool.bread.exception.OwnerNotFoundException;
 import com.codecool.bread.exception.UserNotFoundException;
 import com.codecool.bread.model.Employee;
 import com.codecool.bread.model.Owner;
@@ -47,18 +48,13 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll();
     }
 
-    public Optional get(String username) {
-        User user = userRepository.findByUsername(username).get();
-        Optional owner = ownerRepository.findByUserId(user.getId());
-        Optional employee = employeeRepository.findByUserId(user.getId());
-        if(owner.isPresent()) {
-            return owner;
-        } if(employee.isPresent()) {
-            return employee;
+    public User get(String username) {
+        Optional<User> user = userRepository.findByUsername(username);
+        if(user.isPresent()) {
+            return user.get();
         } else {
             throw new UserNotFoundException();
         }
-
     }
 
     public User add(String username, String password, String confirmationPassword) {

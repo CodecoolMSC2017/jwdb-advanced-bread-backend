@@ -1,5 +1,6 @@
 package com.codecool.bread.service.simple;
 
+import com.codecool.bread.model.Owner;
 import com.codecool.bread.model.User;
 
 import java.util.Optional;
@@ -12,7 +13,7 @@ public interface UserService {
 
     Iterable<User> getAll();
 
-    Optional get(String username);
+    User get(String username);
 
     User add(String username, String password, String confirmationPassword);
 

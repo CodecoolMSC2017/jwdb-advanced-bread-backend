@@ -1,5 +1,6 @@
 package com.codecool.bread.controller;
 
+import com.codecool.bread.model.User;
 import com.codecool.bread.service.simple.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,7 +20,7 @@ public class AuthorizationController {
     private UserService userService;
 
     @GetMapping("")
-    public Optional get(Principal principal) {
+    public User get(Principal principal) {
         return userService.get(principal.getName());
     }
 
