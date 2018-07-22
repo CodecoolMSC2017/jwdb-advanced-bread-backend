@@ -68,27 +68,26 @@ INSERT INTO seat(active, restaurant_table_id) VALUES
     (TRUE, 7); --14
 
 INSERT INTO ingredient(name) VALUES
-    ('paradicsomszósz'), --1
-    ('sajt'), --2
+    ('ketchup'), --1
+    ('cheese'), --2
     ('oregano'), --3
-    ('sonka'), --4
-    ('gomba'), --5
-    ('szalámi'), --6
-    ('füstölt csülök'), --7
-    ('juhtúró'), --8
+    ('ham'), --4
+    ('mushroom'), --5
+    ('salami'), --6
+    ('smoked paw'), --7
+    ('cottage cheese'), --8
     ('bacon'), --9
-    ('tenger gyümölcsei'), --10
-    ('citrom'), --11
-    ('tonhal'), --12
-    ('kukorica'), --13
-    ('kolbász'), --14
-    ('zöldborsó'), --15
-    ('csirkemell'), --16
-    ('pármai sonka'), --17
-    ('hagyma'), --18
-    ('bab'), --19
-    ('füstölt sajt'), --20
-    ('tarja'); --21
+    ('sea fruits'), --10
+    ('lemon'), --11
+    ('tuna'), --12
+    ('corn'), --13
+    ('sausage'), --14
+    ('pea'), --15
+    ('chicken breasts'), --16
+    ('prosciutto'), --17
+    ('onion'), --18
+    ('beans'), --19
+    ('smoked cheese'); --20
 
 INSERT INTO item(name ,price ,category ,restaurant_id) VALUES
     ('Pizza Margareta', 1150,'PIZZA',1),
@@ -118,10 +117,10 @@ INSERT INTO item(name ,price ,category ,restaurant_id) VALUES
     ('Rooibos', 290, 'TEA',1);
 
 INSERT INTO item_ingredient (item_id, ingredient_id) VALUES
-     (15, 21),
+     (15, 20),
      (8, 4),
      (18, 19),
-     (21, 13),
+     (20, 13),
      (17, 11),
      (15, 19),
      (20, 20),
@@ -134,7 +133,7 @@ INSERT INTO item_ingredient (item_id, ingredient_id) VALUES
      (17, 19),
      (12, 4),
      (5, 11),
-     (7, 21),
+     (7, 20),
      (15, 10),
      (15, 16),
      (23, 12),
@@ -158,7 +157,7 @@ INSERT INTO item_ingredient (item_id, ingredient_id) VALUES
      (17, 18),
      (22, 8),
      (12, 6),
-     (21, 5),
+     (20, 5),
      (2, 19),
      (1, 11),
      (10, 4),
@@ -168,7 +167,7 @@ INSERT INTO item_ingredient (item_id, ingredient_id) VALUES
      (2, 10),
      (12, 7),
      (4, 17),
-     (21, 21),
+     (20, 19),
      (14, 1),
      (3, 14),
      (16, 7),
@@ -182,7 +181,7 @@ INSERT INTO item_ingredient (item_id, ingredient_id) VALUES
      (15, 17),
      (10, 8),
      (25, 13),
-     (22, 21),
+     (22, 11),
      (7, 4),
      (12, 16),
      (22, 17),
@@ -190,13 +189,13 @@ INSERT INTO item_ingredient (item_id, ingredient_id) VALUES
      (23, 12),
      (6, 4),
      (4, 3),
-     (5, 21),
+     (5, 17),
      (24, 20),
      (24, 10),
      (8, 3),
-     (21, 8),
+     (20, 8),
      (19, 6),
-     (21, 5),
+     (20, 5),
      (3, 9),
      (3, 13),
      (23, 8),
@@ -208,11 +207,11 @@ INSERT INTO item_ingredient (item_id, ingredient_id) VALUES
      (1, 13),
      (22, 8),
      (4, 1),
-     (21, 7),
+     (20, 7),
      (12, 17),
      (11, 18),
      (8, 13),
-     (11, 21),
+     (11, 20),
      (15, 20),
      (23, 3),
      (13, 17),
