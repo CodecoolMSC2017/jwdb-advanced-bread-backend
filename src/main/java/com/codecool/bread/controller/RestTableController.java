@@ -1,12 +1,15 @@
 package com.codecool.bread.controller;
 
 import com.codecool.bread.exception.*;
+import com.codecool.bread.model.Owner;
 import com.codecool.bread.model.Seat;
 import com.codecool.bread.model.Table;
+import com.codecool.bread.service.simple.OwnerService;
 import com.codecool.bread.service.simple.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.Set;
 
 @RestController
@@ -15,6 +18,9 @@ public class RestTableController {
 
     @Autowired
     private RestaurantService restaurantService;
+
+    @Autowired
+    private OwnerService ownerService;
 
     @GetMapping("/table")
     public Set<Table> getAllTablesByRestaurantId(@PathVariable("ownerId") int ownerId, @PathVariable("restaurantId") int restaurantId) {
@@ -56,6 +62,12 @@ public class RestTableController {
         }
         throw new SeatNotFoundException();
 
+    }
+
+    @PostMapping("/table")
+    public Table addTable(@RequestBody Table table, @PathVariable("restaurantId") int restaurantId, Principal principal) {
+        Owner owner = ownerService.getOwnerByIdFromDb(ownerService.getOwner(principal.getName()).getId());
+        return restaurantService.addOrModifyTableToDb(table, owner.getId(), restaurantId);
     }
 
     @PostMapping("/table/{tableId}/seat")

@@ -30,14 +30,12 @@ public class RestaurantServiceImpl implements RestaurantService {
     private SeatRepository seatRepository;
 
     public Set<Restaurant> getRestaurantsByOwnerIdFromDb(int ownerId) {
-        Set<Restaurant> restaurants= new HashSet<>();
-        Optional<Restaurant> result = restaurantRepository.findByOwnerId(ownerId);
-        if (result.isPresent()) {
-            restaurants.add(result.get());
+        Set<Restaurant> restaurants= restaurantRepository.findByOwnerId(ownerId);
+        if (restaurants != null) {
+            return restaurants;
         } else {
             throw new RestaurantNotFoundException();
         }
-        return restaurants;
     }
 
     @Override

@@ -6,10 +6,11 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Repository("restaurantRepository")
 public interface RestaurantRepository extends JpaRepository<Restaurant, Integer> {
-    Optional<Restaurant> findByOwnerId(Integer id);
+    Set<Restaurant> findByOwnerId(Integer id);
 
     Restaurant findByIdAndOwnerId(Integer restaurantId, Integer ownerId);
 }

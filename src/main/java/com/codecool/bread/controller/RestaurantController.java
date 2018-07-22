@@ -3,7 +3,6 @@ package com.codecool.bread.controller;
 import com.codecool.bread.exception.RestaurantNotFoundException;
 import com.codecool.bread.model.Owner;
 import com.codecool.bread.model.Restaurant;
-import com.codecool.bread.model.Table;
 import com.codecool.bread.service.simple.OwnerService;
 import com.codecool.bread.service.simple.RestaurantService;
 import com.codecool.bread.service.simple.UserService;
@@ -14,7 +13,7 @@ import java.security.Principal;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/owners/restaurants")
+@RequestMapping("/owner/restaurant")
 public class RestaurantController {
 
     @Autowired
@@ -26,33 +25,31 @@ public class RestaurantController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/restaurant")
+    @GetMapping("")
     public Set<Restaurant> getRestaurantsByOwnerId(Principal principal) {
         Owner owner = ownerService.getOwnerByIdFromDb(ownerService.getOwner(principal.getName()).getId());
         return restaurantService.getRestaurantsByOwnerIdFromDb(owner.getId());
     }
 
-    @GetMapping("/restaurant/{restaurantId}")
-    public Restaurant getRestaurantById(@PathVariable("ownerId") int ownerId, @PathVariable("restaurantId") int restaurantId) throws RestaurantNotFoundException {
-        Restaurant restaurant = ownerService.getRestaurantByIdFromDb(restaurantId, ownerId);
+    @GetMapping("/{restaurantId}")
+    public Restaurant getRestaurantById(@PathVariable("restaurantId") int restaurantId, Principal principal) throws RestaurantNotFoundException {
+        Owner owner = ownerService.getOwnerByIdFromDb(ownerService.getOwner(principal.getName()).getId());
+        Restaurant restaurant = ownerService.getRestaurantByIdFromDb(restaurantId, owner.getId());
         if (restaurant == null) {
             throw new RestaurantNotFoundException();
         } else
             return restaurant;
     }
 
-    @PostMapping("/restaurant")
-    public Restaurant addRestaurant(@RequestBody Restaurant restaurant, @PathVariable("ownerId") int ownerId) {
-        return ownerService.addRestaurantToDb(restaurant, ownerId);
+    @PostMapping("")
+    public Restaurant addRestaurant(@RequestBody Restaurant restaurant, Principal principal) {
+        Owner owner = ownerService.getOwnerByIdFromDb(ownerService.getOwner(principal.getName()).getId());
+        return ownerService.addRestaurantToDb(restaurant, owner.getId());
     }
 
-    @PostMapping("/restaurant/{restaurantId}/table")
-    public Table addTable(@RequestBody Table table, @PathVariable("ownerId") int ownerId, @PathVariable("restaurantId") int restaurantId) {
-        return restaurantService.addOrModifyTableToDb(table, ownerId, restaurantId);
-    }
-
-    @PutMapping("/restaurant/{restaurantId}")
-    public Restaurant changeRestaurantDetails(@RequestBody Restaurant restaurant, @PathVariable("ownerId") int ownerId) {
-        return ownerService.editRestaurantDb(restaurant, ownerId);
+    @PutMapping("/{restaurantId}")
+    public Restaurant changeRestaurantDetails(@RequestBody Restaurant restaurant, Principal principal) {
+        Owner owner = ownerService.getOwnerByIdFromDb(ownerService.getOwner(principal.getName()).getId());
+        return ownerService.editRestaurantDb(restaurant, owner.getId());
     }
 }
