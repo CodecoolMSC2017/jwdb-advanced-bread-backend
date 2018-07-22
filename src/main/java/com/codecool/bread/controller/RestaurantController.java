@@ -27,14 +27,14 @@ public class RestaurantController {
 
     @GetMapping("")
     public Set<Restaurant> getRestaurantsByOwnerId(Principal principal) {
-        Owner owner = ownerService.getOwnerByIdFromDb(ownerService.getOwner(principal.getName()).getId());
-        return restaurantService.getRestaurantsByOwnerIdFromDb(owner.getId());
+        int ownerId = ownerService.getOwnerByIdFromDb(ownerService.getOwner(principal.getName()).getId()).getId();
+        return restaurantService.getRestaurantsByOwnerIdFromDb(ownerId);
     }
 
     @GetMapping("/{restaurantId}")
     public Restaurant getRestaurantById(@PathVariable("restaurantId") int restaurantId, Principal principal) throws RestaurantNotFoundException {
-        Owner owner = ownerService.getOwnerByIdFromDb(ownerService.getOwner(principal.getName()).getId());
-        Restaurant restaurant = ownerService.getRestaurantByIdFromDb(restaurantId, owner.getId());
+        int ownerId = ownerService.getOwnerByIdFromDb(ownerService.getOwner(principal.getName()).getId()).getId();
+        Restaurant restaurant = ownerService.getRestaurantByIdFromDb(restaurantId, ownerId);
         if (restaurant == null) {
             throw new RestaurantNotFoundException();
         } else
@@ -43,13 +43,13 @@ public class RestaurantController {
 
     @PostMapping("")
     public Restaurant addRestaurant(@RequestBody Restaurant restaurant, Principal principal) {
-        Owner owner = ownerService.getOwnerByIdFromDb(ownerService.getOwner(principal.getName()).getId());
-        return ownerService.addRestaurantToDb(restaurant, owner.getId());
+        int ownerId = ownerService.getOwnerByIdFromDb(ownerService.getOwner(principal.getName()).getId()).getId();
+        return ownerService.addRestaurantToDb(restaurant, ownerId);
     }
 
     @PutMapping("/{restaurantId}")
     public Restaurant changeRestaurantDetails(@RequestBody Restaurant restaurant, Principal principal) {
-        Owner owner = ownerService.getOwnerByIdFromDb(ownerService.getOwner(principal.getName()).getId());
-        return ownerService.editRestaurantDb(restaurant, owner.getId());
+        int ownerId = ownerService.getOwnerByIdFromDb(ownerService.getOwner(principal.getName()).getId()).getId();
+        return ownerService.editRestaurantDb(restaurant, ownerId);
     }
 }
