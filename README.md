@@ -19,8 +19,8 @@ Restaurant Point-Of-Sale system backend
 * PUT /restaurant/{restaurantId}/table/{tableId}
 * PUT /restaurant/{restaurantId}/table/{tableId}/seat/{seatId}
 
-* GET /owner/{ownerId}/restaurant/{restaurantId}/employee
-* GET /owner/{ownerId}/restaurant/{restaurantId}/employee/{employeeId}
+* __GET /owner/restaurant/{restaurantId}/employee__
+* __GET /owner/restaurant/{restaurantId}/employee/{employeeId}__
 * POST /owner/{ownerId}/restaurant/{restaurantId}/employee
 * DELETE /owner/{ownerId}/restaurant/{restaurantId}/employee
 * PUT /owner/{ownerId}/restaurant/{restaurantId}/employee/{employeeId}
