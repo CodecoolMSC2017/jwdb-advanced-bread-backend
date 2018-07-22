@@ -39,8 +39,21 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee getById(int restaurantId, int employeeId) throws RestaurantAccessDeniedException, EmployeeNotFoundException {
+    public Employee getById(int employeeId, int restaurantId) throws RestaurantAccessDeniedException, EmployeeNotFoundException {
         return employeeRepository.findByIdAndRestaurantId(employeeId, restaurantId);
+    }
+
+    @Override
+    public Employee getByIdAndRestaurantIdAndOwnerId(int employeeId, int restaurantId, int ownerId) throws RestaurantAccessDeniedException, EmployeeNotFoundException {
+        if (employeeRepository.findById(employeeId).isPresent()) {
+            if (employeeRepository.findByRestaurantIdAndRestaurantOwnerId(ownerId, restaurantId).contains(employeeRepository.findById(employeeId).get())) {
+                return employeeRepository.findByIdAndRestaurantId(employeeId, restaurantId);
+            } else {
+                throw new RestaurantAccessDeniedException();
+            }
+        } else {
+            throw new EmployeeNotFoundException();
+        }
     }
 
     @Override

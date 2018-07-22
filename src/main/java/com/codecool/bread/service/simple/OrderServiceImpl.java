@@ -65,7 +65,7 @@ public class OrderServiceImpl implements OrderService {
         orderItem.setComment(orderDto.getComment());
         orderItemRepository.save(orderItem);
         customerOrder.setSeat(seat);
-        customerOrder.setEmployee(employeeService.getById(restaurantId, employeeId));
+        customerOrder.setEmployee(employeeService.getById(employeeId, restaurantId));
         customerOrder.setOrderItem(orderItem);
         customerOrderRepository.save(customerOrder);
         seat.getOrders().add(customerOrder);
@@ -75,7 +75,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void setEmployeeToTableInDb(int employeeId, int tableId, int restaurantId) {
-        Employee employee = employeeService.getById(restaurantId, employeeId);
+        Employee employee = employeeService.getById(employeeId, restaurantId);
         Table table =tableRepository.findByIdAndRestaurantId(tableId, restaurantId);
         table.setEmployee(employee);
         tableRepository.save(table);

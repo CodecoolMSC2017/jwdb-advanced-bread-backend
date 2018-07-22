@@ -29,16 +29,10 @@ public class RestEmployeeController extends AbstractController {
     }
 
     @GetMapping("/{employeeId}")
-    public Employee getEmployeeById(@PathVariable("ownerId") int ownerId, @PathVariable("restaurantId") int restaurantId, @PathVariable("employeeId") int employeeId){
-        if (employeeRepository.findById(employeeId).isPresent()) {
-            if (employeeRepository.findByRestaurantIdAndRestaurantOwnerId(ownerId, restaurantId).contains(employeeRepository.findById(employeeId).get())) {
-                return employeeService.getById( restaurantId, employeeId);
-            } else {
-                throw new RestaurantAccessDeniedException();
-            }
-        } else {
-            throw new EmployeeNotFoundException();
-        }
+    public Employee getByIdAndRestaurantId(@PathVariable("restaurantId") int restaurantId,
+                                           @PathVariable("employeeId") int employeeId,
+                                           Principal principal) {
+        return employeeService.getByIdAndRestaurantIdAndOwnerId(employeeId, restaurantId, getLoggedInOwnerId(principal));
     }
 
     @PostMapping("")
