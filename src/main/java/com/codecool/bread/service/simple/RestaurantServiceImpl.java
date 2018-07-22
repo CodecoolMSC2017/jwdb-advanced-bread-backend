@@ -43,10 +43,10 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     public Set<Restaurant> getAllByOwnerId(int ownerId) {
         Set<Restaurant> restaurants= restaurantRepository.findByOwnerId(ownerId);
-        if (restaurants != null) {
-            return restaurants;
-        } else {
+        if (restaurants.isEmpty()) {
             throw new RestaurantNotFoundException();
+        } else {
+            return restaurants;
         }
     }
 

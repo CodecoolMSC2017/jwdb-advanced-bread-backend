@@ -1,22 +1,24 @@
 package com.codecool.bread.service;
 
 import com.codecool.bread.exception.EmployeeNotFoundException;
+import com.codecool.bread.exception.NoEmployeeForRestaurantException;
 import com.codecool.bread.exception.RestaurantAccessDeniedException;
 import com.codecool.bread.model.Employee;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Set;
 
 public interface EmployeeService {
 
-    List<Employee> getAllByRestaurantId(int ownerId, int restaurantId) throws SQLException;
+    Set<Employee> getAllByRestaurantId(int ownerId, int restaurantId) throws NoEmployeeForRestaurantException;
 
     Employee getById(int restaurantId, int employeeId) throws RestaurantAccessDeniedException, EmployeeNotFoundException;
 
-    Employee add(Employee employee, int ownerId, int restaurantId) throws SQLException;
+    Employee add(Employee employee, int ownerId, int restaurantId);
 
-    void delete(int restaurantId, int employeeId) throws RestaurantAccessDeniedException, EmployeeNotFoundException, SQLException;
+    void delete(int restaurantId, int employeeId) throws RestaurantAccessDeniedException, EmployeeNotFoundException;
 
-    Employee editChanges(Employee employee, int restaurantId, int ownerId) throws SQLException;
+    Employee editChanges(Employee employee, int restaurantId, int ownerId);
 
 }
