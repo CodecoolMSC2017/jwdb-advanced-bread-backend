@@ -23,7 +23,7 @@ public class RestEmployeeController {
 
     @GetMapping("")
     public Iterable<Employee> getEmployeesByRestaurantId(@PathVariable("ownerId") int ownerId, @PathVariable("restaurantId") int restaurantId) throws SQLException {
-        Iterable<Employee> employees = employeeService.getAllByRestaurantIdFromDb(ownerId, restaurantId);
+        Iterable<Employee> employees = employeeService.getAllByRestaurantId(ownerId, restaurantId);
         if(((List<Employee>) employees).size() == 0) {
             throw new EmployeeNotFoundException("s");
         }
@@ -34,7 +34,7 @@ public class RestEmployeeController {
     public Employee getEmployeeById(@PathVariable("ownerId") int ownerId, @PathVariable("restaurantId") int restaurantId, @PathVariable("employeeId") int employeeId){
         if (employeeRepository.findById(employeeId).isPresent()) {
             if (employeeRepository.findByRestaurantId(restaurantId).contains(employeeRepository.findById(employeeId).get())) {
-                return employeeService.getByIdFromDb( restaurantId, employeeId);
+                return employeeService.getById( restaurantId, employeeId);
             } else {
                 throw new RestaurantAccessDeniedException();
             }
@@ -44,17 +44,17 @@ public class RestEmployeeController {
     }
 
     @PostMapping("")
-    public Employee addNewEmployee(@RequestBody Employee employee, @PathVariable("restaurantId") int restaurantId, @PathVariable("ownerId") int ownerId) throws SQLException {
-        return employeeService.addNewToDb(employee, ownerId, restaurantId);
+    public Employee add(@RequestBody Employee employee, @PathVariable("restaurantId") int restaurantId, @PathVariable("ownerId") int ownerId) throws SQLException {
+        return employeeService.add(employee, ownerId, restaurantId);
     }
 
     @DeleteMapping("/{employeeId}")
-    public void deleteEmployeeById(@PathVariable("restaurantId") int restaurantId, @PathVariable("employeeId") int employeeId) throws SQLException {
-        employeeService.deleteFromDb(restaurantId, employeeId);
+    public void delete(@PathVariable("restaurantId") int restaurantId, @PathVariable("employeeId") int employeeId) throws SQLException {
+        employeeService.delete(restaurantId, employeeId);
     }
 
     @PutMapping("/{employeeId}")
-    public Employee changeDetails(@RequestBody Employee employee, @PathVariable("restaurantId") int restaurantId, @PathVariable("ownerId") int ownerId) throws SQLException {
-        return employeeService.saveChanges(employee, restaurantId, ownerId);
+    public Employee editDetails(@RequestBody Employee employee, @PathVariable("restaurantId") int restaurantId, @PathVariable("ownerId") int ownerId) throws SQLException {
+        return employeeService.editChanges(employee, restaurantId, ownerId);
     }
 }

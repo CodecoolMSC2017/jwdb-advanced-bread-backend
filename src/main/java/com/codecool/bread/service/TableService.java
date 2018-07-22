@@ -6,9 +6,9 @@ import java.util.Set;
 
 public interface TableService {
 
-    Set<Table> getAllTableByRestaurantIdFromDb(int restaurantId, int ownerId);
+    Set<Table> getAllTableByRestaurantId(int restaurantId, int ownerId);
 
-    Table getTableByIdFromDb(int tableId, int restaurantId);
+    Table getTableById(int tableId, int restaurantId);
 
-    Table addOrModifyTableToDb(Table table, int ownerId, int restaurantId);
+    Table addOrModifyTable(Table table, int ownerId, int restaurantId);
 }

@@ -27,31 +27,31 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 
     @Override
-    public List<Employee> getAllByRestaurantIdFromDb(int ownerId, int restaurantId) {
-        restaurantService.findById(restaurantId, ownerId);
+    public List<Employee> getAllByRestaurantId(int ownerId, int restaurantId) {
+        restaurantService.getById(restaurantId, ownerId);
         return employeeRepository.findByRestaurantId(restaurantId);
     }
 
     @Override
-    public Employee getByIdFromDb(int restaurantId, int employeeId) throws RestaurantAccessDeniedException, EmployeeNotFoundException {
+    public Employee getById(int restaurantId, int employeeId) throws RestaurantAccessDeniedException, EmployeeNotFoundException {
         return employeeRepository.findByIdAndRestaurantId(employeeId, restaurantId);
     }
 
     @Override
-    public Employee addNewToDb(Employee employee, int ownerId, int restaurantId) {
-        employee.setRestaurant(restaurantService.findById(restaurantId, ownerId));
+    public Employee add(Employee employee, int ownerId, int restaurantId) {
+        employee.setRestaurant(restaurantService.getById(restaurantId, ownerId));
         employeeRepository.save(employee);
         return employee;
     }
 
     @Override
-    public void deleteFromDb(int restaurantId, int employeeId) throws RestaurantAccessDeniedException, EmployeeNotFoundException, SQLException {
+    public void delete(int restaurantId, int employeeId) throws RestaurantAccessDeniedException, EmployeeNotFoundException, SQLException {
         employeeRepository.delete(employeeRepository.findByIdAndRestaurantId(employeeId, restaurantId));
     }
 
     @Override
-    public Employee saveChanges(Employee employee, int restaurantId, int ownerId) {
-        employee.setRestaurant(restaurantService.findById(restaurantId, ownerId));
+    public Employee editChanges(Employee employee, int restaurantId, int ownerId) {
+        employee.setRestaurant(restaurantService.getById(restaurantId, ownerId));
         employeeRepository.save(employee);
         return employee;
     }

@@ -12,9 +12,9 @@ import java.util.Set;
 
 public interface RestaurantService {
 
-    Restaurant findById(int restaurantId, int ownerId) throws RestaurantAccessDeniedException, RestaurantNotFoundException;
+    Restaurant getById(int restaurantId, int ownerId) throws RestaurantAccessDeniedException, RestaurantNotFoundException;
 
-    Set<Restaurant> findAllByOwnerId(int ownerId);
+    Set<Restaurant> getAllByOwnerId(int ownerId);
 
     Restaurant add(Restaurant restaurant, int ownerId);
 

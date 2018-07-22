@@ -19,7 +19,7 @@ public class RestOwnerController {
 
     @GetMapping("/{ownerId}")
     public Owner getOwnerById(@PathVariable("ownerId") int ownerId) throws OwnerNotFoundException {
-        Owner owner = ownerService.getOwnerByIdFromDb(ownerId);
+        Owner owner = ownerService.getOwnerById(ownerId);
         if (owner == null) {
             throw new OwnerNotFoundException();
         } else

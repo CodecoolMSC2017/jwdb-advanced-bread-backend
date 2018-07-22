@@ -37,11 +37,11 @@ public class RestaurantServiceImpl implements RestaurantService {
     private TableService tableService;
 
     @Override
-    public Restaurant findById(int restaurantId, int ownerId) throws RestaurantAccessDeniedException, RestaurantNotFoundException {
+    public Restaurant getById(int restaurantId, int ownerId) throws RestaurantAccessDeniedException, RestaurantNotFoundException {
         return restaurantRepository.findByIdAndOwnerId(restaurantId, ownerId);
     }
 
-    public Set<Restaurant> findAllByOwnerId(int ownerId) {
+    public Set<Restaurant> getAllByOwnerId(int ownerId) {
         Set<Restaurant> restaurants= restaurantRepository.findByOwnerId(ownerId);
         if (restaurants != null) {
             return restaurants;
@@ -53,15 +53,15 @@ public class RestaurantServiceImpl implements RestaurantService {
     @Override
     public Restaurant add(Restaurant restaurant, int ownerId) {
         addressRepository.save(restaurant.getAddress());
-        restaurant.setOwner(ownerService.getOwnerByIdFromDb(ownerId));
-        ownerService.getOwnerByIdFromDb(ownerId).getRestaurants().add(restaurant);
+        restaurant.setOwner(ownerService.getOwnerById(ownerId));
+        ownerService.getOwnerById(ownerId).getRestaurants().add(restaurant);
         restaurantRepository.save(restaurant);
         return restaurant;
     }
 
     @Override
     public Restaurant edit(Restaurant restaurant, int ownerId) {
-        restaurant.setOwner(ownerService.getOwnerByIdFromDb(ownerId));
+        restaurant.setOwner(ownerService.getOwnerById(ownerId));
         restaurantRepository.save(restaurant);
         return restaurant;
     }

@@ -11,9 +11,9 @@ import java.util.List;
 
 public interface OwnerService {
 
-    Owner getOwnerByIdFromDb(Integer id) throws OwnerNotFoundException;
+    Owner getOwnerById(Integer id) throws OwnerNotFoundException;
 
-    Owner getOwner(String username) throws OwnerNotFoundException;
+    Owner getOwnerByUsername(String username) throws OwnerNotFoundException;
 
 
 }

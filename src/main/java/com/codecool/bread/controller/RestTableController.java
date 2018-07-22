@@ -15,7 +15,7 @@ import java.security.Principal;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/restaurant/{restaurantId}") // TODO ???? service methods don't work without ownerID, have to be fixed
+@RequestMapping("/restaurant/{restaurantId}")
 public class RestTableController {
 
     @Autowired
@@ -32,7 +32,7 @@ public class RestTableController {
 
     @GetMapping("/table")
     public Set<Table> getAllTablesByRestaurantId(@PathVariable("ownerId") int ownerId, @PathVariable("restaurantId") int restaurantId) {
-        Set<Table> tables = tableService.getAllTableByRestaurantIdFromDb(restaurantId, ownerId);
+        Set<Table> tables = tableService.getAllTableByRestaurantId(restaurantId, ownerId);
         if (tables.size() == 0) {
             throw new NoTablesFoundException();
         } else
@@ -41,8 +41,8 @@ public class RestTableController {
 
     @GetMapping("/table/{tableId}")
     public Table getTableById(@PathVariable("ownerId")int ownerId, @PathVariable("restaurantId") int restaurantId, @PathVariable("tableId") int tableId) {
-        Set<Table> tables = tableService.getAllTableByRestaurantIdFromDb(restaurantId, ownerId);
-        Table table = tableService.getTableByIdFromDb(tableId, restaurantId);
+        Set<Table> tables = tableService.getAllTableByRestaurantId(restaurantId, ownerId);
+        Table table = tableService.getTableById(tableId, restaurantId);
         if(table == null){
             throw new TableNotFoundException();
         }
@@ -54,7 +54,7 @@ public class RestTableController {
 
     @GetMapping("/table/{tableId}/seat")
     public Set<Seat> getAllSeatsByRestaurantId(@PathVariable("restaurantId") int restaurantId, @PathVariable("tableId") int tableId) {
-        Set<Seat> seats = seatService.getAllSeatByTableIdFromDb(restaurantId, tableId);
+        Set<Seat> seats = seatService.getAllSeatByTableId(restaurantId, tableId);
         if(seats.size() != 0){
             return seats;
         }else
@@ -63,8 +63,8 @@ public class RestTableController {
 
     @GetMapping("/table/{tableId}/seat/{seatId}")
     public Seat getSeatById(@PathVariable("restaurantId") int restaurantId, @PathVariable("tableId") int tableId, @PathVariable("seatId") int seatId) {
-        Seat seat = seatService.getSeatByIdFromDb(restaurantId, tableId, seatId);
-        Set<Seat> seats = seatService.getAllSeatByTableIdFromDb(restaurantId, tableId);
+        Seat seat = seatService.getSeatById(restaurantId, tableId, seatId);
+        Set<Seat> seats = seatService.getAllSeatByTableId(restaurantId, tableId);
         if(seats.contains(seat)){
             return seat;
         }
@@ -74,23 +74,23 @@ public class RestTableController {
 
     @PostMapping("/table")
     public Table addTable(@RequestBody Table table, @PathVariable("restaurantId") int restaurantId, Principal principal) {
-        Owner owner = ownerService.getOwnerByIdFromDb(ownerService.getOwner(principal.getName()).getId());
-        return tableService.addOrModifyTableToDb(table, owner.getId(), restaurantId);
+        Owner owner = ownerService.getOwnerById(ownerService.getOwnerByUsername(principal.getName()).getId());
+        return tableService.addOrModifyTable(table, owner.getId(), restaurantId);
     }
 
     @PostMapping("/table/{tableId}/seat")
     public Seat addSeat(@RequestBody Seat seat, @PathVariable("tableId") int tableId, @PathVariable("restaurantId") int restaurantId) {
-        return seatService.addOrModifySeatToDb(seat, restaurantId, tableId);
+        return seatService.addOrModifySeat(seat, restaurantId, tableId);
     }
 
     @PutMapping("table/{tableId}")
     public Table modifyTable(@RequestBody Table table, @PathVariable("ownerId") int ownerId, @PathVariable("restaurantId") int restaurantId) {
-        return tableService.addOrModifyTableToDb(table, ownerId, restaurantId);
+        return tableService.addOrModifyTable(table, ownerId, restaurantId);
     }
 
     @PutMapping("table/{tableId}/seat/{seatId}")
     public Seat modifySeat(@RequestBody Seat seat, @PathVariable("tableId") int tableId, @PathVariable("restaurantId") int restaurantId) {
-        return seatService.addOrModifySeatToDb(seat, restaurantId, tableId);
+        return seatService.addOrModifySeat(seat, restaurantId, tableId);
     }
 }
 

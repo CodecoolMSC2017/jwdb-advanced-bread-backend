@@ -25,15 +25,15 @@ public class RestaurantController {
     private UserService userService;
 
     @GetMapping("")
-    public Set<Restaurant> getRestaurantsByOwnerId(Principal principal) {
-        int ownerId = ownerService.getOwnerByIdFromDb(ownerService.getOwner(principal.getName()).getId()).getId();
-        return restaurantService.findAllByOwnerId(ownerId);
+    public Set<Restaurant> findAllByOwnerId(Principal principal) {
+        int ownerId = ownerService.getOwnerById(ownerService.getOwnerByUsername(principal.getName()).getId()).getId();
+        return restaurantService.getAllByOwnerId(ownerId);
     }
 
     @GetMapping("/{restaurantId}")
     public Restaurant findById(@PathVariable("restaurantId") int restaurantId, Principal principal) throws RestaurantNotFoundException {
-        int ownerId = ownerService.getOwnerByIdFromDb(ownerService.getOwner(principal.getName()).getId()).getId();
-        Restaurant restaurant = restaurantService.findById(restaurantId, ownerId);
+        int ownerId = ownerService.getOwnerById(ownerService.getOwnerByUsername(principal.getName()).getId()).getId();
+        Restaurant restaurant = restaurantService.getById(restaurantId, ownerId);
         if (restaurant == null) {
             throw new RestaurantNotFoundException();
         } else
@@ -42,13 +42,13 @@ public class RestaurantController {
 
     @PostMapping("")
     public Restaurant add(@RequestBody Restaurant restaurant, Principal principal) {
-        int ownerId = ownerService.getOwnerByIdFromDb(ownerService.getOwner(principal.getName()).getId()).getId();
+        int ownerId = ownerService.getOwnerById(ownerService.getOwnerByUsername(principal.getName()).getId()).getId();
         return restaurantService.add(restaurant, ownerId);
     }
 
     @PutMapping("/{restaurantId}")
     public Restaurant editDetails(@RequestBody Restaurant restaurant, Principal principal) {
-        int ownerId = ownerService.getOwnerByIdFromDb(ownerService.getOwner(principal.getName()).getId()).getId();
+        int ownerId = ownerService.getOwnerById(ownerService.getOwnerByUsername(principal.getName()).getId()).getId();
         return restaurantService.edit(restaurant, ownerId);
     }
 }

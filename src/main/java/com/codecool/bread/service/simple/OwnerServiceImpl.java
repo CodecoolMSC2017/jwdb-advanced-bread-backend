@@ -28,7 +28,7 @@ public class OwnerServiceImpl implements OwnerService {
     @Autowired
     private AddressRepository addressRepository;
 
-    public Owner getOwnerByIdFromDb(Integer id) throws OwnerNotFoundException {
+    public Owner getOwnerById(Integer id) throws OwnerNotFoundException {
         Optional<Owner> result = ownerRepository.findById(id);
         if (result.isPresent()) {
             return result.get();
@@ -37,7 +37,7 @@ public class OwnerServiceImpl implements OwnerService {
         }
     }
 
-    public Owner getOwner(String username) throws OwnerNotFoundException {
+    public Owner getOwnerByUsername(String username) throws OwnerNotFoundException {
         User user = userService.get(username);
         Optional<Owner> owner = ownerRepository.findById(user.getId());
         if (owner.isPresent()) {

@@ -20,17 +20,17 @@ public class TableServiceImpl implements TableService {
     private RestaurantRepository restaurantRepository;
 
     @Override
-    public Set<Table> getAllTableByRestaurantIdFromDb(int restaurantId, int ownerId) {
+    public Set<Table> getAllTableByRestaurantId(int restaurantId, int ownerId) {
         return restaurantRepository.findByIdAndOwnerId(restaurantId, ownerId).getTables();
     }
 
     @Override
-    public Table getTableByIdFromDb(int tableId, int restaurantId) {
+    public Table getTableById(int tableId, int restaurantId) {
         return tableRepository.findByIdAndRestaurantId(tableId, restaurantId);
     }
 
     @Override
-    public Table addOrModifyTableToDb(Table table, int ownerId, int restaurantId) {
+    public Table addOrModifyTable(Table table, int ownerId, int restaurantId) {
         Restaurant restaurant = restaurantRepository.findByIdAndOwnerId(restaurantId, ownerId);
         restaurant.getTables().add(table);
         table.setRestaurant(restaurant);

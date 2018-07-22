@@ -24,17 +24,17 @@ public class SeatServiceImpl implements SeatService {
     private TableRepository tableRepository;
 
     @Override
-    public Set<Seat> getAllSeatByTableIdFromDb(int restaurantId, int tableId) {
-        return tableService.getTableByIdFromDb(tableId, restaurantId).getSeats();
+    public Set<Seat> getAllSeatByTableId(int restaurantId, int tableId) {
+        return tableService.getTableById(tableId, restaurantId).getSeats();
     }
 
     @Override
-    public Seat getSeatByIdFromDb(int restaurantId, int tableId, int seatId) {
+    public Seat getSeatById(int restaurantId, int tableId, int seatId) {
         return seatRepository.findByIdAndTableId(seatId, tableId);
     }
 
     @Override
-    public Seat addOrModifySeatToDb(Seat seat, int restaurantId, int tableId) {
+    public Seat addOrModifySeat(Seat seat, int restaurantId, int tableId) {
         Table table = tableRepository.findByIdAndRestaurantId(tableId, restaurantId);
         table.getSeats().add(seat);
         seat.setTable(table);
