@@ -3,14 +3,18 @@ INSERT INTO users(username, password, enabled) VALUES
     ('davolio', '$2a$04$mrVOIvQZKlIPW0BYXwtaWuV1sZDsoSLSixtxYUhRZh3jpjfKDf736', true), --2
     ('a.fuller', '$2a$04$mrVOIvQZKlIPW0BYXwtaWuV1sZDsoSLSixtxYUhRZh3jpjfKDf736', true), --3
     ('leverling', '$2a$04$mrVOIvQZKlIPW0BYXwtaWuV1sZDsoSLSixtxYUhRZh3jpjfKDf736', true), --4
-    ('stan', '$2a$04$mrVOIvQZKlIPW0BYXwtaWuV1sZDsoSLSixtxYUhRZh3jpjfKDf736', true); --5
+    ('stan', '$2a$04$mrVOIvQZKlIPW0BYXwtaWuV1sZDsoSLSixtxYUhRZh3jpjfKDf736', true), --5
+    ('moreno', '$2a$04$mrVOIvQZKlIPW0BYXwtaWuV1sZDsoSLSixtxYUhRZh3jpjfKDf736', true), --6
+    ('manders', '$2a$04$mrVOIvQZKlIPW0BYXwtaWuV1sZDsoSLSixtxYUhRZh3jpjfKDf736', true); --7
 
 INSERT INTO authorities(username, authority) VALUES
 	('robking', 'ROLE_ADMIN'),
 	('davolio', 'ROLE_ADMIN'),
 	('a.fuller', 'ROLE_USER'),
 	('leverling', 'ROLE_USER'),
-	('stan', 'ROLE_USER');
+	('stan', 'ROLE_USER'),
+	('moreno', 'ROLE_USER'),
+	('manders', 'ROLE_USER');
 
 INSERT INTO address(street, city, postal_code, state, country) VALUES
 	('4110 Old Redmond Rd.', 'Redmond', '98502', 'Washington', 'USA'), --1
@@ -34,7 +38,9 @@ INSERT INTO restaurant(owner_id, name, email, address_id, phone) VALUES
 INSERT INTO employee(user_id, email, first_name, last_name, title, restaurant_id) VALUES
 	(3, 'andrew.fuller@gmail.com', 'Andrew', 'Fuller', 'CHEF', 1), --1
 	(4, 'janet.leverling@gmail.com', 'Janet', 'Leverling', 'WAITER', 1), --2
-	(5, 'stan.super@gmail.com', 'Stan', 'Super', 'WAITER', 3); --3
+	(5, 'stan.super@gmail.com', 'Stan', 'Super', 'WAITER', 3), --3
+	(6, 'maria.anders@gmail.com', 'Maria', 'Anders', 'WAITER', 1), --4
+	(7, 'antonio.moreno@gmail.com', 'Antonio', 'Moreno', 'CHEF', 3); --5
 
 INSERT INTO restaurant_table(name, active, restaurant_id) VALUES
 	('Table ONE', TRUE, 1), --1
