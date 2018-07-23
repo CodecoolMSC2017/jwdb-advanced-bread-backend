@@ -22,9 +22,9 @@ Restaurant Point-Of-Sale system backend
 * __GET /owner/restaurant/{restaurantId}/employee__
 * __GET /owner/restaurant/{restaurantId}/employee/{employeeId}__
 * __POST /owner/{ownerId}/restaurant/{restaurantId}/employee__
-* DELETE /owner/{ownerId}/restaurant/{restaurantId}/employee
-* PUT /owner/{ownerId}/restaurant/{restaurantId}/employee/{employeeId}
-* __PUT /owner/{ownerId}/restaurant/{restaurantId}/employee/{employeeId}/addusername__
+* __DELETE /owner/restaurant/{restaurantId}/employee__ - Deactivates the user.
+* __PUT /owner/restaurant/{restaurantId}/employee/{employeeId}__
+* __PUT /owner/restaurant/{restaurantId}/employee/{employeeId}/addusername__ - Connects an existing employee with a username. It requieres a username, a password and a confirmation password and returns an employee
 
 * GET /owner/{ownerId}/restaurant/{restaurantId}/ingredient
 * GET /owner/{ownerId}/restaurant/{restaurantId}/ingredient/{ingredientId}
