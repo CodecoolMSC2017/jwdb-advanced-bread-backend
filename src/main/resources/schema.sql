@@ -68,7 +68,7 @@ CREATE TABLE restaurant (
 
 CREATE TABLE employee (
 	id SERIAL PRIMARY KEY,
-	user_id INTEGER NOT NULL,
+	user_id INTEGER,
 	email TEXT NOT NULL,
 	first_name TEXT NOT NULL,
 	last_name TEXT NOT NULL,

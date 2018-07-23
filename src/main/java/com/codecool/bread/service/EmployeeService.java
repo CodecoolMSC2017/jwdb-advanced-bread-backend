@@ -7,6 +7,7 @@ import com.codecool.bread.model.Employee;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public interface EmployeeService {
@@ -17,10 +18,12 @@ public interface EmployeeService {
 
     Employee getByIdAndRestaurantIdAndOwnerId(int employeeId, int restaurantId, int ownerId) throws RestaurantAccessDeniedException, EmployeeNotFoundException;
 
-    Employee add(Employee employee, int ownerId, int restaurantId);
+    Employee add(Employee employee, int restaurantId, int ownerId);
 
     void delete(int restaurantId, int employeeId) throws RestaurantAccessDeniedException, EmployeeNotFoundException;
 
     Employee editChanges(Employee employee, int restaurantId, int ownerId);
+
+    Employee addUsername(Map<String,String> user, int employeeId) throws EmployeeNotFoundException;
 
 }

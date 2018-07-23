@@ -6,21 +6,25 @@ import com.codecool.bread.exception.RestaurantAccessDeniedException;
 import com.codecool.bread.exception.RestaurantNotFoundException;
 import com.codecool.bread.model.Employee;
 import com.codecool.bread.repository.EmployeeRepository;
+import com.codecool.bread.repository.UserRepository;
 import com.codecool.bread.service.EmployeeService;
 import com.codecool.bread.service.OwnerService;
 import com.codecool.bread.service.RestaurantService;
+import com.codecool.bread.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service("employeeService")
 public class EmployeeServiceImpl implements EmployeeService {
 
     @Autowired
     private EmployeeRepository employeeRepository;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private OwnerService ownerService;
@@ -57,7 +61,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee add(Employee employee, int ownerId, int restaurantId) {
+    public Employee add(Employee employee, int restaurantId, int ownerId) {
         employee.setRestaurant(restaurantService.getById(restaurantId, ownerId));
         employeeRepository.save(employee);
         return employee;
@@ -73,5 +77,20 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.setRestaurant(restaurantService.getById(restaurantId, ownerId));
         employeeRepository.save(employee);
         return employee;
+    }
+
+    @Override
+    public Employee addUsername(Map<String, String> user, int employeeId) throws EmployeeNotFoundException {
+        String username = user.get("username");
+        String password = user.get("password");
+        String confirmationPassword = user.get("confirmationPassword");
+        userService.add(username, password, confirmationPassword);
+        Optional<Employee> employeeOptional = employeeRepository.findById(employeeId);
+        if (!employeeOptional.isPresent()) {
+            throw new EmployeeNotFoundException();
+        } else {
+            employeeOptional.get().setUser(userService.get(username));
+        }
+        return employeeOptional.get();
     }
 }

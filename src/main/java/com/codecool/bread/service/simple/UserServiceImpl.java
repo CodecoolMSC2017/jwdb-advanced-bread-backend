@@ -1,6 +1,7 @@
 package com.codecool.bread.service.simple;
 
 import com.codecool.bread.exception.UserNotFoundException;
+import com.codecool.bread.exception.UsernameTakenException;
 import com.codecool.bread.model.User;
 import com.codecool.bread.repository.EmployeeRepository;
 import com.codecool.bread.repository.OwnerRepository;
@@ -57,12 +58,15 @@ public class UserServiceImpl implements UserService {
         if (!password.equals(confirmationPassword)) {
             throw new IllegalArgumentException();
         }
-
-        userDetailsManager.createUser(new org.springframework.security.core.userdetails.User(
-                username,
-                passwordEncoder.encode(password),
-                AuthorityUtils.createAuthorityList("USER_ROLE")));
-        return userRepository.findByUsername(username).orElseThrow(UserNotFoundException::new);
+        if (userRepository.findByUsername(username).isPresent()) {
+            throw new UsernameTakenException(username);
+        } else {
+            userDetailsManager.createUser(new org.springframework.security.core.userdetails.User(
+                    username,
+                    passwordEncoder.encode(password),
+                    AuthorityUtils.createAuthorityList("USER_ROLE")));
+            return userRepository.findByUsername(username).orElseThrow(UserNotFoundException::new);
+        }
     }
 
     public void changePassword(String oldPassword, String newPassword, String confirmationPassword) {
