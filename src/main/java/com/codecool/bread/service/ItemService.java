@@ -13,7 +13,7 @@ public interface ItemService {
 
     List<Item> getItemsByRestaurantId(Integer restaurantId) throws NoItemsFoundException;
     Item getItemById(Integer id, Integer restaurantId) throws ItemAccessDeniedException, NoItemsFoundException;
-    Item addNewItem(Item item, int restaurantId, int ownerId);
+    Item addNewItem(Item item, int restaurantId);
     void deleteItem(int restaurantId, int itemId) throws RestaurantAccessDeniedException, ItemNotFoundException;
-    Item saveItemChanges(Item item, int restaurantId, int ownerId);
+    Item saveItemChanges(Item item, int restaurantId);
 }

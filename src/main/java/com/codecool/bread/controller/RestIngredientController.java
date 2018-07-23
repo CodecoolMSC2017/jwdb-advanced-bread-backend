@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/owner/{ownerId}/restaurant/{restaurantId}/ingredient")
+@RequestMapping("/owner/restaurant/{restaurantId}/ingredient")
 public class RestIngredientController {
 
     @Autowired

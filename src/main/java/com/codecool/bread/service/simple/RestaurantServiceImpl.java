@@ -13,6 +13,7 @@ import com.codecool.bread.service.TableService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.Set;
 
 @Service("restaurantService")
@@ -39,6 +40,14 @@ public class RestaurantServiceImpl implements RestaurantService {
     @Override
     public Restaurant getById(int restaurantId, int ownerId) throws RestaurantAccessDeniedException, RestaurantNotFoundException {
         return restaurantRepository.findByIdAndOwnerId(restaurantId, ownerId);
+    }
+
+    public Restaurant getById(int id) {
+        Optional<Restaurant> restaurant = restaurantRepository.findById(id);
+        if(!restaurant.isPresent()) {
+            throw new RestaurantNotFoundException();
+        }
+        return restaurant.get();
     }
 
     public Set<Restaurant> getAllByOwnerId(int ownerId) {

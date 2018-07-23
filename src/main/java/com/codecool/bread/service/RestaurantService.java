@@ -14,6 +14,8 @@ public interface RestaurantService {
 
     Restaurant getById(int restaurantId, int ownerId) throws RestaurantAccessDeniedException, RestaurantNotFoundException;
 
+    Restaurant getById(int restaurantId);
+
     Set<Restaurant> getAllByOwnerId(int ownerId);
 
     Restaurant add(Restaurant restaurant, int ownerId);
