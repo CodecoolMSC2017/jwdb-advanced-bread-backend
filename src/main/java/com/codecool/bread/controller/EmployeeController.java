@@ -46,8 +46,8 @@ public class EmployeeController extends AbstractController {
     }
 
     @PutMapping("/{employeeId}")
-    public Employee editDetails(@RequestBody Employee employee, @PathVariable("restaurantId") int restaurantId, @PathVariable("ownerId") int ownerId) throws SQLException {
-        return employeeService.editChanges(employee, restaurantId, ownerId);
+    public Employee editDetails(@RequestBody Employee employee, @PathVariable("restaurantId") int restaurantId, Principal principal) throws SQLException {
+        return employeeService.editChanges(employee, restaurantId, getLoggedInOwnerId(principal));
     }
 
     @PutMapping("/{employeeId}/addusername")
