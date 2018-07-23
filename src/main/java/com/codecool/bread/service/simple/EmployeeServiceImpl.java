@@ -1,12 +1,9 @@
 package com.codecool.bread.service.simple;
 
-import com.codecool.bread.exception.EmployeeNotFoundException;
-import com.codecool.bread.exception.NoEmployeeForRestaurantException;
-import com.codecool.bread.exception.RestaurantAccessDeniedException;
-import com.codecool.bread.exception.RestaurantNotFoundException;
+import com.codecool.bread.exception.*;
 import com.codecool.bread.model.Employee;
+import com.codecool.bread.model.Restaurant;
 import com.codecool.bread.repository.EmployeeRepository;
-import com.codecool.bread.repository.UserRepository;
 import com.codecool.bread.service.EmployeeService;
 import com.codecool.bread.service.OwnerService;
 import com.codecool.bread.service.RestaurantService;
@@ -15,7 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
+
 import java.util.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 @Service("employeeService")
 public class EmployeeServiceImpl implements EmployeeService {
@@ -34,12 +36,24 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Set<Employee> getAllByRestaurantId(int ownerId, int restaurantId) throws NoEmployeeForRestaurantException {
-        Set<Employee> result = employeeRepository.findByRestaurantIdAndRestaurantOwnerId(restaurantId, ownerId);
-        if (result.isEmpty()) {
+        Set<Employee> employees = employeeRepository.findByRestaurantIdAndRestaurantOwnerId(restaurantId, ownerId);
+        if (employees.isEmpty()) {
             throw new NoEmployeeForRestaurantException();
         } else {
-            return result;
+            return employees;
         }
+    }
+
+    public List<Employee> getAllEmployees(int ownerId) {
+        List<Employee> employees = new ArrayList();
+        Set<Restaurant> restaurants = restaurantService.getAllByOwnerId(ownerId);
+        for(Restaurant restautrant :restaurants) {
+            employees.addAll(restautrant.getEmployees());
+        }
+        if(employees.size() == 0) {
+            throw new NoEmployeeFoundException();
+        }
+        return employees;
     }
 
     @Override
