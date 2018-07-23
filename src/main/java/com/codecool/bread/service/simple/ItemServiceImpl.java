@@ -1,9 +1,6 @@
 package com.codecool.bread.service.simple;
 
-import com.codecool.bread.exception.ItemAccessDeniedException;
-import com.codecool.bread.exception.ItemNotFoundException;
-import com.codecool.bread.exception.NoItemsFoundException;
-import com.codecool.bread.exception.RestaurantAccessDeniedException;
+import com.codecool.bread.exception.*;
 import com.codecool.bread.model.Item;
 import com.codecool.bread.model.Restaurant;
 import com.codecool.bread.repository.ItemRepository;
@@ -33,18 +30,28 @@ public class ItemServiceImpl implements ItemService {
 
 
     public List<Item> getItemsByRestaurantId(Integer restaurantId) throws NoItemsFoundException {
-        return itemRepository.findByRestaurantId(restaurantId);
+        List<Item> items =itemRepository.findByRestaurantId(restaurantId);
+        if(items.size()==0) {
+            throw new NoItemsFoundException();
+        }
+        return items;
     }
 
     public Item getItemById(Integer id, Integer restaurantId) throws ItemAccessDeniedException, NoItemsFoundException {
-        return itemRepository.findByIdAndRestaurantId(id,restaurantId);
+        Item item = itemRepository.findByIdAndRestaurantId(id,restaurantId);
+        if(item == null) {
+            throw new NoItemsFoundException();
+        }
+        return item;
     }
 
     @Override
-    public Item addNewItem(Item item, int restaurantId, int ownerId) {
-
-        Restaurant restaurant = restaurantService.getById(restaurantId,ownerId);
+    public Item addNewItem(Item item, int restaurantId) {
+        Restaurant restaurant = restaurantService.getById(restaurantId);
         item.setRestaurant(restaurant);
+        if(itemRepository.findById(item.getId()).isPresent()) {
+            throw new ItemAlreadyExistsException();
+        }
         return itemRepository.save(item);
     }
 
@@ -63,9 +70,12 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Item saveItemChanges(Item item, int restaurantId, int ownerId) {
-        Restaurant restaurant = restaurantService.getById(restaurantId, ownerId);
+    public Item saveItemChanges(Item item, int restaurantId) {
+        Restaurant restaurant = restaurantService.getById(restaurantId);
         item.setRestaurant(restaurant);
+        if(!itemRepository.findById(item.getId()).isPresent()){
+            throw new ItemNotFoundException();
+        }
         return itemRepository.save(item);
     }
 
