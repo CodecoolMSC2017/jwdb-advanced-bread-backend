@@ -14,7 +14,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/owner/{ownerId}/restaurant/{restaurantId}/item")
+@RequestMapping("/owner/restaurant/{restaurantId}/item")
 public class RestItemController {
 
     @Autowired
@@ -50,8 +50,8 @@ public class RestItemController {
     }
 
     @PostMapping(path = "")
-    public Item addNewItem(@RequestBody Item item, @PathVariable("restaurantId") int restaurantId, @PathVariable("ownerId") int ownerId) throws SQLException {
-        return itemService.addNewItem(item, restaurantId, ownerId);
+    public Item addNewItem(@RequestBody Item item, @PathVariable("restaurantId") int restaurantId) throws SQLException {
+        return itemService.addNewItem(item, restaurantId);
     }
 
     @DeleteMapping("/{itemId}")
@@ -60,8 +60,8 @@ public class RestItemController {
     }
 
     @PutMapping("/{itemId}")
-    public Item changeItemDetails(@RequestBody Item item, @PathVariable("restaurantId") int restaurantId, @PathVariable("ownerId") int ownerId) throws SQLException {
-        return itemService.saveItemChanges(item, restaurantId, ownerId);
+    public Item changeItemDetails(@RequestBody Item item, @PathVariable("restaurantId") int restaurantId) throws SQLException {
+        return itemService.saveItemChanges(item, restaurantId);
     }
 
 }
