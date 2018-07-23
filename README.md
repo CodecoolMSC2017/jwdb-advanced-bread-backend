@@ -21,9 +21,10 @@ Restaurant Point-Of-Sale system backend
 
 * __GET /owner/restaurant/{restaurantId}/employee__
 * __GET /owner/restaurant/{restaurantId}/employee/{employeeId}__
-* POST /owner/{ownerId}/restaurant/{restaurantId}/employee
+* __POST /owner/{ownerId}/restaurant/{restaurantId}/employee__
 * DELETE /owner/{ownerId}/restaurant/{restaurantId}/employee
 * PUT /owner/{ownerId}/restaurant/{restaurantId}/employee/{employeeId}
+* __PUT /owner/{ownerId}/restaurant/{restaurantId}/employee/{employeeId}/addusername__
 
 * GET /owner/{ownerId}/restaurant/{restaurantId}/ingredient
 * GET /owner/{ownerId}/restaurant/{restaurantId}/ingredient/{ingredientId}
