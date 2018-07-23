@@ -12,10 +12,13 @@ import java.util.Set;
 public class Menu extends POSObject {
 
     private String title;
+
     @Column(name = "active")
     private boolean isActive;
+
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinTable(name = "menu_item", joinColumns = {@JoinColumn(name = "menu_id")},
+    @JoinTable(name = "menu_item",
+            joinColumns = {@JoinColumn(name = "menu_id")},
             inverseJoinColumns = {@JoinColumn(name = "item_id")})
     @JsonIgnore
     private Set<Item> items = new HashSet<>();

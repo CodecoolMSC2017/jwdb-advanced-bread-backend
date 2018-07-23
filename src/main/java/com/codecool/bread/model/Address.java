@@ -10,9 +10,12 @@ public class Address extends POSObject {
 
     private String street;
     private String city;
+
     @Column(name = "postal_code")
     private String postalCode;
+
     private String state;
+
     private String country;
 
     public String getStreet() {

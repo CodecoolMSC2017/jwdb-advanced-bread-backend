@@ -12,16 +12,20 @@ import java.util.Set;
 public class Table extends POSObject {
 
     private String name;
+
     @Column(name = "active")
     private boolean isActive;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "restaurant_id")
     @JsonIgnore
     private Restaurant restaurant;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "employee_id")
     @JsonIgnore
     private Employee employee;
+
     @OneToMany(mappedBy = "table", fetch = FetchType.LAZY)
     @JsonIgnore
     private Set<Seat> seats = new HashSet<>();

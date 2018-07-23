@@ -12,6 +12,7 @@ public class Invoice extends POSObject {
 
     @Column(columnDefinition = "DECIMAL(9,2)")
     private BigDecimal total;
+
     private Date date;
 
     public BigDecimal getTotal() {

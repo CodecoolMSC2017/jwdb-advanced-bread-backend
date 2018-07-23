@@ -64,12 +64,10 @@ public class Employee extends POSObject {
         this.role = role;
     }
 
-    //@JsonIgnore
     public Restaurant getRestaurant() {
         return restaurant;
     }
 
-    //@JsonProperty("restaurant")
     public void setRestaurant(Restaurant restaurant) {
         this.restaurant = restaurant;
     }

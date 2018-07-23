@@ -14,14 +14,20 @@ public class Owner extends POSObject {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User user;
+
     @Column(name = "first_name")
     private String firstName;
+
     @Column(name = "last_name")
     private String lastName;
+
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
     private Address address;
+
     private String email;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "owner")
     @JsonIgnore
     private Set<Restaurant> restaurants = new HashSet<>();

@@ -13,7 +13,9 @@ public class OrderItem extends POSObject {
     @JoinColumn(name = "item_id")
     @JsonIgnore
     private Item item;
+
     private int quantity;
+
     private String comment;
 
     public Item getItem() {
