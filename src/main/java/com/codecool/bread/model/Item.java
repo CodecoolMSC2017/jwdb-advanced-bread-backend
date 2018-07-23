@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import static org.hibernate.annotations.QueryHints.READ_ONLY;
@@ -81,4 +82,25 @@ public class Item extends POSObject {
     public void setName(String name) {
         this.name = name;
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, price, comment, category, ingredients, restaurant);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) return true;
+        if (!(o instanceof Item)) {
+            return false;
+        }
+        Item item = (Item) o;
+        return Objects.equals(name, item.name) &&
+                price == item.price &&
+                Objects.equals(comment, item.comment) &&
+                Objects.equals(category, item.category) &&
+                Objects.equals(ingredients, item.ingredients) &&
+                Objects.equals(restaurant, item.restaurant);
+    }
 }
+

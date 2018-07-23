@@ -25,7 +25,7 @@ CREATE TABLE users (
 CREATE TABLE authorities (
 	username TEXT NOT NULL,
 	authority TEXT NOT NULL,
-	CONSTRAINT fk_authorities_users FOREIGN KEY(username) REFERENCES users(username)
+	CONSTRAINT fk_authorities_users FOREIGN KEY(username) REFERENCES users(username) ON UPDATE CASCADE
 );
 
 CREATE UNIQUE INDEX ix_auth_username ON authorities (username,authority);
