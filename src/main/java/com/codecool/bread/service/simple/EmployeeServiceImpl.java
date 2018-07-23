@@ -3,7 +3,9 @@ package com.codecool.bread.service.simple;
 import com.codecool.bread.exception.*;
 import com.codecool.bread.model.Employee;
 import com.codecool.bread.model.Restaurant;
+import com.codecool.bread.model.User;
 import com.codecool.bread.repository.EmployeeRepository;
+import com.codecool.bread.repository.UserRepository;
 import com.codecool.bread.service.EmployeeService;
 import com.codecool.bread.service.OwnerService;
 import com.codecool.bread.service.RestaurantService;
@@ -24,6 +26,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Autowired
     private EmployeeRepository employeeRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private UserService userService;
@@ -83,7 +88,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public void delete(int restaurantId, int employeeId) throws RestaurantAccessDeniedException, EmployeeNotFoundException {
-        employeeRepository.delete(employeeRepository.findByIdAndRestaurantId(employeeId, restaurantId));
+        Optional<User> user = userService.get(employeeRepository.findByIdAndRestaurantId(employeeId, restaurantId).getUser().getId());
+        if (!user.isPresent()) {
+            throw new EmployeeNotFoundException();
+        } else {
+            userService.get(user.get().getUsername()).setEnabled(false);
+        }
+        userRepository.saveAndFlush(user.get());
     }
 
     @Override
