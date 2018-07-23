@@ -41,12 +41,12 @@ public class EmployeeController extends AbstractController {
     }
 
     @DeleteMapping("/{employeeId}")
-    public void delete(@PathVariable("restaurantId") int restaurantId, @PathVariable("employeeId") int employeeId) throws SQLException {
+    public void delete(@PathVariable("restaurantId") int restaurantId, @PathVariable("employeeId") int employeeId) {
         employeeService.delete(restaurantId, employeeId);
     }
 
     @PutMapping("/{employeeId}")
-    public Employee editDetails(@RequestBody Employee employee, @PathVariable("restaurantId") int restaurantId, Principal principal) throws SQLException {
+    public Employee editDetails(@RequestBody Employee employee, @PathVariable("restaurantId") int restaurantId, Principal principal) {
         return employeeService.editChanges(employee, restaurantId, getLoggedInOwnerId(principal));
     }
 
