@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import javax.persistence.Table;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -41,5 +42,24 @@ public class Ingredient extends POSObject {
 
     public void setAllergen(String allergen) {
         this.allergen = allergen;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, allergen);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == this) {
+            return true;
+        }
+        if(!(obj instanceof Ingredient)) {
+            return false;
+        }
+        Ingredient ingredient = (Ingredient) obj;
+
+        return Objects.equals(name, ingredient.name) &&
+                Objects.equals(allergen, ingredient.allergen);
     }
 }
