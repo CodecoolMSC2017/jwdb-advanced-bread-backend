@@ -1,5 +1,9 @@
 package com.codecool.bread.service.simple;
 
+import com.codecool.bread.exception.NoTablesFoundException;
+import com.codecool.bread.exception.RestaurantNotFoundException;
+import com.codecool.bread.exception.TableAccessDeniedException;
+import com.codecool.bread.exception.TableNotFoundException;
 import com.codecool.bread.model.Restaurant;
 import com.codecool.bread.model.Table;
 import com.codecool.bread.repository.RestaurantRepository;
@@ -8,6 +12,7 @@ import com.codecool.bread.service.TableService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -20,21 +25,51 @@ public class TableServiceImpl implements TableService {
     private RestaurantRepository restaurantRepository;
 
     @Override
-    public Set<Table> getAllTableByRestaurantId(int restaurantId, int ownerId) {
-        return restaurantRepository.findByIdAndOwnerId(restaurantId, ownerId).getTables();
+    public Set<Table> getAllTablesByRestaurantId(int restaurantId) throws NoTablesFoundException {
+        Set<Table> tables = tableRepository.findByRestaurantId(restaurantId);
+        if (tables.isEmpty()) {
+            throw new NoTablesFoundException();
+        }
+        return tables;
     }
 
     @Override
-    public Table getTableById(int tableId, int restaurantId) {
-        return tableRepository.findByIdAndRestaurantId(tableId, restaurantId);
+    public Table getTableById(int tableId, int restaurantId) throws TableNotFoundException {
+        Set<Table> tables = tableRepository.findByRestaurantId(restaurantId);
+        Optional<Table> table = tableRepository.findById(tableId);
+        if(!table.isPresent()){
+            throw new TableNotFoundException();
+        }
+        if(tables.contains(table.get())){
+            return table.get();
+        }
+        throw new TableAccessDeniedException();
     }
 
     @Override
-    public Table addOrModifyTable(Table table, int ownerId, int restaurantId) {
-        Restaurant restaurant = restaurantRepository.findByIdAndOwnerId(restaurantId, ownerId);
-        restaurant.getTables().add(table);
-        table.setRestaurant(restaurant);
+    public Table add(Table table, int restaurantId) throws RestaurantNotFoundException {
+        Optional<Restaurant> restaurant = restaurantRepository.findById(restaurantId);
+        if (!restaurant.isPresent()) {
+            throw new RestaurantNotFoundException();
+        }
+        restaurant.get().getTables().add(table);
+        table.setRestaurant(restaurant.get());
         tableRepository.save(table);
         return table;
+    }
+
+
+    @Override
+    public Table edit(Table table) {
+        /*
+        Optional<Restaurant> restaurant = restaurantRepository.findByTableId(table.getId());
+        if (!restaurant.isPresent()) {
+            throw new RestaurantNotFoundException();
+        }
+        restaurant.get().getTables().add(table);
+        table.setRestaurant(restaurant.get());
+        return tableRepository.save(table);
+        */
+        return null;
     }
 }

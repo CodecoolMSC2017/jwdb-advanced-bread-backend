@@ -9,6 +9,7 @@ import com.codecool.bread.service.TableService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -35,9 +36,9 @@ public class SeatServiceImpl implements SeatService {
 
     @Override
     public Seat addOrModifySeat(Seat seat, int restaurantId, int tableId) {
-        Table table = tableRepository.findByIdAndRestaurantId(tableId, restaurantId);
-        table.getSeats().add(seat);
-        seat.setTable(table);
+        Optional<Table> table = tableRepository.findByIdAndRestaurantId(tableId, restaurantId);
+        table.get().getSeats().add(seat);
+        seat.setTable(table.get());
         seatRepository.save(seat);
         return seat;
     }
