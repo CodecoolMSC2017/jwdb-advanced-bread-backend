@@ -49,7 +49,7 @@ public class ItemServiceImpl implements ItemService {
     public Item addNewItem(Item item, int restaurantId) {
         Restaurant restaurant = restaurantService.getById(restaurantId);
         item.setRestaurant(restaurant);
-        if(itemRepository.findById(item.getId()).isPresent()) {
+        if(itemRepository.findById(item.getId()).isPresent() || itemRepository.findByName(item.getName()).isPresent()){
             throw new ItemAlreadyExistsException();
         }
         return itemRepository.save(item);
