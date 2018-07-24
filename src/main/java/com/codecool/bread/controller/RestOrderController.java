@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/restaurant/{restaurantId}/employee/{employeeId}/table/{tableId}") // TODO too many IDs
+@RequestMapping("/seat/{seatId}/order")
 public class RestOrderController {
 
     @Autowired
     private OrderService orderService;
 
-    @GetMapping("/seat/{seatId}/customerorder")
+    @GetMapping("")
     public Set<CustomerOrder> getAllCustomerOrderBySeat(@PathVariable("restaurantId") int restaurantId, @PathVariable("tableId") int tableId, @PathVariable("seatId") int seatId) {
         return orderService.getAllCustomerOrderBySeatFromDb(restaurantId, tableId, seatId);
     }
