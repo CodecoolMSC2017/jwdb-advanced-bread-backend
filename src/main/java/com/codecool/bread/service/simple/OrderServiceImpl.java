@@ -10,6 +10,7 @@ import com.codecool.bread.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -76,8 +77,8 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void setEmployeeToTableInDb(int employeeId, int tableId, int restaurantId) {
         Employee employee = employeeService.getById(employeeId, restaurantId);
-        Table table =tableRepository.findByIdAndRestaurantId(tableId, restaurantId);
-        table.setEmployee(employee);
-        tableRepository.save(table);
+        Optional<Table> table =tableRepository.findByIdAndRestaurantId(tableId, restaurantId);
+        table.get().setEmployee(employee);
+        tableRepository.save(table.get());
     }
 }
