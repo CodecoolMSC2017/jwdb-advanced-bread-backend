@@ -18,18 +18,7 @@ public abstract class AbstractController {
     private EmployeeService employeeService;
 
     int getLoggedInOwnerId(Principal principal) {
-        int userId = 0;
-        try {
-            userId = ownerService.getOwnerById(ownerService.getOwnerByUsername(principal.getName()).getId()).getId();
-            return userId;
-        } catch (OwnerNotFoundException o){
-            try{
-                userId = employeeService.getEmployeeById(employeeService.getEmployeeByUsername(principal.getName()).getId()).getId();
-                return userId;
-            } catch (EmployeeNotFoundException e) {
-                throw new UserNotFoundException();
-            }
-        }
+        return ownerService.getOwnerById(ownerService.getOwnerByUsername(principal.getName()).getId()).getId();
 
 
     }
