@@ -1,9 +1,12 @@
 package com.codecool.bread.controller;
 
-import com.codecool.bread.model.POSObject;
+
+import com.codecool.bread.service.EmployeeService;
 import com.codecool.bread.service.OwnerService;
+import com.codecool.bread.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.nio.file.attribute.UserPrincipalLookupService;
 import java.security.Principal;
 
 public abstract class AbstractController {
@@ -11,11 +14,20 @@ public abstract class AbstractController {
     @Autowired
     private OwnerService ownerService;
 
-    int getLoggedInOwnerId(Principal principal) {
-        return ownerService.getOwnerById(ownerService.getOwnerByUsername(principal.getName()).getId()).getId();
+    @Autowired
+    private EmployeeService employeeService;
+
+    @Autowired
+    private UserService userService;
+
+    int getUserId(Principal principal) {
+        return userService.get(principal.getName()).getId();
     }
 
-    boolean checkIdMatch(POSObject posObject, int id) {
-        return posObject.getId() == id;
+    int getLoggedInOwnerId(Principal principal) {
+        return ownerService.getOwnerById(ownerService.getOwnerByUsername(principal.getName()).getId()).getId();
+
+
     }
+
 }
