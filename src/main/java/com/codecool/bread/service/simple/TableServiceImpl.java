@@ -60,7 +60,7 @@ public class TableServiceImpl implements TableService {
 
 
     @Override
-    public Table edit(Table table, int restaurantId) {
+    public Table edit(Table table, int restaurantId) throws RestaurantNotFoundException {
         Optional<Restaurant> restaurant = restaurantRepository.findById(restaurantId);
         if (!restaurant.isPresent()) {
             throw new RestaurantNotFoundException();
