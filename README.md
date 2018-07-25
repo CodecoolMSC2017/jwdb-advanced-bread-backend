@@ -8,13 +8,13 @@ Restaurant Point-Of-Sale system backend
 * __GET /owner/restaurant/{id}__ - Obtains the restaurant associated with the given ID. If no restaurant exists, an HTTP 404 (Not Found) status is returned. If the restaurant can be found, an HTTP 200 status is returned and the response body contains the information associated with the restaurant.
 * __PUT /owner/restaurant/{id}__ - Updates an existing restaurant. If no restaurant with the given ID can be found, an HTTP 404 status is returned. If a restaurant exists with the given ID and the request body contains valid updates to the restaurant, the restaurant is updated and the updated restaurant is returned in the response body, along with an HTTP 200 status.
 * __DELETE /owner/restaurant/{id}__ - Deletes a restaurant with the given ID. If no restaurant exists, an HTTP 404 status is returned. If the restaurant exists, it is deleted, and an HTTP 204 (No Content) status is returned.
+
 * GET /owner/{ownerId}
-* POST /owner/{id}/restaurant/{id}/table
 
 * __GET /restaurant/{restaurantId}/table__
 * __GET /restaurant/{restaurantId}/table/{tableId}__
 * __POST /restaurant/{restaurantId}/table/{tableId}__
-* PUT /restaurant/{restaurantId}/table/{tableId}
+* __PUT /restaurant/{restaurantId}/table/{tableId}__
 
 * GET /restaurant/{restaurantId}/table/{tableId}/seat
 * GET /restaurant/{restaurantId}/table/{tableId}/seat/{seatId}
@@ -42,9 +42,8 @@ Restaurant Point-Of-Sale system backend
 * GET /restaurant/{restaurantId}/employee/{employeeId}/table/{tableId}/seat/{seatId}/customerorder/{customerOrderId}
 * GET /restaurant/{restaurantId}/employee/{employeeId}/table/{tableId}/seat/{seatId}/orderitem
 * POST /restaurant/{restaurantId}/employee/{employeeId}/table/{tableId}/seat/{seatId}/order
-* POST /restaurant/{restaurantId}/employee/{employeeId}/table/{tableId}
 
-* GET /owner/user
-* GET /owner/user/{userId}
-* POST /owner/user
-* POST /owner/user/change-password
+* __GET /owner/user__
+* __GET /owner/user/{userId}__
+* __POST /owner/user__
+* __POST /owner/user/change-password__
