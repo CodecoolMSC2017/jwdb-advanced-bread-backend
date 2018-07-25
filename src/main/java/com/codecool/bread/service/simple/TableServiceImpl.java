@@ -8,6 +8,7 @@ import com.codecool.bread.model.Restaurant;
 import com.codecool.bread.model.Table;
 import com.codecool.bread.repository.RestaurantRepository;
 import com.codecool.bread.repository.TableRepository;
+import com.codecool.bread.service.SeatService;
 import com.codecool.bread.service.TableService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,9 @@ public class TableServiceImpl implements TableService {
 
     @Autowired
     private RestaurantRepository restaurantRepository;
+
+    @Autowired
+    private SeatService seatService;
 
     @Override
     public Set<Table> getAllTablesByRestaurantId(int restaurantId) throws NoTablesFoundException {
@@ -92,7 +96,9 @@ public class TableServiceImpl implements TableService {
         if(!table.isPresent()) {
             throw new TableNotFoundException();
         }
+
         table.get().setEnabled(false);
+        seatService.deleteSeatsForTable(table.get().getSeats());
         tableRepository.saveAndFlush(table.get());
     }
 }
