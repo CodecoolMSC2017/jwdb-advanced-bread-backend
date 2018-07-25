@@ -1,9 +1,9 @@
 package com.codecool.bread.service.simple;
 
+import com.codecool.bread.exception.NoSeatsFoundException;
 import com.codecool.bread.exception.RestaurantNotFoundException;
 import com.codecool.bread.exception.SeatNotFoundException;
 import com.codecool.bread.exception.TableNotFoundException;
-import com.codecool.bread.model.Restaurant;
 import com.codecool.bread.model.Seat;
 import com.codecool.bread.model.Table;
 import com.codecool.bread.repository.SeatRepository;
@@ -33,9 +33,29 @@ public class SeatServiceImpl implements SeatService {
         return seatRepository.findByTableId(tableId);
     }
 
+    public Set<Seat> getEnableSeatsByTableId(int tableId) throws NoSeatsFoundException {
+        Set<Seat> enableSeats = seatRepository.findByTableIdAndEnabledTrue(tableId);
+        if(enableSeats.isEmpty()) {
+            throw new NoSeatsFoundException();
+        }
+        return enableSeats;
+    }
+
     @Override
     public Seat getSeatById(int tableId, int seatId) throws SeatNotFoundException {
         Set<Seat> seats = seatRepository.findByTableId(tableId);
+        Optional<Seat> seat = seatRepository.findById(seatId);
+        if (!seat.isPresent()) {
+            throw new SeatNotFoundException();
+        }
+        if(seats.contains(seat.get())){
+            return seat.get();
+        }
+        throw new SeatNotFoundException();
+    }
+
+    public Seat getEnableSeatById(int tableId, int seatId) throws SeatNotFoundException {
+        Set<Seat> seats = seatRepository.findByTableIdAndEnabledTrue(tableId);
         Optional<Seat> seat = seatRepository.findById(seatId);
         if (!seat.isPresent()) {
             throw new SeatNotFoundException();
@@ -76,6 +96,14 @@ public class SeatServiceImpl implements SeatService {
         }
         seat.setEnabled(false);
         seatRepository.saveAndFlush(seat);
+    }
+
+    @Override
+    public void deleteSeatsForTable(Set<Seat> seats) {
+        for(Seat seat : seats) {
+            seat.setEnabled(false);
+            seatRepository.saveAndFlush(seat);
+        }
     }
 
 }
