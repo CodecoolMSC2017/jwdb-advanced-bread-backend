@@ -16,10 +16,10 @@ Restaurant Point-Of-Sale system backend
 * __POST /restaurant/{restaurantId}/table/{tableId}__
 * __PUT /restaurant/{restaurantId}/table/{tableId}__
 
-* GET /restaurant/{restaurantId}/table/{tableId}/seat
-* GET /restaurant/{restaurantId}/table/{tableId}/seat/{seatId}
-* POST /restaurant/{restaurantId}/table/{tableId}/seat
-* PUT /restaurant/{restaurantId}/table/{tableId}/seat/{seatId}
+* __GET /table/{tableId}/seat__
+* __GET /table/{tableId}/seat/{seatId}__
+* __POST /table/{tableId}/seat__
+* __PUT /table/{tableId}/seat/{seatId}__
 
 * __GET /owner/restaurant/{restaurantId}/employee__
 * __GET /owner/restaurant/{restaurantId}/employee/{employeeId}__
@@ -38,10 +38,10 @@ Restaurant Point-Of-Sale system backend
 * DELETE /owner/{ownerId}/restaurant/{restaurantId}/item/{itemId}
 * PUT /owner/{ownerId}/restaurant/{restaurantId}/item{itemId}
 
-* GET /restaurant/{restaurantId}/employee/{employeeId}/table/{tableId}/seat/{seatId}/customerorder
-* GET /restaurant/{restaurantId}/employee/{employeeId}/table/{tableId}/seat/{seatId}/customerorder/{customerOrderId}
-* GET /restaurant/{restaurantId}/employee/{employeeId}/table/{tableId}/seat/{seatId}/orderitem
-* POST /restaurant/{restaurantId}/employee/{employeeId}/table/{tableId}/seat/{seatId}/order
+* GET /table/{tableId}/seat/{seatId}/customerorder
+* GET /table/{tableId}/seat/{seatId}/customerorder/{customerOrderId}
+* GET /table/{tableId}/seat/{seatId}/orderitem
+* POST /table/{tableId}/seat/{seatId}/order
 
 * __GET /owner/user__
 * __GET /owner/user/{userId}__
