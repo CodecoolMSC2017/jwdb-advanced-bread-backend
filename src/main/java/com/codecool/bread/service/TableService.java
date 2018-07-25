@@ -15,5 +15,5 @@ public interface TableService {
 
     Table add(Table table, int restaurantId) throws RestaurantNotFoundException;
 
-    Table edit(Table table);
+    Table edit(Table table, int restaurantId);
 }

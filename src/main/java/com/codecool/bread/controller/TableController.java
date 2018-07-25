@@ -45,11 +45,12 @@ public class TableController {
         return tableService.add(table, restaurantId);
     }
 
-    /*
+
     @PutMapping("table/{tableId}")
-    public Table editTable(@RequestBody Table table) {
-        return tableService.edit(table);
+    public Table editTable(@PathVariable("restaurantId") int restaurantId,
+                           @RequestBody Table table) {
+        return tableService.edit(table, restaurantId);
     }
-    */
+
 }
 

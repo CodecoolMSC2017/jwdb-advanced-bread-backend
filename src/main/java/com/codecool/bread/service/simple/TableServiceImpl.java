@@ -60,16 +60,13 @@ public class TableServiceImpl implements TableService {
 
 
     @Override
-    public Table edit(Table table) {
-        /*
-        Optional<Restaurant> restaurant = restaurantRepository.findByTableId(table.getId());
+    public Table edit(Table table, int restaurantId) {
+        Optional<Restaurant> restaurant = restaurantRepository.findById(restaurantId);
         if (!restaurant.isPresent()) {
             throw new RestaurantNotFoundException();
         }
-        restaurant.get().getTables().add(table);
         table.setRestaurant(restaurant.get());
         return tableRepository.save(table);
-        */
-        return null;
+
     }
 }
