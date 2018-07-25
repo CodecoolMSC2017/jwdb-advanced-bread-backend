@@ -64,13 +64,13 @@ public class OrderServiceImpl implements OrderService {
         orderItem.setItem(item);
         orderItem.setQuantity(orderDto.getQuantity());
         orderItem.setComment(orderDto.getComment());
-        orderItemRepository.save(orderItem);
+        orderItemRepository.saveAndFlush(orderItem);
         customerOrder.setSeat(seat);
         customerOrder.setEmployee(employeeService.getById(employeeId, restaurantId));
         customerOrder.setOrderItem(orderItem);
-        customerOrderRepository.save(customerOrder);
+        customerOrderRepository.saveAndFlush(customerOrder);
         seat.getOrders().add(customerOrder);
-        seatRepository.save(seat);
+        seatRepository.saveAndFlush(seat);
         return orderDto;
     }
 
@@ -79,6 +79,6 @@ public class OrderServiceImpl implements OrderService {
         Employee employee = employeeService.getById(employeeId, restaurantId);
         Optional<Table> table =tableRepository.findByIdAndRestaurantId(tableId, restaurantId);
         table.get().setEmployee(employee);
-        tableRepository.save(table.get());
+        tableRepository.saveAndFlush(table.get());
     }
 }

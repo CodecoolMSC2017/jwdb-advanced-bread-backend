@@ -31,7 +31,7 @@ public class IngredientServiceImpl implements IngredientService {
             throw new IngredientAlreadyExistsException();
         }
 
-        return ingredientRepository.save(ingredient);
+        return ingredientRepository.saveAndFlush(ingredient);
     }
 
     public void addNewIngredients(Set<Ingredient> ingredients) {
@@ -46,6 +46,6 @@ public class IngredientServiceImpl implements IngredientService {
 
     @Override
     public Ingredient editEmployee(Ingredient ingredient) throws IngredientNotFoundException{
-        return ingredientRepository.save(ingredient);
+        return ingredientRepository.saveAndFlush(ingredient);
     }
 }
