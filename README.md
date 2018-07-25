@@ -38,8 +38,8 @@ Restaurant Point-Of-Sale system backend
 * DELETE /owner/{ownerId}/restaurant/{restaurantId}/item/{itemId}
 * PUT /owner/{ownerId}/restaurant/{restaurantId}/item{itemId}
 
-* GET /table/{tableId}/seat/{seatId}/customerorder
-* GET /table/{tableId}/seat/{seatId}/customerorder/{customerOrderId}
+* __GET /seat/{seatId}/customer-order__
+* GET /table/{tableId}/seat/{seatId}/customer-order/{customerOrderId}
 * GET /table/{tableId}/seat/{seatId}/orderitem
 * POST /table/{tableId}/seat/{seatId}/order
 
