@@ -1,14 +1,19 @@
 package com.codecool.bread.service;
 
+import com.codecool.bread.exception.NoTablesFoundException;
+import com.codecool.bread.exception.RestaurantNotFoundException;
+import com.codecool.bread.exception.TableNotFoundException;
 import com.codecool.bread.model.Table;
 
 import java.util.Set;
 
 public interface TableService {
 
-    Set<Table> getAllTableByRestaurantId(int restaurantId, int ownerId);
+    Set<Table> getAllTablesByRestaurantId(int restaurantId) throws NoTablesFoundException;
 
-    Table getTableById(int tableId, int restaurantId);
+    Table getTableById(int tableId, int restaurantId) throws TableNotFoundException;
 
-    Table addOrModifyTable(Table table, int ownerId, int restaurantId);
+    Table add(Table table, int restaurantId) throws RestaurantNotFoundException;
+
+    Table edit(Table table);
 }

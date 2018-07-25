@@ -11,12 +11,14 @@ Restaurant Point-Of-Sale system backend
 * GET /owner/{ownerId}
 * POST /owner/{id}/restaurant/{id}/table
 
-* GET /restaurant/{restaurantId}/table
-* GET /restaurant/{restaurantId}/table/{tableId}
+* __GET /restaurant/{restaurantId}/table__
+* __GET /restaurant/{restaurantId}/table/{tableId}__
+* __POST /restaurant/{restaurantId}/table/{tableId}__
+* PUT /restaurant/{restaurantId}/table/{tableId}
+
 * GET /restaurant/{restaurantId}/table/{tableId}/seat
 * GET /restaurant/{restaurantId}/table/{tableId}/seat/{seatId}
 * POST /restaurant/{restaurantId}/table/{tableId}/seat
-* PUT /restaurant/{restaurantId}/table/{tableId}
 * PUT /restaurant/{restaurantId}/table/{tableId}/seat/{seatId}
 
 * __GET /owner/restaurant/{restaurantId}/employee__

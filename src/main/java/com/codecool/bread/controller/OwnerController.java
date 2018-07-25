@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/owner")
-public class RestOwnerController extends AbstractController {
+public class OwnerController extends AbstractController {
 
     @Autowired
     private RestaurantService restaurantService;
