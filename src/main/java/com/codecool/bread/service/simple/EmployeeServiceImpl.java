@@ -52,10 +52,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     public List<Employee> getAllEmployees(int ownerId) {
         List<Employee> employees = new ArrayList();
         Set<Restaurant> restaurants = restaurantService.getAllByOwnerId(ownerId);
-        for(Restaurant restautrant :restaurants) {
+        for (Restaurant restautrant : restaurants) {
             employees.addAll(restautrant.getEmployees());
         }
-        if(employees.size() == 0) {
+        if (employees.size() == 0) {
             throw new NoEmployeeFoundException();
         }
         return employees;
@@ -98,14 +98,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee editChanges(Employee employee, int restaurantId, int ownerId) {
-        if(getByIdAndRestaurantIdAndOwnerId(employee.getId(), restaurantId, ownerId) != null ) {
-            employee.setRestaurant(restaurantService.getById(restaurantId, ownerId));
-            employeeRepository.save(employee);
-            return employee;
-        } else {
-            throw new EmployeeNotFoundException();
-        }
+    public Employee editChanges(Employee employee, int restaurantId, int ownerId) throws EmployeeNotFoundException{
+        return employeeRepository.save(employee);
     }
 
     @Override

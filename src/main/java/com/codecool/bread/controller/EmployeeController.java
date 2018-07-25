@@ -1,5 +1,6 @@
 package com.codecool.bread.controller;
 
+import com.codecool.bread.exception.EmployeeNotFoundException;
 import com.codecool.bread.model.Employee;
 import com.codecool.bread.repository.EmployeeRepository;
 import com.codecool.bread.service.EmployeeService;
@@ -50,12 +51,17 @@ public class EmployeeController extends AbstractController {
     public Employee editDetails(@RequestBody Employee employee,
                                 @PathVariable("restaurantId") int restaurantId,
                                 Principal principal) {
-        return employeeService.editChanges(employee, restaurantId, getLoggedInOwnerId(principal));
+        if (employeeService.getByIdAndRestaurantIdAndOwnerId(employee.getId(), restaurantId,
+                getLoggedInOwnerId(principal)) != null) {
+            return employeeService.editChanges(employee, restaurantId, getLoggedInOwnerId(principal));
+        } else {
+            throw new EmployeeNotFoundException();
+        }
     }
 
     @PutMapping("/{employeeId}/addusername")
     public Employee addUsername(@PathVariable("employeeId") int employeeId,
-                                @RequestBody Map<String,String> user) {
+                                @RequestBody Map<String, String> user) {
         return employeeService.addUsername(user, employeeId);
     }
 }
