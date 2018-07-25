@@ -34,7 +34,7 @@ public class TableServiceImpl implements TableService {
     }
 
     @Override
-    public Table getTableById(int tableId, int restaurantId) throws TableNotFoundException {
+    public Table getTableById(int restaurantId, int tableId) throws TableNotFoundException {
         Set<Table> tables = tableRepository.findByRestaurantId(restaurantId);
         Optional<Table> table = tableRepository.findById(tableId);
         if(!table.isPresent()){
