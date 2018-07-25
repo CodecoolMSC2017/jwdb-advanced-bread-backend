@@ -13,6 +13,8 @@ import java.util.Set;
 public interface RestaurantRepository extends JpaRepository<Restaurant, Integer> {
     Set<Restaurant> findByOwnerId(Integer id);
 
+    Set<Restaurant> findByOwnerIdAndEnabledTrue(int ownerId);
+
     Restaurant findByIdAndOwnerId(Integer restaurantId, Integer ownerId);
 
 

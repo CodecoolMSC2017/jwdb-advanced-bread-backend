@@ -39,23 +39,36 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     public Restaurant getById(int restaurantId, int ownerId) throws RestaurantAccessDeniedException, RestaurantNotFoundException {
-        return restaurantRepository.findByIdAndOwnerId(restaurantId, ownerId);
+        Restaurant restaurant =restaurantRepository.findByIdAndOwnerId(restaurantId, ownerId);
+        if(restaurant == null || restaurant.isEnabled() == false) {
+            throw new RestaurantNotFoundException();
+        }
+        return restaurant;
     }
 
     public Restaurant getById(int id) {
         Optional<Restaurant> restaurant = restaurantRepository.findById(id);
-        if(!restaurant.isPresent()) {
+        if (!restaurant.isPresent()) {
             throw new RestaurantNotFoundException();
         }
         return restaurant.get();
     }
 
     public Set<Restaurant> getAllByOwnerId(int ownerId) {
-        Set<Restaurant> restaurants= restaurantRepository.findByOwnerId(ownerId);
+        Set<Restaurant> restaurants = restaurantRepository.findByOwnerId(ownerId);
         if (restaurants.isEmpty()) {
             throw new RestaurantNotFoundException();
         } else {
             return restaurants;
+        }
+    }
+
+    public Set<Restaurant> getAllEnableByOwnerId(int ownerId) throws RestaurantNotFoundException {
+        Set<Restaurant> enableRestaurants = restaurantRepository.findByOwnerIdAndEnabledTrue(ownerId);
+        if (enableRestaurants.isEmpty()) {
+            throw new RestaurantNotFoundException();
+        } else {
+            return enableRestaurants;
         }
     }
 
@@ -68,8 +81,18 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public Restaurant edit(Restaurant restaurant, int ownerId) throws RestaurantNotFoundException{
+    public Restaurant edit(Restaurant restaurant, int ownerId) throws RestaurantNotFoundException {
         restaurant.setOwner(ownerService.getOwnerById(ownerId));
         return restaurantRepository.saveAndFlush(restaurant);
+    }
+
+    @Override
+    public void deleteRestaurant(int restaurantId, int ownerId) throws RestaurantNotFoundException {
+        Restaurant restaurant = restaurantRepository.findByIdAndOwnerId(restaurantId, ownerId);
+        if (restaurant == null) {
+            throw new RestaurantNotFoundException();
+        }
+        restaurant.setEnabled(false);
+        restaurantRepository.saveAndFlush(restaurant);
     }
 }
