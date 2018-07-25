@@ -20,5 +20,5 @@ public interface RestaurantService {
 
     Restaurant add(Restaurant restaurant, int ownerId);
 
-    Restaurant edit(Restaurant restaurant, int ownerId);
+    Restaurant edit(Restaurant restaurant, int ownerId) throws RestaurantNotFoundException;
 }
