@@ -11,9 +11,15 @@ public interface TableService {
 
     Set<Table> getAllTablesByRestaurantId(int restaurantId) throws NoTablesFoundException;
 
+    Set<Table> getEnableTablesByRestaurantId(int restaurantId) throws NoTablesFoundException;
+
     Table getTableById(int tableId, int restaurantId) throws TableNotFoundException;
+
+    Table getEnableTableById(int restaurantId, int tableId) throws TableNotFoundException;
 
     Table add(Table table, int restaurantId) throws RestaurantNotFoundException;
 
     Table edit(Table table, int restaurantId);
+
+    void deleteTable(int tableId, int restaurantId) throws TableNotFoundException;
 }

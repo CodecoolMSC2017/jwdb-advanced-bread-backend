@@ -33,6 +33,15 @@ public class TableServiceImpl implements TableService {
         return tables;
     }
 
+    public Set<Table> getEnableTablesByRestaurantId(int restaurantId) throws NoTablesFoundException {
+        Set<Table> enableTables = tableRepository.findByRestaurantIdAndEnabledTrue(restaurantId);
+        if(enableTables.isEmpty()) {
+            throw new NoTablesFoundException();
+        }
+        return enableTables;
+    }
+
+
     @Override
     public Table getTableById(int restaurantId, int tableId) throws TableNotFoundException, TableAccessDeniedException {
         Set<Table> tables = tableRepository.findByRestaurantId(restaurantId);
@@ -44,6 +53,14 @@ public class TableServiceImpl implements TableService {
             return table.get();
         }
         throw new TableAccessDeniedException();
+    }
+
+    public Table getEnableTableById(int restaurantId, int tableId) throws TableNotFoundException {
+        Optional<Table> table = tableRepository.findByIdAndRestaurantIdAndEnabledTrue(tableId, restaurantId);
+        if(!table.isPresent()) {
+            throw new TableNotFoundException();
+        }
+        return table.get();
     }
 
     @Override
@@ -68,5 +85,14 @@ public class TableServiceImpl implements TableService {
         table.setRestaurant(restaurant.get());
         return tableRepository.save(table);
 
+    }
+
+    public void deleteTable(int tableId, int restaurantId) throws TableNotFoundException {
+        Optional<Table> table = tableRepository.findByIdAndRestaurantId(tableId,restaurantId);
+        if(!table.isPresent()) {
+            throw new TableNotFoundException();
+        }
+        table.get().setEnabled(false);
+        tableRepository.saveAndFlush(table.get());
     }
 }
