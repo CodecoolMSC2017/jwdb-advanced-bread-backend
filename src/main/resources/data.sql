@@ -40,13 +40,13 @@ INSERT INTO restaurant(owner_id, name, email, address_id, phone) VALUES
 	(1, 'Restaurant Rex', 'contact@restaurantrex.com', 2, '5553119'), --2
 	(2, 'Davolio Cafe', 'contact@davoliocafe.com', 7, '5553119'); --3
 
-INSERT INTO employee(user_id, email, first_name, last_name, title, restaurant_id) VALUES
-	(3, 'andrew.fuller@gmail.com', 'Andrew', 'Fuller', 'CHEF', 1), --1
-	(4, 'janet.leverling@gmail.com', 'Janet', 'Leverling', 'WAITER', 1), --2
-	(5, 'stan.super@gmail.com', 'Stan', 'Super', 'WAITER', 3), --3
-	(6, 'maria.anders@gmail.com', 'Maria', 'Anders', 'WAITER', 1), --4
-	(7, 'antonio.moreno@gmail.com', 'Antonio', 'Moreno', 'BARTENDER', 3), --5
-    (8, 'thomas.hardy@gmail.com', 'Thomas', 'Hardy', 'BARTENDER', 1); --6
+INSERT INTO employee(user_id, email, first_name, last_name, title,address_id, restaurant_id) VALUES
+	(3, 'andrew.fuller@gmail.com', 'Andrew', 'Fuller', 'CHEF',5, 1), --1
+	(4, 'janet.leverling@gmail.com', 'Janet', 'Leverling', 'WAITER',6, 1), --2
+	(5, 'stan.super@gmail.com', 'Stan', 'Super', 'WAITER',7, 3), --3
+	(6, 'maria.anders@gmail.com', 'Maria', 'Anders', 'WAITER',8, 1), --4
+	(7, 'antonio.moreno@gmail.com', 'Antonio', 'Moreno', 'BARTENDER',9, 3), --5
+    (8, 'thomas.hardy@gmail.com', 'Thomas', 'Hardy', 'BARTENDER',10, 1); --6
 
 INSERT INTO restaurant_table(name, active, restaurant_id) VALUES
 	('Table ONE', TRUE, 1), --1

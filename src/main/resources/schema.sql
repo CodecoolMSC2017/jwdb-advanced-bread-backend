@@ -76,6 +76,7 @@ CREATE TABLE employee (
 	first_name TEXT NOT NULL,
 	last_name TEXT NOT NULL,
 	title TEXT NOT NULL,
+	address_id INTEGER NOT NULL,
 	restaurant_id INTEGER NOT NULL,
 	hour_rate INTEGER DEFAULT NULL,
 	enabled BOOLEAN DEFAULT TRUE,
@@ -83,6 +84,7 @@ CREATE TABLE employee (
 	CONSTRAINT first_name_not_empty CHECK (first_name <> ''),
 	CONSTRAINT last_name_not_empty CHECK (last_name <> ''),
 	FOREIGN KEY (user_id) REFERENCES users(id),
+	FOREIGN KEY (address_id) REFERENCES address(id),
 	FOREIGN KEY (restaurant_id) REFERENCES restaurant(id)
 );
 
