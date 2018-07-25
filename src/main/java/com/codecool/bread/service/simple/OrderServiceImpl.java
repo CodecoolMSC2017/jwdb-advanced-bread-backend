@@ -42,7 +42,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Set<CustomerOrder> getAllCustomerOrderBySeatFromDb(int restaurantId, int tableId, int seatId) {
-        return seatService.getSeatById(restaurantId, tableId, seatId).getOrders();
+        return seatService.getSeatById(tableId, seatId).getOrders();
     }
 
     @Override

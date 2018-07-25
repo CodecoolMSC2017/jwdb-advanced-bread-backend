@@ -10,15 +10,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/table/{id}/seat")
+@RequestMapping("/table/{tableId}/seat")
 public class SeatController {
 
     @Autowired
     private SeatService seatService;
 
     @GetMapping("")
-    public Set<Seat> getAllSeatsByRestaurantId(@PathVariable("restaurantId") int restaurantId, @PathVariable("tableId") int tableId) {
-        Set<Seat> seats = seatService.getAllSeatByTableId(restaurantId, tableId);
+    public Set<Seat> getAllSeatsByRestaurantId(@PathVariable("tableId") int tableId) {
+        Set<Seat> seats = seatService.getAllSeatsByTableId(tableId);
         if(seats.size() != 0){
             return seats;
         }else
@@ -26,22 +26,20 @@ public class SeatController {
     }
 
     @GetMapping("/{seatId}")
-    public Seat getSeatById(@PathVariable("restaurantId") int restaurantId, @PathVariable("tableId") int tableId, @PathVariable("seatId") int seatId) {
-        Seat seat = seatService.getSeatById(restaurantId, tableId, seatId);
-        Set<Seat> seats = seatService.getAllSeatByTableId(restaurantId, tableId);
-        if(seats.contains(seat)){
-            return seat;
-        }
-        throw new SeatNotFoundException();
+    public Seat getSeatById(@PathVariable("tableId") int tableId,
+                            @PathVariable("seatId") int seatId) {
+        return  seatService.getSeatById(tableId, seatId);
     }
 
     @PostMapping("")
-    public Seat addSeat(@RequestBody Seat seat, @PathVariable("tableId") int tableId, @PathVariable("restaurantId") int restaurantId) {
-        return seatService.addOrModifySeat(seat, restaurantId, tableId);
+    public Seat add(@RequestBody Seat seat,
+                        @PathVariable("tableId") int tableId) {
+        return seatService.add(seat, tableId);
     }
 
     @PutMapping("/{seatId}")
-    public Seat modifySeat(@RequestBody Seat seat, @PathVariable("tableId") int tableId, @PathVariable("restaurantId") int restaurantId) {
-        return seatService.addOrModifySeat(seat, restaurantId, tableId);
+    public Seat edit(@RequestBody Seat seat,
+                           @PathVariable("tableId") int tableId) {
+        return seatService.edit(seat,  tableId);
     }
 }

@@ -6,9 +6,11 @@ import java.util.Set;
 
 public interface SeatService {
 
-    Set<Seat> getAllSeatByTableId(int restaurantId, int tableId);
+    Seat add(Seat seat, int restaurantId);
 
-    Seat getSeatById(int restaurantId, int tableId, int seatId);
+    Set<Seat> getAllSeatsByTableId(int tableId);
 
-    Seat addOrModifySeat(Seat seat, int restaurantId, int tableId);
+    Seat getSeatById(int tableId, int seatId);
+
+    Seat edit(Seat seat, int tableId);
 }
