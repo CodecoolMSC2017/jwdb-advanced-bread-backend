@@ -40,5 +40,12 @@ public class RestIngredientController {
         return ingredientService.addNewIngredient(ingredient);
     }
 
-
+    @PutMapping("/{ingredientId}")
+    public Ingredient editIngredient(@RequestBody Ingredient ingredient) {
+        if(ingredientService.getIngredientById(ingredient.getId()) != null) {
+            return ingredientService.editEmployee(ingredient);
+        } else {
+            throw new IngredientNotFoundException();
+        }
+    }
 }

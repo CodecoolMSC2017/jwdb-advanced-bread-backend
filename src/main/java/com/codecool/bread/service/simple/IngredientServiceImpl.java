@@ -43,4 +43,9 @@ public class IngredientServiceImpl implements IngredientService {
         }
         ingredientRepository.saveAll(newIngredients);
     }
+
+    @Override
+    public Ingredient editEmployee(Ingredient ingredient) throws IngredientNotFoundException{
+        return ingredientRepository.save(ingredient);
+    }
 }

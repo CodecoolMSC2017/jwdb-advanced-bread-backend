@@ -37,6 +37,14 @@ public class ItemServiceImpl implements ItemService {
         return items;
     }
 
+    public List<Item> getEnableItemsByRestaurantId(Integer restaurantId) throws NoItemsFoundException {
+        List<Item> items =itemRepository.findByRestaurantIdAndEnabledTrue(restaurantId);
+        if(items.size()==0) {
+            throw new NoItemsFoundException();
+        }
+        return items;
+    }
+
     public Item getItemById(Integer id, Integer restaurantId) throws ItemAccessDeniedException, NoItemsFoundException {
         Item item = itemRepository.findByIdAndRestaurantId(id,restaurantId);
         if(item == null) {
@@ -57,16 +65,12 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public void deleteItem(int restaurantId, int itemId) throws RestaurantAccessDeniedException, ItemNotFoundException {
-
-        if (itemRepository.findById(itemId).isPresent()) {
-            if (itemRepository.findByRestaurantId(restaurantId).contains(itemRepository.findById(itemId).get())) {
-                itemRepository.deleteById(itemId);
-            } else {
-                throw new RestaurantAccessDeniedException();
-            }
-        } else {
+        Item item = itemRepository.findByIdAndRestaurantId(itemId, restaurantId);
+        if(item == null) {
             throw new ItemNotFoundException();
         }
+        item.setEnabled(false);
+        itemRepository.saveAndFlush(item);
     }
 
     @Override
@@ -78,5 +82,4 @@ public class ItemServiceImpl implements ItemService {
         }
         return itemRepository.save(item);
     }
-
 }

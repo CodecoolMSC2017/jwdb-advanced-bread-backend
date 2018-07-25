@@ -45,6 +45,10 @@ public class RestaurantController extends AbstractController {
 
     @PutMapping("/{restaurantId}")
     public Restaurant editDetails(@RequestBody Restaurant restaurant, Principal principal) {
-        return restaurantService.edit(restaurant, getLoggedInOwnerId(principal));
+        if(restaurantService.getById(restaurant.getId(), getLoggedInOwnerId(principal)) != null) {
+            return restaurantService.edit(restaurant, getLoggedInOwnerId(principal));
+        } else {
+            throw new RestaurantNotFoundException();
+        }
     }
 }

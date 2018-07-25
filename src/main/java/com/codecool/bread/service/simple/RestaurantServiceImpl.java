@@ -64,14 +64,12 @@ public class RestaurantServiceImpl implements RestaurantService {
         addressRepository.save(restaurant.getAddress());
         restaurant.setOwner(ownerService.getOwnerById(ownerId));
         ownerService.getOwnerById(ownerId).getRestaurants().add(restaurant);
-        restaurantRepository.save(restaurant);
-        return restaurant;
+        return restaurantRepository.saveAndFlush(restaurant);
     }
 
     @Override
-    public Restaurant edit(Restaurant restaurant, int ownerId) {
+    public Restaurant edit(Restaurant restaurant, int ownerId) throws RestaurantNotFoundException{
         restaurant.setOwner(ownerService.getOwnerById(ownerId));
-        restaurantRepository.save(restaurant);
-        return restaurant;
+        return restaurantRepository.saveAndFlush(restaurant);
     }
 }

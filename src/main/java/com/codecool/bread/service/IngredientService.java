@@ -10,8 +10,12 @@ import java.util.Set;
 public interface IngredientService {
 
     List<Ingredient> getAllIngredient();
+
     Ingredient getIngredientById(int ingredientId) throws IngredientNotFoundException;
+
     Ingredient addNewIngredient(Ingredient ingredient);
+
     void addNewIngredients(Set<Ingredient> ingredients);
 
+    Ingredient editEmployee(Ingredient ingredient) throws IngredientNotFoundException;
 }

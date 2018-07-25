@@ -36,7 +36,8 @@ CREATE TABLE address (
 	city TEXT,
 	postal_code TEXT,
 	state TEXT,
-	country TEXT
+	country TEXT,
+	enabled BOOLEAN DEFAULT TRUE
 );
 
 CREATE TABLE owner (
@@ -47,6 +48,7 @@ CREATE TABLE owner (
 	address_id INTEGER,
 	email TEXT NOT NULL,
 	phone INTEGER,
+	enabled BOOLEAN DEFAULT TRUE,
 	CONSTRAINT email_not_empty CHECK (email <> ''),
 	CONSTRAINT first_name_not_empty CHECK (first_name <> ''),
 	CONSTRAINT last_name_not_empty CHECK (last_name <> ''),
@@ -61,6 +63,7 @@ CREATE TABLE restaurant (
 	email TEXT NOT NULL,
 	phone INTEGER NOT NULL,
 	owner_id INTEGER NOT NULL,
+	enabled BOOLEAN DEFAULT TRUE,
 	CONSTRAINT email_not_empty CHECK (email <> ''),
 	FOREIGN KEY (owner_id) REFERENCES owner(id),
 	FOREIGN KEY (address_id) REFERENCES address(id)
@@ -75,6 +78,7 @@ CREATE TABLE employee (
 	title TEXT NOT NULL,
 	restaurant_id INTEGER NOT NULL,
 	hour_rate INTEGER DEFAULT NULL,
+	enabled BOOLEAN DEFAULT TRUE,
 	CONSTRAINT email_not_empty CHECK (email <> ''),
 	CONSTRAINT first_name_not_empty CHECK (first_name <> ''),
 	CONSTRAINT last_name_not_empty CHECK (last_name <> ''),
@@ -85,7 +89,8 @@ CREATE TABLE employee (
 CREATE TABLE ingredient (
 	id SERIAL PRIMARY KEY,
 	name TEXT NOT NULL,
-	allergen TEXT DEFAULT NULL
+	allergen TEXT DEFAULT NULL,
+	enabled BOOLEAN DEFAULT TRUE
 );
 
 CREATE TABLE item (
@@ -95,6 +100,7 @@ CREATE TABLE item (
 	comment TEXT DEFAULT NULL,
 	category TEXT NOT NULL,
 	restaurant_id INTEGER NOT NULL,
+	enabled BOOLEAN DEFAULT TRUE,
 	FOREIGN KEY (restaurant_id) REFERENCES restaurant(id)
 );
 
@@ -106,7 +112,8 @@ CREATE TABLE item_ingredient (
 CREATE TABLE menu (
 	id SERIAL PRIMARY KEY,
 	title TEXT NOT NULL,
-	active BOOLEAN DEFAULT FALSE
+	active BOOLEAN DEFAULT FALSE,
+	enabled BOOLEAN DEFAULT TRUE
 );
 
 CREATE TABLE menu_item (
@@ -122,6 +129,7 @@ CREATE TABLE restaurant_table (
 	active BOOLEAN DEFAULT FALSE,
 	restaurant_id INTEGER NOT NULL,
 	employee_id INTEGER DEFAULT NULL,
+	enabled BOOLEAN DEFAULT TRUE,
 	FOREIGN KEY (restaurant_id) REFERENCES restaurant(id),
 	FOREIGN KEY (employee_id) REFERENCES employee(id)
 );
@@ -130,12 +138,14 @@ CREATE TABLE seat (
 	id SERIAL PRIMARY KEY,
 	active BOOLEAN,
 	restaurant_table_id INTEGER NOT NULL,
+	enabled BOOLEAN DEFAULT TRUE,
 	FOREIGN KEY (restaurant_table_id) REFERENCES restaurant_table(id)
 );
 
 CREATE TABLE invoice (
 	id SERIAL PRIMARY KEY,
 	total NUMERIC NOT NULL,
+	enabled BOOLEAN DEFAULT TRUE,
 	date DATE DEFAULT current_date
 );
 
@@ -154,6 +164,7 @@ CREATE TABLE customer_order (
 	ordering_time DATE DEFAULT current_date,
 	order_item_id INTEGER NOT NULL,
 	invoice_id INTEGER DEFAULT NULL,
+	enabled BOOLEAN DEFAULT TRUE,
 	FOREIGN KEY (seat_id) REFERENCES seat(id),
 	FOREIGN KEY (employee_id) REFERENCES employee(id),
 	FOREIGN KEY (order_item_id) REFERENCES order_item(id),

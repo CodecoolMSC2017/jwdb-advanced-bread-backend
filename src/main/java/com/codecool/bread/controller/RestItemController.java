@@ -4,9 +4,7 @@ import com.codecool.bread.exception.ItemAccessDeniedException;
 import com.codecool.bread.exception.ItemNotFoundException;
 import com.codecool.bread.exception.NoItemsFoundException;
 import com.codecool.bread.model.Item;
-import com.codecool.bread.repository.ItemRepository;
 import com.codecool.bread.service.ItemService;
-import com.codecool.bread.service.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,16 +18,10 @@ public class RestItemController {
     @Autowired
     private ItemService itemService;
 
-    @Autowired
-    private RestaurantService restaurantService;
-
-    @Autowired
-    private ItemRepository itemRepository;
-
     @GetMapping("")
     public List<Item> getItemsByRestaurantId(@PathVariable("restaurantId") int restaurantId) {
 
-        List<Item> items = itemService.getItemsByRestaurantId(restaurantId);
+        List<Item> items = itemService.getEnableItemsByRestaurantId(restaurantId);
         if (items.size() == 0) {
             throw new NoItemsFoundException();
         }

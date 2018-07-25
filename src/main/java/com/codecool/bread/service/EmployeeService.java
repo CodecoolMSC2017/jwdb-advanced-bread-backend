@@ -24,7 +24,7 @@ public interface EmployeeService {
 
     void delete(int restaurantId, int employeeId) throws RestaurantAccessDeniedException, EmployeeNotFoundException;
 
-    Employee editChanges(Employee employee, int restaurantId, int ownerId);
+    Employee editChanges(Employee employee, int restaurantId, int ownerId) throws EmployeeNotFoundException;
 
     Employee addUsername(Map<String,String> user, int employeeId) throws EmployeeNotFoundException;
 
