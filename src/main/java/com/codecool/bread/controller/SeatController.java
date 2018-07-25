@@ -42,4 +42,10 @@ public class SeatController {
                            @PathVariable("tableId") int tableId) {
         return seatService.edit(seat,  tableId);
     }
+
+    @DeleteMapping("/{seatId}")
+    public void deleteSeat(@PathVariable("tableId") int tableId,
+                           @PathVariable("seatId") int seatId) {
+        seatService.deleteSeat(seatId, tableId);
+    }
 }

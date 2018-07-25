@@ -67,4 +67,15 @@ public class SeatServiceImpl implements SeatService {
         seat.setTable(table.get());
         return seatRepository.save(seat);
     }
+
+    @Override
+    public void deleteSeat(int seatId, int tableId) throws SeatNotFoundException {
+        Seat seat = seatRepository.findByIdAndTableId(seatId, tableId);
+        if(seat == null) {
+            throw new SeatNotFoundException();
+        }
+        seat.setEnabled(false);
+        seatRepository.saveAndFlush(seat);
+    }
+
 }
