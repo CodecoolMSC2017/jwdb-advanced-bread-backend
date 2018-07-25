@@ -99,9 +99,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee editChanges(Employee employee, int restaurantId, int ownerId) {
-        employee.setRestaurant(restaurantService.getById(restaurantId, ownerId));
-        employeeRepository.save(employee);
-        return employee;
+        if(getByIdAndRestaurantIdAndOwnerId(employee.getId(), restaurantId, ownerId) != null ) {
+            employee.setRestaurant(restaurantService.getById(restaurantId, ownerId));
+            employeeRepository.save(employee);
+            return employee;
+        } else {
+            throw new EmployeeNotFoundException();
+        }
     }
 
     @Override
