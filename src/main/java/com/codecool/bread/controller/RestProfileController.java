@@ -18,6 +18,6 @@ public class RestProfileController extends AbstractController{
 
     @GetMapping("")
     public ProfileDto getProfile(Principal principal) {
-        return profileService.getProfileFromDb(getLoggedInOwnerId(principal));
+        return profileService.getProfileFromDb(getUserId(principal));
     }
 }
