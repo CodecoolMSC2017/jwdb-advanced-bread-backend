@@ -11,8 +11,11 @@ import java.util.Set;
 @Repository
 public interface TableRepository extends JpaRepository<Table, Integer> {
 
-    Set<Table> findByRestaurantId(int id);
+    Set<Table> findByRestaurantId(Integer id);
 
     Optional<Table> findByIdAndRestaurantId(Integer id, Integer restaurantId);
 
+    Set<Table> findByRestaurantIdAndEnabledTrue(Integer restaurantId);
+
+    Optional<Table> findByIdAndRestaurantIdAndEnabledTrue(Integer tableId, Integer restaurantId);
 }

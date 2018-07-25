@@ -74,7 +74,7 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     public Restaurant add(Restaurant restaurant, int ownerId) {
-        addressRepository.save(restaurant.getAddress());
+        addressRepository.saveAndFlush(restaurant.getAddress());
         restaurant.setOwner(ownerService.getOwnerById(ownerId));
         ownerService.getOwnerById(ownerId).getRestaurants().add(restaurant);
         return restaurantRepository.saveAndFlush(restaurant);

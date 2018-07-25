@@ -82,7 +82,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee add(Employee employee, int restaurantId, int ownerId) {
         employee.setRestaurant(restaurantService.getById(restaurantId, ownerId));
-        employeeRepository.save(employee);
+        employeeRepository.saveAndFlush(employee);
         return employee;
     }
 
@@ -99,7 +99,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee editChanges(Employee employee, int restaurantId, int ownerId) throws EmployeeNotFoundException{
-        return employeeRepository.save(employee);
+        return employeeRepository.saveAndFlush(employee);
     }
 
     @Override

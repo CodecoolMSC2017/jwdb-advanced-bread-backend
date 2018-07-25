@@ -13,4 +13,6 @@ public interface SeatRepository extends JpaRepository<Seat, Integer> {
     Set<Seat> findByTableId(Integer id);
 
     Seat findByIdAndTableId(Integer seatId, Integer tableId);
+
+    Set<Seat> findByTableIdAndEnabledTrue(Integer tableId);
 }

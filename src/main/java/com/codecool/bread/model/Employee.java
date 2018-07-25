@@ -32,6 +32,18 @@ public class Employee extends POSObject {
     @JsonIgnore
     private Restaurant restaurant;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id")
+    private Address address;
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
     public String getEmail() {
         return email;
     }

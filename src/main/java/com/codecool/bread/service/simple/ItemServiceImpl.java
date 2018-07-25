@@ -68,7 +68,7 @@ public class ItemServiceImpl implements ItemService {
         if(itemRepository.findById(item.getId()).isPresent() || itemRepository.findByName(item.getName()).isPresent()){
             throw new ItemAlreadyExistsException();
         }
-        return itemRepository.save(item);
+        return itemRepository.saveAndFlush(item);
     }
 
     @Override
@@ -88,6 +88,6 @@ public class ItemServiceImpl implements ItemService {
         if(!itemRepository.findById(item.getId()).isPresent()){
             throw new ItemNotFoundException();
         }
-        return itemRepository.save(item);
+        return itemRepository.saveAndFlush(item);
     }
 }

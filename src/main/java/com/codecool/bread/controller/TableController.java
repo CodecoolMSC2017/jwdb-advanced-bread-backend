@@ -29,13 +29,13 @@ public class TableController extends AbstractController {
 
     @GetMapping("/table")
     public Set<Table> getAllTablesByRestaurantId(@PathVariable("restaurantId") int restaurantId) {
-        return tableService.getAllTablesByRestaurantId(restaurantId);
+        return tableService.getEnableTablesByRestaurantId(restaurantId);
     }
 
     @GetMapping("/table/{tableId}")
     public Table getTableById(@PathVariable("restaurantId") int restaurantId,
                               @PathVariable("tableId") int tableId) {
-        return  tableService.getTableById(restaurantId, tableId);
+        return  tableService.getEnableTableById(restaurantId, tableId);
     }
 
     @PostMapping("/table")
@@ -55,6 +55,11 @@ public class TableController extends AbstractController {
         } else {
             throw new  IdMismatchException();
         }
+    }
+
+    @DeleteMapping("/table/{tableId}")
+    public void deleteTable(@PathVariable("tableId") int tableId, @PathVariable("restaurantId") int restaurantId) {
+        tableService.deleteTable(tableId, restaurantId);
     }
 
 }

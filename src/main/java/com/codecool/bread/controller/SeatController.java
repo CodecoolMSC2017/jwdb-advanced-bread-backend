@@ -19,7 +19,7 @@ public class SeatController extends AbstractController {
 
     @GetMapping("")
     public Set<Seat> getAllSeatsByRestaurantId(@PathVariable("tableId") int tableId) {
-        Set<Seat> seats = seatService.getAllSeatsByTableId(tableId);
+        Set<Seat> seats = seatService.getEnableSeatsByTableId(tableId);
         if(seats.size() != 0){
             return seats;
         }else
@@ -29,7 +29,7 @@ public class SeatController extends AbstractController {
     @GetMapping("/{seatId}")
     public Seat getSeatById(@PathVariable("tableId") int tableId,
                             @PathVariable("seatId") int seatId) {
-        return  seatService.getSeatById(tableId, seatId);
+        return  seatService.getEnableSeatById(tableId, seatId);
     }
 
     @PostMapping("")
@@ -47,5 +47,11 @@ public class SeatController extends AbstractController {
         } else {
             throw new IdMismatchException();
         }
+    }
+
+    @DeleteMapping("/{seatId}")
+    public void deleteSeat(@PathVariable("tableId") int tableId,
+                           @PathVariable("seatId") int seatId) {
+        seatService.deleteSeat(seatId, tableId);
     }
 }
