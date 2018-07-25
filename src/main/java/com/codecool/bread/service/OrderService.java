@@ -7,9 +7,9 @@ import com.codecool.bread.model.dto.OrderDto;
 import java.util.Set;
 
 public interface OrderService {
-    Set<CustomerOrder> getAllCustomerOrderBySeatFromDb(int restaurantId, int tableId, int seatId);
+    Set<CustomerOrder> getAllCustomerOrderBySeat(int seatId);
 
-    CustomerOrder getCustomerOrderByIdFromDb(int seatId, int customerOrderId);
+    CustomerOrder getCustomerOrderById(int seatId, int customerOrderId);
 
     OrderItem getOrderItem(int seatId, int customerOrderId);
 

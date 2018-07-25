@@ -11,19 +11,19 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/seat/{seatId}/order")
-public class RestOrderController {
+public class OrderController {
 
     @Autowired
     private OrderService orderService;
 
     @GetMapping("")
-    public Set<CustomerOrder> getAllCustomerOrderBySeat(@PathVariable("restaurantId") int restaurantId, @PathVariable("tableId") int tableId, @PathVariable("seatId") int seatId) {
-        return orderService.getAllCustomerOrderBySeatFromDb(restaurantId, tableId, seatId);
+    public Set<CustomerOrder> getAllCustomerOrder(@PathVariable("seatId") int seatId) {
+        return orderService.getAllCustomerOrderBySeat(seatId);
     }
 
-    @GetMapping("/seat/{seatId}/customerorder/{customerOrderId}")
+    @GetMapping("/seat/{seatId}/customer-order/{customerOrderId}")
     public CustomerOrder getCustomerOrder(@PathVariable("seatId") int seatId, @PathVariable("customerOrderId") int customerOrderId) {
-        return orderService.getCustomerOrderByIdFromDb(seatId, customerOrderId);
+        return orderService.getCustomerOrderById(seatId, customerOrderId);
     }
 
     @GetMapping("/seat/{seatId}/orderitem")

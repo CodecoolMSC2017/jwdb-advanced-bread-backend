@@ -1,5 +1,6 @@
 package com.codecool.bread.service.simple;
 
+import com.codecool.bread.exception.SeatNotFoundException;
 import com.codecool.bread.model.*;
 import com.codecool.bread.model.dto.OrderDto;
 import com.codecool.bread.repository.CustomerOrderRepository;
@@ -41,12 +42,16 @@ public class OrderServiceImpl implements OrderService {
     private TableRepository tableRepository;
 
     @Override
-    public Set<CustomerOrder> getAllCustomerOrderBySeatFromDb(int restaurantId, int tableId, int seatId) {
-        return seatService.getSeatById(tableId, seatId).getOrders();
+    public Set<CustomerOrder> getAllCustomerOrderBySeat(int seatId) {
+        Optional<Seat> seat = seatRepository.findById(seatId);
+        if (!seat.isPresent()) {
+            throw new SeatNotFoundException();
+        }
+        return seat.get().getOrders();
     }
 
     @Override
-    public CustomerOrder getCustomerOrderByIdFromDb(int seatId, int customerOrderId) {
+    public CustomerOrder getCustomerOrderById(int seatId, int customerOrderId) {
         return customerOrderRepository.findByIdAndSeatId(customerOrderId, seatId);
     }
 
