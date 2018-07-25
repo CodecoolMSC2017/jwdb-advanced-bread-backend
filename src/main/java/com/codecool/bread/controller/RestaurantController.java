@@ -26,7 +26,7 @@ public class RestaurantController extends AbstractController {
 
     @GetMapping("")
     public Set<Restaurant> findAllByOwnerId(Principal principal) {
-        return restaurantService.getAllByOwnerId(getLoggedInOwnerId(principal));
+        return restaurantService.getAllEnableByOwnerId(getLoggedInOwnerId(principal));
     }
 
     @GetMapping("/{restaurantId}")
@@ -50,5 +50,10 @@ public class RestaurantController extends AbstractController {
         } else {
             throw new RestaurantNotFoundException();
         }
+    }
+
+    @DeleteMapping("/{restaurantId}")
+    public void deleteRestaurant(@PathVariable("restaurantId") int restaurantId, Principal principal) {
+        restaurantService.deleteRestaurant(restaurantId, getLoggedInOwnerId(principal));
     }
 }
