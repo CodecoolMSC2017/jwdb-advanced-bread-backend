@@ -1,5 +1,6 @@
 package com.codecool.bread.controller;
 
+import com.codecool.bread.exception.IdMismatchException;
 import com.codecool.bread.exception.NoSeatsFoundException;
 import com.codecool.bread.exception.SeatNotFoundException;
 import com.codecool.bread.model.Seat;
@@ -11,7 +12,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/table/{tableId}/seat")
-public class SeatController {
+public class SeatController extends AbstractController {
 
     @Autowired
     private SeatService seatService;
@@ -33,13 +34,18 @@ public class SeatController {
 
     @PostMapping("")
     public Seat add(@RequestBody Seat seat,
-                        @PathVariable("tableId") int tableId) {
+                    @PathVariable("tableId") int tableId) {
         return seatService.add(seat, tableId);
     }
 
     @PutMapping("/{seatId}")
     public Seat edit(@RequestBody Seat seat,
-                           @PathVariable("tableId") int tableId) {
-        return seatService.edit(seat,  tableId);
+                     @PathVariable("tableId") int tableId,
+                     @PathVariable("seatId") int seatId) {
+        if (checkIdMatch(seat, seatId)) {
+            return seatService.add(seat, tableId);
+        } else {
+            throw new IdMismatchException();
+        }
     }
 }

@@ -16,7 +16,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/restaurant/{restaurantId}")
-public class TableController {
+public class TableController extends AbstractController {
 
     @Autowired
     private RestaurantService restaurantService;
@@ -48,8 +48,13 @@ public class TableController {
 
     @PutMapping("table/{tableId}")
     public Table editTable(@PathVariable("restaurantId") int restaurantId,
+                           @PathVariable("tableId") int tableId,
                            @RequestBody Table table) {
-        return tableService.edit(table, restaurantId);
+        if (checkIdMatch(table, tableId)) {
+            return tableService.edit(table, restaurantId);
+        } else {
+            throw new  IdMismatchException();
+        }
     }
 
 }
