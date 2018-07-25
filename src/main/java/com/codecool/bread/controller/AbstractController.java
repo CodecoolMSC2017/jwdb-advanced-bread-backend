@@ -1,6 +1,7 @@
 package com.codecool.bread.controller;
 
 
+import com.codecool.bread.model.POSObject;
 import com.codecool.bread.service.EmployeeService;
 import com.codecool.bread.service.OwnerService;
 import com.codecool.bread.service.UserService;
@@ -30,4 +31,7 @@ public abstract class AbstractController {
 
     }
 
+    boolean checkIdMatch(POSObject posObject, int id) {
+        return posObject.getId() == id;
+    }
 }

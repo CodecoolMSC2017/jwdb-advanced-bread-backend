@@ -2,7 +2,6 @@ package com.codecool.bread.controller;
 
 import com.codecool.bread.exception.IdMismatchException;
 import com.codecool.bread.exception.NoSeatsFoundException;
-import com.codecool.bread.exception.SeatNotFoundException;
 import com.codecool.bread.model.Seat;
 import com.codecool.bread.service.SeatService;
 import org.springframework.beans.factory.annotation.Autowired;
