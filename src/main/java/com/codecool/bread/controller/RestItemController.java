@@ -30,7 +30,7 @@ public class RestItemController {
 
     @GetMapping("/{itemId}")
     public Item getItemById(@PathVariable("itemId") int itemId, @PathVariable("restaurantId") int restaurantId) {
-        Item item = itemService.getItemById(itemId,restaurantId);
+        Item item = itemService.getEnableItemById(itemId,restaurantId);
         if(item == null){
             throw new ItemNotFoundException();
         }

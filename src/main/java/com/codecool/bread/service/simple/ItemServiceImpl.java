@@ -53,7 +53,15 @@ public class ItemServiceImpl implements ItemService {
         return item;
     }
 
-    @Override
+    public Item getEnableItemById(Integer id, Integer restaurantId) throws ItemAccessDeniedException, NoItemsFoundException {
+        Item item = itemRepository.findByIdAndRestaurantIdAndEnabledTrue(id, restaurantId);
+        if(item == null) {
+            throw new NoItemsFoundException();
+        }
+        return item;
+    }
+
+        @Override
     public Item addNewItem(Item item, int restaurantId) {
         Restaurant restaurant = restaurantService.getById(restaurantId);
         item.setRestaurant(restaurant);
