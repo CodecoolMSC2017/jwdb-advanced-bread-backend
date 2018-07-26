@@ -1,6 +1,7 @@
 package com.codecool.bread.service.simple;
 
 import com.codecool.bread.exception.*;
+import com.codecool.bread.model.Category;
 import com.codecool.bread.model.Item;
 import com.codecool.bread.model.Restaurant;
 import com.codecool.bread.repository.ItemRepository;
@@ -32,6 +33,22 @@ public class ItemServiceImpl implements ItemService {
     public List<Item> getItemsByRestaurantId(Integer restaurantId) throws NoItemsFoundException {
         List<Item> items =itemRepository.findByRestaurantId(restaurantId);
         if(items.size()==0) {
+            throw new NoItemsFoundException();
+        }
+        return items;
+    }
+
+    public List<Item> getAllFoodsByRestaurantId(Integer restaurantId) throws NoItemsFoundException {
+        List<Item> items = itemRepository.findByRestaurantIdAndEnabledTrueAndCategory(restaurantId, Category.FOOD);
+        if(items.size() == 0) {
+            throw new NoItemsFoundException();
+        }
+        return items;
+    }
+
+    public List<Item> getAllDrinksByRestaurantId(Integer restaurantId) throws NoItemsFoundException {
+        List<Item> items = itemRepository.findByRestaurantIdAndEnabledTrueAndCategory(restaurantId,Category.DRINK);
+        if(items.size() == 0) {
             throw new NoItemsFoundException();
         }
         return items;
