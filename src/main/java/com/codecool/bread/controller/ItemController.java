@@ -1,5 +1,6 @@
 package com.codecool.bread.controller;
 
+import com.codecool.bread.exception.CategoryNotFoundException;
 import com.codecool.bread.exception.ItemAccessDeniedException;
 import com.codecool.bread.exception.ItemNotFoundException;
 import com.codecool.bread.exception.NoItemsFoundException;
@@ -14,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/owner/restaurant/{restaurantId}/item")
-public class RestItemController {
+public class ItemController {
 
     @Autowired
     private ItemService itemService;
@@ -24,23 +25,16 @@ public class RestItemController {
         List<Item> items = null;
         if(category.equals("all")) {
             items = itemService.getEnableItemsByRestaurantId(restaurantId);
-        } else {
+        } else if(category.equals("food") || category.equals("drink")){
             items = itemService.getCategorizedItemsByRestaurantId(restaurantId, Category.valueOf(category.toUpperCase()));
+        } else {
+            throw new CategoryNotFoundException();
         }
         if (items.size() == 0) {
             throw new NoItemsFoundException();
         }
         return items;
     }
-
-    /*@GetMapping("/category")
-    public List<Item> getFoodItemsByRestaurantId(@PathVariable("restaurantId") int restaurantId, ) {
-        List<Item> ;
-        if (items.size() == 0) {
-            throw new NoItemsFoundException();
-        }
-        return items;
-    }*/
 
     @GetMapping("/{itemId}")
     public Item getItemById(@PathVariable("itemId") int itemId, @PathVariable("restaurantId") int restaurantId) {
