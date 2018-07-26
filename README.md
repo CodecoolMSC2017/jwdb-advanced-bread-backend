@@ -32,7 +32,7 @@ Restaurant Point-Of-Sale system backend
 * GET /owner/{ownerId}/restaurant/{restaurantId}/ingredient/{ingredientId}
 * POST /owner/{ownerId}/restaurant/{restaurantId}/ingredient
 
-* GET /owner/{ownerId}/restaurant/{restaurantId}/item
+* GET /owner/{ownerId}/restaurant/{restaurantId}/item?category={category}
 * GET /owner/{ownerId}/restaurant/{restaurantId}/item/{itemId}
 * POST /owner/{ownerId}/restaurant/{restaurantId}/item
 * DELETE /owner/{ownerId}/restaurant/{restaurantId}/item/{itemId}
