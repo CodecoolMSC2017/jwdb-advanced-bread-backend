@@ -1,5 +1,6 @@
 package com.codecool.bread.service.simple;
 
+import com.codecool.bread.exception.CustomerOrderNotFoundException;
 import com.codecool.bread.exception.SeatNotFoundException;
 import com.codecool.bread.exception.TableNotFoundException;
 import com.codecool.bread.model.*;
@@ -48,17 +49,20 @@ public class OrderServiceImpl implements OrderService {
         if (!seat.isPresent()) {
             throw new SeatNotFoundException();
         }
-        return seat.get().getOrders();
+        return seat.get().getCustomerOrders();
     }
 
     @Override
-    public CustomerOrder getCustomerOrderById(int seatId, int customerOrderId) {
-        return customerOrderRepository.findByIdAndSeatId(customerOrderId, seatId);
+    public CustomerOrder getCustomerOrderById(int seatId, int customerOrderId) throws CustomerOrderNotFoundException {
+        Optional<CustomerOrder> customerOrder = customerOrderRepository.findByIdAndSeatId(customerOrderId, seatId);
+        if (customerOrder.isPresent()) {
+            return customerOrder.get();
+        } throw new CustomerOrderNotFoundException();
     }
 
     @Override
     public OrderItem getOrderItem(int seatId, int customerOrderId) {
-        return customerOrderRepository.findByIdAndSeatId(customerOrderId, seatId).getOrderItem();
+        return customerOrderRepository.findByIdAndSeatId(customerOrderId, seatId).get().getOrderItem();
     }
 
     @Override
@@ -75,7 +79,7 @@ public class OrderServiceImpl implements OrderService {
         customerOrder.setEmployee(employeeService.getById(employeeId, restaurantId));
         customerOrder.setOrderItem(orderItem);
         customerOrderRepository.saveAndFlush(customerOrder);
-        seat.getOrders().add(customerOrder);
+        seat.getCustomerOrders().add(customerOrder);
         seatRepository.saveAndFlush(seat);
         return orderDto;
     }

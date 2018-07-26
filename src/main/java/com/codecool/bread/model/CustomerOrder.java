@@ -25,7 +25,7 @@ public class CustomerOrder extends POSObject {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "order_item_id")
-    @JsonIgnore
+    //@JsonIgnore
     private OrderItem order;
 
     @ManyToOne(fetch = FetchType.EAGER)

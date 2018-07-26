@@ -21,18 +21,24 @@ public class OrderController {
         return orderService.getAllCustomerOrderBySeat(seatId);
     }
 
-    @GetMapping("/seat/{seatId}/customer-order/{customerOrderId}")
-    public CustomerOrder getCustomerOrder(@PathVariable("seatId") int seatId, @PathVariable("customerOrderId") int customerOrderId) {
+    @GetMapping("/{customerOrderId}")
+    public CustomerOrder getCustomerOrderById(@PathVariable("seatId") int seatId,
+                                          @PathVariable("customerOrderId") int customerOrderId) {
         return orderService.getCustomerOrderById(seatId, customerOrderId);
     }
 
-    @GetMapping("/seat/{seatId}/orderitem")
-    public OrderItem getOrderItem(@PathVariable("seatId") int seatId, @PathVariable("customerOrderId") int customerOrderId) {
+    @GetMapping("/{customerOrderId}/order-item")
+    public OrderItem getOrderItem(@PathVariable("seatId") int seatId,
+                                  @PathVariable("customerOrderId") int customerOrderId) {
         return orderService.getOrderItem(seatId, customerOrderId);
     }
 
-    @PostMapping("/seat/{seatId}/order")
-    public OrderDto addOrder(@RequestBody OrderDto orderDto, @PathVariable("restaurantId") int restaurantId, @PathVariable("employeeId") int employeeId, @PathVariable("tableId") int tableId, @PathVariable("seatId") int seatId) {
+    @PostMapping("")
+    public OrderDto addOrder(@RequestBody OrderDto orderDto,
+                             @PathVariable("restaurantId") int restaurantId,
+                             @PathVariable("employeeId") int employeeId,
+                             @PathVariable("tableId") int tableId,
+                             @PathVariable("seatId") int seatId) {
         return orderService.addOrderToDb(orderDto, restaurantId, employeeId, tableId, seatId);
     }
 }

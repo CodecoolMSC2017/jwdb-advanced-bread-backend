@@ -156,6 +156,7 @@ CREATE TABLE order_item (
 	item_id INTEGER NOT NULL,
 	quantity INTEGER NOT NULL,
 	comment TEXT,
+	enabled BOOLEAN DEFAULT TRUE,
 	FOREIGN KEY (item_id) REFERENCES item(id)
 );
 
