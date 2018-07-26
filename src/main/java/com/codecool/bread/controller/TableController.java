@@ -1,13 +1,11 @@
 package com.codecool.bread.controller;
 
 import com.codecool.bread.exception.*;
+import com.codecool.bread.model.Employee;
 import com.codecool.bread.model.Owner;
 import com.codecool.bread.model.Seat;
 import com.codecool.bread.model.Table;
-import com.codecool.bread.service.OwnerService;
-import com.codecool.bread.service.RestaurantService;
-import com.codecool.bread.service.SeatService;
-import com.codecool.bread.service.TableService;
+import com.codecool.bread.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +24,9 @@ public class TableController extends AbstractController {
 
     @Autowired
     private TableService tableService;
+
+    @Autowired
+    private OrderService orderService;
 
     @GetMapping("/table")
     public Set<Table> getAllTablesByRestaurantId(@PathVariable("restaurantId") int restaurantId) {
@@ -60,6 +61,13 @@ public class TableController extends AbstractController {
     @DeleteMapping("/table/{tableId}")
     public void deleteTable(@PathVariable("tableId") int tableId, @PathVariable("restaurantId") int restaurantId) {
         tableService.deleteTable(tableId, restaurantId);
+    }
+
+    @PostMapping("/table/{tableId}")
+    public void setEmployeeToTable(@PathVariable("employeeId") int tableId,
+                                   Principal principal) {
+        int emmployeeId = getLoggedInEmployeeId(principal);
+        orderService.setEmployeeToTable(emmployeeId, tableId);
     }
 
 }

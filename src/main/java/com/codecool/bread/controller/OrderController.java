@@ -35,10 +35,4 @@ public class OrderController {
     public OrderDto addOrder(@RequestBody OrderDto orderDto, @PathVariable("restaurantId") int restaurantId, @PathVariable("employeeId") int employeeId, @PathVariable("tableId") int tableId, @PathVariable("seatId") int seatId) {
         return orderService.addOrderToDb(orderDto, restaurantId, employeeId, tableId, seatId);
     }
-
-    @PostMapping("")
-    public void setEmployeeToTable(@RequestBody Integer tableId, @PathVariable("employeeId") int employeeId, @PathVariable("restaurantId") int restaurantId) {
-        orderService.setEmployeeToTableInDb(employeeId, tableId, restaurantId);
-    }
-
 }

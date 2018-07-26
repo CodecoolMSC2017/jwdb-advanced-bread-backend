@@ -11,6 +11,7 @@ import com.codecool.bread.service.OwnerService;
 import com.codecool.bread.service.RestaurantService;
 import com.codecool.bread.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
@@ -64,6 +65,27 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee getById(int employeeId, int restaurantId) throws RestaurantAccessDeniedException, EmployeeNotFoundException {
         return employeeRepository.findByIdAndRestaurantId(employeeId, restaurantId);
+    }
+
+    @Override
+    public  Employee getById(int employeeId) throws EmployeeNotFoundException {
+        Optional<Employee> employee = employeeRepository.findById(employeeId);
+        if (employee.isPresent()) {
+            return employee.get();
+        } else {
+            throw new EmployeeNotFoundException();
+        }
+    }
+
+    @Override
+    public Employee getByUsername(String username) throws EmployeeNotFoundException, UsernameNotFoundException {
+        User user = userService.get(username);
+        Optional<Employee> employee = employeeRepository.findById(user.getId());
+        if (!employee.isPresent()) {
+            throw new EmployeeNotFoundException();
+        } else {
+            return employee.get();
+        }
     }
 
     @Override

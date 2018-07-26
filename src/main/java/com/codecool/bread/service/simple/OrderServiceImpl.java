@@ -1,6 +1,7 @@
 package com.codecool.bread.service.simple;
 
 import com.codecool.bread.exception.SeatNotFoundException;
+import com.codecool.bread.exception.TableNotFoundException;
 import com.codecool.bread.model.*;
 import com.codecool.bread.model.dto.OrderDto;
 import com.codecool.bread.repository.CustomerOrderRepository;
@@ -80,9 +81,12 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void setEmployeeToTableInDb(int employeeId, int tableId, int restaurantId) {
-        Employee employee = employeeService.getById(employeeId, restaurantId);
-        Optional<Table> table =tableRepository.findByIdAndRestaurantId(tableId, restaurantId);
+    public void setEmployeeToTable(int employeeId, int tableId) {
+        Employee employee = employeeService.getById(employeeId);
+        Optional<Table> table =tableRepository.findById(tableId);
+        if (!table.isPresent()) {
+            throw new TableNotFoundException();
+        }
         table.get().setEmployee(employee);
         tableRepository.saveAndFlush(table.get());
     }

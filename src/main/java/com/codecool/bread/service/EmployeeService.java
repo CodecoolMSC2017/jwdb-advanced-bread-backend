@@ -4,6 +4,7 @@ import com.codecool.bread.exception.EmployeeNotFoundException;
 import com.codecool.bread.exception.NoEmployeeForRestaurantException;
 import com.codecool.bread.exception.RestaurantAccessDeniedException;
 import com.codecool.bread.model.Employee;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -17,6 +18,10 @@ public interface EmployeeService {
     List<Employee> getAllEmployees(int ownerId);
 
     Employee getById(int employeeId, int restaurantId) throws RestaurantAccessDeniedException, EmployeeNotFoundException;
+
+    Employee getById(int employeeId) throws EmployeeNotFoundException;
+
+    Employee getByUsername(String username) throws EmployeeNotFoundException, UsernameNotFoundException;
 
     Employee getByIdAndRestaurantIdAndOwnerId(int employeeId, int restaurantId, int ownerId) throws RestaurantAccessDeniedException, EmployeeNotFoundException;
 

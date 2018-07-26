@@ -34,4 +34,8 @@ public abstract class AbstractController {
     boolean checkIdMatch(POSObject posObject, int id) {
         return posObject.getId() == id;
     }
+
+    int getLoggedInEmployeeId(Principal principal) {
+        return employeeService.getByUsername(principal.getName()).getUser().getId();
+    }
 }
