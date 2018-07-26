@@ -20,9 +20,10 @@ public class Item extends POSObject {
     private String name;
     @Column(columnDefinition = "DECIMAL(9,2)")
     private BigDecimal price;
-    private String comment;
     @Enumerated(EnumType.STRING)
     private Category category;
+
+    private String subcategory;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "item_ingredient",
@@ -43,20 +44,20 @@ public class Item extends POSObject {
         this.price = price;
     }
 
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
     public Category getCategory() {
         return category;
     }
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public String getSubcategory() {
+        return subcategory;
+    }
+
+    public void setSubcategory(String subcategory) {
+        this.subcategory = subcategory;
     }
 
     public Set<Ingredient> getIngredients() {
@@ -85,7 +86,7 @@ public class Item extends POSObject {
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, price, comment, category, ingredients, restaurant);
+        return Objects.hash(name, price, category, subcategory, ingredients, restaurant);
     }
 
     @Override
@@ -97,7 +98,7 @@ public class Item extends POSObject {
         Item item = (Item) o;
         return Objects.equals(name, item.name) &&
                 price == item.price &&
-                Objects.equals(comment, item.comment) &&
+                Objects.equals(subcategory, item.subcategory) &&
                 Objects.equals(category, item.category) &&
                 Objects.equals(ingredients, item.ingredients) &&
                 Objects.equals(restaurant, item.restaurant);
