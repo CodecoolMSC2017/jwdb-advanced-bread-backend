@@ -20,8 +20,25 @@ public class RestItemController {
 
     @GetMapping("")
     public List<Item> getItemsByRestaurantId(@PathVariable("restaurantId") int restaurantId) {
-
         List<Item> items = itemService.getEnableItemsByRestaurantId(restaurantId);
+        if (items.size() == 0) {
+            throw new NoItemsFoundException();
+        }
+        return items;
+    }
+
+    @GetMapping("/food")
+    public List<Item> getFoodItemsByRestaurantId(@PathVariable("restaurantId") int restaurantId) {
+        List<Item> items = itemService.getAllFoodsByRestaurantId(restaurantId);
+        if (items.size() == 0) {
+            throw new NoItemsFoundException();
+        }
+        return items;
+    }
+
+    @GetMapping("/drink")
+    public List<Item> getDrinkItemsByRestaurantId(@PathVariable("restaurantId") int restaurantId) {
+        List<Item> items = itemService.getAllDrinksByRestaurantId(restaurantId);
         if (items.size() == 0) {
             throw new NoItemsFoundException();
         }
