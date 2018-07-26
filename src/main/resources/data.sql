@@ -43,10 +43,10 @@ INSERT INTO restaurant(owner_id, name, email, address_id, phone) VALUES
 INSERT INTO employee(user_id, email, first_name, last_name, title,address_id, restaurant_id) VALUES
 	(3, 'andrew.fuller@gmail.com', 'Andrew', 'Fuller', 'CHEF',5, 1), --1
 	(4, 'janet.leverling@gmail.com', 'Janet', 'Leverling', 'WAITER',6, 1), --2
-	(5, 'stan.super@gmail.com', 'Stan', 'Super', 'WAITER',7, 3), --3
-	(6, 'maria.anders@gmail.com', 'Maria', 'Anders', 'WAITER',8, 1), --4
+	(6, 'maria.anders@gmail.com', 'Maria', 'Anders', 'WAITER',8, 1),--3
+	(8, 'thomas.hardy@gmail.com', 'Thomas', 'Hardy', 'BARTENDER',10, 1),--4
 	(7, 'antonio.moreno@gmail.com', 'Antonio', 'Moreno', 'BARTENDER',9, 3), --5
-    (8, 'thomas.hardy@gmail.com', 'Thomas', 'Hardy', 'BARTENDER',10, 1); --6
+    (5, 'stan.super@gmail.com', 'Stan', 'Super', 'WAITER',7, 3);--6
 
 INSERT INTO restaurant_table(name, active, restaurant_id) VALUES
 	('Table ONE', TRUE, 1), --1
@@ -225,4 +225,76 @@ INSERT INTO item_ingredient (item_id, ingredient_id) VALUES
      (3, 20);
 
 INSERT INTO order_item (item_id, quantity, comment) VALUES
-    (1, 2, 'no chili');
+    (1, 2, 'no chili'),
+    (1, 2,null),
+    (25, 3,null),
+    (1, 3,null),
+    (24, 3,null),
+    (15, 1,null),
+    (13, 1,null),
+    (15, 3,null),
+    (18, 2,null),
+    (5, 2,null),
+    (13, 3,null),
+    (13, 1,null),
+    (21, 3,null),
+    (14, 1,null),
+    (22, 3,null),
+    (16, 1,null),
+    (23, 2,null),
+    (19, 3,null),
+    (8, 1,null),
+    (19, 3,null),
+    (1, 3,null),
+    (14, 2,null),
+    (25, 3,null),
+    (11, 3,null),
+    (15, 1,null),
+    (17, 3,null),
+    (20, 2,null),
+    (24, 2,null),
+    (13, 2,null),
+    (9, 3,null),
+    (3, 1,null),
+    (10, 1,null),
+    (2, 2,null),
+    (2, 1,null),
+    (6, 3,null),
+    (6, 3,null),
+    (15, 3,null),
+    (7, 3,null),
+    (24, 3,null),
+    (18, 1,null),
+    (14, 1,null),
+    (18, 2,null),
+    (20, 1,null),
+    (13, 1,null),
+    (23, 3,null),
+    (18, 3,null),
+    (7, 3,null),
+    (2, 2,null),
+    (12, 3,null),
+    (2, 3,null),
+    (16, 2,null);
+
+INSERT INTO customer_order (seat_id,employee_id,ordering_time ,order_item_id) VALUES
+    (12, 1, '2018-03-05', 7),
+    (12, 4, '2018-01-24', 38),
+    (8, 2, '2018-03-17', 11),
+    (4, 4, '2018-06-04', 3),
+    (9, 1, '2018-06-23', 9),
+    (11, 3, '2018-06-14', 3),
+    (3, 3, '2018-03-17', 1),
+    (1, 3, '2018-05-17', 20),
+    (6, 3, '2018-01-05', 9),
+    (4, 3, '2018-02-02', 3),
+    (7, 2, '2018-03-14', 39),
+    (12, 3, '2018-06-12', 16),
+    (5, 3, '2018-03-25', 29),
+    (12, 1, '2018-04-30', 37),
+    (1, 2, '2018-04-18', 12),
+    (8, 4, '2018-03-24', 12),
+    (10, 1, '2018-01-05', 9),
+    (12, 3, '2018-06-20', 34),
+    (14, 4, '2018-02-13', 36),
+    (12, 3, '2018-07-15', 47);
