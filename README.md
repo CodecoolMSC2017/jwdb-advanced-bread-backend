@@ -41,7 +41,7 @@ Restaurant Point-Of-Sale system backend
 * __GET /seat/{seatId}/order__
 * __GET /seat/{seatId}/order/{orderId}__
 * GET /seat/{seatId}/orderitem
-* POST /seat/{seatId}/order
+* __POST /seat/{seatId}/order__
 
 * __GET /owner/user__
 * __GET /owner/user/{userId}__
