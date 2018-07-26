@@ -20,6 +20,8 @@ public class Item extends POSObject {
     private String name;
     @Column(columnDefinition = "DECIMAL(9,2)")
     private BigDecimal price;
+
+    @Column(columnDefinition = "enum('FOOD','DRINK)")
     @Enumerated(EnumType.STRING)
     private Category category;
 
