@@ -99,8 +99,8 @@ CREATE TABLE item (
 	id SERIAL PRIMARY KEY,
 	name TEXT NOT NULL,
 	price NUMERIC NOT NULL,
-	comment TEXT DEFAULT NULL,
 	category TEXT NOT NULL,
+	subcategory TEXT NOT NULL,
 	restaurant_id INTEGER NOT NULL,
 	enabled BOOLEAN DEFAULT TRUE,
 	FOREIGN KEY (restaurant_id) REFERENCES restaurant(id)

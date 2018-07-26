@@ -1,6 +1,7 @@
 package com.codecool.bread.model.dto;
 
 import com.codecool.bread.model.Address;
+import com.codecool.bread.model.Role;
 import com.codecool.bread.model.User;
 
 public class ProfileDto {
@@ -10,13 +11,15 @@ public class ProfileDto {
     private String lastName;
     private Address address;
     private String email;
+    private Role role;
 
-    public ProfileDto(User user, String firstName, String lastName, Address address, String email) {
+    public ProfileDto(User user, String firstName, String lastName, Address address, String email, Role role) {
         this.user = user;
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
         this.email = email;
+        this.role = role;
     }
 
     public User getUser() {
@@ -57,5 +60,13 @@ public class ProfileDto {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }
