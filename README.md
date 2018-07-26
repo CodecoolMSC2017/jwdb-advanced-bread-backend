@@ -13,7 +13,7 @@ Restaurant Point-Of-Sale system backend
 
 * __GET /restaurant/{restaurantId}/table__
 * __GET /restaurant/{restaurantId}/table/{tableId}__
-* __POST /restaurant/{restaurantId}/table/{tableId}__
+* __POST /restaurant/{restaurantId}/table/{tableId}__ - Connects the loggedin Employee to the table.
 * __PUT /restaurant/{restaurantId}/table/{tableId}__
 
 * __GET /table/{tableId}/seat__
