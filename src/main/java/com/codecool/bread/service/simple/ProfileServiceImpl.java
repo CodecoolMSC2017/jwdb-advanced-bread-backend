@@ -3,6 +3,7 @@ package com.codecool.bread.service.simple;
 import com.codecool.bread.exception.ProfileNotFoundException;
 import com.codecool.bread.model.Employee;
 import com.codecool.bread.model.Owner;
+import com.codecool.bread.model.Role;
 import com.codecool.bread.model.dto.ProfileDto;
 import com.codecool.bread.repository.EmployeeRepository;
 import com.codecool.bread.repository.OwnerRepository;
@@ -24,11 +25,11 @@ public class ProfileServiceImpl implements ProfileService {
         if(ownerRepository.findByUserId(userId).isPresent()) {
             Owner owner = ownerRepository.findByUserId(userId).get();
             return new ProfileDto(owner.getUser(), owner.getFirstName(),
-                    owner.getLastName(), owner.getAddress(), owner.getEmail());
+                    owner.getLastName(), owner.getAddress(), owner.getEmail(), Role.OWNER);
         } else if (employeeRepository.findByUserId(userId).isPresent()) {
             Employee employee = employeeRepository.findByUserId(userId).get();
             return new ProfileDto(employee.getUser(), employee.getFirstName(),
-                    employee.getLastName(), employee.getAddress(), employee.getEmail());
+                    employee.getLastName(), employee.getAddress(), employee.getEmail(), employee.getRole());
         } else {
             throw new ProfileNotFoundException();
         }

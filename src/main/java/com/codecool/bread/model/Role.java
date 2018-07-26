@@ -4,5 +4,6 @@ public enum Role {
     MANAGER,
     CHEF,
     WAITER,
-    BARTENDER
+    BARTENDER,
+    OWNER
 }
