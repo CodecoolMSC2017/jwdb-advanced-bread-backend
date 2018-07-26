@@ -27,7 +27,7 @@ public class Table extends POSObject {
     private Employee employee;
 
     @OneToMany(mappedBy = "table", fetch = FetchType.LAZY)
-    //@JsonIgnore
+    @JsonIgnore
     private Set<Seat> seats = new HashSet<>();
 
     public String getName() {

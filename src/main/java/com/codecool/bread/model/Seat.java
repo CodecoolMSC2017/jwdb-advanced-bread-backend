@@ -20,7 +20,7 @@ public class Seat extends POSObject {
     private com.codecool.bread.model.Table table;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "seat")
-    //@JsonIgnore
+    @JsonIgnore
     private Set<CustomerOrder> customerOrders = new HashSet<>();
 
     public boolean isActive() {
