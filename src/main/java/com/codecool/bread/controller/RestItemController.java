@@ -3,6 +3,7 @@ package com.codecool.bread.controller;
 import com.codecool.bread.exception.ItemAccessDeniedException;
 import com.codecool.bread.exception.ItemNotFoundException;
 import com.codecool.bread.exception.NoItemsFoundException;
+import com.codecool.bread.model.Category;
 import com.codecool.bread.model.Item;
 import com.codecool.bread.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,39 +20,36 @@ public class RestItemController {
     private ItemService itemService;
 
     @GetMapping("")
-    public List<Item> getItemsByRestaurantId(@PathVariable("restaurantId") int restaurantId) {
-        List<Item> items = itemService.getEnableItemsByRestaurantId(restaurantId);
+    public List<Item> getItemsByRestaurantId(@PathVariable("restaurantId") int restaurantId, @RequestParam("category") String category) {
+        List<Item> items = null;
+        if(category.equals("all")) {
+            items = itemService.getEnableItemsByRestaurantId(restaurantId);
+        } else {
+            items = itemService.getCategorizedItemsByRestaurantId(restaurantId, Category.valueOf(category.toUpperCase()));
+        }
         if (items.size() == 0) {
             throw new NoItemsFoundException();
         }
         return items;
     }
 
-    @GetMapping("/food")
-    public List<Item> getFoodItemsByRestaurantId(@PathVariable("restaurantId") int restaurantId) {
-        List<Item> items = itemService.getAllFoodsByRestaurantId(restaurantId);
+    /*@GetMapping("/category")
+    public List<Item> getFoodItemsByRestaurantId(@PathVariable("restaurantId") int restaurantId, ) {
+        List<Item> ;
         if (items.size() == 0) {
             throw new NoItemsFoundException();
         }
         return items;
-    }
-
-    @GetMapping("/drink")
-    public List<Item> getDrinkItemsByRestaurantId(@PathVariable("restaurantId") int restaurantId) {
-        List<Item> items = itemService.getAllDrinksByRestaurantId(restaurantId);
-        if (items.size() == 0) {
-            throw new NoItemsFoundException();
-        }
-        return items;
-    }
+    }*/
 
     @GetMapping("/{itemId}")
     public Item getItemById(@PathVariable("itemId") int itemId, @PathVariable("restaurantId") int restaurantId) {
         Item item = itemService.getEnableItemById(itemId,restaurantId);
+        List<Item> items = itemService.getEnableItemsByRestaurantId(restaurantId);
         if(item == null){
             throw new ItemNotFoundException();
         }
-        if(getItemsByRestaurantId(restaurantId).contains(item)){
+        if(items.contains(item)){
             return itemService.getItemById(itemId, restaurantId);
         }else{
             throw new ItemAccessDeniedException();

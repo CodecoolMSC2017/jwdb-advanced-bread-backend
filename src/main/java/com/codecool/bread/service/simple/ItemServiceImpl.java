@@ -38,16 +38,8 @@ public class ItemServiceImpl implements ItemService {
         return items;
     }
 
-    public List<Item> getAllFoodsByRestaurantId(Integer restaurantId) throws NoItemsFoundException {
-        List<Item> items = itemRepository.findByRestaurantIdAndEnabledTrueAndCategory(restaurantId, Category.FOOD);
-        if(items.size() == 0) {
-            throw new NoItemsFoundException();
-        }
-        return items;
-    }
-
-    public List<Item> getAllDrinksByRestaurantId(Integer restaurantId) throws NoItemsFoundException {
-        List<Item> items = itemRepository.findByRestaurantIdAndEnabledTrueAndCategory(restaurantId,Category.DRINK);
+    public List<Item> getCategorizedItemsByRestaurantId(Integer restaurantId, Category category) throws NoItemsFoundException {
+        List<Item> items = itemRepository.findByRestaurantIdAndEnabledTrueAndCategory(restaurantId, category);
         if(items.size() == 0) {
             throw new NoItemsFoundException();
         }
