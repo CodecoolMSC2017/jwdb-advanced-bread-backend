@@ -28,15 +28,15 @@ Restaurant Point-Of-Sale system backend
 * __PUT /owner/restaurant/{restaurantId}/employee/{employeeId}__
 * __PUT /owner/restaurant/{restaurantId}/employee/{employeeId}/addusername__ - Connects an existing employee with a username. It requieres a username, a password and a confirmation password and returns an employee
 
-* GET /owner/{ownerId}/restaurant/{restaurantId}/ingredient
-* GET /owner/{ownerId}/restaurant/{restaurantId}/ingredient/{ingredientId}
-* POST /owner/{ownerId}/restaurant/{restaurantId}/ingredient
+* __GET /owner/{ownerId}/restaurant/{restaurantId}/ingredient__
+* __GET /owner/{ownerId}/restaurant/{restaurantId}/ingredient/{ingredientId}__
+* __POST /owner/{ownerId}/restaurant/{restaurantId}/ingredient__
 
-* GET /owner/{ownerId}/restaurant/{restaurantId}/item?category={category}
-* GET /owner/{ownerId}/restaurant/{restaurantId}/item/{itemId}
-* POST /owner/{ownerId}/restaurant/{restaurantId}/item
-* DELETE /owner/{ownerId}/restaurant/{restaurantId}/item/{itemId}
-* PUT /owner/{ownerId}/restaurant/{restaurantId}/item{itemId}
+* __GET /owner/restaurant/{restaurantId}/item?category={category}__
+* __GET /owner/restaurant/{restaurantId}/item/{itemId}__
+* __POST /owner/restaurant/{restaurantId}/item__
+* __DELETE /owner/restaurant/{restaurantId}/item/{itemId}__
+* __PUT /owner/restaurant/{restaurantId}/item/{itemId}__
 
 * __GET /seat/{seatId}/order__
 * __GET /seat/{seatId}/order/{orderId}__
