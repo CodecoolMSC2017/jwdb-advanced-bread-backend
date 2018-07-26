@@ -27,8 +27,6 @@ public abstract class AbstractController {
 
     int getLoggedInOwnerId(Principal principal) {
         return ownerService.getOwnerById(ownerService.getOwnerByUsername(principal.getName()).getId()).getId();
-
-
     }
 
     boolean checkIdMatch(POSObject posObject, int id) {
@@ -36,6 +34,7 @@ public abstract class AbstractController {
     }
 
     int getLoggedInEmployeeId(Principal principal) {
-        return employeeService.getByUsername(principal.getName()).getUser().getId();
+        int userId = userService.get(principal.getName()).getId();
+        return employeeService.getEmployeeByUserId(userId).getId();
     }
 }
