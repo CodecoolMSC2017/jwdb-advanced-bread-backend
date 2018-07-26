@@ -33,4 +33,6 @@ public interface EmployeeService {
 
     Employee addUsername(Map<String,String> user, int employeeId) throws EmployeeNotFoundException;
 
+    Employee getEmployeeByUserId(Integer id) throws EmployeeNotFoundException;
+
 }

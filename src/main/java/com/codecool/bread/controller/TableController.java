@@ -39,6 +39,12 @@ public class TableController extends AbstractController {
         return  tableService.getEnableTableById(restaurantId, tableId);
     }
 
+    @GetMapping("/table/{tableId}/active-orders")
+    public Table getTableWithOrders(@PathVariable("restaurantId") int restaurantId,
+                              @PathVariable("tableId") int tableId){
+        return null;
+    }
+
     @PostMapping("/table")
     public Table addTable(@RequestBody Table table,
                           @PathVariable("restaurantId") int restaurantId,

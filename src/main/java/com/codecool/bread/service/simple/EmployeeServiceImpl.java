@@ -2,6 +2,7 @@ package com.codecool.bread.service.simple;
 
 import com.codecool.bread.exception.*;
 import com.codecool.bread.model.Employee;
+import com.codecool.bread.model.Owner;
 import com.codecool.bread.model.Restaurant;
 import com.codecool.bread.model.User;
 import com.codecool.bread.repository.EmployeeRepository;
@@ -137,5 +138,14 @@ public class EmployeeServiceImpl implements EmployeeService {
             employeeOptional.get().setUser(userService.get(username));
         }
         return employeeOptional.get();
+    }
+
+    public Employee getEmployeeByUserId(Integer id) throws EmployeeNotFoundException {
+        Optional<Employee> employee = employeeRepository.findById(id);
+        if (employee.isPresent()) {
+            return employee.get();
+        } else {
+            throw new EmployeeNotFoundException();
+        }
     }
 }

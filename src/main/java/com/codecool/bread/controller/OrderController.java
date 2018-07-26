@@ -7,11 +7,12 @@ import com.codecool.bread.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.Set;
 
 @RestController
 @RequestMapping("/seat/{seatId}/order")
-public class OrderController {
+public class OrderController extends AbstractController {
 
     @Autowired
     private OrderService orderService;
@@ -34,11 +35,10 @@ public class OrderController {
     }
 
     @PostMapping("")
-    public OrderDto addOrder(@RequestBody OrderDto orderDto,
-                             @PathVariable("restaurantId") int restaurantId,
-                             @PathVariable("employeeId") int employeeId,
-                             @PathVariable("tableId") int tableId,
-                             @PathVariable("seatId") int seatId) {
-        return orderService.addOrderToDb(orderDto, restaurantId, employeeId, tableId, seatId);
+    public OrderItem addOrder(@RequestBody OrderDto orderDto,
+                             @PathVariable("seatId") int seatId,
+                             Principal principal) {
+        int loggedInEmployeeId = getLoggedInEmployeeId(principal);
+        return orderService.add(orderDto,  seatId, loggedInEmployeeId);
     }
 }

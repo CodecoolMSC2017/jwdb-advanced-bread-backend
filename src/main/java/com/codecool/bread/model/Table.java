@@ -16,7 +16,7 @@ public class Table extends POSObject {
     @Column(name = "active")
     private boolean isActive;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id")
     @JsonIgnore
     private Restaurant restaurant;

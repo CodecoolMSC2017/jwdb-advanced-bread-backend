@@ -4,6 +4,7 @@ import com.codecool.bread.model.CustomerOrder;
 import com.codecool.bread.model.OrderItem;
 import com.codecool.bread.model.dto.OrderDto;
 
+import java.security.Principal;
 import java.util.Set;
 
 public interface OrderService {
@@ -13,7 +14,7 @@ public interface OrderService {
 
     OrderItem getOrderItem(int seatId, int customerOrderId);
 
-    OrderDto addOrderToDb(OrderDto orderDto, int restaurantId, int employeeId, int tableId, int seatId);
+    OrderItem add(OrderDto orderDto, int seatId, int loggedInEmployeeId);
 
     void setEmployeeToTable(int employeeId, int tableId);
 }
