@@ -20,8 +20,8 @@ public class Seat extends POSObject {
     private com.codecool.bread.model.Table table;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "seat")
-    @JsonIgnore
-    private Set<CustomerOrder> orders = new HashSet<>();
+    //@JsonIgnore
+    private Set<CustomerOrder> customerOrders = new HashSet<>();
 
     public boolean isActive() {
         return isActive;
@@ -39,11 +39,11 @@ public class Seat extends POSObject {
         this.table = table;
     }
 
-    public Set<CustomerOrder> getOrders() {
-        return orders;
+    public Set<CustomerOrder> getCustomerOrders() {
+        return customerOrders;
     }
 
-    public void setOrders(Set<CustomerOrder> orders) {
-        this.orders = orders;
+    public void setCustomerOrders(Set<CustomerOrder> customerOrders) {
+        this.customerOrders = customerOrders;
     }
 }
