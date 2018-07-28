@@ -4,6 +4,7 @@ import com.codecool.bread.model.CustomerOrder;
 import com.codecool.bread.model.Invoice;
 import com.codecool.bread.model.OrderItem;
 import com.codecool.bread.model.dto.OrderDto;
+import com.codecool.bread.model.dto.RestaurantDto;
 import com.codecool.bread.model.dto.TableDto;
 import com.codecool.bread.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,11 @@ public class OrderController extends AbstractController {
     @GetMapping("/seat/{seatId}/")
     public Set<CustomerOrder> getAllCustomerOrder(@PathVariable("seatId") int seatId) {
         return orderService.getAllCustomerOrderBySeat(seatId);
+    }
+
+    @GetMapping("/table")
+    public RestaurantDto getAllActiveOrdersByRestaurant(@RequestParam("id") int restaurantId) {
+        return orderService.getAllActiveOrdersByRestaurant(restaurantId);
     }
 
     @GetMapping("/table/{tableId}")

@@ -6,6 +6,7 @@ import com.codecool.bread.exception.SeatNotFoundException;
 import com.codecool.bread.exception.TableNotFoundException;
 import com.codecool.bread.model.*;
 import com.codecool.bread.model.dto.OrderDto;
+import com.codecool.bread.model.dto.RestaurantDto;
 import com.codecool.bread.model.dto.SeatDto;
 import com.codecool.bread.model.dto.TableDto;
 import com.codecool.bread.repository.*;
@@ -130,6 +131,16 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Invoice generateInvoiceForTable(int tableId, Principal principal) {
         return null;
+    }
+
+    @Override
+    public RestaurantDto getAllActiveOrdersByRestaurant(int restaurantId) {
+        Set<Table> tableSet = tableService.getAllTablesByRestaurantId(restaurantId);
+        Set<TableDto> tableDtoSet = new HashSet<>();
+        for (Table table : tableSet) {
+            tableDtoSet.add(getActiveOrdersByTable(table.getId()));
+        }
+        return new RestaurantDto(restaurantId, tableDtoSet);
     }
 
     private Set<CustomerOrder>  setEnabledOrderItemToCustomerOrder(Set<CustomerOrder> customerOrders) {

@@ -5,6 +5,7 @@ import com.codecool.bread.model.Invoice;
 import com.codecool.bread.model.OrderItem;
 import com.codecool.bread.model.Table;
 import com.codecool.bread.model.dto.OrderDto;
+import com.codecool.bread.model.dto.RestaurantDto;
 import com.codecool.bread.model.dto.TableDto;
 
 import java.security.Principal;
@@ -24,4 +25,6 @@ public interface OrderService {
     TableDto getActiveOrdersByTable(int tableId);
 
     Invoice generateInvoiceForTable(int tableId, Principal principal);
+
+    RestaurantDto getAllActiveOrdersByRestaurant(int restaurantId);
 }
