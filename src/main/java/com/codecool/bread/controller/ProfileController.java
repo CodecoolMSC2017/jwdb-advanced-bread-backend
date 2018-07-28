@@ -11,7 +11,7 @@ import java.security.Principal;
 
 @RestController
 @RequestMapping("/profile")
-public class RestProfileController extends AbstractController{
+public class ProfileController extends AbstractController{
 
     @Autowired
     private ProfileService profileService;
