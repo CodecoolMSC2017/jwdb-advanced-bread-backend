@@ -44,7 +44,7 @@ public class ItemController {
             throw new ItemNotFoundException();
         }
         if(items.contains(item)){
-            return itemService.getItemById(itemId, restaurantId);
+            return itemService.getByIdAndRestaurantId(itemId, restaurantId);
         }else{
             throw new ItemAccessDeniedException();
         }
