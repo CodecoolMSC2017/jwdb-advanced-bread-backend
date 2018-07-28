@@ -11,10 +11,10 @@ import com.codecool.bread.model.dto.SeatDto;
 import com.codecool.bread.model.dto.TableDto;
 import com.codecool.bread.repository.*;
 import com.codecool.bread.service.*;
-import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.security.Principal;
 import java.util.*;
 
@@ -54,6 +54,9 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private OrderService orderService;
 
+    @Autowired
+    private InvoiceRepository invoiceRepository;
+
     @Override
     public Set<CustomerOrder> getAllCustomerOrderBySeat(int seatId) {
         Optional<Seat> seat = seatRepository.findById(seatId);
@@ -89,7 +92,7 @@ public class OrderServiceImpl implements OrderService {
         if (table.getEmployee() == null) {
             table.setEmployee(employeeService.getById(loggedInEmployeeId));
         }
-        Item item = itemService.getItemById(orderDto.getItemId(), restaurantId);
+        Item item = itemService.getByIdAndRestaurantId(orderDto.getItemId(), restaurantId);
         OrderItem orderItem = new OrderItem();
         CustomerOrder customerOrder = new CustomerOrder();
         orderItem.setItem(item);
@@ -129,8 +132,14 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Invoice generateInvoiceForTable(int tableId, Principal principal) {
-        return null;
+    public Invoice getInvoiceForTable(int tableId) {
+        Invoice invoice = new Invoice(new BigDecimal(0));
+        Set<Seat> seats = seatService.getEnableSeatsByTableId(tableId);
+        for (Seat seat: seats) {
+            calculateTotalPriceForSeat(invoice, seat);
+        }
+        invoice.setEnabled(true);
+        return invoiceRepository.save(invoice);
     }
 
     @Override
@@ -146,11 +155,13 @@ public class OrderServiceImpl implements OrderService {
     private Set<CustomerOrder>  setEnabledOrderItemToCustomerOrder(Set<CustomerOrder> customerOrders) {
         Set<CustomerOrder> result = new HashSet<>();
         for (CustomerOrder customerOrder: customerOrders) {
-            CustomerOrder updatedCostumerOrder = new CustomerOrder();
-            updateCustomerOrder(customerOrder, updatedCostumerOrder);
-            int orderItemId = customerOrder.getOrderItem().getId();
-            updatedCostumerOrder.setOrderItem(getOrderItemByIdAndEnabledTrue(orderItemId));
-            result.add(updatedCostumerOrder);
+            if (customerOrder.isEnabled()) {
+                CustomerOrder updatedCostumerOrder = new CustomerOrder();
+                updateCustomerOrder(customerOrder, updatedCostumerOrder);
+                int orderItemId = customerOrder.getOrderItem().getId();
+                updatedCostumerOrder.setOrderItem(getOrderItemByIdAndEnabledTrue(orderItemId));
+                result.add(updatedCostumerOrder);
+            }
         }
         return result;
     }
@@ -169,4 +180,37 @@ public class OrderServiceImpl implements OrderService {
             throw new OrderItemNotFoundException();
         }
     }
+
+    private void calculateTotalPriceForSeat(Invoice invoice, Seat seat) {
+        Set<CustomerOrder> customerOrderSet = customerOrderRepository.findBySeatIdAndEnabledTrue(seat.getId());
+        for (CustomerOrder customerOrder: customerOrderSet) {
+            invoice.setTotal(invoice.getTotal().add(calculateTotalPriceForCustomerOrder(customerOrder)));
+        }
+    }
+
+    private BigDecimal calculateTotalPriceForCustomerOrder(CustomerOrder customerOrder) {
+        return calculateTotalPriceForOrderItem(customerOrder.getOrderItem());
+    }
+
+    private BigDecimal calculateTotalPriceForOrderItem(OrderItem orderItem) {
+        int quantity = orderItem.getQuantity();
+        BigDecimal price = orderItem.getItem().getPrice();
+        return BigDecimal.valueOf(quantity).multiply(price);
+    }
+
+    private void setTableAsPaid(int tableId) {
+        Set<Seat> seats = seatService.getEnableSeatsByTableId(tableId);
+        for (Seat seat: seats) {
+            setSeatAsPaid(seat.getId());
+        }
+    }
+
+    private void setSeatAsPaid(int seatId) {
+        Set<CustomerOrder> customerOrderSet = customerOrderRepository.findBySeatIdAndEnabledTrue(seatId);
+        for (CustomerOrder customerOrder: customerOrderSet) {
+            customerOrder.setEnabled(false);
+            customerOrderRepository.saveAndFlush(customerOrder);
+        }
+    }
+
 }

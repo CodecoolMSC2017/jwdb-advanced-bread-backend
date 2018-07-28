@@ -33,8 +33,6 @@ public class CustomerOrder extends POSObject {
     @JsonIgnore
     private Invoice invoice;
 
-    private boolean enabled;
-
     public Seat getSeat() {
         return seat;
     }
@@ -75,13 +73,4 @@ public class CustomerOrder extends POSObject {
         this.invoice = invoice;
     }
 
-    @Override
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    @Override
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
 }

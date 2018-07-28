@@ -56,8 +56,7 @@ public class OrderController extends AbstractController {
     }
 
     @GetMapping("/table/{tableId}/invoice")
-    public Invoice getInvoiceForTable(@PathVariable("tableId") int tableId,
-                              Principal principal) {
-        return orderService.generateInvoiceForTable(tableId, principal);
+    public Invoice getInvoiceForTable(@PathVariable("tableId") int tableId) {
+        return orderService.getInvoiceForTable(tableId);
     }
 }

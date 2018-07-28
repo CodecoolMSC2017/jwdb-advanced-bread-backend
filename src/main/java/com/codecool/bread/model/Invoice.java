@@ -13,7 +13,14 @@ public class Invoice extends POSObject {
     @Column(columnDefinition = "DECIMAL(9,2)")
     private BigDecimal total;
 
-    private Date date;
+    private Date date = new Date(new java.util.Date().getTime());
+
+    public Invoice(BigDecimal total) {
+        this.total = total;
+    }
+
+    protected Invoice() {  /* as required by JPA */
+    }
 
     public BigDecimal getTotal() {
         return total;

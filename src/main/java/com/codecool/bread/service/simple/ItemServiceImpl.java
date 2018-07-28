@@ -54,7 +54,7 @@ public class ItemServiceImpl implements ItemService {
         return items;
     }
 
-    public Item getItemById(Integer id, Integer restaurantId) throws ItemAccessDeniedException, NoItemsFoundException {
+    public Item getByIdAndRestaurantId(Integer id, Integer restaurantId) throws ItemAccessDeniedException, NoItemsFoundException {
         Item item = itemRepository.findByIdAndRestaurantId(id,restaurantId);
         if(item == null) {
             throw new NoItemsFoundException();

@@ -18,8 +18,6 @@ public class OrderItem extends POSObject {
 
     private String comment;
 
-    private boolean enabled;
-
     public Item getItem() {
         return item;
     }
@@ -42,15 +40,5 @@ public class OrderItem extends POSObject {
 
     public void setComment(String comment) {
         this.comment = comment;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    @Override
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
     }
 }

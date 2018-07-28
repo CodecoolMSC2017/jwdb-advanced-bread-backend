@@ -9,7 +9,8 @@ import java.util.Set;
 
 @Repository
 public interface CustomerOrderRepository extends JpaRepository<CustomerOrder, Integer> {
+
     Optional<CustomerOrder> findByIdAndSeatId(Integer id, Integer seatId);
 
-    Set<CustomerOrder> findByIdAndEnabledTrue(Integer id);
+    Set<CustomerOrder> findBySeatIdAndEnabledTrue(Integer seatId);
 }

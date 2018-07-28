@@ -24,7 +24,7 @@ public interface OrderService {
 
     TableDto getActiveOrdersByTable(int tableId);
 
-    Invoice generateInvoiceForTable(int tableId, Principal principal);
+    Invoice getInvoiceForTable(int tableId);
 
     RestaurantDto getAllActiveOrdersByRestaurant(int restaurantId);
 }

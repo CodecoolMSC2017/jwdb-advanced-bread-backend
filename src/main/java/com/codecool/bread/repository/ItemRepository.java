@@ -2,6 +2,7 @@ package com.codecool.bread.repository;
 
 import com.codecool.bread.model.Category;
 import com.codecool.bread.model.Item;
+import com.codecool.bread.model.OrderItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -22,4 +23,5 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
     Item findByIdAndRestaurantIdAndEnabledTrue(Integer id, Integer restaurantId);
 
     List<Item> findByRestaurantIdAndEnabledTrueAndCategory(Integer restaurantId, Category category);
+
 }
