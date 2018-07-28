@@ -47,7 +47,7 @@ public class TableServiceImpl implements TableService {
 
 
     @Override
-    public Table getTableById(int restaurantId, int tableId) throws TableNotFoundException, TableAccessDeniedException {
+    public Table getTableByRestaurantIdAndTableId(int restaurantId, int tableId) throws TableNotFoundException, TableAccessDeniedException {
         Set<Table> tables = tableRepository.findByRestaurantId(restaurantId);
         Optional<Table> table = tableRepository.findById(tableId);
         if(!table.isPresent()){
@@ -100,5 +100,14 @@ public class TableServiceImpl implements TableService {
         table.get().setEnabled(false);
         seatService.deleteSeatsForTable(table.get().getSeats());
         tableRepository.saveAndFlush(table.get());
+    }
+
+    public Table getById(int tableId) throws TableNotFoundException {
+        Optional<Table> table = tableRepository.findById(tableId);
+        if (table.isPresent()) {
+            return table.get();
+        } else {
+            throw new TableNotFoundException();
+        }
     }
 }

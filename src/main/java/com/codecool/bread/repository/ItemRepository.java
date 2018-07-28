@@ -10,10 +10,16 @@ import java.util.Optional;
 
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Integer> {
+
     List<Item> findByRestaurantId(Integer restaurantId);
+
     List<Item> findByRestaurantIdAndEnabledTrue(Integer restaurantId);
+
     Item findByIdAndRestaurantId(Integer id, Integer restaurantId);
+
     Optional<Item> findByName(String name);
+
     Item findByIdAndRestaurantIdAndEnabledTrue(Integer id, Integer restaurantId);
+
     List<Item> findByRestaurantIdAndEnabledTrueAndCategory(Integer restaurantId, Category category);
 }
