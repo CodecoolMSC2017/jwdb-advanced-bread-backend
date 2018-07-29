@@ -2,8 +2,6 @@ package com.codecool.bread.service.simple;
 
 import com.codecool.bread.exception.CustomerOrderNotFoundException;
 import com.codecool.bread.exception.OrderItemNotFoundException;
-import com.codecool.bread.exception.SeatNotFoundException;
-import com.codecool.bread.exception.TableNotFoundException;
 import com.codecool.bread.model.*;
 import com.codecool.bread.model.dto.OrderDto;
 import com.codecool.bread.model.dto.RestaurantDto;
@@ -58,11 +56,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Set<CustomerOrder> getAllCustomerOrderBySeat(int seatId) {
-        Optional<Seat> seat = seatRepository.findById(seatId);
-        if (!seat.isPresent()) {
-            throw new SeatNotFoundException();
-        }
-        return seat.get().getCustomerOrders();
+        Seat seat = seatService.getById(seatId);
+        return seat.getCustomerOrders();
     }
 
     @Override
@@ -80,10 +75,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderItem add(OrderDto orderDto, int seatId, int loggedInEmployeeId) {
-        Optional<Seat> seat = seatRepository.findById(seatId);
-        if (!seat.isPresent()) {
-            throw new SeatNotFoundException();
-        }
+        Seat seat = seatService.getById(seatId);
         Table table = tableRepository.findBySeatId(seatId);
         int tableId = table.getId();
         Restaurant restaurant = restaurantRepository.findByTableId(tableId);
@@ -99,24 +91,21 @@ public class OrderServiceImpl implements OrderService {
         orderItem.setComment(orderDto.getComment());
         orderItem.setEnabled(true);
         OrderItem savedOrderItem = orderItemRepository.saveAndFlush(orderItem);
-        customerOrder.setSeat(seat.get());
+        customerOrder.setSeat(seat);
         customerOrder.setEmployee(employeeService.getById(table.getEmployee().getId(), restaurantId));
         customerOrder.setOrderItem(orderItem);
         customerOrderRepository.saveAndFlush(customerOrder);
-        seat.get().getCustomerOrders().add(customerOrder);
-        seatRepository.saveAndFlush(seat.get());
+        seat.getCustomerOrders().add(customerOrder);
+        seatRepository.saveAndFlush(seat);
         return savedOrderItem;
     }
 
     @Override
     public void setEmployeeToTable(int employeeId, int tableId) {
         Employee employee = employeeService.getById(employeeId);
-        Optional<Table> table =tableRepository.findById(tableId);
-        if (!table.isPresent()) {
-            throw new TableNotFoundException();
-        }
-        table.get().setEmployee(employee);
-        tableRepository.saveAndFlush(table.get());
+        Table table = tableService.getById(tableId);
+        table.setEmployee(employee);
+        tableRepository.saveAndFlush(table);
     }
 
     @Override
