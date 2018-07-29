@@ -41,6 +41,16 @@ public class OrderController extends AbstractController {
         return orderService.getCustomerOrderById(seatId, customerOrderId);
     }
 
+    @GetMapping("/table/{tableId}/invoice")
+    public Invoice getInvoiceForTable(@PathVariable("tableId") int tableId) {
+        return orderService.getInvoiceForTable(tableId);
+    }
+
+    @GetMapping("/seat/{seatId}/invoice")
+    public Invoice getInvoiceForSeat(@PathVariable("seatId") int seatId) {
+        return orderService.getInvoiceForSeat(seatId);
+    }
+
     @GetMapping("/seat/{seatId}/{customerOrderId}/order-item")
     public OrderItem getOrderItem(@PathVariable("seatId") int seatId,
                                   @PathVariable("customerOrderId") int customerOrderId) {
@@ -53,10 +63,5 @@ public class OrderController extends AbstractController {
                              Principal principal) {
         int loggedInEmployeeId = getLoggedInEmployeeId(principal);
         return orderService.add(orderDto,  seatId, loggedInEmployeeId);
-    }
-
-    @GetMapping("/table/{tableId}/invoice")
-    public Invoice getInvoiceForTable(@PathVariable("tableId") int tableId) {
-        return orderService.getInvoiceForTable(tableId);
     }
 }
