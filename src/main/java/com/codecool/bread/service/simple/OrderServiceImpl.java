@@ -143,7 +143,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public RestaurantDto getAllActiveOrdersByRestaurant(int restaurantId) {
+    public RestaurantDto getActiveOrdersByRestaurant(int restaurantId) {
         Set<Table> tableSet = tableService.getAllTablesByRestaurantId(restaurantId);
         Set<TableDto> tableDtoSet = new HashSet<>();
         for (Table table : tableSet) {
