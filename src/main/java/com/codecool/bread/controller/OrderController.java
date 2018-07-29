@@ -25,9 +25,9 @@ public class OrderController extends AbstractController {
         return orderService.getAllCustomerOrderBySeat(seatId);
     }
 
-    @GetMapping("/table")
-    public RestaurantDto getAllActiveOrdersByRestaurant(@RequestParam("id") int restaurantId) {
-        return orderService.getAllActiveOrdersByRestaurant(restaurantId);
+    @GetMapping("/restaurant/{restaurantId}")
+    public RestaurantDto getActiveOrdersByRestaurant(@PathVariable("id") int restaurantId) {
+        return orderService.getActiveOrdersByRestaurant(restaurantId);
     }
 
     @GetMapping("/table/{tableId}")
