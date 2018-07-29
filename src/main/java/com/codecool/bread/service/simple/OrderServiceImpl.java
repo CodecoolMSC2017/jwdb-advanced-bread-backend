@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 import java.util.*;
 
 @Service
-public class OrderServiceImpl implements OrderService {
+public class OrderServiceImpl implements OrderService { // TODO remove empty customerOrders when sending orders to fron end
 
     @Autowired
     private RestaurantService restaurantService;
@@ -115,7 +115,9 @@ public class OrderServiceImpl implements OrderService {
         String tableName = tableService.getById(tableId).getName();
         for (Seat seat : seats) {
             SeatDto seatDto = new SeatDto(seat.getId(), setEnabledOrderItemToCustomerOrder(seat.getCustomerOrders()));
-            seatDtoSet.add(seatDto);
+            if (!seatDto.getCustomerOrderSet().isEmpty()) {
+                seatDtoSet.add(seatDto);
+            }
         }
         return new TableDto(tableId, tableName, seatDtoSet);
     }
