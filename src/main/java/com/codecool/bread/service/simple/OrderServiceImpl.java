@@ -124,11 +124,12 @@ public class OrderServiceImpl implements OrderService {
     public TableDto getActiveOrdersByTable(int tableId) {
         Set<Seat> seats = seatService.getAllSeatsByTableId(tableId);
         Set<SeatDto> seatDtoSet = new HashSet<>();
+        String tableName = tableService.getById(tableId).getName();
         for (Seat seat : seats) {
             SeatDto seatDto = new SeatDto(seat.getId(), setEnabledOrderItemToCustomerOrder(seat.getCustomerOrders()));
             seatDtoSet.add(seatDto);
         }
-        return new TableDto(tableId, seatDtoSet);
+        return new TableDto(tableId, tableName, seatDtoSet);
     }
 
     @Override
@@ -149,7 +150,7 @@ public class OrderServiceImpl implements OrderService {
         for (Table table : tableSet) {
             tableDtoSet.add(getActiveOrdersByTable(table.getId()));
         }
-        return new RestaurantDto(restaurantId, tableDtoSet);
+        return new RestaurantDto(restaurantId,  tableDtoSet);
     }
 
     private Set<CustomerOrder>  setEnabledOrderItemToCustomerOrder(Set<CustomerOrder> customerOrders) {
