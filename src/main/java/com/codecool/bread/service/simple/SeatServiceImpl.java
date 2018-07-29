@@ -42,7 +42,7 @@ public class SeatServiceImpl implements SeatService {
     }
 
     @Override
-    public Seat getSeatById(int tableId, int seatId) throws SeatNotFoundException {
+    public Seat getSeatByIdAndTableId(int tableId, int seatId) throws SeatNotFoundException {
         Set<Seat> seats = seatRepository.findByTableId(tableId);
         Optional<Seat> seat = seatRepository.findById(seatId);
         if (!seat.isPresent()) {
@@ -103,6 +103,16 @@ public class SeatServiceImpl implements SeatService {
         for(Seat seat : seats) {
             seat.setEnabled(false);
             seatRepository.saveAndFlush(seat);
+        }
+    }
+
+    @Override
+    public Seat getById(int seatId) throws SeatNotFoundException {
+        Optional<Seat> seat = seatRepository.findById(seatId);
+        if (seat.isPresent()) {
+            return seat.get();
+        } else {
+            throw new SeatNotFoundException();
         }
     }
 

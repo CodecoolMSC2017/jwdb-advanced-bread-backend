@@ -4,6 +4,7 @@ import com.codecool.bread.exception.NoSeatsFoundException;
 import com.codecool.bread.exception.SeatNotFoundException;
 import com.codecool.bread.model.Seat;
 
+import java.util.Optional;
 import java.util.Set;
 
 public interface SeatService {
@@ -14,7 +15,7 @@ public interface SeatService {
 
     Set<Seat> getEnableSeatsByTableId(int tableId) throws NoSeatsFoundException;
 
-    Seat getSeatById(int tableId, int seatId);
+    Seat getSeatByIdAndTableId(int tableId, int seatId);
 
     Seat getEnableSeatById(int tableId, int seatId) throws SeatNotFoundException;
 
@@ -23,4 +24,6 @@ public interface SeatService {
     void deleteSeat(int seatId, int tableId) throws SeatNotFoundException;
 
     void deleteSeatsForTable(Set<Seat> seats);
+
+    Seat getById(int seatId) throws SeatNotFoundException;
 }

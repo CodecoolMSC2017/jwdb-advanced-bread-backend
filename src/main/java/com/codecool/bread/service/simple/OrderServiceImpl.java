@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.security.Principal;
 import java.util.*;
 
 @Service
@@ -133,17 +132,6 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Invoice getInvoiceForTable(int tableId) {
-        Invoice invoice = new Invoice(new BigDecimal(0));
-        Set<Seat> seats = seatService.getEnableSeatsByTableId(tableId);
-        for (Seat seat: seats) {
-            calculateTotalPriceForSeat(invoice, seat);
-        }
-        invoice.setEnabled(true);
-        return invoiceRepository.save(invoice);
-    }
-
-    @Override
     public RestaurantDto getActiveOrdersByRestaurant(int restaurantId) {
         Set<Table> tableSet = tableService.getAllTablesByRestaurantId(restaurantId);
         Set<TableDto> tableDtoSet = new HashSet<>();
@@ -151,6 +139,27 @@ public class OrderServiceImpl implements OrderService {
             tableDtoSet.add(getActiveOrdersByTable(table.getId()));
         }
         return new RestaurantDto(restaurantId,  tableDtoSet);
+    }
+
+    @Override
+    public Invoice getInvoiceForTable(int tableId) {
+        Set<Seat> seats = seatService.getEnableSeatsByTableId(tableId);
+        BigDecimal total = new BigDecimal(0);
+        for (Seat seat: seats) {
+            total = total.add(calculateTotalPriceForSeat(seat));
+        }
+        Invoice invoice = new Invoice(total);
+        invoice.setEnabled(true);
+        return invoiceRepository.save(invoice);
+    }
+
+    @Override
+    public Invoice getInvoiceForSeat(int seatId) {
+        Seat seat = seatService.getById(seatId);
+        BigDecimal total = calculateTotalPriceForSeat(seat);
+        Invoice invoice = new Invoice(total);
+        invoice.setEnabled(true);
+        return invoiceRepository.save(invoice);
     }
 
     private Set<CustomerOrder>  setEnabledOrderItemToCustomerOrder(Set<CustomerOrder> customerOrders) {
@@ -182,11 +191,13 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
-    private void calculateTotalPriceForSeat(Invoice invoice, Seat seat) {
+    private BigDecimal calculateTotalPriceForSeat(Seat seat) {
+        BigDecimal total = new BigDecimal(0);
         Set<CustomerOrder> customerOrderSet = customerOrderRepository.findBySeatIdAndEnabledTrue(seat.getId());
         for (CustomerOrder customerOrder: customerOrderSet) {
-            invoice.setTotal(invoice.getTotal().add(calculateTotalPriceForCustomerOrder(customerOrder)));
+            total = total.add(calculateTotalPriceForCustomerOrder(customerOrder));
         }
+        return total;
     }
 
     private BigDecimal calculateTotalPriceForCustomerOrder(CustomerOrder customerOrder) {
