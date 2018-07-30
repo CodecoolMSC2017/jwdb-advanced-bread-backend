@@ -8,6 +8,8 @@ import com.codecool.bread.model.dto.RestaurantDto;
 import com.codecool.bread.model.dto.TableDto;
 import com.codecool.bread.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -42,19 +44,30 @@ public class OrderController extends AbstractController {
     }
 
     @GetMapping("/table/{tableId}/invoice")
-    public Invoice getInvoiceForTable(@PathVariable("tableId") int tableId) {
-        return orderService.getInvoiceForTable(tableId);
+    public Invoice createInvoiceForTable(@PathVariable("tableId") int tableId) {
+        return orderService.createInvoiceForTable(tableId);
     }
 
     @GetMapping("/seat/{seatId}/invoice")
-    public Invoice getInvoiceForSeat(@PathVariable("seatId") int seatId) {
-        return orderService.getInvoiceForSeat(seatId);
+    public Invoice createInvoiceForSeat(@PathVariable("seatId") int seatId) {
+        return orderService.createInvoiceForSeat(seatId);
+    }
+
+    @GetMapping("/invoice")
+    public Invoice createInvoiceForSeats(@RequestParam("seatId") int[] seatIds) {
+        return orderService.createInvoiceForSeats(seatIds);
     }
 
     @GetMapping("/seat/{seatId}/{customerOrderId}/order-item")
-    public OrderItem getOrderItem(@PathVariable("seatId") int seatId,
+    public OrderItem createOrderItem(@PathVariable("seatId") int seatId,
                                   @PathVariable("customerOrderId") int customerOrderId) {
         return orderService.getOrderItem(seatId, customerOrderId);
+    }
+
+    @PutMapping("invoice/{id}/paid")
+    public ResponseEntity<Void> setInvoiceAsPaid(@PathVariable("invoiceId") int invoiceId) {
+        orderService.setInvoiceAsPaid(invoiceId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("seat/{seatId}/")

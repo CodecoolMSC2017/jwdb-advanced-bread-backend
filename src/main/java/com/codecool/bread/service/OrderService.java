@@ -26,7 +26,11 @@ public interface OrderService {
 
     RestaurantDto getActiveOrdersByRestaurant(int restaurantId);
 
-    Invoice getInvoiceForTable(int tableId);
+    Invoice createInvoiceForTable(int tableId);
 
-    Invoice getInvoiceForSeat(int seatId);
+    Invoice createInvoiceForSeat(int seatId);
+
+    Invoice createInvoiceForSeats(int[] seatIds);
+
+    void setInvoiceAsPaid(int invoiceId);
 }
