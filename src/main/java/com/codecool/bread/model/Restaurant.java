@@ -20,7 +20,7 @@ public class Restaurant extends POSObject {
 
     private String email;
 
-    private int phone;
+    private String phone;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "owner_id", nullable = false)
@@ -63,11 +63,11 @@ public class Restaurant extends POSObject {
         this.email = email;
     }
 
-    public int getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(int phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 

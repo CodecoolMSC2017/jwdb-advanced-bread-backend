@@ -133,7 +133,7 @@ public class OrderServiceImpl implements OrderService { // TODO remove empty cus
     }
 
     @Override
-    public Invoice getInvoiceForTable(int tableId) {
+    public Invoice createInvoiceForTable(int tableId) {
         Set<Seat> seats = seatService.getEnableSeatsByTableId(tableId);
         BigDecimal total = new BigDecimal(0);
         for (Seat seat: seats) {
@@ -145,12 +145,28 @@ public class OrderServiceImpl implements OrderService { // TODO remove empty cus
     }
 
     @Override
-    public Invoice getInvoiceForSeat(int seatId) {
+    public Invoice createInvoiceForSeat(int seatId) {
         Seat seat = seatService.getById(seatId);
         BigDecimal total = calculateTotalPriceForSeat(seat);
         Invoice invoice = new Invoice(total);
         invoice.setEnabled(true);
         return invoiceRepository.save(invoice);
+    }
+
+    @Override
+    public Invoice createInvoiceForSeats(int[] seatIds) {
+        BigDecimal total = new BigDecimal(0);
+        for (int i : seatIds) {
+            total = total.add(calculateTotalPriceForSeat(seatService.getById(i)));
+        }
+        Invoice invoice = new Invoice(total);
+        //invoice.setEnabled(true);
+        return invoiceRepository.save(invoice);
+    }
+
+    @Override
+    public void setInvoiceAsPaid(int invoiceId) {
+
     }
 
     private Set<CustomerOrder>  setEnabledOrderItemToCustomerOrder(Set<CustomerOrder> customerOrders) {
