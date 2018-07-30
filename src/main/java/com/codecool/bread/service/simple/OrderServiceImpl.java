@@ -54,6 +54,8 @@ public class OrderServiceImpl implements OrderService { // TODO remove empty cus
     @Autowired
     private InvoiceRepository invoiceRepository;
 
+    @Autowired InvoiceService invoiceService;
+
     @Override
     public Set<CustomerOrder> getAllCustomerOrderBySeat(int seatId) {
         Seat seat = seatService.getById(seatId);
@@ -149,8 +151,11 @@ public class OrderServiceImpl implements OrderService { // TODO remove empty cus
         Seat seat = seatService.getById(seatId);
         BigDecimal total = calculateTotalPriceForSeat(seat);
         Invoice invoice = new Invoice(total);
-        invoice.setEnabled(true);
-        return invoiceRepository.save(invoice);
+        //invoice.setEnabled(true);
+        int invoiceId = invoiceRepository.save(invoice).getId();
+        Set<CustomerOrder> customerOrderSet = customerOrderRepository.findBySeatIdAndEnabledTrue(seatId);
+        setInvoiceForCustomerOrders(invoiceService.getById(invoiceId), customerOrderSet);
+        return invoiceService.getById(invoiceId);
     }
 
     @Override
@@ -160,13 +165,35 @@ public class OrderServiceImpl implements OrderService { // TODO remove empty cus
             total = total.add(calculateTotalPriceForSeat(seatService.getById(i)));
         }
         Invoice invoice = new Invoice(total);
+        int invoiceId = invoiceRepository.save(invoice).getId();
+        for (int i : seatIds) {
+            Set<CustomerOrder> customerOrderSet = customerOrderRepository.findBySeatIdAndEnabledTrue(i);
+            setInvoiceForCustomerOrders(invoiceService.getById(invoiceId), customerOrderSet);
+        }
         //invoice.setEnabled(true);
-        return invoiceRepository.save(invoice);
+        return invoiceService.getById(invoiceId);
+    }
+
+    private void setInvoiceForCustomerOrders(Invoice invoice, Set<CustomerOrder> customerOrderSet) {
+        for (CustomerOrder customerOrder: customerOrderSet) {
+            customerOrder.setInvoice(invoice);
+            customerOrderRepository.save(customerOrder);
+        }
     }
 
     @Override
     public void setInvoiceAsPaid(int invoiceId) {
+        Set<Seat> seatSet = seatRepository.findByInvoiceId(invoiceId);
+        Invoice invoice = invoiceService.getById(invoiceId);
+        for (Seat seat : seatSet) {
+           setSeatAsPaid(seat.getId());
+        }
+        invoice.setPaid(true);
+        invoiceRepository.save(invoice);
+    }
 
+    public Set<Seat> getByInvoideId(int invoiceId) {
+        return seatRepository.findByInvoiceId(invoiceId);
     }
 
     private Set<CustomerOrder>  setEnabledOrderItemToCustomerOrder(Set<CustomerOrder> customerOrders) {

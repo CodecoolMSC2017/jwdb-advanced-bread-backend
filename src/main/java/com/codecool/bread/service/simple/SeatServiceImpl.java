@@ -6,6 +6,7 @@ import com.codecool.bread.exception.SeatNotFoundException;
 import com.codecool.bread.exception.TableNotFoundException;
 import com.codecool.bread.model.Seat;
 import com.codecool.bread.model.Table;
+import com.codecool.bread.repository.CustomerOrderRepository;
 import com.codecool.bread.repository.SeatRepository;
 import com.codecool.bread.repository.TableRepository;
 import com.codecool.bread.service.SeatService;
@@ -115,5 +116,4 @@ public class SeatServiceImpl implements SeatService {
             throw new SeatNotFoundException();
         }
     }
-
 }

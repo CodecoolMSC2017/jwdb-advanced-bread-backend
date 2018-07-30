@@ -1,5 +1,7 @@
 package com.codecool.bread.model;
 
+import org.hibernate.annotations.JoinColumnOrFormula;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -14,6 +16,9 @@ public class Invoice extends POSObject {
     private BigDecimal total;
 
     private Date date = new Date(new java.util.Date().getTime());
+
+    @Column(name = "paid", columnDefinition = "boolean default false")
+    private Boolean isPaid = false;
 
     public Invoice(BigDecimal total) {
         this.total = total;
@@ -36,5 +41,13 @@ public class Invoice extends POSObject {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public Boolean getPaid() {
+        return isPaid;
+    }
+
+    public void setPaid(Boolean paid) {
+        isPaid = paid;
     }
 }
