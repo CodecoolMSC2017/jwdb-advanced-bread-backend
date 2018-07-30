@@ -166,12 +166,16 @@ public class OrderServiceImpl implements OrderService { // TODO remove empty cus
         }
         Invoice invoice = new Invoice(total);
         int invoiceId = invoiceRepository.save(invoice).getId();
+        setInvoiceForSeats(seatIds, invoiceId);
+        //invoice.setEnabled(true);
+        return invoiceService.getById(invoiceId);
+    }
+
+    private void setInvoiceForSeats(int[] seatIds, int invoiceId) {
         for (int i : seatIds) {
             Set<CustomerOrder> customerOrderSet = customerOrderRepository.findBySeatIdAndEnabledTrue(i);
             setInvoiceForCustomerOrders(invoiceService.getById(invoiceId), customerOrderSet);
         }
-        //invoice.setEnabled(true);
-        return invoiceService.getById(invoiceId);
     }
 
     private void setInvoiceForCustomerOrders(Invoice invoice, Set<CustomerOrder> customerOrderSet) {
