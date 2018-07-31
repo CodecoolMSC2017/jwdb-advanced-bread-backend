@@ -12,6 +12,7 @@ public class ProfileDto {
     private Address address;
     private String email;
     private Role role;
+    private int restaurantId;
 
     public ProfileDto(User user, String firstName, String lastName, Address address, String email, Role role) {
         this.user = user;
@@ -20,6 +21,16 @@ public class ProfileDto {
         this.address = address;
         this.email = email;
         this.role = role;
+    }
+
+    public ProfileDto(User user, String firstName, String lastName, Address address, String email, Role role, int restaurantId) {
+        this.user = user;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.email = email;
+        this.role = role;
+        this.restaurantId = restaurantId;
     }
 
     public User getUser() {
