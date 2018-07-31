@@ -54,13 +54,8 @@ public class RestaurantController extends AbstractController {
         }
     }
 
-    @DeleteMapping("")
-    public ResponseEntity<?> deleteRestaurant(@RequestBody int restaurantId) {
-        try {
-            restaurantService.deleteRestaurant(restaurantId);
-            return ResponseEntity.ok("Success");
-        } catch (RestaurantNotFoundException ex) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    @DeleteMapping("/{restaurantId}")
+    public void deleteRestaurant(@PathVariable("restaurantId") int restaurantId) {
+        restaurantService.deleteRestaurant(restaurantId);
     }
 }

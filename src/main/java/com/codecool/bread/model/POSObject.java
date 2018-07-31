@@ -9,7 +9,6 @@ public abstract class POSObject {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "enabled", columnDefinition = "boolean default true")
     private boolean enabled = true;
 
     public Integer getId() {

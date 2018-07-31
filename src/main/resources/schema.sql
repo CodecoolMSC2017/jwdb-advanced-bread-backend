@@ -63,7 +63,7 @@ CREATE TABLE restaurant (
 	email TEXT NOT NULL,
 	phone TEXT NOT NULL,
 	owner_id INTEGER NOT NULL,
-	enabled BOOLEAN DEFAULT TRUE,
+	enabled BOOLEAN default true,
 	CONSTRAINT email_not_empty CHECK (email <> ''),
 	FOREIGN KEY (owner_id) REFERENCES owner(id),
 	FOREIGN KEY (address_id) REFERENCES address(id)

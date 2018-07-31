@@ -65,9 +65,9 @@ public class OrderController extends AbstractController {
     }
 
     @PutMapping("invoice/{invoiceId}/paid")
-    public ResponseEntity<Void> setInvoiceAsPaid(@PathVariable("invoiceId") int invoiceId) {
+    public void setInvoiceAsPaid(@PathVariable("invoiceId") int invoiceId) {
         orderService.setInvoiceAsPaid(invoiceId);
-        return new ResponseEntity<>(HttpStatus.OK);
+
     }
 
     @PostMapping("seat/{seatId}/")

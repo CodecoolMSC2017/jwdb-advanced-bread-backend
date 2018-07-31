@@ -89,7 +89,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     @Override
     public void deleteRestaurant(int restaurantId) throws RestaurantNotFoundException {
         Optional<Restaurant> restaurant = restaurantRepository.findById(restaurantId);
-        if (restaurant.isPresent()) {
+        if (!restaurant.isPresent()) {
             throw new RestaurantNotFoundException();
         }
         restaurant.get().setEnabled(false);
