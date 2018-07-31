@@ -56,4 +56,9 @@ public class RestaurantController extends AbstractController {
     public void deleteRestaurant(@PathVariable("restaurantId") int restaurantId, Principal principal) {
         restaurantService.deleteRestaurant(restaurantId, getLoggedInOwnerId(principal));
     }
+
+    @PutMapping("")
+    public Restaurant setDisabled(@RequestBody int restaurantId) {
+        return restaurantService.setDisabledInDb(restaurantId);
+    }
 }

@@ -95,4 +95,11 @@ public class RestaurantServiceImpl implements RestaurantService {
         restaurant.setEnabled(false);
         restaurantRepository.saveAndFlush(restaurant);
     }
+
+    @Override
+    public Restaurant setDisabledInDb(int restaurantId) {
+        Restaurant restaurant = restaurantRepository.findById(restaurantId).get();
+        restaurant.setEnabled(false);
+        return restaurantRepository.saveAndFlush(restaurant);
+    }
 }

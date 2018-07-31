@@ -25,4 +25,6 @@ public interface RestaurantService {
     Restaurant edit(Restaurant restaurant, int ownerId) throws RestaurantNotFoundException;
 
     void deleteRestaurant(int restaurantId, int ownerId) throws RestaurantNotFoundException;
+
+    Restaurant setDisabledInDb(int restaurantId);
 }
