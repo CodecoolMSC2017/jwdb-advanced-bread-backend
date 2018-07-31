@@ -15,10 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/owner/restaurant/{restaurantId}/item")
-public class ItemController {
-
-    @Autowired
-    private ItemService itemService;
+public class ItemController extends AbstractController {
 
     @GetMapping("")
     public List<Item> getItemsByRestaurantId(@PathVariable("restaurantId") int restaurantId, @RequestParam("category") String category) {

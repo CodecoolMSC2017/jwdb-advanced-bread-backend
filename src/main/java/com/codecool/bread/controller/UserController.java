@@ -10,10 +10,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/owner/user")
-public class UserController {
-
-    @Autowired
-    private UserService userService;
+public class UserController extends AbstractController {
 
     @GetMapping("")
     public Iterable<User> getAll() {

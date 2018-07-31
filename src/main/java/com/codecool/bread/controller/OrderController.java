@@ -19,9 +19,6 @@ import java.util.Set;
 @RequestMapping("order/")
 public class OrderController extends AbstractController {
 
-    @Autowired
-    private OrderService orderService;
-
     @GetMapping("/seat/{seatId}/")
     public Set<CustomerOrder> getAllCustomerOrderBySeat(@PathVariable("seatId") int seatId) {
         return orderService.getAllCustomerOrderBySeat(seatId);

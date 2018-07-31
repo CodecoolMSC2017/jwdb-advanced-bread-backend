@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -20,7 +21,11 @@ public class IngredientServiceImpl extends AbstractService implements Ingredient
     }
 
     public Ingredient getIngredientById(int ingredientId) throws IngredientNotFoundException {
-        return ingredientRepository.findById(ingredientId).get();
+        Optional<Ingredient> ingredient = ingredientRepository.findById(ingredientId);
+        if(!ingredient.isPresent()) {
+            throw new IngredientNotFoundException();
+        }
+        return ingredient.get();
     }
 
     public Ingredient addNewIngredient(Ingredient ingredient) {

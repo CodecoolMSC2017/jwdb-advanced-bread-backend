@@ -61,9 +61,8 @@ public class OrderServiceImpl extends AbstractService implements OrderService { 
     @Override
     public OrderItem add(OrderDto orderDto, int seatId, int loggedInEmployeeId) {
         Seat seat = seatService.getById(seatId);
-        Table table = tableRepository.findBySeatId(seatId);
-        int tableId = table.getId();
-        Restaurant restaurant = restaurantRepository.findByTableId(tableId);
+        Table table = seat.getTable();
+        Restaurant restaurant = table.getRestaurant();
         int restaurantId = restaurant.getId();
         if (table.getEmployee() == null) {
             table.setEmployee(employeeService.getById(loggedInEmployeeId));

@@ -13,10 +13,7 @@ import java.security.Principal;
 
 @RestController
 @RequestMapping("/auth")
-public class AuthorizationController {
-
-    @Autowired
-    private UserService userService;
+public class AuthorizationController extends AbstractController {
 
     @GetMapping("")
     public User get(Principal principal) {

@@ -17,15 +17,6 @@ import java.util.Set;
 @RequestMapping("/owner/restaurant")
 public class RestaurantController extends AbstractController {
 
-    @Autowired
-    private RestaurantService restaurantService;
-
-    @Autowired
-    private OwnerService ownerService;
-
-    @Autowired
-    private UserService userService;
-
     @GetMapping("")
     public Set<Restaurant> findAllByOwnerId(Principal principal) {
         return restaurantService.getAllEnableByOwnerId(getLoggedInOwnerId(principal));

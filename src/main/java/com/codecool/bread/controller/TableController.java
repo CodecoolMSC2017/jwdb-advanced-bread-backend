@@ -16,20 +16,9 @@ import java.util.Set;
 @RequestMapping("/restaurant/{restaurantId}")
 public class TableController extends AbstractController {
 
-    @Autowired
-    private RestaurantService restaurantService;
-
-    @Autowired
-    private OwnerService ownerService;
-
-    @Autowired
-    private TableService tableService;
-
-    @Autowired
-    private OrderService orderService;
-
     @GetMapping("/table")
     public Set<Table> getAllTablesByRestaurantId(@PathVariable("restaurantId") int restaurantId) {
+
         return tableService.getEnableTablesByRestaurantId(restaurantId);
     }
 

@@ -16,15 +16,6 @@ import java.util.List;
 @RequestMapping("/owner")
 public class OwnerController extends AbstractController {
 
-    @Autowired
-    private RestaurantService restaurantService;
-
-    @Autowired
-    private OwnerServiceImpl ownerService;
-
-    @Autowired
-    private EmployeeService employeeService;
-
     @GetMapping("/{ownerId}")
     public Owner getOwnerById(@PathVariable("ownerId") int ownerId) throws OwnerNotFoundException {
         Owner owner = ownerService.getOwnerById(ownerId);

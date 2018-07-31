@@ -13,9 +13,6 @@ import java.security.Principal;
 @RequestMapping("/profile")
 public class ProfileController extends AbstractController{
 
-    @Autowired
-    private ProfileService profileService;
-
     @GetMapping("")
     public ProfileDto getProfile(Principal principal) {
         return profileService.getProfileFromDb(getUserId(principal));

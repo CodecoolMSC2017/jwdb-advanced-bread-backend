@@ -17,6 +17,8 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Integer>
 
     Restaurant findByIdAndOwnerId(Integer restaurantId, Integer ownerId);
 
+    Restaurant findByEmployeesId(Integer employeesId);
+
     @Query(value = "select restaurant.id,\n" +
             "\t   restaurant.name,\n" +
             "\t   restaurant.address_id,\n" +

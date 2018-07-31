@@ -15,12 +15,6 @@ import java.util.Set;
 @RequestMapping("owner/restaurant/{restaurantId}/employee")
 public class EmployeeController extends AbstractController {
 
-    @Autowired
-    private EmployeeService employeeService;
-
-    @Autowired
-    private EmployeeRepository employeeRepository;
-
     @GetMapping("")
     public Set<Employee> getEmployeesByRestaurantId(@PathVariable("restaurantId") int restaurantId,
                                                     Principal principal) {

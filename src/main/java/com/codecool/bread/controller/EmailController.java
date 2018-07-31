@@ -15,15 +15,12 @@ import javax.mail.SendFailedException;
 
 @Controller
 @RequestMapping("/send")
-public class EmailController {
-
-    @Autowired
-    private EmailService emailServive;
+public class EmailController extends AbstractController {
 
     @PostMapping("/invite")
     public ResponseEntity<?> sendInvitation(@RequestBody Email email) {
         try {
-            emailServive.sendSimpleMessage(email);
+            emailService.sendSimpleMessage(email);
             return ResponseEntity.ok("Success");
         } catch (SendFailedException ex) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

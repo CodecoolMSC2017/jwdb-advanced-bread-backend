@@ -12,13 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/owner/restaurant/{restaurantId}/ingredient")
-public class RestIngredientController {
-
-    @Autowired
-    private IngredientService ingredientService;
-
-    @Autowired
-    private IngredientRepository ingredientRepository;
+public class IngredientController extends AbstractController {
 
     @GetMapping("")
     public List<Ingredient> getAllIngredients(@PathVariable("restaurantId") int restaurantId) {
@@ -27,9 +21,6 @@ public class RestIngredientController {
 
     @GetMapping("/{ingredientId}")
     public Ingredient getIngredientById(@PathVariable("ingredientId") int ingredientId) {
-        if(!ingredientRepository.findById(ingredientId).isPresent()) {
-            throw new IngredientNotFoundException();
-        }
         return ingredientService.getIngredientById(ingredientId);
     }
 

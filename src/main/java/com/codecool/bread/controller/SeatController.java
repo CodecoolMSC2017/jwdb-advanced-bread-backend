@@ -13,9 +13,6 @@ import java.util.Set;
 @RequestMapping("/table/{tableId}/seat")
 public class SeatController extends AbstractController {
 
-    @Autowired
-    private SeatService seatService;
-
     @GetMapping("")
     public Set<Seat> getAllSeatsByRestaurantId(@PathVariable("tableId") int tableId) {
         Set<Seat> seats = seatService.getEnableSeatsByTableId(tableId);
