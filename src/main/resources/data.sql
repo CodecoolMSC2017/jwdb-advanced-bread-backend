@@ -55,7 +55,7 @@ INSERT INTO restaurant_table(name, active, restaurant_id) VALUES
 	('Bar', TRUE, 1), --4
 	('Table CORNER', TRUE, 1), --5
 	('Table VIP', TRUE, 1), --6
-	('Second restaurant First Table', TRUE, 3); --7
+	('Table ONE', TRUE, 3); --7
 
 INSERT INTO seat(active, restaurant_table_id) VALUES
     (TRUE, 1), --1

@@ -23,7 +23,7 @@ public class OrderController extends AbstractController {
     private OrderService orderService;
 
     @GetMapping("/seat/{seatId}/")
-    public Set<CustomerOrder> getAllCustomerOrder(@PathVariable("seatId") int seatId) {
+    public Set<CustomerOrder> getAllCustomerOrderBySeat(@PathVariable("seatId") int seatId) {
         return orderService.getAllCustomerOrderBySeat(seatId);
     }
 

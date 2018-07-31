@@ -54,7 +54,8 @@ public class OrderServiceImpl implements OrderService { // TODO remove empty cus
     @Autowired
     private InvoiceRepository invoiceRepository;
 
-    @Autowired InvoiceService invoiceService;
+    @Autowired
+    private InvoiceService invoiceService;
 
     @Override
     public Set<CustomerOrder> getAllCustomerOrderBySeat(int seatId) {
