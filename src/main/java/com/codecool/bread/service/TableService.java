@@ -24,4 +24,6 @@ public interface TableService {
     void deleteTable(int tableId, int restaurantId) throws TableNotFoundException;
 
     Table getById(int tableId) throws TableNotFoundException;
+
+    void deleteAllTableByRestaurantId(int restaurantId);
 }

@@ -142,4 +142,14 @@ public class EmployeeServiceImpl extends AbstractService implements EmployeeServ
             throw new EmployeeNotFoundException();
         }
     }
+
+    @Override
+    public void setAllEmployeeRestaurantNull(int ownerId) {
+        Owner owner = ownerRepository.findById(ownerId).get();
+        List<Employee> employees = getAllEmployees(owner.getId());
+        for(Employee employee : employees) {
+            employee.setRestaurant(null);
+        }
+        employeeRepository.saveAll(employees);
+    }
 }

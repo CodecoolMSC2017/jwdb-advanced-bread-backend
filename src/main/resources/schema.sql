@@ -77,7 +77,7 @@ CREATE TABLE employee (
 	last_name TEXT NOT NULL,
 	title TEXT NOT NULL,
 	address_id INTEGER NOT NULL,
-	restaurant_id INTEGER NOT NULL,
+	restaurant_id INTEGER,
 	hour_rate INTEGER DEFAULT NULL,
 	enabled BOOLEAN DEFAULT TRUE,
 	CONSTRAINT email_not_empty CHECK (email <> ''),

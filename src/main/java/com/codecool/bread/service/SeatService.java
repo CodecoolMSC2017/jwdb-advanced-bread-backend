@@ -3,8 +3,8 @@ package com.codecool.bread.service;
 import com.codecool.bread.exception.NoSeatsFoundException;
 import com.codecool.bread.exception.SeatNotFoundException;
 import com.codecool.bread.model.Seat;
+import com.codecool.bread.model.Table;
 
-import java.util.Optional;
 import java.util.Set;
 
 public interface SeatService {
@@ -23,7 +23,7 @@ public interface SeatService {
 
     void deleteSeat(int seatId, int tableId) throws SeatNotFoundException;
 
-    void deleteSeatsForTable(Set<Seat> seats);
+    void deleteAllSeatsByTableId(Table table);
 
     Seat getById(int seatId) throws SeatNotFoundException;
 }

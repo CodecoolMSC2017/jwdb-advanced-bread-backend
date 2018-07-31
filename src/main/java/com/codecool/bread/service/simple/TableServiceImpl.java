@@ -6,8 +6,6 @@ import com.codecool.bread.exception.TableAccessDeniedException;
 import com.codecool.bread.exception.TableNotFoundException;
 import com.codecool.bread.model.Restaurant;
 import com.codecool.bread.model.Table;
-import com.codecool.bread.repository.RestaurantRepository;
-import com.codecool.bread.repository.TableRepository;
 import com.codecool.bread.service.SeatService;
 import com.codecool.bread.service.TableService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,7 +90,7 @@ public class TableServiceImpl extends AbstractService implements TableService {
         }
 
         table.get().setEnabled(false);
-        seatService.deleteSeatsForTable(table.get().getSeats());
+        seatService.deleteAllSeatsByTableId(table.get());
         tableRepository.saveAndFlush(table.get());
     }
 
@@ -103,5 +101,14 @@ public class TableServiceImpl extends AbstractService implements TableService {
         } else {
             throw new TableNotFoundException();
         }
+    }
+
+    @Override
+    public void deleteAllTableByRestaurantId(int restaurantId) {
+        Set<Table> tables = restaurantRepository.findById(restaurantId).get().getTables();
+        for(Table table : tables) {
+            table.setEnabled(false);
+        }
+        tableRepository.saveAll(tables);
     }
 }

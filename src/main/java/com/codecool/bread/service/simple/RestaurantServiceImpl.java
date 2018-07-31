@@ -2,17 +2,16 @@ package com.codecool.bread.service.simple;
 
 import com.codecool.bread.exception.RestaurantAccessDeniedException;
 import com.codecool.bread.exception.RestaurantNotFoundException;
-import com.codecool.bread.model.Restaurant;
+import com.codecool.bread.model.*;
 import com.codecool.bread.repository.AddressRepository;
 import com.codecool.bread.repository.RestaurantRepository;
 import com.codecool.bread.repository.SeatRepository;
 import com.codecool.bread.repository.TableRepository;
-import com.codecool.bread.service.OwnerService;
-import com.codecool.bread.service.RestaurantService;
-import com.codecool.bread.service.TableService;
+import com.codecool.bread.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -24,6 +23,12 @@ public class RestaurantServiceImpl extends AbstractService implements Restaurant
 
     @Autowired
     private TableService tableService;
+
+    @Autowired
+    private EmployeeService employeeService;
+
+    @Autowired
+    private SeatService seatService;
 
     @Override
     public Restaurant getById(int restaurantId, int ownerId) throws RestaurantAccessDeniedException, RestaurantNotFoundException {
@@ -79,6 +84,12 @@ public class RestaurantServiceImpl extends AbstractService implements Restaurant
         Optional<Restaurant> restaurant = restaurantRepository.findById(restaurantId);
         if (!restaurant.isPresent()) {
             throw new RestaurantNotFoundException();
+        }
+        employeeService.setAllEmployeeRestaurantNull(restaurant.get().getOwner().getId());
+        tableService.deleteAllTableByRestaurantId(restaurantId);
+        Set<Table> tables = restaurant.get().getTables();
+        for(Table table : tables) {
+            seatService.deleteAllSeatsByTableId(table);
         }
         restaurant.get().setEnabled(false);
         restaurantRepository.saveAndFlush(restaurant.get());

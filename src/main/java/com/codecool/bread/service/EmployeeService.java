@@ -35,4 +35,6 @@ public interface EmployeeService {
 
     Employee getEmployeeByUserId(Integer id) throws EmployeeNotFoundException;
 
+    void setAllEmployeeRestaurantNull(int ownerId);
+
 }

@@ -6,9 +6,6 @@ import com.codecool.bread.exception.SeatNotFoundException;
 import com.codecool.bread.exception.TableNotFoundException;
 import com.codecool.bread.model.Seat;
 import com.codecool.bread.model.Table;
-import com.codecool.bread.repository.CustomerOrderRepository;
-import com.codecool.bread.repository.SeatRepository;
-import com.codecool.bread.repository.TableRepository;
 import com.codecool.bread.service.SeatService;
 import com.codecool.bread.service.TableService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,7 +91,8 @@ public class SeatServiceImpl extends AbstractService implements SeatService {
     }
 
     @Override
-    public void deleteSeatsForTable(Set<Seat> seats) {
+    public void deleteAllSeatsByTableId(Table table) {
+        Set<Seat> seats = table.getSeats();
         for(Seat seat : seats) {
             seat.setEnabled(false);
             seatRepository.saveAndFlush(seat);
