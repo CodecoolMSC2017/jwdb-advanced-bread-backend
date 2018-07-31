@@ -298,3 +298,34 @@ INSERT INTO customer_order (seat_id,employee_id,ordering_time ,order_item_id) VA
     (12, 3, '2018-06-20', 34),
     (14, 4, '2018-02-13', 36),
     (12, 3, '2018-07-15', 47);
+
+INSERT INTO menu (title) VALUES
+    ('Hetfo'),
+    ('Kedd'),
+    ('Szerda'),
+    ('Csutortok'),
+    ('Pentek'),
+    ('Szombat'),
+    ('Vasarnap');
+
+INSERT INTO menu_item (menu_id, item_id) VALUES
+    (1, 1),
+    (1, 2),
+    (1, 3),
+    (2, 4),
+    (2, 5),
+    (2, 6),
+    (3, 7),
+    (3, 8),
+    (4, 9),
+    (4, 10),
+    (4, 11),
+    (5, 12),
+    (5, 13),
+    (5, 14),
+    (6, 15),
+    (6, 16),
+    (6, 17),
+    (7, 18),
+    (7, 19),
+    (7, 20);
