@@ -6,6 +6,8 @@ import com.codecool.bread.service.OwnerService;
 import com.codecool.bread.service.RestaurantService;
 import com.codecool.bread.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -52,13 +54,13 @@ public class RestaurantController extends AbstractController {
         }
     }
 
-    @DeleteMapping("/{restaurantId}")
-    public void deleteRestaurant(@PathVariable("restaurantId") int restaurantId, Principal principal) {
-        restaurantService.deleteRestaurant(restaurantId, getLoggedInOwnerId(principal));
-    }
-
-    @PutMapping("")
-    public Restaurant setDisabled(@RequestBody int restaurantId) {
-        return restaurantService.setDisabledInDb(restaurantId);
+    @DeleteMapping("")
+    public ResponseEntity<?> deleteRestaurant(@RequestBody int restaurantId) {
+        try {
+            restaurantService.deleteRestaurant(restaurantId);
+            return ResponseEntity.ok("Success");
+        } catch (RestaurantNotFoundException ex) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }

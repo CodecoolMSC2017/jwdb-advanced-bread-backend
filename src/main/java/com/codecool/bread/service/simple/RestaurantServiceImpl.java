@@ -87,19 +87,12 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public void deleteRestaurant(int restaurantId, int ownerId) throws RestaurantNotFoundException {
-        Restaurant restaurant = restaurantRepository.findByIdAndOwnerId(restaurantId, ownerId);
-        if (restaurant == null) {
+    public void deleteRestaurant(int restaurantId) throws RestaurantNotFoundException {
+        Optional<Restaurant> restaurant = restaurantRepository.findById(restaurantId);
+        if (restaurant.isPresent()) {
             throw new RestaurantNotFoundException();
         }
-        restaurant.setEnabled(false);
-        restaurantRepository.saveAndFlush(restaurant);
-    }
-
-    @Override
-    public Restaurant setDisabledInDb(int restaurantId) {
-        Restaurant restaurant = restaurantRepository.findById(restaurantId).get();
-        restaurant.setEnabled(false);
-        return restaurantRepository.saveAndFlush(restaurant);
+        restaurant.get().setEnabled(false);
+        restaurantRepository.saveAndFlush(restaurant.get());
     }
 }
