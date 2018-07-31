@@ -16,22 +16,13 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class UserServiceImpl implements UserService {
-
-    @Autowired
-    private UserRepository userRepository;
+public class UserServiceImpl extends AbstractService implements UserService {
 
     @Autowired
     private UserDetailsManager userDetailsManager;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private OwnerRepository ownerRepository;
-
-    @Autowired
-    private EmployeeRepository employeeRepository;
 
     public Optional<User> get(Integer id) {
         return userRepository.findById(id);

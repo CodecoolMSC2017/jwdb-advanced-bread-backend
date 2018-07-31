@@ -17,19 +17,7 @@ import java.util.Optional;
 import java.util.Set;
 
 @Service("restaurantService")
-public class RestaurantServiceImpl implements RestaurantService {
-
-    @Autowired
-    private RestaurantRepository restaurantRepository;
-
-    @Autowired
-    private AddressRepository addressRepository;
-
-    @Autowired
-    private TableRepository tableRepository;
-
-    @Autowired
-    private SeatRepository seatRepository;
+public class RestaurantServiceImpl extends AbstractService implements RestaurantService {
 
     @Autowired
     private OwnerService ownerService;

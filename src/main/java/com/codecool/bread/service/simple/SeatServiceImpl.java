@@ -18,16 +18,10 @@ import java.util.Optional;
 import java.util.Set;
 
 @Service
-public class SeatServiceImpl implements SeatService {
+public class SeatServiceImpl extends AbstractService implements SeatService {
 
     @Autowired
     private TableService tableService;
-
-    @Autowired
-    private SeatRepository seatRepository;
-
-    @Autowired
-    private TableRepository tableRepository;
 
     @Override
     public Set<Seat> getAllSeatsByTableId(int tableId) {

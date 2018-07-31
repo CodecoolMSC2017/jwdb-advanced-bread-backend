@@ -10,10 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class InvoiceServiceImpl implements InvoiceService {
-
-    @Autowired
-    private InvoiceRepository invoiceRepository;
+public class InvoiceServiceImpl extends AbstractService implements InvoiceService {
 
     @Override
     public Invoice getById(int invoiceId) {

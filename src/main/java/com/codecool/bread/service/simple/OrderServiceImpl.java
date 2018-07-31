@@ -16,19 +16,10 @@ import java.math.BigDecimal;
 import java.util.*;
 
 @Service
-public class OrderServiceImpl implements OrderService { // TODO remove empty customerOrders when sending orders to fron end
+public class OrderServiceImpl extends AbstractService implements OrderService { // TODO remove empty customerOrders when sending orders to fron end
 
     @Autowired
     private RestaurantService restaurantService;
-
-    @Autowired
-    private CustomerOrderRepository customerOrderRepository;
-
-    @Autowired
-    private OrderItemRepository orderItemRepository;
-
-    @Autowired
-    private SeatRepository seatRepository;
 
     @Autowired
     private EmployeeService employeeService;
@@ -40,19 +31,10 @@ public class OrderServiceImpl implements OrderService { // TODO remove empty cus
     private SeatService seatService;
 
     @Autowired
-    private TableRepository tableRepository;
-
-    @Autowired
-    private RestaurantRepository restaurantRepository;
-
-    @Autowired
     private TableService tableService;
 
     @Autowired
     private OrderService orderService;
-
-    @Autowired
-    private InvoiceRepository invoiceRepository;
 
     @Autowired
     private InvoiceService invoiceService;

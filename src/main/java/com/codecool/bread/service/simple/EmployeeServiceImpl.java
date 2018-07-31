@@ -24,13 +24,7 @@ import java.util.List;
 import java.util.Set;
 
 @Service("employeeService")
-public class EmployeeServiceImpl implements EmployeeService {
-
-    @Autowired
-    private EmployeeRepository employeeRepository;
-
-    @Autowired
-    private UserRepository userRepository;
+public class EmployeeServiceImpl extends AbstractService implements EmployeeService {
 
     @Autowired
     private UserService userService;

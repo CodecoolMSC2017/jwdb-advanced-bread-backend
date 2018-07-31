@@ -12,13 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ProfileServiceImpl implements ProfileService {
-
-    @Autowired
-    private OwnerRepository ownerRepository;
-
-    @Autowired
-    private EmployeeRepository employeeRepository;
+public class ProfileServiceImpl extends AbstractService implements ProfileService {
 
     @Override
     public ProfileDto getProfileFromDb(int userId) {

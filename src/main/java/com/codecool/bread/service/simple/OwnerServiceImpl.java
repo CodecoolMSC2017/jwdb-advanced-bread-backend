@@ -14,19 +14,10 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class OwnerServiceImpl implements OwnerService {
-
-    @Autowired
-    private OwnerRepository ownerRepository;
+public class OwnerServiceImpl extends AbstractService implements OwnerService {
 
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private RestaurantRepository restaurantRepository;
-
-    @Autowired
-    private AddressRepository addressRepository;
 
     public Owner getOwnerById(Integer id) throws OwnerNotFoundException {
         Optional<Owner> result = ownerRepository.findById(id);

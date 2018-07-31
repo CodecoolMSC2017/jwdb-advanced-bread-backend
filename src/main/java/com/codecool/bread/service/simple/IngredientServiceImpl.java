@@ -13,10 +13,7 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-public class IngredientServiceImpl implements IngredientService {
-
-    @Autowired
-    private IngredientRepository ingredientRepository;
+public class IngredientServiceImpl extends AbstractService implements IngredientService {
 
     public List<Ingredient> getAllIngredient() {
         return ingredientRepository.findAll();

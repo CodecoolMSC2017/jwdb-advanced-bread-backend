@@ -15,13 +15,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ItemServiceImpl implements ItemService {
+public class ItemServiceImpl extends AbstractService implements ItemService {
 
     @Autowired
     private RestaurantService restaurantService;
-
-    @Autowired
-    private ItemRepository itemRepository;
 
     @Autowired
     private IngredientService ingredientService;
