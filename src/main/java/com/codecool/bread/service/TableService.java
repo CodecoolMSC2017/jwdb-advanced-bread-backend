@@ -30,4 +30,8 @@ public interface TableService {
     void deleteAllTableByRestaurantId(int restaurantId);
 
     List<TableDto> getAllTablesByWaiter(int employeeId);
+
+    void assignEmployeeToTable(int employeeId, Table table);
+
+    void unsassingEmployeeFromTable(Table table);
 }

@@ -15,7 +15,7 @@ INSERT INTO authorities(username, authority) VALUES
 	('leverling', 'ROLE_USER'),
 	('stan', 'ROLE_USER'),
 	('moreno', 'ROLE_USER'),
-	('manders', 'ROLE_USER'),
+	('anders', 'ROLE_USER'),
 	('hardy', 'ROLE_USER');
 
 INSERT INTO address(street, city, postal_code, state, country) VALUES
