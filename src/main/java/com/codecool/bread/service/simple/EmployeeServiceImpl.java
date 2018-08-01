@@ -99,8 +99,8 @@ public class EmployeeServiceImpl extends AbstractService implements EmployeeServ
     @Override
     public Employee add(Employee employee, int restaurantId, int ownerId) {
         employee.setRestaurant(restaurantService.getById(restaurantId, ownerId));
-        employeeRepository.saveAndFlush(employee);
-        return employee;
+
+        return employeeRepository.saveAndFlush(employee);
     }
 
     @Override
