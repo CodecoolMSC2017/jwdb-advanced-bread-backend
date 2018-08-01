@@ -20,15 +20,15 @@ public class WaiterController extends AbstractController {
     }
 
     @PutMapping("/table/assign")
-    public void assignEmployeeToTable(@RequestBody Map<String, String> table, Principal principal) {
+    public void assignEmployeeToTable(@RequestBody TableDto tableDto, Principal principal) {
         int employeeId = getLoggedInEmployeeId(principal);
-        int tableId = Integer.parseInt(table.get("id"));
+        int tableId = tableDto.getId();
         tableService.assignEmployeeToTable(employeeId, tableId);
     }
 
     @PutMapping("/table/unassign")
-    public void unassignEmployeeFromTable(@RequestBody Map<String, String> table) {
-        int tableId = Integer.parseInt(table.get("id"));
+    public void unassignEmployeeFromTable(@RequestBody TableDto tableDto) {
+        int tableId = tableDto.getId();
         tableService.unsassingEmployeeFromTable(tableId);
     }
 }
