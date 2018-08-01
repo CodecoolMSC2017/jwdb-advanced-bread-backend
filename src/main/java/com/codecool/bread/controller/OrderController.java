@@ -56,7 +56,7 @@ public class OrderController extends AbstractController {
     }
 
     @GetMapping("/seat/{seatId}/{customerOrderId}/order-item")
-    public OrderItem createOrderItem(@PathVariable("seatId") int seatId,
+    public OrderItem getOrderItem(@PathVariable("seatId") int seatId,
                                   @PathVariable("customerOrderId") int customerOrderId) {
         return orderService.getOrderItem(seatId, customerOrderId);
     }
