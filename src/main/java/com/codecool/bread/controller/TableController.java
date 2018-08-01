@@ -1,25 +1,19 @@
 package com.codecool.bread.controller;
 
 import com.codecool.bread.exception.*;
-import com.codecool.bread.model.Employee;
-import com.codecool.bread.model.Owner;
-import com.codecool.bread.model.Seat;
 import com.codecool.bread.model.Table;
-import com.codecool.bread.service.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.Set;
+import java.util.List;
 
 @RestController
 @RequestMapping("/restaurant/{restaurantId}")
 public class TableController extends AbstractController {
 
     @GetMapping("/table")
-    public Set<Table> getAllTablesByRestaurantId(@PathVariable("restaurantId") int restaurantId) {
-
-        return tableService.getEnableTablesByRestaurantId(restaurantId);
+    public List<Table> getAllTablesByRestaurantId(@PathVariable("restaurantId") int restaurantId) {
+        return tableService.getAllEnabledTablesByRestaurantId(restaurantId);
     }
 
     @GetMapping("/table/{tableId}")

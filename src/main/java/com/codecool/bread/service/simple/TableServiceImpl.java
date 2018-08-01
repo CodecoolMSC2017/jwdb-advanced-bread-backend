@@ -11,6 +11,8 @@ import com.codecool.bread.service.TableService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -29,8 +31,8 @@ public class TableServiceImpl extends AbstractService implements TableService {
         return tables;
     }
 
-    public Set<Table> getEnableTablesByRestaurantId(int restaurantId) throws NoTablesFoundException {
-        Set<Table> enableTables = tableRepository.findByRestaurantIdAndEnabledTrue(restaurantId);
+    public List<Table> getAllEnabledTablesByRestaurantId(int restaurantId) throws NoTablesFoundException {
+        List<Table> enableTables = tableRepository.findByRestaurantIdAndEnabledTrueOrderByName(restaurantId);
         if(enableTables.isEmpty()) {
             throw new NoTablesFoundException();
         }
