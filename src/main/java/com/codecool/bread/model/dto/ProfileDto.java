@@ -80,4 +80,12 @@ public class ProfileDto {
     public void setRole(Role role) {
         this.role = role;
     }
+
+    public int getRestaurantId() {
+        return restaurantId;
+    }
+
+    public void setRestaurantId(int restaurantId) {
+        this.restaurantId = restaurantId;
+    }
 }
