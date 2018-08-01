@@ -9,6 +9,7 @@ public class TableDto {
     private int id;
     private String name;
     private Set<SeatDto> seatDtoSet;
+    private String assignedTo;
 
     public TableDto(int id, String name, Set<SeatDto> seatDtoSet) {
         this.id = id;
@@ -38,5 +39,13 @@ public class TableDto {
 
     public void setSeatDtoSet(Set<SeatDto> seatDtoSet) {
         this.seatDtoSet = seatDtoSet;
+    }
+
+    public String getAssignedTo() {
+        return assignedTo;
+    }
+
+    public void setAssignedTo(String assignedTo) {
+        this.assignedTo = assignedTo;
     }
 }

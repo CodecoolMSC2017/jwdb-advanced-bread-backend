@@ -6,21 +6,27 @@ import com.codecool.bread.exception.TableAccessDeniedException;
 import com.codecool.bread.exception.TableNotFoundException;
 import com.codecool.bread.model.Restaurant;
 import com.codecool.bread.model.Table;
+import com.codecool.bread.model.dto.TableDto;
+import com.codecool.bread.service.EmployeeService;
+import com.codecool.bread.service.OrderService;
 import com.codecool.bread.service.SeatService;
 import com.codecool.bread.service.TableService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class TableServiceImpl extends AbstractService implements TableService {
 
     @Autowired
     private SeatService seatService;
+
+    @Autowired
+    private EmployeeService employeeService;
+
+    @Autowired
+    private OrderService orderService;
 
     @Override
     public Set<Table> getAllTablesByRestaurantId(int restaurantId) throws NoTablesFoundException {
@@ -112,5 +118,20 @@ public class TableServiceImpl extends AbstractService implements TableService {
             table.setEnabled(false);
         }
         tableRepository.saveAll(tables);
+    }
+
+    // WAITER SERVICES
+
+    @Override
+    public List<TableDto> getAllTablesByWaiter(int employeeId) {
+        int restaurantId = employeeService.getById(employeeId).getRestaurant().getId();
+        List<Table> tableList = getAllEnabledTablesByRestaurantId(restaurantId);
+        List<TableDto> tableDtos = new ArrayList<>();
+        for (Table table : tableList) {
+            TableDto tableDto = orderService.getActiveOrdersByTable(table.getId());
+            tableDto.setAssignedTo(table.getEmployee().getLastName());
+            tableDtos.add(tableDto);
+        }
+        return tableDtos;
     }
 }

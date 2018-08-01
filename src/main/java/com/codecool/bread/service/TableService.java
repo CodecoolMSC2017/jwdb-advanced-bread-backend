@@ -4,6 +4,7 @@ import com.codecool.bread.exception.NoTablesFoundException;
 import com.codecool.bread.exception.RestaurantNotFoundException;
 import com.codecool.bread.exception.TableNotFoundException;
 import com.codecool.bread.model.Table;
+import com.codecool.bread.model.dto.TableDto;
 
 import java.util.List;
 import java.util.Set;
@@ -27,4 +28,6 @@ public interface TableService {
     Table getById(int tableId) throws TableNotFoundException;
 
     void deleteAllTableByRestaurantId(int restaurantId);
+
+    List<TableDto> getAllTablesByWaiter(int employeeId);
 }
