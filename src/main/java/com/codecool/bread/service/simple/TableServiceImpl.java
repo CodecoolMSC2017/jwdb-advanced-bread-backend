@@ -138,13 +138,15 @@ public class TableServiceImpl extends AbstractService implements TableService {
     }
 
     @Override
-    public void assignEmployeeToTable(int employeeId, Table table) {
+    public void assignEmployeeToTable(int employeeId, int tableId) {
+        Table table = getById(tableId);
         table.setEmployee(employeeService.getById(employeeId));
         tableRepository.saveAndFlush(table);
     }
 
     @Override
-    public void unsassingEmployeeFromTable(Table table) {
+    public void unsassingEmployeeFromTable(int tableId) {
+        Table table = getById(tableId);
         table.setEmployee(null);
         tableRepository.saveAndFlush(table);
     }

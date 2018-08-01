@@ -31,7 +31,7 @@ public interface TableService {
 
     List<TableDto> getAllTablesByWaiter(int employeeId);
 
-    void assignEmployeeToTable(int employeeId, Table table);
+    void assignEmployeeToTable(int employeeId, int tableId);
 
-    void unsassingEmployeeFromTable(Table table);
+    void unsassingEmployeeFromTable(int tableId);
 }
