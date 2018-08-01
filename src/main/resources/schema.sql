@@ -149,7 +149,7 @@ CREATE TABLE invoice (
 	total NUMERIC NOT NULL,
 	paid BOOLEAN DEFAULT FALSE,
 	enabled BOOLEAN DEFAULT TRUE,
-	date DATE DEFAULT current_date
+	date TIMESTAMP DEFAULT current_date
 );
 
 CREATE TABLE order_item (
@@ -165,7 +165,7 @@ CREATE TABLE customer_order (
 	id SERIAL PRIMARY KEY,
 	seat_id INTEGER NOT NULL,
 	employee_id INTEGER NOT NULL,
-	ordering_time DATE DEFAULT current_date,
+	ordering_time TIMESTAMP DEFAULT current_date,
 	order_item_id INTEGER NOT NULL,
 	invoice_id INTEGER DEFAULT NULL,
 	enabled BOOLEAN DEFAULT TRUE,
