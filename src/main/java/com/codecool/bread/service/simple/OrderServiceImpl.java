@@ -78,6 +78,9 @@ public class OrderServiceImpl extends AbstractService implements OrderService { 
         customerOrder.setSeat(seat);
         customerOrder.setEmployee(employeeService.getById(table.getEmployee().getId(), restaurantId));
         customerOrder.setOrderItem(orderItem);
+        if (customerOrder.getArrivalTime() == null) {
+            customerOrder.setArrivalTime(new java.sql.Date(new java.util.Date().getTime()));
+        }
         customerOrderRepository.saveAndFlush(customerOrder);
         seat.getCustomerOrders().add(customerOrder);
         seatRepository.saveAndFlush(seat);

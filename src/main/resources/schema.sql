@@ -165,6 +165,7 @@ CREATE TABLE customer_order (
 	id SERIAL PRIMARY KEY,
 	seat_id INTEGER NOT NULL,
 	employee_id INTEGER NOT NULL,
+	arrival_time DATE,
 	ordering_time DATE DEFAULT current_date,
 	order_item_id INTEGER NOT NULL,
 	invoice_id INTEGER DEFAULT NULL,

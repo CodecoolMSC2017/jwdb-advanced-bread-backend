@@ -20,6 +20,9 @@ public class CustomerOrder extends POSObject {
     @JsonIgnore
     private Employee employee;
 
+    @Column(name = "arrival_time")
+    private Date arrivalTime;
+
     @Column(name = "ordering_time")
     private Date orderingTime = new Date(new java.util.Date().getTime());
 
@@ -73,4 +76,11 @@ public class CustomerOrder extends POSObject {
         this.invoice = invoice;
     }
 
+    public Date getArrivalTime() {
+        return arrivalTime;
+    }
+
+    public void setArrivalTime(Date arrive) {
+        this.arrivalTime = arrivalTime;
+    }
 }
