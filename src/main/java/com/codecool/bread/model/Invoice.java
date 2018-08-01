@@ -25,7 +25,7 @@ public class Invoice extends POSObject {
         this.total = total;
     }
 
-    protected Invoice() {  /* as required by JPA */
+    protected Invoice() {  // as required by JPA
     }
 
     public BigDecimal getTotal() {

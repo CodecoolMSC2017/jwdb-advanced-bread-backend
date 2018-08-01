@@ -4,6 +4,7 @@ package com.codecool.bread.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,6 +16,9 @@ public class Table extends POSObject {
 
     @Column(name = "active")
     private boolean isActive;
+
+    @Column(name = "arrival_time")
+    private LocalDateTime arrivalTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id")

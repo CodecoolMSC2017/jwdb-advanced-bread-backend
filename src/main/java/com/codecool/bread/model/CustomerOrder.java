@@ -21,9 +21,6 @@ public class CustomerOrder extends POSObject {
     @JsonIgnore
     private Employee employee;
 
-    @Column(name = "arrival_time")
-    private LocalDateTime arrivalTime;
-
     @Column(name = "ordering_time")
     private LocalDateTime orderingTime = LocalDateTime.now();
 
@@ -75,13 +72,5 @@ public class CustomerOrder extends POSObject {
 
     public void setInvoice(Invoice invoice) {
         this.invoice = invoice;
-    }
-
-    public LocalDateTime getArrivalTime() {
-        return arrivalTime;
-    }
-
-    public void setArrivalTime(LocalDateTime arrive) {
-        this.arrivalTime = arrivalTime;
     }
 }
