@@ -142,10 +142,7 @@ public class OrderServiceImpl extends AbstractService implements OrderService { 
 */
     @Override
     public Invoice createInvoiceForSeats(int[] seatIds) {
-        BigDecimal total = new BigDecimal(0);
-        for (int i : seatIds) {
-            total = total.add(calculateTotalPriceForSeat(seatService.getById(i)));
-        }
+        BigDecimal total = getTotalPriceForSeats(seatIds);
         Invoice invoice = new Invoice(total);
         int invoiceId = invoiceRepository.save(invoice).getId();
         setInvoiceForSeats(seatIds, invoiceId);
@@ -211,6 +208,14 @@ public class OrderServiceImpl extends AbstractService implements OrderService { 
         } else {
             throw new OrderItemNotFoundException();
         }
+    }
+
+    private BigDecimal getTotalPriceForSeats(int[] seatIds) {
+        BigDecimal total = new BigDecimal(0);
+        for (int i : seatIds) {
+            total = total.add(calculateTotalPriceForSeat(seatService.getById(i)));
+        }
+        return total;
     }
 
     private BigDecimal getTotalPriceForSeats(Set<Seat> seats) {
