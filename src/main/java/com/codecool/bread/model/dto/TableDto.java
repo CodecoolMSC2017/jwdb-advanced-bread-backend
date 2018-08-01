@@ -8,8 +8,8 @@ public class TableDto {
 
     private int id;
     private String name;
-    private Set<SeatDto> seatDtoSet;
     private String assignedTo;
+    private Set<SeatDto> seatDtoSet;
 
     public TableDto(int id, String name, Set<SeatDto> seatDtoSet) {
         this.id = id;
