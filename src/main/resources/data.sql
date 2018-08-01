@@ -279,10 +279,8 @@ INSERT INTO order_item (item_id, quantity, comment) VALUES
     (2, 1,null),
     (16, 1,null);
 
-INSERT INTO customer_order (seat_id, employee_id, arrival_time, ordering_time , order_item_id) VALUES
-(1, 1, '2018-03-05 22:15:49', '2018-03-05 20:22:49', 7);
-
 INSERT INTO customer_order (seat_id, employee_id, ordering_time , order_item_id) VALUES
+    (1, 1, '2018-03-05 20:22:49', 7),
     (1, 4, '2018-03-05 20:32:49', 38),
     (2, 2, '2018-03-05 20:23:49', 11),
     (2, 4, '2018-03-05 20:24:49', 3),
@@ -304,13 +302,13 @@ INSERT INTO customer_order (seat_id, employee_id, ordering_time , order_item_id)
     (12, 3, '2018-07-15 07:04:50', 47);
 
 INSERT INTO menu (title) VALUES
-    ('Hetfo'),
-    ('Kedd'),
-    ('Szerda'),
-    ('Csutortok'),
-    ('Pentek'),
-    ('Szombat'),
-    ('Vasarnap');
+    ('Monday'), --1
+    ('Tuesday'), --2
+    ('Wednesday'), --3
+    ('Thursday'), --4
+    ('Friday'), --5
+    ('Saturday'), --6
+    ('Sunday'); --7
 
 INSERT INTO menu_item (menu_id, item_id) VALUES
     (1, 1),
