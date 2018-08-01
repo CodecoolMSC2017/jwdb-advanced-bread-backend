@@ -1,7 +1,7 @@
 INSERT INTO users(username, password, enabled) VALUES
     ('robking', '$2a$04$mrVOIvQZKlIPW0BYXwtaWuV1sZDsoSLSixtxYUhRZh3jpjfKDf736', true), --1
     ('davolio', '$2a$04$mrVOIvQZKlIPW0BYXwtaWuV1sZDsoSLSixtxYUhRZh3jpjfKDf736', true), --2
-    ('a.fuller', '$2a$04$mrVOIvQZKlIPW0BYXwtaWuV1sZDsoSLSixtxYUhRZh3jpjfKDf736', true), --3
+    ('fuller', '$2a$04$mrVOIvQZKlIPW0BYXwtaWuV1sZDsoSLSixtxYUhRZh3jpjfKDf736', true), --3
     ('leverling', '$2a$04$mrVOIvQZKlIPW0BYXwtaWuV1sZDsoSLSixtxYUhRZh3jpjfKDf736', true), --4
     ('stan', '$2a$04$mrVOIvQZKlIPW0BYXwtaWuV1sZDsoSLSixtxYUhRZh3jpjfKDf736', true), --5
     ('moreno', '$2a$04$mrVOIvQZKlIPW0BYXwtaWuV1sZDsoSLSixtxYUhRZh3jpjfKDf736', true), --6
@@ -11,7 +11,7 @@ INSERT INTO users(username, password, enabled) VALUES
 INSERT INTO authorities(username, authority) VALUES
 	('robking', 'ROLE_ADMIN'),
 	('davolio', 'ROLE_ADMIN'),
-	('a.fuller', 'ROLE_USER'),
+	('fuller', 'ROLE_USER'),
 	('leverling', 'ROLE_USER'),
 	('stan', 'ROLE_USER'),
 	('moreno', 'ROLE_USER'),
