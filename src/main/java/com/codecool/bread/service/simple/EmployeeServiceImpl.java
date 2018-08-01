@@ -48,8 +48,8 @@ public class EmployeeServiceImpl extends AbstractService implements EmployeeServ
     public List<Employee> getAllEmployees(int ownerId) {
         List<Employee> employees = new ArrayList();
         Set<Restaurant> restaurants = restaurantService.getAllByOwnerId(ownerId);
-        for (Restaurant restautrant : restaurants) {
-            employees.addAll(restautrant.getEmployees());
+        for (Restaurant restaurant : restaurants) {
+            employees.addAll(restaurant.getEmployees());
         }
         if (employees.size() == 0) {
             throw new NoEmployeeFoundException();
