@@ -28,7 +28,7 @@ public interface OrderService {
 
     Invoice createInvoiceForTable(int tableId);
 
-    Invoice createInvoiceForSeat(int seatId);
+    //Invoice createInvoiceForSeat(int seatId);
 
     Invoice createInvoiceForSeats(int[] seatIds);
 

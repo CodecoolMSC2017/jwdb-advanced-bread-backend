@@ -79,9 +79,6 @@ public class OrderServiceImpl extends AbstractService implements OrderService { 
         customerOrder.setSeat(seat);
         customerOrder.setEmployee(employeeService.getById(table.getEmployee().getId(), restaurantId));
         customerOrder.setOrderItem(orderItem);
-        if (customerOrder.getArrivalTime() == null) {
-            customerOrder.setArrivalTime(LocalDateTime.now());
-        }
         customerOrderRepository.saveAndFlush(customerOrder);
         seat.getCustomerOrders().add(customerOrder);
         seatRepository.saveAndFlush(seat);
@@ -120,18 +117,17 @@ public class OrderServiceImpl extends AbstractService implements OrderService { 
         return new RestaurantDto(restaurantId,  tableDtoSet);
     }
 
+    // INVOICE SERVICES
+
     @Override
     public Invoice createInvoiceForTable(int tableId) {
         Set<Seat> seats = seatService.getEnableSeatsByTableId(tableId);
-        BigDecimal total = new BigDecimal(0);
-        for (Seat seat: seats) {
-            total = total.add(calculateTotalPriceForSeat(seat));
-        }
-        Invoice invoice = new Invoice(total);
-        invoice.setEnabled(true);
+        BigDecimal totalPriceForSeats = getTotalPriceForSeats(seats);
+        Invoice invoice = new Invoice(totalPriceForSeats);
+        //invoice.setEnabled(true);
         return invoiceRepository.save(invoice);
     }
-
+/*
     @Override
     public Invoice createInvoiceForSeat(int seatId) {
         Seat seat = seatService.getById(seatId);
@@ -143,7 +139,7 @@ public class OrderServiceImpl extends AbstractService implements OrderService { 
         setInvoiceForCustomerOrders(invoiceService.getById(invoiceId), customerOrderSet);
         return invoiceService.getById(invoiceId);
     }
-
+*/
     @Override
     public Invoice createInvoiceForSeats(int[] seatIds) {
         BigDecimal total = new BigDecimal(0);
@@ -156,6 +152,8 @@ public class OrderServiceImpl extends AbstractService implements OrderService { 
         //invoice.setEnabled(true);
         return invoiceService.getById(invoiceId);
     }
+
+    // HELPER METHODS
 
     private void setInvoiceForSeats(int[] seatIds, int invoiceId) {
         for (int i : seatIds) {
@@ -213,6 +211,14 @@ public class OrderServiceImpl extends AbstractService implements OrderService { 
         } else {
             throw new OrderItemNotFoundException();
         }
+    }
+
+    private BigDecimal getTotalPriceForSeats(Set<Seat> seats) {
+        BigDecimal total = new BigDecimal(0);
+        for (Seat seat: seats) {
+            total = total.add(calculateTotalPriceForSeat(seat));
+        }
+        return total;
     }
 
     private BigDecimal calculateTotalPriceForSeat(Seat seat) {

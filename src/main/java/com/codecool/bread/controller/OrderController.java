@@ -44,12 +44,12 @@ public class OrderController extends AbstractController {
     public Invoice createInvoiceForTable(@PathVariable("tableId") int tableId) {
         return orderService.createInvoiceForTable(tableId);
     }
-
+/*
     @GetMapping("/seat/{seatId}/invoice")
     public Invoice createInvoiceForSeat(@PathVariable("seatId") int seatId) {
         return orderService.createInvoiceForSeat(seatId);
     }
-
+*/
     @GetMapping("/invoice")
     public Invoice createInvoiceForSeats(@RequestParam("seatId") int[] seatIds) {
         return orderService.createInvoiceForSeats(seatIds);
