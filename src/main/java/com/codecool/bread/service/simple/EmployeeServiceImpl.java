@@ -37,7 +37,7 @@ public class EmployeeServiceImpl extends AbstractService implements EmployeeServ
 
     @Override
     public Set<Employee> getAllByRestaurantId(int ownerId, int restaurantId) throws NoEmployeeForRestaurantException {
-        Set<Employee> employees = employeeRepository.findByRestaurantIdAndRestaurantOwnerId(restaurantId, ownerId);
+        Set<Employee> employees = employeeRepository.findByEnabledTrueAndRestaurantIdAndRestaurantOwnerId(restaurantId, ownerId);
         if (employees.isEmpty()) {
             throw new NoEmployeeForRestaurantException();
         } else {
@@ -86,7 +86,7 @@ public class EmployeeServiceImpl extends AbstractService implements EmployeeServ
     @Override
     public Employee getByIdAndRestaurantIdAndOwnerId(int employeeId, int restaurantId, int ownerId) throws RestaurantAccessDeniedException, EmployeeNotFoundException {
         if (employeeRepository.findById(employeeId).isPresent()) {
-            if (employeeRepository.findByRestaurantIdAndRestaurantOwnerId(ownerId, restaurantId).contains(employeeRepository.findById(employeeId).get())) {
+            if (employeeRepository.findByEnabledTrueAndRestaurantIdAndRestaurantOwnerId(ownerId, restaurantId).contains(employeeRepository.findById(employeeId).get())) {
                 return employeeRepository.findByIdAndRestaurantId(employeeId, restaurantId);
             } else {
                 throw new RestaurantAccessDeniedException();
@@ -110,8 +110,11 @@ public class EmployeeServiceImpl extends AbstractService implements EmployeeServ
             throw new EmployeeNotFoundException();
         } else {
             userService.get(user.get().getUsername()).setEnabled(false);
+            Employee employee = getById(employeeId);
+            employee.setEnabled(false);
+            employeeRepository.saveAndFlush(employee);
+            userRepository.saveAndFlush(user.get());
         }
-        userRepository.saveAndFlush(user.get());
     }
 
     @Override

@@ -18,7 +18,7 @@ public class EmployeeController extends AbstractController {
     @GetMapping("")
     public Set<Employee> getEmployeesByRestaurantId(@PathVariable("restaurantId") int restaurantId,
                                                     Principal principal) {
-        return employeeService.getAllByRestaurantId(restaurantId, getLoggedInOwnerId(principal));
+        return employeeService.getAllByRestaurantId(getLoggedInOwnerId(principal), restaurantId);
     }
 
     @GetMapping("/{employeeId}")
