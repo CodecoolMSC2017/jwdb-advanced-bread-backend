@@ -9,6 +9,9 @@ public class SeatDto {
     private int id;
     Set<CustomerOrder> customerOrderSet;
 
+    public SeatDto() {
+    }
+
     public SeatDto(int id, Set<CustomerOrder> customerOrderSet) {
         this.id = id;
         this.customerOrderSet = customerOrderSet;

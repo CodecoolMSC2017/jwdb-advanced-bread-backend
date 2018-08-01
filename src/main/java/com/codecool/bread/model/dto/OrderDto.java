@@ -6,6 +6,9 @@ public class OrderDto {
     private int quantity;
     private String comment;
 
+    public OrderDto() {
+    }
+
     public Integer getItemId() {
         return itemId;
     }

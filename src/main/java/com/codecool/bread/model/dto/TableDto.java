@@ -12,6 +12,9 @@ public class TableDto {
     private Employee employee;
     private Set<SeatDto> seatDtoSet;
 
+    public TableDto() {
+    }
+
     public TableDto(int id, String name, Set<SeatDto> seatDtoSet) {
         this.id = id;
         this.name = name;
