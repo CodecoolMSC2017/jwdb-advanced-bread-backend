@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -79,7 +80,7 @@ public class OrderServiceImpl extends AbstractService implements OrderService { 
         customerOrder.setEmployee(employeeService.getById(table.getEmployee().getId(), restaurantId));
         customerOrder.setOrderItem(orderItem);
         if (customerOrder.getArrivalTime() == null) {
-            customerOrder.setArrivalTime(new java.sql.Date(new java.util.Date().getTime()));
+            customerOrder.setArrivalTime(LocalDateTime.now());
         }
         customerOrderRepository.saveAndFlush(customerOrder);
         seat.getCustomerOrders().add(customerOrder);

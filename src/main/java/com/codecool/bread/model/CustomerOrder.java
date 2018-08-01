@@ -22,7 +22,7 @@ public class CustomerOrder extends POSObject {
     private Employee employee;
 
     @Column(name = "arrival_time")
-    private Date arrivalTime;
+    private LocalDateTime arrivalTime;
 
     @Column(name = "ordering_time")
     private LocalDateTime orderingTime = LocalDateTime.now();
@@ -77,11 +77,11 @@ public class CustomerOrder extends POSObject {
         this.invoice = invoice;
     }
 
-    public Date getArrivalTime() {
+    public LocalDateTime getArrivalTime() {
         return arrivalTime;
     }
 
-    public void setArrivalTime(Date arrive) {
+    public void setArrivalTime(LocalDateTime arrive) {
         this.arrivalTime = arrivalTime;
     }
 }
