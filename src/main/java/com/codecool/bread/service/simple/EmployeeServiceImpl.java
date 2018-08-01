@@ -135,7 +135,7 @@ public class EmployeeServiceImpl extends AbstractService implements EmployeeServ
     }
 
     public Employee getEmployeeByUserId(Integer id) throws EmployeeNotFoundException {
-        Optional<Employee> employee = employeeRepository.findById(id);
+        Optional<Employee> employee = employeeRepository.findByUserId(id);
         if (employee.isPresent()) {
             return employee.get();
         } else {
