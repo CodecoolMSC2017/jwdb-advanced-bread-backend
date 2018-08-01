@@ -1,5 +1,6 @@
 package com.codecool.bread.model.dto;
 
+import com.codecool.bread.model.Employee;
 import com.codecool.bread.model.Seat;
 
 import java.util.Set;
@@ -8,7 +9,7 @@ public class TableDto {
 
     private int id;
     private String name;
-    private String assignedTo;
+    private Employee employee;
     private Set<SeatDto> seatDtoSet;
 
     public TableDto(int id, String name, Set<SeatDto> seatDtoSet) {
@@ -41,11 +42,11 @@ public class TableDto {
         this.seatDtoSet = seatDtoSet;
     }
 
-    public String getAssignedTo() {
-        return assignedTo;
+    public Employee getEmployee() {
+        return employee;
     }
 
-    public void setAssignedTo(String assignedTo) {
-        this.assignedTo = assignedTo;
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 }

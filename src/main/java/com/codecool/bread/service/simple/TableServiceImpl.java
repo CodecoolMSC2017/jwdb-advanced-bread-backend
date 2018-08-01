@@ -129,10 +129,8 @@ public class TableServiceImpl extends AbstractService implements TableService {
         List<TableDto> tableDtos = new ArrayList<>();
         for (Table table : tableList) {
             TableDto tableDto = orderService.getActiveOrdersByTable(table.getId());
-            if (table.getEmployee() == null) {
-                tableDto.setAssignedTo("-");
-            } else {
-                tableDto.setAssignedTo(table.getEmployee().getLastName());
+            if (table.getEmployee() != null) {
+                tableDto.setEmployee(table.getEmployee());
             }
             tableDtos.add(tableDto);
         }
