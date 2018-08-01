@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import javax.persistence.Table;
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "customer_order")
@@ -24,7 +25,7 @@ public class CustomerOrder extends POSObject {
     private Date arrivalTime;
 
     @Column(name = "ordering_time")
-    private Date orderingTime = new Date(new java.util.Date().getTime());
+    private LocalDateTime orderingTime = LocalDateTime.now();
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "order_item_id")
@@ -52,11 +53,11 @@ public class CustomerOrder extends POSObject {
         this.employee = employee;
     }
 
-    public Date getOrderingTime() {
+    public LocalDateTime getOrderingTime() {
         return orderingTime;
     }
 
-    public void setOrderingTime(Date orderingTime) {
+    public void setOrderingTime(LocalDateTime orderingTime) {
         this.orderingTime = orderingTime;
     }
 

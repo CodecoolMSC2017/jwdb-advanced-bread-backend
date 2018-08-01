@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "invoice")
@@ -15,7 +16,7 @@ public class Invoice extends POSObject {
     @Column(columnDefinition = "DECIMAL(9,2)")
     private BigDecimal total;
 
-    private Date date = new Date(new java.util.Date().getTime());
+    private LocalDateTime date = LocalDateTime.now();
 
     @Column(name = "paid", columnDefinition = "boolean default false")
     private Boolean isPaid = false;
@@ -35,11 +36,11 @@ public class Invoice extends POSObject {
         this.total = total;
     }
 
-    public Date getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 

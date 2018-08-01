@@ -16,10 +16,10 @@ import java.security.Principal;
 import java.util.Set;
 
 @RestController
-@RequestMapping("order/")
+@RequestMapping("/order")
 public class OrderController extends AbstractController {
 
-    @GetMapping("/seat/{seatId}/")
+    @GetMapping("/seat/{seatId}")
     public Set<CustomerOrder> getAllCustomerOrderBySeat(@PathVariable("seatId") int seatId) {
         return orderService.getAllCustomerOrderBySeat(seatId);
     }
