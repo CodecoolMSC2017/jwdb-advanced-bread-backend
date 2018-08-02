@@ -17,12 +17,12 @@ public class RestMenuController extends AbstractController {
 
     @GetMapping("")
     public Set<Menu> getAllMenus(@PathVariable("restaurantId") int restaurantId) {
-        return menuService.getAllMenuFromDb(restaurantId);
+        return menuService.getAllEnabledMenuFromDb(restaurantId);
     }
 
     @GetMapping("{menuId}")
     public Menu getMenu(@PathVariable("menuId") int menuId, @PathVariable("restaurantId") int restaurantId) {
-        return menuService.getMenuFromDb(menuId, restaurantId);
+        return menuService.getEnabledMenuFromDb(menuId, restaurantId);
     }
 
     @GetMapping("{menuId}/items")

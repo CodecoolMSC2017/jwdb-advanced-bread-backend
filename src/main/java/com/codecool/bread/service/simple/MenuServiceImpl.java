@@ -11,18 +11,18 @@ import java.util.Set;
 public class MenuServiceImpl extends AbstractService implements MenuService {
 
     @Override
-    public Set<Menu> getAllMenuFromDb(int restaurantId) {
-        return menuRepository.findAllByRestaurantId(restaurantId);
+    public Set<Menu> getAllEnabledMenuFromDb(int restaurantId) {
+        return menuRepository.findAllByRestaurantIdAndEnabledTrue(restaurantId);
     }
 
     @Override
-    public Menu getMenuFromDb(int menuId, int restaurantId) {
-        return menuRepository.findByIdAndRestaurantId(menuId, restaurantId);
+    public Menu getEnabledMenuFromDb(int menuId, int restaurantId) {
+        return menuRepository.findByIdAndRestaurantIdAndEnabledTrue(menuId, restaurantId);
     }
 
     @Override
     public Set<Item> getItemsByMenuIdFromDb(int menuId, int restaurantId) {
-        return menuRepository.findByIdAndRestaurantId(menuId, restaurantId).getItems();
+        return menuRepository.findByIdAndRestaurantIdAndEnabledTrue(menuId, restaurantId).getItems();
     }
 
     @Override
@@ -32,14 +32,14 @@ public class MenuServiceImpl extends AbstractService implements MenuService {
 
     @Override
     public void delete(int menuId, int restaurantId) {
-        Menu menu = menuRepository.findByIdAndRestaurantId(menuId, restaurantId);
+        Menu menu = menuRepository.findByIdAndRestaurantIdAndEnabledTrue(menuId, restaurantId);
         menu.setEnabled(false);
         menuRepository.saveAndFlush(menu);
     }
 
     @Override
     public Menu changeActivityInDb(int menuId, int restaurantId) {
-        Menu menu = menuRepository.findByIdAndRestaurantId(menuId, restaurantId);
+        Menu menu = menuRepository.findByIdAndRestaurantIdAndEnabledTrue(menuId, restaurantId);
         if(menu.isActive()) {
             menu.setActive(false);
             return menuRepository.saveAndFlush(menu);

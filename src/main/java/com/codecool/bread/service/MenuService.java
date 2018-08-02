@@ -8,9 +8,9 @@ import java.util.Set;
 
 public interface MenuService {
 
-    Set<Menu> getAllMenuFromDb(int restaurantId);
+    Set<Menu> getAllEnabledMenuFromDb(int restaurantId);
 
-    Menu getMenuFromDb(int menuId, int restaurantId);
+    Menu getEnabledMenuFromDb(int menuId, int restaurantId);
 
     Set<Item> getItemsByMenuIdFromDb(int menuId, int restaurantId);
 
