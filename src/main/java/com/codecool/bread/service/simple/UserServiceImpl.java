@@ -1,5 +1,6 @@
 package com.codecool.bread.service.simple;
 
+import com.codecool.bread.exception.PasswordNotMatchException;
 import com.codecool.bread.exception.UserNotFoundException;
 import com.codecool.bread.exception.UsernameTakenException;
 import com.codecool.bread.model.User;
@@ -47,7 +48,8 @@ public class UserServiceImpl extends AbstractService implements UserService {
 
     public User add(String username, String password, String confirmationPassword) {
         if (!password.equals(confirmationPassword)) {
-            throw new IllegalArgumentException();
+            //TODO create custom exception if the alert window works
+            throw new PasswordNotMatchException();
         }
         if (userRepository.findByUsername(username).isPresent()) {
             throw new UsernameTakenException(username);

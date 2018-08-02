@@ -28,6 +28,7 @@ public class EmailServiceImpl implements EmailService {
 
     public Email createEmail(Employee employee) throws UnsupportedEncodingException {
         String subject = "Registration from " + employee.getRestaurant().getName();
+        // TODO this is the first part of the URL
         String url = "http://localhost:4200/registration?";
         String encodedUrl = /*URLEncoder.encode(*/"employeeId="+employee.getId()+"&restaurantId="+employee.getRestaurant().getId()/*,"UTF-8")*/;
         url += encodedUrl;
