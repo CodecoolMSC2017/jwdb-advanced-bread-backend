@@ -46,7 +46,7 @@ public class RestMenuController extends AbstractController {
     }
 
     @PutMapping("{menuId}/activity")
-    public Menu changeActivity(@RequestBody Menu menu) {
-        return menuService.changeActivityInDb(menu);
+    public Menu changeActivity(@PathVariable("menuId") int menuId, @PathVariable("restaurantId") int restaurantId) {
+        return menuService.changeActivityInDb(menuId, restaurantId);
     }
 }

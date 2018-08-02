@@ -38,7 +38,8 @@ public class MenuServiceImpl extends AbstractService implements MenuService {
     }
 
     @Override
-    public Menu changeActivityInDb(Menu menu) {
+    public Menu changeActivityInDb(int menuId, int restaurantId) {
+        Menu menu = menuRepository.findByIdAndRestaurantId(menuId, restaurantId);
         if(menu.isActive()) {
             menu.setActive(false);
             return menuRepository.saveAndFlush(menu);

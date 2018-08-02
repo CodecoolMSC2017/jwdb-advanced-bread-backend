@@ -18,5 +18,5 @@ public interface MenuService {
 
     void delete(int menuId, int restaurantId);
 
-    Menu changeActivityInDb(Menu menu);
+    Menu changeActivityInDb(int menuId, int restaurantId);
 }
