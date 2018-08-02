@@ -4,6 +4,7 @@ import com.codecool.bread.model.CustomerOrder;
 import com.codecool.bread.model.Invoice;
 import com.codecool.bread.model.OrderItem;
 import com.codecool.bread.model.Table;
+import com.codecool.bread.model.dto.InvoiceDto;
 import com.codecool.bread.model.dto.OrderDto;
 import com.codecool.bread.model.dto.RestaurantDto;
 import com.codecool.bread.model.dto.TableDto;
@@ -26,7 +27,7 @@ public interface OrderService {
 
     RestaurantDto getActiveOrdersByRestaurant(int restaurantId);
 
-    Invoice createInvoiceForTable(int tableId);
+    InvoiceDto createInvoiceForTable(int tableId, int employeeId);
 
     //Invoice createInvoiceForSeat(int seatId);
 

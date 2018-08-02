@@ -3,10 +3,7 @@ package com.codecool.bread.service.simple;
 import com.codecool.bread.exception.CustomerOrderNotFoundException;
 import com.codecool.bread.exception.OrderItemNotFoundException;
 import com.codecool.bread.model.*;
-import com.codecool.bread.model.dto.OrderDto;
-import com.codecool.bread.model.dto.RestaurantDto;
-import com.codecool.bread.model.dto.SeatDto;
-import com.codecool.bread.model.dto.TableDto;
+import com.codecool.bread.model.dto.*;
 import com.codecool.bread.repository.*;
 import com.codecool.bread.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -120,26 +117,27 @@ public class OrderServiceImpl extends AbstractService implements OrderService { 
     // INVOICE SERVICES
 
     @Override
-    public Invoice createInvoiceForTable(int tableId) {
+    public InvoiceDto createInvoiceForTable(int tableId, int employeeId) {
         Set<Seat> seats = seatService.getEnableSeatsByTableId(tableId);
         BigDecimal totalPriceForSeats = getTotalPriceForSeats(seats);
         Invoice invoice = new Invoice(totalPriceForSeats);
-        //invoice.setEnabled(true);
-        return invoiceRepository.save(invoice);
+        setInvoiceForSeats(seats, invoiceRepository.save(invoice).getId());
+        return createInvoiceDtoForTable(invoice, employeeId);
     }
-/*
-    @Override
-    public Invoice createInvoiceForSeat(int seatId) {
-        Seat seat = seatService.getById(seatId);
-        BigDecimal total = calculateTotalPriceForSeat(seat);
-        Invoice invoice = new Invoice(total);
-        //invoice.setEnabled(true);
-        int invoiceId = invoiceRepository.save(invoice).getId();
-        Set<CustomerOrder> customerOrderSet = customerOrderRepository.findBySeatIdAndEnabledTrue(seatId);
-        setInvoiceForCustomerOrders(invoiceService.getById(invoiceId), customerOrderSet);
-        return invoiceService.getById(invoiceId);
-    }
-*/
+
+    /*
+        @Override
+        public Invoice createInvoiceForSeat(int seatId) {
+            Seat seat = seatService.getById(seatId);
+            BigDecimal total = calculateTotalPriceForSeat(seat);
+            Invoice invoice = new Invoice(total);
+            //invoice.setEnabled(true);
+            int invoiceId = invoiceRepository.save(invoice).getId();
+            Set<CustomerOrder> customerOrderSet = customerOrderRepository.findBySeatIdAndEnabledTrue(seatId);
+            setInvoiceForCustomerOrders(invoiceService.getById(invoiceId), customerOrderSet);
+            return invoiceService.getById(invoiceId);
+        }
+    */
     @Override
     public Invoice createInvoiceForSeats(int[] seatIds) {
         BigDecimal total = getTotalPriceForSeats(seatIds);
@@ -152,10 +150,41 @@ public class OrderServiceImpl extends AbstractService implements OrderService { 
 
     // HELPER METHODS
 
+    private InvoiceDto createInvoiceDtoForTable(Invoice invoice, int employeeId) {
+        int invoiceId = invoice.getId();
+        LocalDateTime created = invoice.getDate();
+        Address restaurantAddress = employeeService.getById(employeeId).getRestaurant().getAddress();
+        BigDecimal totalPrice = invoice.getTotal();
+
+        List<InvoiceItemDto> invoiceItemDtoList = new ArrayList<>();
+
+        Set<CustomerOrder> customerOrderSet = customerOrderRepository.findByInvoiceId(invoiceId);
+        for (CustomerOrder customerOrder : customerOrderSet) {
+            int id = customerOrder.getOrderItem().getItem().getId();
+            int quantity = customerOrder.getOrderItem().getQuantity();
+            String itemName = customerOrder.getOrderItem().getItem().getName();
+            BigDecimal unitPrice = customerOrder.getOrderItem().getItem().getPrice();
+            InvoiceItemDto invoiceItemDto = new InvoiceItemDto(id, quantity, itemName, unitPrice);
+            invoiceItemDtoList.add(invoiceItemDto);
+        }
+
+        //List<InvoiceItemDto> invoiceItemDtos =
+        return new InvoiceDto(invoiceId, created, employeeId,restaurantAddress, totalPrice, invoiceItemDtoList);
+    }
+
     private void setInvoiceForSeats(int[] seatIds, int invoiceId) {
+        Invoice invoice = invoiceService.getById(invoiceId);
         for (int i : seatIds) {
             Set<CustomerOrder> customerOrderSet = customerOrderRepository.findBySeatIdAndEnabledTrue(i);
-            setInvoiceForCustomerOrders(invoiceService.getById(invoiceId), customerOrderSet);
+            setInvoiceForCustomerOrders(invoice, customerOrderSet);
+        }
+    }
+
+    private void setInvoiceForSeats(Set<Seat> seats, int invoiceId) {
+        Invoice invoice = invoiceService.getById(invoiceId);
+        for (Seat seat : seats) {
+            Set<CustomerOrder> customerOrderSet = customerOrderRepository.findBySeatIdAndEnabledTrue(seat.getId());
+            setInvoiceForCustomerOrders(invoice, customerOrderSet);
         }
     }
 
@@ -176,7 +205,7 @@ public class OrderServiceImpl extends AbstractService implements OrderService { 
         invoiceRepository.save(invoice);
     }
 
-    public Set<Seat> getByInvoideId(int invoiceId) {
+    public Set<Seat> getByInvoiceId(int invoiceId) {
         return seatRepository.findByInvoiceId(invoiceId);
     }
 

@@ -3,6 +3,7 @@ package com.codecool.bread.controller;
 import com.codecool.bread.model.CustomerOrder;
 import com.codecool.bread.model.Invoice;
 import com.codecool.bread.model.OrderItem;
+import com.codecool.bread.model.dto.InvoiceDto;
 import com.codecool.bread.model.dto.OrderDto;
 import com.codecool.bread.model.dto.RestaurantDto;
 import com.codecool.bread.model.dto.TableDto;
@@ -41,8 +42,9 @@ public class OrderController extends AbstractController {
     }
 
     @GetMapping("/table/{tableId}/invoice")
-    public Invoice createInvoiceForTable(@PathVariable("tableId") int tableId) {
-        return orderService.createInvoiceForTable(tableId);
+    public InvoiceDto createInvoiceForTable(@PathVariable("tableId") int tableId, Principal principal) {
+
+        return orderService.createInvoiceForTable(tableId, getLoggedInEmployeeId(principal));
     }
 /*
     @GetMapping("/seat/{seatId}/invoice")

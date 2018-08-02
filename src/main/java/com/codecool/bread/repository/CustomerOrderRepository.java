@@ -14,4 +14,6 @@ public interface CustomerOrderRepository extends JpaRepository<CustomerOrder, In
     Optional<CustomerOrder> findByIdAndSeatId(Integer id, Integer seatId);
 
     Set<CustomerOrder> findBySeatIdAndEnabledTrue(Integer seatId);
+
+    Set<CustomerOrder> findByInvoiceId(int invoiceId);
 }

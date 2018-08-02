@@ -150,7 +150,7 @@ CREATE TABLE invoice (
 	total NUMERIC NOT NULL,
 	paid BOOLEAN DEFAULT FALSE,
 	enabled BOOLEAN DEFAULT TRUE,
-	date TIMESTAMP DEFAULT current_date
+	date TIMESTAMP
 );
 
 CREATE TABLE order_item (
