@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/restaurant/{restaurantId}/menu")
+@RequestMapping("/menu/{restaurantId}")
 public class RestMenuController extends AbstractController {
 
     @Autowired
@@ -20,12 +20,12 @@ public class RestMenuController extends AbstractController {
         return menuService.getAllEnabledMenuFromDb(restaurantId);
     }
 
-    @GetMapping("{menuId}")
+    @GetMapping("/{menuId}")
     public Menu getMenu(@PathVariable("menuId") int menuId, @PathVariable("restaurantId") int restaurantId) {
         return menuService.getEnabledMenuFromDb(menuId, restaurantId);
     }
 
-    @GetMapping("{menuId}/items")
+    @GetMapping("/{menuId}/items")
     public Set<Item> getItemByMenuId(@PathVariable("menuId") int menuId, @PathVariable("restaurantId") int restaurantId) {
         return menuService.getItemsByMenuIdFromDb(menuId, restaurantId);
     }
@@ -35,17 +35,17 @@ public class RestMenuController extends AbstractController {
         return menuService.addOrEditMenuToDb(menu);
     }
 
-    @PutMapping("{menuId}")
+    @PutMapping("/{menuId}")
     public Menu editMenu(@RequestBody Menu menu) {
         return menuService.addOrEditMenuToDb(menu);
     }
 
-    @DeleteMapping("{menuId}")
+    @DeleteMapping("/{menuId}")
     public void deleteMenu(@PathVariable("menuId") int menuId, @PathVariable("restaurantId") int restaurantId) {
         menuService.delete(menuId, restaurantId);
     }
 
-    @PutMapping("{menuId}/activity")
+    @PutMapping("/{menuId}/activity")
     public Menu changeActivity(@PathVariable("menuId") int menuId, @PathVariable("restaurantId") int restaurantId) {
         return menuService.changeActivityInDb(menuId, restaurantId);
     }

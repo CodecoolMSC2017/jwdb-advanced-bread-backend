@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/owner/restaurant/{restaurantId}/ingredient")
@@ -38,5 +39,10 @@ public class IngredientController extends AbstractController {
         } else {
             throw new IngredientNotFoundException();
         }
+    }
+
+    @GetMapping("/{itemId}")
+    public Set<Ingredient> getIngredientsByItemId(@PathVariable("itemId") int itemId, @PathVariable("restaurantId") int restaurantId) {
+        return ingredientService.getIngredientsByItemIdFromDb(itemId, restaurantId);
     }
 }

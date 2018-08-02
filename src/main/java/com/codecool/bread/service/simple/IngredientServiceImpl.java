@@ -3,6 +3,7 @@ package com.codecool.bread.service.simple;
 import com.codecool.bread.exception.IngredientAlreadyExistsException;
 import com.codecool.bread.exception.IngredientNotFoundException;
 import com.codecool.bread.model.Ingredient;
+import com.codecool.bread.model.Item;
 import com.codecool.bread.repository.IngredientRepository;
 import com.codecool.bread.service.IngredientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,5 +50,11 @@ public class IngredientServiceImpl extends AbstractService implements Ingredient
     @Override
     public Ingredient editEmployee(Ingredient ingredient) throws IngredientNotFoundException{
         return ingredientRepository.saveAndFlush(ingredient);
+    }
+
+    @Override
+    public Set<Ingredient> getIngredientsByItemIdFromDb(int itemId, int restaurantId) {
+        Item item = itemRepository.findByIdAndRestaurantId(itemId, restaurantId);
+        return item.getIngredients();
     }
 }

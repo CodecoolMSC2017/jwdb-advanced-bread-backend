@@ -18,4 +18,6 @@ public interface IngredientService {
     void addNewIngredients(Set<Ingredient> ingredients);
 
     Ingredient editEmployee(Ingredient ingredient) throws IngredientNotFoundException;
+
+    Set<Ingredient> getIngredientsByItemIdFromDb(int itemId, int restaurantId);
 }
