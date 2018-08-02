@@ -21,14 +21,4 @@ public interface TableRepository extends JpaRepository<Table, Integer> {
 
     Optional<Table> findByIdAndRestaurantIdAndEnabledTrue(Integer tableId, Integer restaurantId);
 
-    @Query(value = "select restaurant_table.id,\n" +
-            "\t   restaurant_table.name,\n" +
-            "\t   restaurant_table.active,\n" +
-            "\t   restaurant_table.restaurant_id,\n" +
-            "\t   restaurant_table.employee_id,\n" +
-            "\t   restaurant_table.enabled\n" +
-            "FROM restaurant_table\n" +
-            "JOIN seat ON restaurant_table.id = seat.restaurant_table_id\n" +
-            "WHERE seat.id = ?1", nativeQuery = true)
-    Table findBySeatId(Integer seatId);
 }

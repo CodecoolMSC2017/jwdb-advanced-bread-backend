@@ -61,9 +61,9 @@ public class OrderController extends AbstractController {
         return orderService.getOrderItem(seatId, customerOrderId);
     }
 
-    @PutMapping("invoice/{invoiceId}/paid")
-    public void setInvoiceAsPaid(@PathVariable("invoiceId") int invoiceId) {
-        orderService.setInvoiceAsPaid(invoiceId);
+    @PutMapping("invoice/set-paid")
+    public void setInvoiceAsPaid(@RequestBody Invoice invoice) {
+        orderService.setInvoiceAsPaid(invoice);
 
     }
 
