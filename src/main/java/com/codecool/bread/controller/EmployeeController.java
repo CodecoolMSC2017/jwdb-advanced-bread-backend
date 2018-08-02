@@ -3,10 +3,13 @@ package com.codecool.bread.controller;
 import com.codecool.bread.exception.EmployeeNotFoundException;
 import com.codecool.bread.model.Employee;
 import com.codecool.bread.repository.EmployeeRepository;
+import com.codecool.bread.service.EmailService;
 import com.codecool.bread.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.SendFailedException;
+import java.io.UnsupportedEncodingException;
 import java.security.Principal;
 import java.util.Map;
 import java.util.Set;
@@ -14,6 +17,15 @@ import java.util.Set;
 @RestController
 @RequestMapping("owner/restaurant/{restaurantId}/employee")
 public class EmployeeController extends AbstractController {
+
+    @Autowired
+    private EmployeeService employeeService;
+
+    @Autowired
+    private EmployeeRepository employeeRepository;
+
+    @Autowired
+    private EmailService emailService;
 
     @GetMapping("")
     public Set<Employee> getEmployeesByRestaurantId(@PathVariable("restaurantId") int restaurantId,
@@ -32,7 +44,15 @@ public class EmployeeController extends AbstractController {
     public Employee add(@RequestBody Employee employee,
                         @PathVariable("restaurantId") int restaurantId,
                         Principal principal) {
-        return employeeService.add(employee, restaurantId, getLoggedInOwnerId(principal));
+        Employee newEmployee = employeeService.add(employee, restaurantId, getLoggedInOwnerId(principal));
+        try {
+            emailService.sendSimpleMessage(emailService.createEmail(newEmployee));
+        } catch (SendFailedException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return newEmployee;
     }
 
     @DeleteMapping("/{employeeId}")

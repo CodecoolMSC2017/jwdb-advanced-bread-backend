@@ -73,6 +73,15 @@ public class EmployeeServiceImpl extends AbstractService implements EmployeeServ
     }
 
     @Override
+    public Employee getByIdAndUserIdNull(int employeeId, int restaurantId) throws EmployeeNotFoundException {
+        Optional<Employee> employee =  employeeRepository.findByIdAndRestaurantIdAndUserNull(employeeId, restaurantId);
+        if(!employee.isPresent()) {
+            throw new EmployeeNotFoundException();
+        }
+        return employee.get();
+    }
+
+    @Override
     public Employee getByUsername(String username) throws EmployeeNotFoundException, UsernameNotFoundException {
         User user = userService.get(username);
         Optional<Employee> employee = employeeRepository.findById(user.getId());
@@ -136,7 +145,7 @@ public class EmployeeServiceImpl extends AbstractService implements EmployeeServ
         } else {
             employeeOptional.get().setUser(userService.get(username));
         }
-        return employeeOptional.get();
+        return employeeRepository.saveAndFlush(employeeOptional.get());
     }
 
     public Employee getEmployeeByUserId(Integer id) throws EmployeeNotFoundException {
