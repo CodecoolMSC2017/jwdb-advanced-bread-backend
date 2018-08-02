@@ -17,12 +17,12 @@ public class RestMenuController extends AbstractController {
 
     @GetMapping("")
     public Set<Menu> getAllMenus(@PathVariable("restaurantId") int restaurantId) {
-        return menuService.getAllMenuFromDb(restaurantId);
+        return menuService.getAllEnabledMenuFromDb(restaurantId);
     }
 
     @GetMapping("{menuId}")
     public Menu getMenu(@PathVariable("menuId") int menuId, @PathVariable("restaurantId") int restaurantId) {
-        return menuService.getMenuFromDb(menuId, restaurantId);
+        return menuService.getEnabledMenuFromDb(menuId, restaurantId);
     }
 
     @GetMapping("{menuId}/items")
@@ -46,7 +46,7 @@ public class RestMenuController extends AbstractController {
     }
 
     @PutMapping("{menuId}/activity")
-    public Menu changeActivity(@RequestBody Menu menu) {
-        return menuService.changeActivityInDb(menu);
+    public Menu changeActivity(@PathVariable("menuId") int menuId, @PathVariable("restaurantId") int restaurantId) {
+        return menuService.changeActivityInDb(menuId, restaurantId);
     }
 }
