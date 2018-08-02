@@ -16,6 +16,9 @@ public class InvoiceDto {
     private BigDecimal totalPrice;
     private List<InvoiceItemDto> invoiceItemDtos;
 
+    public InvoiceDto() {
+    }
+
     public InvoiceDto(int id, LocalDateTime created, int employeeId, Address restaurantAddress, BigDecimal totalPrice, List<InvoiceItemDto> invoiceItemDtos) {
         this.id = id;
         this.created = created;

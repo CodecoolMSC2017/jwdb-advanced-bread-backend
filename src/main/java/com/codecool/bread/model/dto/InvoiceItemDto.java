@@ -10,6 +10,9 @@ public class InvoiceItemDto {
     private BigDecimal unitPrice;
     private BigDecimal totalPrice;
 
+    public InvoiceItemDto() {
+    }
+
     public InvoiceItemDto(int itemId, int quantity, String itemName, BigDecimal unitPrice) {
         this.itemId = itemId;
         this.quantity = quantity;
