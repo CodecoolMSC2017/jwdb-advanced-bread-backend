@@ -33,5 +33,5 @@ public interface OrderService {
 
     Invoice createInvoiceForSeats(int[] seatIds);
 
-    void setInvoiceAsPaid(Invoice invoice);
+    void setInvoiceAsPaid(int invoiceId);
 }

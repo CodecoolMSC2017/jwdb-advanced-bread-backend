@@ -196,7 +196,8 @@ public class OrderServiceImpl extends AbstractService implements OrderService { 
     }
 
     @Override
-    public void setInvoiceAsPaid(Invoice invoice) {
+    public void setInvoiceAsPaid(int invoiceId) {
+        Invoice invoice = invoiceService.getById(invoiceId);
         Set<Seat> seatSet = seatRepository.findByInvoiceId(invoice.getId());
         for (Seat seat : seatSet) {
            setSeatAsPaid(seat.getId());
