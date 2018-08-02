@@ -41,7 +41,7 @@ public class IngredientController extends AbstractController {
         }
     }
 
-    @GetMapping("/{itemId}")
+    @GetMapping("/item/{itemId}")
     public Set<Ingredient> getIngredientsByItemId(@PathVariable("itemId") int itemId, @PathVariable("restaurantId") int restaurantId) {
         return ingredientService.getIngredientsByItemIdFromDb(itemId, restaurantId);
     }
