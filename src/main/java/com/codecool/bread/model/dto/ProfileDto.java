@@ -14,6 +14,9 @@ public class ProfileDto {
     private Role role;
     private int restaurantId;
 
+    public ProfileDto() {
+    }
+
     public ProfileDto(User user, String firstName, String lastName, Address address, String email, Role role) {
         this.user = user;
         this.firstName = firstName;
