@@ -21,6 +21,8 @@ public interface EmployeeService {
 
     Employee getById(int employeeId) throws EmployeeNotFoundException;
 
+    Employee getByIdAndUserIdNull(int employeeId, int restaurantId) throws EmployeeNotFoundException;
+
     Employee getByUsername(String username) throws EmployeeNotFoundException, UsernameNotFoundException;
 
     Employee getByIdAndRestaurantIdAndOwnerId(int employeeId, int restaurantId, int ownerId) throws RestaurantAccessDeniedException, EmployeeNotFoundException;

@@ -55,7 +55,7 @@ public class UserServiceImpl extends AbstractService implements UserService {
             userDetailsManager.createUser(new org.springframework.security.core.userdetails.User(
                     username,
                     passwordEncoder.encode(password),
-                    AuthorityUtils.createAuthorityList("USER_ROLE")));
+                        AuthorityUtils.createAuthorityList("ROLE_USER")));
             return userRepository.findByUsername(username).orElseThrow(UserNotFoundException::new);
         }
     }
