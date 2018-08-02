@@ -46,7 +46,7 @@ public class EmployeeServiceImpl extends AbstractService implements EmployeeServ
     }
 
     public List<Employee> getAllEmployees(int ownerId) {
-        List<Employee> employees = new ArrayList();
+        List<Employee> employees = new ArrayList<>();
         Set<Restaurant> restaurants = restaurantService.getAllByOwnerId(ownerId);
         for (Restaurant restaurant : restaurants) {
             employees.addAll(restaurant.getEmployees());
@@ -84,9 +84,11 @@ public class EmployeeServiceImpl extends AbstractService implements EmployeeServ
     }
 
     @Override
-    public Employee getByIdAndRestaurantIdAndOwnerId(int employeeId, int restaurantId, int ownerId) throws RestaurantAccessDeniedException, EmployeeNotFoundException {
+    public Employee getByIdAndRestaurantIdAndOwnerId(int employeeId, int restaurantId, int ownerId) throws
+            RestaurantAccessDeniedException, EmployeeNotFoundException {
         if (employeeRepository.findById(employeeId).isPresent()) {
-            if (employeeRepository.findByEnabledTrueAndRestaurantIdAndRestaurantOwnerId(ownerId, restaurantId).contains(employeeRepository.findById(employeeId).get())) {
+            if (employeeRepository.findByEnabledTrueAndRestaurantIdAndRestaurantOwnerId(ownerId, restaurantId)
+                    .contains(employeeRepository.findById(employeeId).get())) {
                 return employeeRepository.findByIdAndRestaurantId(employeeId, restaurantId);
             } else {
                 throw new RestaurantAccessDeniedException();
@@ -148,7 +150,7 @@ public class EmployeeServiceImpl extends AbstractService implements EmployeeServ
 
     @Override
     public void setAllEmployeeRestaurantNull(int ownerId) {
-        Owner owner = ownerRepository.findById(ownerId).get();
+        Owner owner = ownerService.getOwnerById(ownerId);
         List<Employee> employees = getAllEmployees(owner.getId());
         for(Employee employee : employees) {
             employee.setRestaurant(null);
