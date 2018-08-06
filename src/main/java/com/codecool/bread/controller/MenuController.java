@@ -25,11 +25,6 @@ public class MenuController extends AbstractController {
         return menuService.getEnabledMenuFromDb(menuId);
     }
 
-    @GetMapping("{menuId}")
-    public Menu getMenuByCategory(@PathVariable("menuId") int menuId, @RequestParam String category) {
-        return null;
-    }
-
     @GetMapping("/{menuId}/items")
     public Set<Item> getItemByMenuId(@PathVariable("menuId") int menuId) {
         return menuService.getItemsByMenuIdFromDb(menuId);
