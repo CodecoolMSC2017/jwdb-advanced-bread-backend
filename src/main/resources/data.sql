@@ -98,31 +98,31 @@ INSERT INTO ingredient(name) VALUES
     ('smoked cheese'); --20
 
 INSERT INTO item(name ,price ,category ,subcategory ,restaurant_id) VALUES
-    ('Pizza Margareta', 1150,'FOOD','PIZZA',1),
-    ('Pizza Prosciutto',1350,'FOOD','PIZZA',1),
-    ('Pizza Funghi', 1150,'FOOD','PIZZA',1),
-    ('Pizza Salami', 1350,'FOOD','PIZZA',1),
-    ('Pizza Hawaii', 1350,'FOOD','PIZZA',1),
-    ('Tárkonyos vadmalac leves', 1290,'FOOD','SOUP',1),
-    ('Jókai bableves', 1100,'FOOD','SOUP',1),
-    ('Harcsapaprikás kapros túrós sztrapacskával', 2590,'FOOD','FISH_MAIN',1),
-    ('Rántott halfilé, rizs, tartármártás', 1900,'FOOD','FISH_MAIN',1),
-    ('Rántott csirkemell hasábburgonyával', 1750,'FOOD','CHICKEN_DISH',1),
-    ('Juhtúróval-baconnel töltött csirkemell parázs burgonya', 2200,'FOOD','CHICKEN_DISH',1),
-    ('Zöldséges marharagu óriás zsemlegombóccal', 1900,'FOOD','BEEF_DISH',1),
-    ('Zöldséges marharagu óriás zsemlegombóccal', 1900,'FOOD','BEEF_DISH',1),
-    ('Rántott szelet, hasábburgonyával', 1690,'FOOD','PORK_DISH',1),
-    ('Pizza kenyérben sült kemencés csülök lyoni hagymával', 2390,'FOOD','PORK_DISH',1),
-    ('Rántott gomba, rizs, tartármártás', 1690,'FOOD','VEGETARIAN',1),
-    ('Rántott sajt, hasábburgonya, tartár mártás', 1690,'FOOD','VEGETARIAN',1),
-    ('Coors Light Lager', 390,'DRINK', 'ALCOHOLIC',1),
-    ('Chivas Regal', 790,'DRINK', 'ALCOHOLIC',1),
-    ('Coca Cola', 390,'DRINK', 'BEVERAGE',1),
-    ('Fanta', 390,'DRINK', 'BEVERAGE',1),
-    ('Espresso', 290,'DRINK', 'COFFEE',1),
-    ('Latte Machiato', 290,'DRINK', 'COFFEE',1),
-    ('Earl Grey', 290,'DRINK', 'TEA',1),
-    ('Rooibos', 290,'DRINK', 'TEA',1);
+    ('Pizza Margareta', 1150,'FOOD','PIZZA',1), --1
+    ('Pizza Prosciutto',1350,'FOOD','PIZZA',1), --2
+    ('Pizza Funghi', 1150,'FOOD','PIZZA',1), --3
+    ('Pizza Salami', 1350,'FOOD','PIZZA',1), --4
+    ('Pizza Hawaii', 1350,'FOOD','PIZZA',1), --5
+    ('Tárkonyos vadmalac leves', 1290,'FOOD','SOUP',1), --6
+    ('Jókai bableves', 1100,'FOOD','SOUP',1), --7
+    ('Harcsapaprikás kapros túrós sztrapacskával', 2590,'FOOD','FISH_MAIN',1), --8
+    ('Rántott halfilé, rizs, tartármártás', 1900,'FOOD','FISH_MAIN',1), --9
+    ('Rántott csirkemell hasábburgonyával', 1750,'FOOD','CHICKEN_DISH',1), --10
+    ('Juhtúróval-baconnel töltött csirkemell parázs burgonya', 2200,'FOOD','CHICKEN_DISH',1), --11
+    ('Zöldséges marharagu óriás zsemlegombóccal', 1900,'FOOD','BEEF_DISH',1), --12
+    ('Zöldséges marharagu óriás zsemlegombóccal', 1900,'FOOD','BEEF_DISH',1), --13
+    ('Rántott szelet, hasábburgonyával', 1690,'FOOD','PORK_DISH',1), --14
+    ('Pizza kenyérben sült kemencés csülök lyoni hagymával', 2390,'FOOD','PORK_DISH',1), --15
+    ('Rántott gomba, rizs, tartármártás', 1690,'FOOD','VEGETARIAN',1), --16
+    ('Rántott sajt, hasábburgonya, tartár mártás', 1690,'FOOD','VEGETARIAN',1), --17
+    ('Coors Light Lager', 390,'DRINK', 'ALCOHOLIC',1), --18
+    ('Chivas Regal', 790,'DRINK', 'ALCOHOLIC',1), --19
+    ('Coca Cola', 390,'DRINK', 'BEVERAGE',1), --20
+    ('Fanta', 390,'DRINK', 'BEVERAGE',1), --21
+    ('Espresso', 290,'DRINK', 'COFFEE',1), --22
+    ('Latte Machiato', 290,'DRINK', 'COFFEE',1), --23
+    ('Earl Grey', 290,'DRINK', 'TEA',1), --24
+    ('Rooibos', 290,'DRINK', 'TEA',1); --25
 
 INSERT INTO item_ingredient (item_id, ingredient_id) VALUES
      (15, 20),
@@ -314,6 +314,14 @@ INSERT INTO menu_item (menu_id, item_id) VALUES
     (1, 1),
     (1, 2),
     (1, 3),
+    (1, 18),
+    (1, 19),
+    (1, 20),
+    (1, 21),
+    (1, 22),
+    (1, 23),
+    (1, 24),
+    (1, 25),
     (2, 4),
     (2, 5),
     (2, 6),
