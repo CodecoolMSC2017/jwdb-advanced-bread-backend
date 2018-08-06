@@ -24,10 +24,10 @@ public interface MenuRepository extends JpaRepository<Menu, Integer> {
             "WHERE menu.id = ?1 AND menu.enabled = true", nativeQuery = true)
     Menu findByIdAndRestaurantIdAndEnabledTrue(Integer id);
 
-    @Query(value = "SELECT menu.id, menu.title, menu.active, menu.enabled FROM menu\n" +
+    @Query(value = "SELECT DISTINCT menu.id, menu.title, menu.active, menu.enabled FROM menu\n" +
             "JOIN menu_item ON menu_item.menu_id = menu.id\n" +
             "JOIN item ON item.id = menu_item.item_id\n" +
             "JOIN restaurant ON restaurant.id = item.restaurant_id\n" +
-            "WHERE menu.id = ?1 AND menu.active = true", nativeQuery = true)
+            "WHERE restaurant.id = ?1 AND menu.active = true", nativeQuery = true)
     Optional<Menu> findByRestaurantIdAndActiveTrue(Integer restaurantId);
 }

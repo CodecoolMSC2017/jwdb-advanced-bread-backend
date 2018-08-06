@@ -10,7 +10,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/menu")
-public class RestMenuController extends AbstractController {
+public class MenuController extends AbstractController {
 
     @Autowired
     MenuService menuService;
@@ -23,6 +23,11 @@ public class RestMenuController extends AbstractController {
     @GetMapping("/{menuId}")
     public Menu getMenu(@PathVariable("menuId") int menuId) {
         return menuService.getEnabledMenuFromDb(menuId);
+    }
+
+    @GetMapping("{menuId}")
+    public Menu getMenuByCategory(@PathVariable("menuId") int menuId, @RequestParam String category) {
+        return null;
     }
 
     @GetMapping("/{menuId}/items")
