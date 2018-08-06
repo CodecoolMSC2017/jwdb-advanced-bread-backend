@@ -58,6 +58,7 @@ public class MenuServiceImpl extends AbstractService implements MenuService {
         if(menu == null || !menu.isEnabled()) {
             throw new MenuNotFoundException();
         } else {
+            setAllInactiveInDb(restaurantId);
             if(menu.isActive()) {
                 menu.setActive(false);
                 return menuRepository.saveAndFlush(menu);
@@ -65,6 +66,15 @@ public class MenuServiceImpl extends AbstractService implements MenuService {
                 menu.setActive(true);
                 return menuRepository.saveAndFlush(menu);
             }
+        }
+    }
+
+    @Override
+    public void setAllInactiveInDb(int restaurantId) {
+        Set<Menu> menus = getAllEnabledMenuFromDb(restaurantId);
+        for(Menu menu : menus) {
+            menu.setActive(false);
+            menuRepository.saveAndFlush(menu);
         }
     }
 }
