@@ -35,7 +35,7 @@ public class RestMenuController extends AbstractController {
         return menuService.addOrEditMenuToDb(menu);
     }
 
-    @PutMapping("/{menuId}")
+    @PutMapping("")
     public Menu editMenu(@RequestBody Menu menu) {
         return menuService.addOrEditMenuToDb(menu);
     }
