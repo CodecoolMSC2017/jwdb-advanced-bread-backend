@@ -1,6 +1,7 @@
 package com.codecool.bread.service;
 
 
+import com.codecool.bread.exception.MenuNotFoundException;
 import com.codecool.bread.model.Item;
 import com.codecool.bread.model.Menu;
 
@@ -21,4 +22,6 @@ public interface MenuService {
     Menu changeActivityInDb(Menu menu, int restaurantId);
 
     void setAllInactiveInDb(int restaurantId);
+
+    Menu getActiveMenu(int restaurantId) throws MenuNotFoundException;
 }

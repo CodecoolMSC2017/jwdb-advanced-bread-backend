@@ -30,6 +30,11 @@ public class RestMenuController extends AbstractController {
         return menuService.getItemsByMenuIdFromDb(menuId);
     }
 
+    @GetMapping("/restaurant/{restaurantId}/active")
+    public Menu getActiveMenu(@PathVariable("restaurantId") int restaurantId) {
+        return menuService.getActiveMenu(restaurantId);
+    }
+
     @PostMapping("")
     public Menu addMenu(@RequestBody Menu menu) {
         return menuService.addOrEditMenuToDb(menu);
