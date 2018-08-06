@@ -15,7 +15,7 @@ public class RestMenuController extends AbstractController {
     @Autowired
     MenuService menuService;
 
-    @GetMapping("/{restaurantId")
+    @GetMapping("/restaurant/{restaurantId}")
     public Set<Menu> getAllMenus(@PathVariable("restaurantId") int restaurantId) {
         return menuService.getAllEnabledMenuFromDb(restaurantId);
     }
@@ -45,7 +45,7 @@ public class RestMenuController extends AbstractController {
         menuService.delete(menuId);
     }
 
-    @PutMapping("/{restaurandId}/activity")
+    @PutMapping("/{restaurantId}/activity")
     public Menu changeActivity(@RequestBody Menu menu, @PathVariable("restaurantId") int restaurantId) {
         return menuService.changeActivityInDb(menu, restaurantId);
     }
