@@ -17,8 +17,8 @@ public class MenuServiceImpl extends AbstractService implements MenuService {
     }
 
     @Override
-    public Menu getEnabledMenuFromDb(int menuId, int restaurantId) {
-        Menu menu = menuRepository.findByIdAndRestaurantIdAndEnabledTrue(menuId, restaurantId);
+    public Menu getEnabledMenuFromDb(int menuId) {
+        Menu menu = menuRepository.findByIdAndRestaurantIdAndEnabledTrue(menuId);
         if(menu == null || !menu.isEnabled()) {
             throw new MenuNotFoundException();
         } else {
@@ -27,8 +27,8 @@ public class MenuServiceImpl extends AbstractService implements MenuService {
     }
 
     @Override
-    public Set<Item> getItemsByMenuIdFromDb(int menuId, int restaurantId) {
-        Menu menu = menuRepository.findByIdAndRestaurantIdAndEnabledTrue(menuId, restaurantId);
+    public Set<Item> getItemsByMenuIdFromDb(int menuId) {
+        Menu menu = menuRepository.findByIdAndRestaurantIdAndEnabledTrue(menuId);
         if(menu == null || !menu.isEnabled()) {
             throw new MenuNotFoundException();
         } else {
@@ -42,8 +42,8 @@ public class MenuServiceImpl extends AbstractService implements MenuService {
     }
 
     @Override
-    public void delete(int menuId, int restaurantId) {
-        Menu menu = menuRepository.findByIdAndRestaurantIdAndEnabledTrue(menuId, restaurantId);
+    public void delete(int menuId) {
+        Menu menu = menuRepository.findByIdAndRestaurantIdAndEnabledTrue(menuId);
         if(menu == null || !menu.isEnabled()) {
             throw new MenuNotFoundException();
         } else {
@@ -53,8 +53,7 @@ public class MenuServiceImpl extends AbstractService implements MenuService {
     }
 
     @Override
-    public Menu changeActivityInDb(int menuId, int restaurantId) {
-        Menu menu = menuRepository.findByIdAndRestaurantIdAndEnabledTrue(menuId, restaurantId);
+    public Menu changeActivityInDb(Menu menu, int restaurantId) {
         if(menu == null || !menu.isEnabled()) {
             throw new MenuNotFoundException();
         } else {

@@ -10,15 +10,15 @@ public interface MenuService {
 
     Set<Menu> getAllEnabledMenuFromDb(int restaurantId);
 
-    Menu getEnabledMenuFromDb(int menuId, int restaurantId);
+    Menu getEnabledMenuFromDb(int menuId);
 
-    Set<Item> getItemsByMenuIdFromDb(int menuId, int restaurantId);
+    Set<Item> getItemsByMenuIdFromDb(int menuId);
 
     Menu addOrEditMenuToDb(Menu menu);
 
-    void delete(int menuId, int restaurantId);
+    void delete(int menuId);
 
-    Menu changeActivityInDb(int menuId, int restaurantId);
+    Menu changeActivityInDb(Menu menu, int restaurantId);
 
     void setAllInactiveInDb(int restaurantId);
 }

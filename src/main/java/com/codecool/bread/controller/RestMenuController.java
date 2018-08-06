@@ -9,25 +9,25 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/menu/{restaurantId}")
+@RequestMapping("/menu")
 public class RestMenuController extends AbstractController {
 
     @Autowired
     MenuService menuService;
 
-    @GetMapping("")
+    @GetMapping("/{restaurantId")
     public Set<Menu> getAllMenus(@PathVariable("restaurantId") int restaurantId) {
         return menuService.getAllEnabledMenuFromDb(restaurantId);
     }
 
     @GetMapping("/{menuId}")
-    public Menu getMenu(@PathVariable("menuId") int menuId, @PathVariable("restaurantId") int restaurantId) {
-        return menuService.getEnabledMenuFromDb(menuId, restaurantId);
+    public Menu getMenu(@PathVariable("menuId") int menuId) {
+        return menuService.getEnabledMenuFromDb(menuId);
     }
 
     @GetMapping("/{menuId}/items")
-    public Set<Item> getItemByMenuId(@PathVariable("menuId") int menuId, @PathVariable("restaurantId") int restaurantId) {
-        return menuService.getItemsByMenuIdFromDb(menuId, restaurantId);
+    public Set<Item> getItemByMenuId(@PathVariable("menuId") int menuId) {
+        return menuService.getItemsByMenuIdFromDb(menuId);
     }
 
     @PostMapping("")
@@ -41,12 +41,12 @@ public class RestMenuController extends AbstractController {
     }
 
     @DeleteMapping("/{menuId}")
-    public void deleteMenu(@PathVariable("menuId") int menuId, @PathVariable("restaurantId") int restaurantId) {
-        menuService.delete(menuId, restaurantId);
+    public void deleteMenu(@PathVariable("menuId") int menuId) {
+        menuService.delete(menuId);
     }
 
-    @PutMapping("/{menuId}/activity")
-    public Menu changeActivity(@PathVariable("menuId") int menuId, @PathVariable("restaurantId") int restaurantId) {
-        return menuService.changeActivityInDb(menuId, restaurantId);
+    @PutMapping("/{restaurandId}/activity")
+    public Menu changeActivity(@RequestBody Menu menu, @PathVariable("restaurantId") int restaurantId) {
+        return menuService.changeActivityInDb(menu, restaurantId);
     }
 }
