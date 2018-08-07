@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -18,7 +19,7 @@ import java.util.Set;
 public class OrderController extends AbstractController {
 
     @GetMapping("/seat/{seatId}")
-    public Set<CustomerOrder> getAllCustomerOrderBySeat(@PathVariable("seatId") int seatId) {
+    public List<CustomerOrder> getAllCustomerOrderBySeat(@PathVariable("seatId") int seatId) {
         return orderService.getAllCustomerOrderBySeat(seatId);
     }
 
