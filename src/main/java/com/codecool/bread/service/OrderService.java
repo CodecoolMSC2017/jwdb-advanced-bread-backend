@@ -35,5 +35,5 @@ public interface OrderService {
 
     SeatDto getActiveOrdersBySeat(int seatId);
 
-    void deleteOrderFromSeat(int seatId, OrderDto orderDto);
+    void deleteOrderFromSeat(int seatId, int orderItemId);
 }

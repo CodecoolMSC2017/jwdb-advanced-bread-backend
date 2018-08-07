@@ -121,11 +121,14 @@ public class OrderServiceImpl extends AbstractService implements OrderService {
     }
 
     @Override
-    public void deleteOrderFromSeat(int seatId, OrderDto orderDto) {
+    public void deleteOrderFromSeat(int seatId, int orderItemId) {
         Seat seat = seatService.getById(seatId);
         for (CustomerOrder customerOrder : seat.getCustomerOrders()) {
-            if (customerOrder.getOrderItem().getId().equals(orderDto.getItemId())) {
+            if (customerOrder.getOrderItem().getId().equals(orderItemId) && customerOrder.getOrderItem().getQuantity() == 1) {
                 orderItemRepository.delete(customerOrder.getOrderItem());
+            } else {
+                customerOrder.getOrderItem().setQuantity(customerOrder.getOrderItem().getQuantity() - 1);
+                orderItemRepository.save(customerOrder.getOrderItem());
             }
         }
     }
@@ -235,7 +238,15 @@ public class OrderServiceImpl extends AbstractService implements OrderService {
                 result.add(updatedCostumerOrder);
             }
         }
-        return result;
+        return summarizeCustomerOrder(result);
+
+    }
+
+    private List<CustomerOrder> summarizeCustomerOrder(List<CustomerOrder> customerOrders) {
+        List<CustomerOrder> result = new ArrayList<>();
+        return null;
+
+
     }
 
     private void updateCustomerOrder(CustomerOrder customerOrder, CustomerOrder updatedCostumerOrder) {

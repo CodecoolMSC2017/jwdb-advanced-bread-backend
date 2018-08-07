@@ -82,8 +82,8 @@ public class OrderController extends AbstractController {
     }
 
     @DeleteMapping("/seat/{seatId}")
-    public void deleteOrderFromSeat(@RequestBody OrderDto orderDto,
-                                    @PathVariable("seatId") int seatId) {
-        orderService.deleteOrderFromSeat(seatId, orderDto);
+    public void deleteOrderFromSeat(@PathVariable("seatId") int seatId,
+                                    @RequestParam("orderItemId") int orderItemId) {
+        orderService.deleteOrderFromSeat(seatId, orderItemId);
     }
 }

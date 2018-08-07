@@ -51,7 +51,7 @@ INSERT INTO employee(user_id, email, first_name, last_name, title,address_id, re
 INSERT INTO restaurant_table(name, active, restaurant_id, employee_id) VALUES
 	('Table ONE', TRUE, 1, 1), --1
 	('Table TWO', TRUE, 1, 1), --2
-	('Table THREE', TRUE, 1, 3); --3
+	('Table THREE', TRUE, 1, 4); --3
 
 INSERT INTO restaurant_table(name, active, restaurant_id) VALUES
 	('Bar', TRUE, 1), --4
