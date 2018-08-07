@@ -107,7 +107,7 @@ public class OrderServiceImpl extends AbstractService implements OrderService {
         String tableName = tableService.getById(tableId).getName();
         for (Seat seat : seats) {
             SeatDto seatDto = new SeatDto(seat.getId(), setEnabledOrderItemToCustomerOrder(seat.getCustomerOrders()));
-            if (!seatDto.getCustomerOrderSet().isEmpty()) {
+            if (!seatDto.getCustomerOrderList().isEmpty()) {
                 seatDtoList.add(seatDto);
             }
         }
@@ -238,7 +238,7 @@ public class OrderServiceImpl extends AbstractService implements OrderService {
                 result.add(updatedCostumerOrder);
             }
         }
-        return summarizeCustomerOrder(result);
+        return result;
 
     }
 
