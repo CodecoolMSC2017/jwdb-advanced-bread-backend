@@ -6,7 +6,8 @@ INSERT INTO users(username, password, enabled) VALUES
     ('stan', '$2a$04$mrVOIvQZKlIPW0BYXwtaWuV1sZDsoSLSixtxYUhRZh3jpjfKDf736', true), --5
     ('anders', '$2a$04$mrVOIvQZKlIPW0BYXwtaWuV1sZDsoSLSixtxYUhRZh3jpjfKDf736', true), --6
     ('moreno', '$2a$04$mrVOIvQZKlIPW0BYXwtaWuV1sZDsoSLSixtxYUhRZh3jpjfKDf736', true), --7
-    ('hardy', '$2a$04$mrVOIvQZKlIPW0BYXwtaWuV1sZDsoSLSixtxYUhRZh3jpjfKDf736', true); --8
+    ('hardy', '$2a$04$mrVOIvQZKlIPW0BYXwtaWuV1sZDsoSLSixtxYUhRZh3jpjfKDf736', true), --8
+    ('murvai', '$2a$04$mrVOIvQZKlIPW0BYXwtaWuV1sZDsoSLSixtxYUhRZh3jpjfKDf736', true);  --9
 
 INSERT INTO authorities(username, authority) VALUES
 	('robking', 'ROLE_ADMIN'),
@@ -16,7 +17,8 @@ INSERT INTO authorities(username, authority) VALUES
 	('stan', 'ROLE_USER'),
 	('moreno', 'ROLE_USER'),
 	('anders', 'ROLE_USER'),
-	('hardy', 'ROLE_USER');
+	('hardy', 'ROLE_USER'),
+	('murvai', 'ROLE_USER');
 
 INSERT INTO address(street, city, postal_code, state, country) VALUES
 	('4110 Old Redmond Rd.', 'Redmond', '98502', 'Washington', 'USA'), --1
@@ -28,7 +30,8 @@ INSERT INTO address(street, city, postal_code, state, country) VALUES
 	('Coventry House Miner Rd.', 'London', 'EC2 7JR', '', 'UK'),--7
     ('120 Hanover Sq.', 'Strasbourg', '67000', '', 'France'), --8
     ('Berkeley Gardens 12  Brewery', 'London', 'WX1 6LT', '', 'UK'), -- 9
-    ('Berliner Platz 43', 'Berlin', '80805', '', 'Germany'); --10
+    ('Berliner Platz 43', 'Berlin', '80805', '', 'Germany'), --10
+    ('Barna Street 2','Debrecen', '4025', '','Hungary'); --11
 
 INSERT INTO owner(user_id, first_name, last_name, address_id ,email) VALUES
 	(1, 'Robert', 'King', 1,'robert.king@gmail.com'), --1
@@ -46,7 +49,8 @@ INSERT INTO employee(user_id, email, first_name, last_name, title,address_id, re
 	(6, 'maria.anders@gmail.com', 'Maria', 'Anders', 'WAITER',8, 1),--3
 	(8, 'thomas.hardy@gmail.com', 'Thomas', 'Hardy', 'BARTENDER',10, 1),--4
 	(7, 'antonio.moreno@gmail.com', 'Antonio', 'Moreno', 'BARTENDER',9, 1), --5
-    (5, 'stan.super@gmail.com', 'Stan', 'Super', 'WAITER',7, 3);--6
+    (5, 'stan.super@gmail.com', 'Stan', 'Super', 'WAITER',7, 3),--6
+    (9, 'murvai.gergely@gmail.com', 'Murvai', 'Gergely', 'BARTENDER', 11, 3); --7
 
 INSERT INTO restaurant_table(name, active, restaurant_id, employee_id) VALUES
 	('Table ONE', TRUE, 1, 1), --1
