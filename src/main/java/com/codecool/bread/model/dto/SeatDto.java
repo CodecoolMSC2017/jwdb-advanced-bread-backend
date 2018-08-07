@@ -8,7 +8,7 @@ import java.util.List;
 public class SeatDto {
 
     private Integer id;
-    private List<CustomerOrder> customerOrderList = new ArrayList<>();
+    private List<CustomerOrder> customerOrderList;
 
     public SeatDto() {
     }

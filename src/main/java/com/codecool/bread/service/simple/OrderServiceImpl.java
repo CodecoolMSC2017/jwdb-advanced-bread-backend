@@ -128,7 +128,7 @@ public class OrderServiceImpl extends AbstractService implements OrderService {
                 orderItemRepository.delete(customerOrder.getOrderItem());
             } else {
                 customerOrder.getOrderItem().setQuantity(customerOrder.getOrderItem().getQuantity() - 1);
-                orderItemRepository.save(customerOrder.getOrderItem());
+                customerOrderRepository.saveAndFlush(customerOrder);
             }
         }
     }
@@ -244,6 +244,9 @@ public class OrderServiceImpl extends AbstractService implements OrderService {
 
     private List<CustomerOrder> summarizeCustomerOrder(List<CustomerOrder> customerOrders) {
         List<CustomerOrder> result = new ArrayList<>();
+        for (CustomerOrder customerOrder : customerOrders) {
+
+        }
         return null;
 
 
