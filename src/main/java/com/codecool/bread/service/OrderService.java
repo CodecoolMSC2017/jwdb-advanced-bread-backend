@@ -33,4 +33,6 @@ public interface OrderService {
     void setInvoiceAsPaid(int invoiceId);
 
     SeatDto getActiveOrdersBySeat(int seatId);
+
+    void deleteOrderFromSeat(int seatId, OrderDto orderDto);
 }

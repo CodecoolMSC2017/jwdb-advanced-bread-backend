@@ -32,7 +32,7 @@ public class OrderController extends AbstractController {
         return orderService.getActiveOrdersByTable(tableId);
     }
 
-    @GetMapping("/seat/{seatId}")
+    @GetMapping("/seat/{seatId}/active")
     public SeatDto getActiveOrdersBySeat(@PathVariable("seatId") int seatId) {
         return orderService.getActiveOrdersBySeat(seatId);
     }
@@ -78,5 +78,11 @@ public class OrderController extends AbstractController {
                              Principal principal) {
         int loggedInEmployeeId = getLoggedInEmployeeId(principal);
         return orderService.add(orderDto,  seatId, loggedInEmployeeId);
+    }
+
+    @DeleteMapping("/seat/{seatId}")
+    public void deleteOrderFromSeat(@RequestBody OrderDto orderDto,
+                                    @PathVariable("seatId") int seatId) {
+        orderService.deleteOrderFromSeat(seatId, orderDto);
     }
 }

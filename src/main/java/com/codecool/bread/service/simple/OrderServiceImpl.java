@@ -91,6 +91,16 @@ public class OrderServiceImpl extends AbstractService implements OrderService { 
     }
 
     @Override
+    public RestaurantDto getActiveOrdersByRestaurant(int restaurantId) {
+        Set<Table> tableSet = tableService.getAllTablesByRestaurantId(restaurantId);
+        Set<TableDto> tableDtoSet = new HashSet<>();
+        for (Table table : tableSet) {
+            tableDtoSet.add(getActiveOrdersByTable(table.getId()));
+        }
+        return new RestaurantDto(restaurantId,  tableDtoSet);
+    }
+
+    @Override
     public TableDto getActiveOrdersByTable(int tableId) {
         Set<Seat> seats = seatService.getAllSeatsByTableId(tableId);
         Set<SeatDto> seatDtoSet = new HashSet<>();
@@ -111,13 +121,13 @@ public class OrderServiceImpl extends AbstractService implements OrderService { 
     }
 
     @Override
-    public RestaurantDto getActiveOrdersByRestaurant(int restaurantId) {
-        Set<Table> tableSet = tableService.getAllTablesByRestaurantId(restaurantId);
-        Set<TableDto> tableDtoSet = new HashSet<>();
-        for (Table table : tableSet) {
-            tableDtoSet.add(getActiveOrdersByTable(table.getId()));
+    public void deleteOrderFromSeat(int seatId, OrderDto orderDto) {
+        Seat seat = seatService.getById(seatId);
+        for (CustomerOrder customerOrder : seat.getCustomerOrders()) {
+            if (customerOrder.getOrderItem().getId().equals(orderDto.getItemId())) {
+                orderItemRepository.delete(customerOrder.getOrderItem());
+            }
         }
-        return new RestaurantDto(restaurantId,  tableDtoSet);
     }
 
     // INVOICE SERVICES
