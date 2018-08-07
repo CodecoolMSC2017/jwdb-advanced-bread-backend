@@ -2,19 +2,19 @@ package com.codecool.bread.model.dto;
 
 import com.codecool.bread.model.CustomerOrder;
 
-import java.util.Set;
+import java.util.List;
 
 public class SeatDto {
 
     private int id;
-    Set<CustomerOrder> customerOrderSet;
+    private List<CustomerOrder> customerOrderList;
 
     public SeatDto() {
     }
 
-    public SeatDto(int id, Set<CustomerOrder> customerOrderSet) {
+    public SeatDto(int id, List<CustomerOrder> customerOrderList) {
         this.id = id;
-        this.customerOrderSet = customerOrderSet;
+        this.customerOrderList = customerOrderList;
     }
 
     public int getId() {
@@ -25,11 +25,11 @@ public class SeatDto {
         this.id = id;
     }
 
-    public Set<CustomerOrder> getCustomerOrderSet() {
-        return customerOrderSet;
+    public List<CustomerOrder> getCustomerOrderSet() {
+        return customerOrderList;
     }
 
-    public void setCustomerOrderSet(Set<CustomerOrder> customerOrderSet) {
-        this.customerOrderSet = customerOrderSet;
+    public void setCustomerOrderSet(List<CustomerOrder> customerOrderSet) {
+        this.customerOrderList = customerOrderSet;
     }
 }

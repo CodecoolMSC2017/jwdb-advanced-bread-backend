@@ -7,10 +7,11 @@ import com.codecool.bread.model.Table;
 import com.codecool.bread.model.dto.*;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Set;
 
 public interface OrderService {
-    Set<CustomerOrder> getAllCustomerOrderBySeat(int seatId);
+    List<CustomerOrder> getAllCustomerOrderBySeat(int seatId);
 
     CustomerOrder getCustomerOrderById(int seatId, int customerOrderId);
 

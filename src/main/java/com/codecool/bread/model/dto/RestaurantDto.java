@@ -1,14 +1,14 @@
 package com.codecool.bread.model.dto;
 
-import java.util.Set;
+import java.util.List;
 
 public class RestaurantDto {
 
     private int id;
 
-    private Set<TableDto> tableDtoSet;
+    private List<TableDto> tableDtoSet;
 
-    public RestaurantDto(int id, Set<TableDto> tableDtoSet) {
+    public RestaurantDto(int id, List<TableDto> tableDtoSet) {
         this.id = id;
         this.tableDtoSet = tableDtoSet;
     }
@@ -21,11 +21,11 @@ public class RestaurantDto {
         this.id = id;
     }
 
-    public Set<TableDto> getTableDtoSet() {
+    public List<TableDto> getTableDtoSet() {
         return tableDtoSet;
     }
 
-    public void setTableDtoSet(Set<TableDto> tableDtoSet) {
+    public void setTableDtoSet(List<TableDto> tableDtoSet) {
         this.tableDtoSet = tableDtoSet;
     }
 }

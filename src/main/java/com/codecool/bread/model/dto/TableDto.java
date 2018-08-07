@@ -1,21 +1,20 @@
 package com.codecool.bread.model.dto;
 
 import com.codecool.bread.model.Employee;
-import com.codecool.bread.model.Seat;
 
-import java.util.Set;
+import java.util.List;
 
 public class TableDto {
 
     private int id;
     private String name;
     private Employee employee;
-    private Set<SeatDto> seatDtoSet;
+    private List<SeatDto> seatDtoSet;
 
     public TableDto() {
     }
 
-    public TableDto(int id, String name, Set<SeatDto> seatDtoSet) {
+    public TableDto(int id, String name, List<SeatDto> seatDtoSet) {
         this.id = id;
         this.name = name;
         this.seatDtoSet = seatDtoSet;
@@ -37,11 +36,11 @@ public class TableDto {
         this.name = name;
     }
 
-    public Set<SeatDto> getSeatDtoSet() {
+    public List<SeatDto> getSeatDtoSet() {
         return seatDtoSet;
     }
 
-    public void setSeatDtoSet(Set<SeatDto> seatDtoSet) {
+    public void setSeatDtoSet(List<SeatDto> seatDtoSet) {
         this.seatDtoSet = seatDtoSet;
     }
 

@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
-public class OrderServiceImpl extends AbstractService implements OrderService { // TODO remove empty customerOrders when sending orders to fron end
+public class OrderServiceImpl extends AbstractService implements OrderService {
 
     @Autowired
     private RestaurantService restaurantService;
@@ -38,7 +38,7 @@ public class OrderServiceImpl extends AbstractService implements OrderService { 
     private InvoiceService invoiceService;
 
     @Override
-    public Set<CustomerOrder> getAllCustomerOrderBySeat(int seatId) {
+    public List<CustomerOrder> getAllCustomerOrderBySeat(int seatId) {
         Seat seat = seatService.getById(seatId);
         return seat.getCustomerOrders();
     }
@@ -93,31 +93,31 @@ public class OrderServiceImpl extends AbstractService implements OrderService { 
     @Override
     public RestaurantDto getActiveOrdersByRestaurant(int restaurantId) {
         Set<Table> tableSet = tableService.getAllTablesByRestaurantId(restaurantId);
-        Set<TableDto> tableDtoSet = new HashSet<>();
+        List<TableDto> tableDtoList = new ArrayList<>();
         for (Table table : tableSet) {
-            tableDtoSet.add(getActiveOrdersByTable(table.getId()));
+            tableDtoList.add(getActiveOrdersByTable(table.getId()));
         }
-        return new RestaurantDto(restaurantId,  tableDtoSet);
+        return new RestaurantDto(restaurantId,  tableDtoList);
     }
 
     @Override
     public TableDto getActiveOrdersByTable(int tableId) {
         Set<Seat> seats = seatService.getAllSeatsByTableId(tableId);
-        Set<SeatDto> seatDtoSet = new HashSet<>();
+        List<SeatDto> seatDtoList = new ArrayList<>();
         String tableName = tableService.getById(tableId).getName();
         for (Seat seat : seats) {
             SeatDto seatDto = new SeatDto(seat.getId(), setEnabledOrderItemToCustomerOrder(seat.getCustomerOrders()));
             if (!seatDto.getCustomerOrderSet().isEmpty()) {
-                seatDtoSet.add(seatDto);
+                seatDtoList.add(seatDto);
             }
         }
-        return new TableDto(tableId, tableName, seatDtoSet);
+        return new TableDto(tableId, tableName, seatDtoList);
     }
 
     @Override
     public SeatDto getActiveOrdersBySeat(int seatId) {
         Seat seat = seatService.getById(seatId);
-        return new SeatDto(seat.getId(), setEnabledOrderItemToCustomerOrder(seat.getCustomerOrders()));
+        return new SeatDto(seatId, setEnabledOrderItemToCustomerOrder(seat.getCustomerOrders()));
     }
 
     @Override
@@ -183,8 +183,6 @@ public class OrderServiceImpl extends AbstractService implements OrderService { 
             InvoiceItemDto invoiceItemDto = new InvoiceItemDto(id, quantity, itemName, unitPrice);
             invoiceItemDtoList.add(invoiceItemDto);
         }
-
-        //List<InvoiceItemDto> invoiceItemDtos =
         return new InvoiceDto(invoiceId, created, employeeId,restaurantAddress, totalPrice, invoiceItemDtoList);
     }
 
@@ -226,8 +224,8 @@ public class OrderServiceImpl extends AbstractService implements OrderService { 
         return seatRepository.findByInvoiceId(invoiceId);
     }
 
-    private Set<CustomerOrder>  setEnabledOrderItemToCustomerOrder(Set<CustomerOrder> customerOrders) {
-        Set<CustomerOrder> result = new HashSet<>();
+    private List<CustomerOrder>  setEnabledOrderItemToCustomerOrder(List<CustomerOrder> customerOrders) {
+        List<CustomerOrder> result = new ArrayList<>();
         for (CustomerOrder customerOrder: customerOrders) {
             if (customerOrder.isEnabled()) {
                 CustomerOrder updatedCostumerOrder = new CustomerOrder();

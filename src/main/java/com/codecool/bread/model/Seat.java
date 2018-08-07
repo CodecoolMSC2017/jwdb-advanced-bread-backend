@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.persistence.Table;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -21,7 +23,7 @@ public class Seat extends POSObject {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "seat")
     @JsonIgnore
-    private Set<CustomerOrder> customerOrders = new HashSet<>();
+    private List<CustomerOrder> customerOrders = new ArrayList<>();
 
     public boolean isActive() {
         return isActive;
@@ -39,11 +41,11 @@ public class Seat extends POSObject {
         this.table = table;
     }
 
-    public Set<CustomerOrder> getCustomerOrders() {
+    public List<CustomerOrder> getCustomerOrders() {
         return customerOrders;
     }
 
-    public void setCustomerOrders(Set<CustomerOrder> customerOrders) {
+    public void setCustomerOrders(List<CustomerOrder> customerOrders) {
         this.customerOrders = customerOrders;
     }
 }
