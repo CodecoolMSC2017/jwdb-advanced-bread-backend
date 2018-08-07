@@ -125,7 +125,7 @@ public class OrderServiceImpl extends AbstractService implements OrderService {
         Seat seat = seatService.getById(seatId);
         for (CustomerOrder customerOrder : seat.getCustomerOrders()) {
             if (customerOrder.getOrderItem().getId().equals(orderItemId) && customerOrder.getOrderItem().getQuantity() == 1) {
-                orderItemRepository.delete(customerOrder.getOrderItem());
+                customerOrderRepository.delete(customerOrder);
             } else {
                 customerOrder.getOrderItem().setQuantity(customerOrder.getOrderItem().getQuantity() - 1);
                 customerOrderRepository.saveAndFlush(customerOrder);
