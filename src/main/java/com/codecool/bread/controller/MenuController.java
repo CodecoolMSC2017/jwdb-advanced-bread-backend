@@ -54,4 +54,9 @@ public class MenuController extends AbstractController {
     public Menu changeActivity(@RequestBody Menu menu, @PathVariable("restaurantId") int restaurantId) {
         return menuService.changeActivityInDb(menu, restaurantId);
     }
+
+    @PutMapping("/{menuId}/item")
+    public Menu addItemToMenu(@RequestBody Item item, @PathVariable("menuId") int menuId) {
+        return menuService.addItemToMenuInDb(item, menuId);
+    }
 }

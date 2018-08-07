@@ -24,4 +24,6 @@ public interface MenuService {
     void setAllInactiveInDb(int restaurantId);
 
     Menu getActiveMenu(int restaurantId) throws MenuNotFoundException;
+
+    Menu addItemToMenuInDb(Item item, int menuId);
 }

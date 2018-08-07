@@ -3,7 +3,6 @@ package com.codecool.bread.service.simple;
 import com.codecool.bread.exception.MenuNotFoundException;
 import com.codecool.bread.model.Item;
 import com.codecool.bread.model.Menu;
-import com.codecool.bread.model.Restaurant;
 import com.codecool.bread.service.MenuService;
 import com.codecool.bread.service.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +24,7 @@ public class MenuServiceImpl extends AbstractService implements MenuService {
 
     @Override
     public Menu getEnabledMenuFromDb(int menuId) {
-        Menu menu = menuRepository.findByIdAndRestaurantIdAndEnabledTrue(menuId);
+        Menu menu = menuRepository.findByIdAndEnabledTrue(menuId);
         if(menu == null || !menu.isEnabled()) {
             throw new MenuNotFoundException();
         } else {
@@ -35,7 +34,7 @@ public class MenuServiceImpl extends AbstractService implements MenuService {
 
     @Override
     public Set<Item> getItemsByMenuIdFromDb(int menuId) {
-        Menu menu = menuRepository.findByIdAndRestaurantIdAndEnabledTrue(menuId);
+        Menu menu = menuRepository.findByIdAndEnabledTrue(menuId);
         if(menu == null || !menu.isEnabled()) {
             throw new MenuNotFoundException();
         } else {
@@ -50,7 +49,7 @@ public class MenuServiceImpl extends AbstractService implements MenuService {
 
     @Override
     public void delete(int menuId) {
-        Menu menu = menuRepository.findByIdAndRestaurantIdAndEnabledTrue(menuId);
+        Menu menu = menuRepository.findByIdAndEnabledTrue(menuId);
         if(menu == null || !menu.isEnabled()) {
             throw new MenuNotFoundException();
         } else {
@@ -92,5 +91,12 @@ public class MenuServiceImpl extends AbstractService implements MenuService {
             throw new MenuNotFoundException();
         }
         return menu.get();
+    }
+
+    @Override
+    public Menu addItemToMenuInDb(Item item, int menuId) {
+        Menu menu = menuRepository.findByIdAndEnabledTrue(menuId);
+        menu.getItems().add(item);
+        return menuRepository.saveAndFlush(menu);
     }
 }
