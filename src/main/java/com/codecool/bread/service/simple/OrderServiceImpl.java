@@ -105,6 +105,12 @@ public class OrderServiceImpl extends AbstractService implements OrderService { 
     }
 
     @Override
+    public SeatDto getActiveOrdersBySeat(int seatId) {
+        Seat seat = seatService.getById(seatId);
+        return new SeatDto(seat.getId(), setEnabledOrderItemToCustomerOrder(seat.getCustomerOrders()));
+    }
+
+    @Override
     public RestaurantDto getActiveOrdersByRestaurant(int restaurantId) {
         Set<Table> tableSet = tableService.getAllTablesByRestaurantId(restaurantId);
         Set<TableDto> tableDtoSet = new HashSet<>();

@@ -3,10 +3,7 @@ package com.codecool.bread.controller;
 import com.codecool.bread.model.CustomerOrder;
 import com.codecool.bread.model.Invoice;
 import com.codecool.bread.model.OrderItem;
-import com.codecool.bread.model.dto.InvoiceDto;
-import com.codecool.bread.model.dto.OrderDto;
-import com.codecool.bread.model.dto.RestaurantDto;
-import com.codecool.bread.model.dto.TableDto;
+import com.codecool.bread.model.dto.*;
 import com.codecool.bread.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,6 +30,11 @@ public class OrderController extends AbstractController {
     @GetMapping("/table/{tableId}")
     public TableDto getActiveOrdersByTable(@PathVariable("tableId") int tableId) {
         return orderService.getActiveOrdersByTable(tableId);
+    }
+
+    @GetMapping("/seat/{seatId}")
+    public SeatDto getActiveOrdersBySeat(@PathVariable("seatId") int seatId) {
+        return orderService.getActiveOrdersBySeat(seatId);
     }
 
     @GetMapping("/seat/{seatId}/{customerOrderId}")

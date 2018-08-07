@@ -4,10 +4,7 @@ import com.codecool.bread.model.CustomerOrder;
 import com.codecool.bread.model.Invoice;
 import com.codecool.bread.model.OrderItem;
 import com.codecool.bread.model.Table;
-import com.codecool.bread.model.dto.InvoiceDto;
-import com.codecool.bread.model.dto.OrderDto;
-import com.codecool.bread.model.dto.RestaurantDto;
-import com.codecool.bread.model.dto.TableDto;
+import com.codecool.bread.model.dto.*;
 
 import java.security.Principal;
 import java.util.Set;
@@ -34,4 +31,6 @@ public interface OrderService {
     Invoice createInvoiceForSeats(int[] seatIds);
 
     void setInvoiceAsPaid(int invoiceId);
+
+    SeatDto getActiveOrdersBySeat(int seatId);
 }
