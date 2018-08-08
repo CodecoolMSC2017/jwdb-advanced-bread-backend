@@ -1,6 +1,7 @@
 package com.codecool.bread.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.aspectj.weaver.ast.Or;
 
 import javax.persistence.*;
 import javax.persistence.Table;

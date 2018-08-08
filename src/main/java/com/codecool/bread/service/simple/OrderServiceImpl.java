@@ -106,7 +106,7 @@ public class OrderServiceImpl extends AbstractService implements OrderService {
         List<SeatDto> seatDtoList = new ArrayList<>();
         String tableName = tableService.getById(tableId).getName();
         for (Seat seat : seats) {
-            SeatDto seatDto = new SeatDto(seat.getId(), setEnabledOrderItemToCustomerOrder(seat.getCustomerOrders()));
+            SeatDto seatDto = new SeatDto(seat.getId(), setEnabledOrderItemToCustomerOrder(summarizeCustomerOrder(seat.getCustomerOrders())));
             if (!seatDto.getCustomerOrderList().isEmpty()) {
                 seatDtoList.add(seatDto);
             }
@@ -177,8 +177,9 @@ public class OrderServiceImpl extends AbstractService implements OrderService {
 
         List<InvoiceItemDto> invoiceItemDtoList = new ArrayList<>();
 
-        Set<CustomerOrder> customerOrderSet = customerOrderRepository.findByInvoiceId(invoiceId);
-        for (CustomerOrder customerOrder : customerOrderSet) {
+        List<CustomerOrder> customerOrderList = summarizeCustomerOrder(customerOrderRepository.findByInvoiceId(invoiceId));
+
+        for (CustomerOrder customerOrder : customerOrderList) {
             int id = customerOrder.getOrderItem().getItem().getId();
             int quantity = customerOrder.getOrderItem().getQuantity();
             String itemName = customerOrder.getOrderItem().getItem().getName();
@@ -257,18 +258,7 @@ public class OrderServiceImpl extends AbstractService implements OrderService {
                 }
             }
         }
-        /*
-        Map<Integer, Integer> result = new HashMap<>();
-
-        for (CustomerOrder customerOrder : customerOrders) {
-            result.compute(customerOrder.getOrderItem().getItem().getId(), (k, v) -> v == null ? 1 : v + 1);
-        }
-
-
-        for (Map.Entry<Integer, Integer> entry : result.entrySet()) {
-
-        }
-        */
+       Collections.sort(result);
         return result;
     }
 

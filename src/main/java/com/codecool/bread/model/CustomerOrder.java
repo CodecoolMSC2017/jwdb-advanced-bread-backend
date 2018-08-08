@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "customer_order")
-public class CustomerOrder extends POSObject {
+public class CustomerOrder extends POSObject implements Comparable<CustomerOrder> {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "seat_id")
@@ -72,5 +72,10 @@ public class CustomerOrder extends POSObject {
 
     public void setInvoice(Invoice invoice) {
         this.invoice = invoice;
+    }
+
+    @Override
+    public int compareTo(CustomerOrder o) {
+        return (this.getOrderItem().getItem().getName().compareTo(o.getOrderItem().getItem().getName()));
     }
 }
