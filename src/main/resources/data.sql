@@ -305,8 +305,10 @@ INSERT INTO customer_order (seat_id, employee_id, ordering_time , order_item_id)
     (14, 4, '2018-02-13 02:16:24', 36),
     (12, 3, '2018-07-15 07:04:50', 47);
 
+INSERT INTO menu (title, active) VALUES
+    ('Monday', true); --1
+
 INSERT INTO menu (title) VALUES
-    ('Monday'), --1
     ('Tuesday'), --2
     ('Wednesday'), --3
     ('Thursday'), --4

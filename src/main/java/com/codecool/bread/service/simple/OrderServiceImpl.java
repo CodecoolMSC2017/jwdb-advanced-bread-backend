@@ -117,7 +117,7 @@ public class OrderServiceImpl extends AbstractService implements OrderService {
     @Override
     public SeatDto getActiveOrdersBySeat(int seatId) {
         Seat seat = seatService.getById(seatId);
-        return new SeatDto(seatId, setEnabledOrderItemToCustomerOrder(seat.getCustomerOrders()));
+        return new SeatDto(seatId, setEnabledOrderItemToCustomerOrder(summarizeCustomerOrder(seat.getCustomerOrders())));
     }
 
     @Override
@@ -126,7 +126,7 @@ public class OrderServiceImpl extends AbstractService implements OrderService {
         for (CustomerOrder customerOrder : seat.getCustomerOrders()) {
             if (customerOrder.getOrderItem().getId().equals(orderItemId) && customerOrder.getOrderItem().getQuantity() == 1) {
                 customerOrderRepository.delete(customerOrder);
-            } else {
+            } else if (customerOrder.getOrderItem().getId().equals(orderItemId)){
                 customerOrder.getOrderItem().setQuantity(customerOrder.getOrderItem().getQuantity() - 1);
                 customerOrderRepository.saveAndFlush(customerOrder);
             }
@@ -244,12 +244,41 @@ public class OrderServiceImpl extends AbstractService implements OrderService {
 
     private List<CustomerOrder> summarizeCustomerOrder(List<CustomerOrder> customerOrders) {
         List<CustomerOrder> result = new ArrayList<>();
+        List<Integer> existingIds = new ArrayList<>();
         for (CustomerOrder customerOrder : customerOrders) {
+            if( !existingIds.contains(customerOrder.getOrderItem().getItem().getId())) {
+                existingIds.add(customerOrder.getOrderItem().getItem().getId());
+                result.add(customerOrder);
+            } else {
+                CustomerOrder temp = findCustomerOrderInListByOrderItemId(customerOrders, customerOrder.getOrderItem().getItem().getId());
+                if (temp != null) {
+                    int quantity = temp.getOrderItem().getQuantity();
+                    temp.getOrderItem().setQuantity(quantity + 1);
+                }
+            }
+        }
+        /*
+        Map<Integer, Integer> result = new HashMap<>();
+
+        for (CustomerOrder customerOrder : customerOrders) {
+            result.compute(customerOrder.getOrderItem().getItem().getId(), (k, v) -> v == null ? 1 : v + 1);
+        }
+
+
+        for (Map.Entry<Integer, Integer> entry : result.entrySet()) {
 
         }
+        */
+        return result;
+    }
+
+    private CustomerOrder findCustomerOrderInListByOrderItemId(List<CustomerOrder> customerOrders, int id) {
+        for (CustomerOrder customerOrder : customerOrders) {
+            if (customerOrder.getOrderItem().getItem().getId() == id) {
+                return customerOrder;
+            }
+        }
         return null;
-
-
     }
 
     private void updateCustomerOrder(CustomerOrder customerOrder, CustomerOrder updatedCostumerOrder) {
