@@ -2,7 +2,6 @@ package com.codecool.bread.model.dto;
 
 import com.codecool.bread.model.CustomerOrder;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SeatDto {

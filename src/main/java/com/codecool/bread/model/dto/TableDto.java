@@ -2,6 +2,7 @@ package com.codecool.bread.model.dto;
 
 import com.codecool.bread.model.Employee;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class TableDto {
@@ -9,6 +10,7 @@ public class TableDto {
     private int id;
     private String name;
     private Employee employee;
+    private LocalDateTime arrivalTime;
     private List<SeatDto> seatDtoSet;
 
     public TableDto() {
@@ -17,6 +19,13 @@ public class TableDto {
     public TableDto(int id, String name, List<SeatDto> seatDtoSet) {
         this.id = id;
         this.name = name;
+        this.seatDtoSet = seatDtoSet;
+    }
+
+    public TableDto(int id, String name, LocalDateTime arrivalTime, List<SeatDto> seatDtoSet) {
+        this.id = id;
+        this.name = name;
+        this.arrivalTime = arrivalTime;
         this.seatDtoSet = seatDtoSet;
     }
 

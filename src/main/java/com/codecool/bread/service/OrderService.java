@@ -29,7 +29,7 @@ public interface OrderService {
 
     //Invoice createInvoiceForSeat(int seatId);
 
-    Invoice createInvoiceForSeats(int[] seatIds);
+    InvoiceDto createInvoiceForSeats(int[] seatIds, int employeeId);
 
     void setInvoiceAsPaid(int invoiceId);
 

@@ -4,7 +4,6 @@ import com.codecool.bread.exception.CustomerOrderNotFoundException;
 import com.codecool.bread.exception.OrderItemNotFoundException;
 import com.codecool.bread.model.*;
 import com.codecool.bread.model.dto.*;
-import com.codecool.bread.repository.*;
 import com.codecool.bread.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -106,7 +105,7 @@ public class OrderServiceImpl extends AbstractService implements OrderService {
         List<SeatDto> seatDtoList = new ArrayList<>();
         String tableName = tableService.getById(tableId).getName();
         for (Seat seat : seats) {
-            SeatDto seatDto = new SeatDto(seat.getId(), setEnabledOrderItemToCustomerOrder(summarizeCustomerOrder(seat.getCustomerOrders())));
+            SeatDto seatDto = new SeatDto(seat.getId(), setEnabledOrderItemToCustomerOrder(sumCustomerOrder(seat.getCustomerOrders())));
             if (!seatDto.getCustomerOrderList().isEmpty()) {
                 seatDtoList.add(seatDto);
             }
@@ -117,7 +116,7 @@ public class OrderServiceImpl extends AbstractService implements OrderService {
     @Override
     public SeatDto getActiveOrdersBySeat(int seatId) {
         Seat seat = seatService.getById(seatId);
-        return new SeatDto(seatId, setEnabledOrderItemToCustomerOrder(summarizeCustomerOrder(seat.getCustomerOrders())));
+        return new SeatDto(seatId, setEnabledOrderItemToCustomerOrder(sumCustomerOrder(seat.getCustomerOrders())));
     }
 
     @Override
@@ -140,31 +139,18 @@ public class OrderServiceImpl extends AbstractService implements OrderService {
         Set<Seat> seats = seatService.getEnableSeatsByTableId(tableId);
         BigDecimal totalPriceForSeats = getTotalPriceForSeats(seats);
         Invoice invoice = new Invoice(totalPriceForSeats);
-        setInvoiceForSeats(seats, invoiceRepository.save(invoice).getId());
+        int invoiceId = invoiceRepository.save(invoice).getId();
+        setInvoiceForSeats(seats, invoiceId) ;
         return createInvoiceDtoForTable(invoice, employeeId);
     }
 
-    /*
-        @Override
-        public Invoice createInvoiceForSeat(int seatId) {
-            Seat seat = seatService.getById(seatId);
-            BigDecimal total = calculateTotalPriceForSeat(seat);
-            Invoice invoice = new Invoice(total);
-            //invoice.setEnabled(true);
-            int invoiceId = invoiceRepository.save(invoice).getId();
-            Set<CustomerOrder> customerOrderSet = customerOrderRepository.findBySeatIdAndEnabledTrue(seatId);
-            setInvoiceForCustomerOrders(invoiceService.getById(invoiceId), customerOrderSet);
-            return invoiceService.getById(invoiceId);
-        }
-    */
     @Override
-    public Invoice createInvoiceForSeats(int[] seatIds) {
-        BigDecimal total = getTotalPriceForSeats(seatIds);
-        Invoice invoice = new Invoice(total);
+    public InvoiceDto createInvoiceForSeats(int[] seatIds, int employeeId) {
+        BigDecimal totalPriceForSeats = getTotalPriceForSeats(seatIds);
+        Invoice invoice = new Invoice(totalPriceForSeats);
         int invoiceId = invoiceRepository.save(invoice).getId();
         setInvoiceForSeats(seatIds, invoiceId);
-        //invoice.setEnabled(true);
-        return invoiceService.getById(invoiceId);
+        return createInvoiceDtoForSeats(invoice, employeeId);
     }
 
     // HELPER METHODS
@@ -177,7 +163,28 @@ public class OrderServiceImpl extends AbstractService implements OrderService {
 
         List<InvoiceItemDto> invoiceItemDtoList = new ArrayList<>();
 
-        List<CustomerOrder> customerOrderList = summarizeCustomerOrder(customerOrderRepository.findByInvoiceId(invoiceId));
+        List<CustomerOrder> customerOrderList = sumCustomerOrder(customerOrderRepository.findByInvoiceId(invoiceId));
+
+        for (CustomerOrder customerOrder : customerOrderList) {
+            int id = customerOrder.getOrderItem().getItem().getId();
+            int quantity = customerOrder.getOrderItem().getQuantity();
+            String itemName = customerOrder.getOrderItem().getItem().getName();
+            BigDecimal unitPrice = customerOrder.getOrderItem().getItem().getPrice();
+            InvoiceItemDto invoiceItemDto = new InvoiceItemDto(id, quantity, itemName, unitPrice);
+            invoiceItemDtoList.add(invoiceItemDto);
+        }
+        return new InvoiceDto(invoiceId, created, employeeId,restaurantAddress, totalPrice, invoiceItemDtoList);
+    }
+
+    private InvoiceDto createInvoiceDtoForSeats(Invoice invoice, int employeeId) {
+        int invoiceId = invoice.getId();
+        LocalDateTime created = invoice.getDate();
+        Address restaurantAddress = employeeService.getById(employeeId).getRestaurant().getAddress();
+        BigDecimal totalPrice = invoice.getTotal();
+
+        List<InvoiceItemDto> invoiceItemDtoList = new ArrayList<>();
+
+        List<CustomerOrder> customerOrderList = sumCustomerOrder(customerOrderRepository.findByInvoiceId(invoiceId));
 
         for (CustomerOrder customerOrder : customerOrderList) {
             int id = customerOrder.getOrderItem().getItem().getId();
@@ -243,7 +250,7 @@ public class OrderServiceImpl extends AbstractService implements OrderService {
 
     }
 
-    private List<CustomerOrder> summarizeCustomerOrder(List<CustomerOrder> customerOrders) {
+    private List<CustomerOrder> sumCustomerOrder(List<CustomerOrder> customerOrders) {
         List<CustomerOrder> result = new ArrayList<>();
         List<Integer> existingIds = new ArrayList<>();
         for (CustomerOrder customerOrder : customerOrders) {
@@ -334,6 +341,14 @@ public class OrderServiceImpl extends AbstractService implements OrderService {
             customerOrder.setEnabled(false);
             customerOrderRepository.saveAndFlush(customerOrder);
         }
+    }
+
+    private LocalDateTime findEarliestTime(List<CustomerOrder> customerOrderList) {
+        List<LocalDateTime> orderTimeList = new ArrayList<>();
+        for (CustomerOrder customerOrder : customerOrderList) {
+            orderTimeList.add(customerOrder.getOrderingTime());
+        }
+        return Collections.min(orderTimeList);
     }
 
 }

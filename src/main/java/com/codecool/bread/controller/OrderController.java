@@ -56,8 +56,8 @@ public class OrderController extends AbstractController {
     }
 */
     @GetMapping("/invoice")
-    public Invoice createInvoiceForSeats(@RequestParam("seatId") int[] seatIds) {
-        return orderService.createInvoiceForSeats(seatIds);
+    public InvoiceDto createInvoiceForSeats(@RequestParam("seatId") int[] seatIds, Principal principal) {
+        return orderService.createInvoiceForSeats(seatIds, getLoggedInEmployeeId(principal));
     }
 
     @GetMapping("/seat/{seatId}/{customerOrderId}/order-item")
