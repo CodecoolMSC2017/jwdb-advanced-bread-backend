@@ -141,7 +141,7 @@ public class OrderServiceImpl extends AbstractService implements OrderService {
         Invoice invoice = new Invoice(totalPriceForSeats);
         int invoiceId = invoiceRepository.save(invoice).getId();
         setInvoiceForSeats(seats, invoiceId) ;
-        return createInvoiceDtoForTable(invoice, employeeId);
+        return createInvoiceDto(invoice, employeeId);
     }
 
     @Override
@@ -150,33 +150,12 @@ public class OrderServiceImpl extends AbstractService implements OrderService {
         Invoice invoice = new Invoice(totalPriceForSeats);
         int invoiceId = invoiceRepository.save(invoice).getId();
         setInvoiceForSeats(seatIds, invoiceId);
-        return createInvoiceDtoForSeats(invoice, employeeId);
+        return createInvoiceDto(invoice, employeeId);
     }
 
     // HELPER METHODS
 
-    private InvoiceDto createInvoiceDtoForTable(Invoice invoice, int employeeId) {
-        int invoiceId = invoice.getId();
-        LocalDateTime created = invoice.getDate();
-        Address restaurantAddress = employeeService.getById(employeeId).getRestaurant().getAddress();
-        BigDecimal totalPrice = invoice.getTotal();
-
-        List<InvoiceItemDto> invoiceItemDtoList = new ArrayList<>();
-
-        List<CustomerOrder> customerOrderList = sumCustomerOrder(customerOrderRepository.findByInvoiceId(invoiceId));
-
-        for (CustomerOrder customerOrder : customerOrderList) {
-            int id = customerOrder.getOrderItem().getItem().getId();
-            int quantity = customerOrder.getOrderItem().getQuantity();
-            String itemName = customerOrder.getOrderItem().getItem().getName();
-            BigDecimal unitPrice = customerOrder.getOrderItem().getItem().getPrice();
-            InvoiceItemDto invoiceItemDto = new InvoiceItemDto(id, quantity, itemName, unitPrice);
-            invoiceItemDtoList.add(invoiceItemDto);
-        }
-        return new InvoiceDto(invoiceId, created, employeeId,restaurantAddress, totalPrice, invoiceItemDtoList);
-    }
-
-    private InvoiceDto createInvoiceDtoForSeats(Invoice invoice, int employeeId) {
+    private InvoiceDto createInvoiceDto(Invoice invoice, int employeeId) {
         int invoiceId = invoice.getId();
         LocalDateTime created = invoice.getDate();
         Address restaurantAddress = employeeService.getById(employeeId).getRestaurant().getAddress();
