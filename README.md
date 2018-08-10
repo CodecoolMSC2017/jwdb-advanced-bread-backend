@@ -3,6 +3,9 @@ Restaurant Point-Of-Sale system backend
 
 ## REST endpoints
 
+Repository of the corresponding frontend:
+https://github.com/CodecoolMSC2017/jwdb-advanced-bread-frontend
+
 * __GET /owner/restaurant__ - Obtains the list of all restaurant associated with the given owner ID. If the list is successfully obtained, the list of existing restaurant is returned, along with an HTTP 200(OK) status.
 * __POST /owner/restaurant__ - Creates a new restaurant. This request should carry a request body that includes the data that should be associated with the newly created restaurant. If the restaurant is created, an HTTP 201 (Created) status is returned along with the newly created restaurant in the response body.
 * __GET /owner/restaurant/{id}__ - Obtains the restaurant associated with the given ID. If no restaurant exists, an HTTP 404 (Not Found) status is returned. If the restaurant can be found, an HTTP 200 status is returned and the response body contains the information associated with the restaurant.
@@ -47,3 +50,8 @@ Restaurant Point-Of-Sale system backend
 * __GET /owner/user/{userId}__
 * __POST /owner/user__
 * __POST /owner/user/change-password__
+
+* __GET /register__
+* __PUT /register/{employeeId}__
+* __GET /changepw__
+* __PUT /changepw__

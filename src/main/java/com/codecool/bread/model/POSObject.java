@@ -11,6 +11,15 @@ public abstract class POSObject {
 
     private boolean enabled = true;
 
+    public POSObject() {
+
+    }
+
+    public POSObject(int id,boolean enabled) {
+        this.id = id;
+        this.enabled = enabled;
+    }
+
     public Integer getId() {
         return id;
     }
