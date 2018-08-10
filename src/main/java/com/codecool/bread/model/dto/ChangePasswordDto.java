@@ -6,6 +6,15 @@ public class ChangePasswordDto {
     private String confirmationPassword;
     private String[] authorities;
 
+    public ChangePasswordDto() {}
+
+    public ChangePasswordDto(String username,String password,String confirmationPassword,String[] authorities) {
+        this.username = username;
+        this.password = password;
+        this.confirmationPassword = confirmationPassword;
+        this.authorities = authorities;
+    }
+
     public String getUsername() {
         return username;
     }
