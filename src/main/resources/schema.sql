@@ -129,7 +129,6 @@ CREATE TABLE restaurant_table (
 	id SERIAL PRIMARY KEY,
 	name TEXT NOT NULL,
 	active BOOLEAN DEFAULT FALSE,
-	arrival_time TIMESTAMP,
 	restaurant_id INTEGER NOT NULL,
 	employee_id INTEGER DEFAULT NULL,
 	enabled BOOLEAN DEFAULT TRUE,

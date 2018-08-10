@@ -114,7 +114,7 @@ INSERT INTO item(name ,price ,category ,subcategory ,restaurant_id) VALUES
     ('Rántott csirkemell hasábburgonyával', 1750,'FOOD','CHICKEN_DISH',1), --10
     ('Juhtúróval-baconnel töltött csirkemell parázs burgonya', 2200,'FOOD','CHICKEN_DISH',1), --11
     ('Zöldséges marharagu óriás zsemlegombóccal', 1900,'FOOD','BEEF_DISH',1), --12
-    ('Zöldséges marharagu óriás zsemlegombóccal', 1900,'FOOD','BEEF_DISH',1), --13
+    ('Töltott káposzta', 1900,'FOOD','BEEF_DISH',1), --13
     ('Rántott szelet, hasábburgonyával', 1690,'FOOD','PORK_DISH',1), --14
     ('Pizza kenyérben sült kemencés csülök lyoni hagymával', 2390,'FOOD','PORK_DISH',1), --15
     ('Rántott gomba, rizs, tartármártás', 1690,'FOOD','VEGETARIAN',1), --16
