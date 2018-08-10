@@ -26,6 +26,15 @@ public class User implements Serializable {
     @Column(name = "authority")
     private List<String> authorities;
 
+    public User() {}
+
+    public User(int id, String username, boolean enabled, List<String> authorities) {
+        this.id = id;
+        this.username = username;
+        this.enabled = enabled;
+        this.authorities = authorities;
+    }
+
     public Integer getId() {
         return id;
     }

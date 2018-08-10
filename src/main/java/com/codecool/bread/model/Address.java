@@ -18,6 +18,17 @@ public class Address extends POSObject {
 
     private String country;
 
+    public Address() {}
+
+    public Address(int id, boolean enabled, String street, String city, String postalCode, String state, String country) {
+        super(id, enabled);
+        this.street = street;
+        this.city = city;
+        this.postalCode = postalCode;
+        this.state = state;
+        this.country = country;
+    }
+
     public String getStreet() {
         return street;
     }

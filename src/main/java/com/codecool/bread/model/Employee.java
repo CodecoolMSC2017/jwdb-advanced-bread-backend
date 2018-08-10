@@ -36,6 +36,19 @@ public class Employee extends POSObject {
     @JoinColumn(name = "address_id")
     private Address address;
 
+    public Employee() {}
+
+    public Employee(int id, boolean enabled, User user,String email, String firstName, String lastName, Role role, Restaurant restaurant,Address address) {
+        super(id, enabled);
+        this.user = user;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.role = role;
+        this.restaurant = restaurant;
+        this.address = address;
+    }
+
     public Address getAddress() {
         return address;
     }
