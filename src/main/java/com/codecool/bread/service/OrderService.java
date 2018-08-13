@@ -1,14 +1,10 @@
 package com.codecool.bread.service;
 
 import com.codecool.bread.model.CustomerOrder;
-import com.codecool.bread.model.Invoice;
 import com.codecool.bread.model.OrderItem;
-import com.codecool.bread.model.Table;
 import com.codecool.bread.model.dto.*;
 
-import java.security.Principal;
 import java.util.List;
-import java.util.Set;
 
 public interface OrderService {
     List<CustomerOrder> getAllCustomerOrderBySeat(int seatId);
@@ -16,6 +12,8 @@ public interface OrderService {
     CustomerOrder getCustomerOrderById(int seatId, int customerOrderId);
 
     OrderItem getOrderItem(int seatId, int customerOrderId);
+
+    List<OrderKitchenDto> getNewOrderItems(String category, String username);
 
     OrderItem add(OrderDto orderDto, int seatId, int loggedInEmployeeId);
 
