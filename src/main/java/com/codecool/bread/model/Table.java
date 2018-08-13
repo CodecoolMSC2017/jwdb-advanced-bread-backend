@@ -17,9 +17,6 @@ public class Table extends POSObject {
     @Column(name = "active")
     private boolean isActive;
 
-    @Column(name = "arrival_time")
-    private LocalDateTime arrivalTime;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id")
     @JsonIgnore
