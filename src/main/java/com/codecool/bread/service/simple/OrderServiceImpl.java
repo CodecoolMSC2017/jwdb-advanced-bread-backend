@@ -56,6 +56,21 @@ public class OrderServiceImpl extends AbstractService implements OrderService {
     }
 
     @Override
+    public List<OrderKitchenDto> getNewOrderItems(String category) {
+        List<OrderItem> orderItems = orderItemRepository.findAll();
+        List<OrderKitchenDto> orderedItems = new ArrayList<>();
+        Category cat = Category.valueOf(category.toUpperCase());
+
+        for(OrderItem orderItem : orderItems) {
+            if(orderItem.getItem().getCategory() == cat) {
+                orderedItems.add(new OrderKitchenDto(orderItem));
+            }
+        }
+        return orderedItems;
+    }
+
+
+    @Override
     public OrderItem add(OrderDto orderDto, int seatId, int loggedInEmployeeId) {
         Seat seat = seatService.getById(seatId);
         Table table = seat.getTable();
