@@ -13,7 +13,7 @@ public interface OrderService {
 
     OrderItem getOrderItem(int seatId, int customerOrderId);
 
-    List<OrderKitchenDto> getNewOrderItems(String type);
+    List<OrderKitchenDto> getNewOrderItems(String category, String username);
 
     OrderItem add(OrderDto orderDto, int seatId, int loggedInEmployeeId);
 

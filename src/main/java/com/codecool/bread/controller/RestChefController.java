@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -22,8 +23,8 @@ public class RestChefController {
     OrderService orderService;
 
     @GetMapping("")
-    public List<OrderKitchenDto> getPendingOrders(@RequestParam("category") String category) {
-        return orderService.getNewOrderItems(category);
+    public List<OrderKitchenDto> getPendingOrders(Principal principal, @RequestParam("category") String category) {
+        return orderService.getNewOrderItems(category.toUpperCase(), principal.getName());
     }
 
 

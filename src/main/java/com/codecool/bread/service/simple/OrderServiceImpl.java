@@ -47,7 +47,8 @@ public class OrderServiceImpl extends AbstractService implements OrderService {
         Optional<CustomerOrder> customerOrder = customerOrderRepository.findByIdAndSeatId(customerOrderId, seatId);
         if (customerOrder.isPresent()) {
             return customerOrder.get();
-        } throw new CustomerOrderNotFoundException();
+        }
+        throw new CustomerOrderNotFoundException();
     }
 
     @Override
@@ -56,15 +57,16 @@ public class OrderServiceImpl extends AbstractService implements OrderService {
     }
 
     @Override
-    public List<OrderKitchenDto> getNewOrderItems(String category) {
-        List<OrderItem> orderItems = orderItemRepository.findAll();
+    public List<OrderKitchenDto> getNewOrderItems(String category, String username) {
+        int restaurantId = employeeService.getByUsername(username).getRestaurant().getId();
+
+
+        List<OrderItem> orderItems = orderItemRepository.findByItemTypeAndRestaurantId(restaurantId, category);
         List<OrderKitchenDto> orderedItems = new ArrayList<>();
         Category cat = Category.valueOf(category.toUpperCase());
 
-        for(OrderItem orderItem : orderItems) {
-            if(orderItem.getItem().getCategory() == cat) {
-                orderedItems.add(new OrderKitchenDto(orderItem));
-            }
+        for (OrderItem orderItem : orderItems) {
+            orderedItems.add(new OrderKitchenDto(orderItem));
         }
         return orderedItems;
     }
@@ -111,7 +113,7 @@ public class OrderServiceImpl extends AbstractService implements OrderService {
         for (Table table : tableSet) {
             tableDtoList.add(getActiveOrdersByTable(table.getId()));
         }
-        return new RestaurantDto(restaurantId,  tableDtoList);
+        return new RestaurantDto(restaurantId, tableDtoList);
     }
 
     @Override
@@ -140,7 +142,7 @@ public class OrderServiceImpl extends AbstractService implements OrderService {
         for (CustomerOrder customerOrder : seat.getCustomerOrders()) {
             if (customerOrder.getOrderItem().getId().equals(orderItemId) && customerOrder.getOrderItem().getQuantity() == 1) {
                 customerOrderRepository.delete(customerOrder);
-            } else if (customerOrder.getOrderItem().getId().equals(orderItemId)){
+            } else if (customerOrder.getOrderItem().getId().equals(orderItemId)) {
                 customerOrder.getOrderItem().setQuantity(customerOrder.getOrderItem().getQuantity() - 1);
                 customerOrderRepository.saveAndFlush(customerOrder);
             }
@@ -155,7 +157,7 @@ public class OrderServiceImpl extends AbstractService implements OrderService {
         BigDecimal totalPriceForSeats = getTotalPriceForSeats(seats);
         Invoice invoice = new Invoice(totalPriceForSeats);
         int invoiceId = invoiceRepository.save(invoice).getId();
-        setInvoiceForSeats(seats, invoiceId) ;
+        setInvoiceForSeats(seats, invoiceId);
         return createInvoiceDto(invoice, employeeId);
     }
 
@@ -188,7 +190,7 @@ public class OrderServiceImpl extends AbstractService implements OrderService {
             InvoiceItemDto invoiceItemDto = new InvoiceItemDto(id, quantity, itemName, unitPrice);
             invoiceItemDtoList.add(invoiceItemDto);
         }
-        return new InvoiceDto(invoiceId, created, employeeId,restaurantAddress, totalPrice, invoiceItemDtoList);
+        return new InvoiceDto(invoiceId, created, employeeId, restaurantAddress, totalPrice, invoiceItemDtoList);
     }
 
     private void setInvoiceForSeats(int[] seatIds, int invoiceId) {
@@ -208,7 +210,7 @@ public class OrderServiceImpl extends AbstractService implements OrderService {
     }
 
     private void setInvoiceForCustomerOrders(Invoice invoice, Set<CustomerOrder> customerOrderSet) {
-        for (CustomerOrder customerOrder: customerOrderSet) {
+        for (CustomerOrder customerOrder : customerOrderSet) {
             customerOrder.setInvoice(invoice);
             customerOrderRepository.save(customerOrder);
         }
@@ -219,7 +221,7 @@ public class OrderServiceImpl extends AbstractService implements OrderService {
         Invoice invoice = invoiceService.getById(invoiceId);
         Set<Seat> seatSet = seatRepository.findByInvoiceId(invoice.getId());
         for (Seat seat : seatSet) {
-           setSeatAsPaid(seat.getId());
+            setSeatAsPaid(seat.getId());
         }
         invoice.setPaid(true);
         invoiceRepository.save(invoice);
@@ -229,9 +231,9 @@ public class OrderServiceImpl extends AbstractService implements OrderService {
         return seatRepository.findByInvoiceId(invoiceId);
     }
 
-    private List<CustomerOrder>  setEnabledOrderItemToCustomerOrder(List<CustomerOrder> customerOrders) {
+    private List<CustomerOrder> setEnabledOrderItemToCustomerOrder(List<CustomerOrder> customerOrders) {
         List<CustomerOrder> result = new ArrayList<>();
-        for (CustomerOrder customerOrder: customerOrders) {
+        for (CustomerOrder customerOrder : customerOrders) {
             if (customerOrder.isEnabled()) {
                 CustomerOrder updatedCostumerOrder = new CustomerOrder();
                 updateCustomerOrder(customerOrder, updatedCostumerOrder);
@@ -248,7 +250,7 @@ public class OrderServiceImpl extends AbstractService implements OrderService {
         List<CustomerOrder> result = new ArrayList<>();
         List<Integer> existingIds = new ArrayList<>();
         for (CustomerOrder customerOrder : customerOrders) {
-            if( !existingIds.contains(customerOrder.getOrderItem().getItem().getId())) {
+            if (!existingIds.contains(customerOrder.getOrderItem().getItem().getId())) {
                 existingIds.add(customerOrder.getOrderItem().getItem().getId());
                 result.add(customerOrder);
             } else {
@@ -259,7 +261,7 @@ public class OrderServiceImpl extends AbstractService implements OrderService {
                 }
             }
         }
-       Collections.sort(result);
+        Collections.sort(result);
         return result;
     }
 
@@ -280,7 +282,7 @@ public class OrderServiceImpl extends AbstractService implements OrderService {
 
     private OrderItem getOrderItemByIdAndEnabledTrue(int orderItemId) {
         Optional<OrderItem> orderItem = orderItemRepository.findByIdAndEnabledTrue(orderItemId);
-        if(orderItem.isPresent()) {
+        if (orderItem.isPresent()) {
             return orderItem.get();
         } else {
             throw new OrderItemNotFoundException();
@@ -297,7 +299,7 @@ public class OrderServiceImpl extends AbstractService implements OrderService {
 
     private BigDecimal getTotalPriceForSeats(Set<Seat> seats) {
         BigDecimal total = new BigDecimal(0);
-        for (Seat seat: seats) {
+        for (Seat seat : seats) {
             total = total.add(calculateTotalPriceForSeat(seat));
         }
         return total;
@@ -306,7 +308,7 @@ public class OrderServiceImpl extends AbstractService implements OrderService {
     private BigDecimal calculateTotalPriceForSeat(Seat seat) {
         BigDecimal total = new BigDecimal(0);
         Set<CustomerOrder> customerOrderSet = customerOrderRepository.findBySeatIdAndEnabledTrue(seat.getId());
-        for (CustomerOrder customerOrder: customerOrderSet) {
+        for (CustomerOrder customerOrder : customerOrderSet) {
             total = total.add(calculateTotalPriceForCustomerOrder(customerOrder));
         }
         return total;
@@ -324,14 +326,14 @@ public class OrderServiceImpl extends AbstractService implements OrderService {
 
     private void setTableAsPaid(int tableId) {
         Set<Seat> seats = seatService.getEnableSeatsByTableId(tableId);
-        for (Seat seat: seats) {
+        for (Seat seat : seats) {
             setSeatAsPaid(seat.getId());
         }
     }
 
     private void setSeatAsPaid(int seatId) {
         Set<CustomerOrder> customerOrderSet = customerOrderRepository.findBySeatIdAndEnabledTrue(seatId);
-        for (CustomerOrder customerOrder: customerOrderSet) {
+        for (CustomerOrder customerOrder : customerOrderSet) {
             customerOrder.setEnabled(false);
             customerOrderRepository.saveAndFlush(customerOrder);
         }
