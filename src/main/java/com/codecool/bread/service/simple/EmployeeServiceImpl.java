@@ -209,25 +209,4 @@ public class EmployeeServiceImpl extends AbstractService implements EmployeeServ
         }
         return null;
     }
-
-    private boolean isOwner(Principal principal) {
-        User user = userService.get(principal.getName());
-        if (user.getAuthorities().contains("ROLE_ADMIN")) {
-            return true;
-        }
-        return false;
-    }
-
-    private boolean isManager(Principal principal, int restaurantId) {
-        User user = userService.get(principal.getName());
-        if (!user.getAuthorities().contains("ROLE_USER")) {
-            return false;
-        }
-        Employee employee = employeeService.getByUsername(principal.getName());
-        int employeeRestaurant = employee.getRestaurant().getId();
-        if (employee.getRole().equals(Role.MANAGER) && employeeRestaurant == restaurantId) {
-            return true;
-        }
-        return false;
-    }
 }
