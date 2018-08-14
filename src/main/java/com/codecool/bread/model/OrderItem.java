@@ -19,6 +19,8 @@ public class OrderItem extends POSObject {
 
     private String comment;
 
+    private boolean ready;
+
     public Item getItem() {
         return item;
     }
@@ -41,5 +43,13 @@ public class OrderItem extends POSObject {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public boolean isReady() {
+        return ready;
+    }
+
+    public void setReady(boolean ready) {
+        this.ready = ready;
     }
 }
