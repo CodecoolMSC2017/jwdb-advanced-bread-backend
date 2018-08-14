@@ -60,13 +60,13 @@ public class OrderServiceImpl extends AbstractService implements OrderService {
     public List<OrderKitchenDto> getNewOrderItems(String category, String username) {
         int restaurantId = employeeService.getByUsername(username).getRestaurant().getId();
 
-
         List<OrderItem> orderItems = orderItemRepository.findByItemTypeAndRestaurantId(restaurantId, category);
         List<OrderKitchenDto> orderedItems = new ArrayList<>();
         Category cat = Category.valueOf(category.toUpperCase());
 
         for (OrderItem orderItem : orderItems) {
-            orderedItems.add(new OrderKitchenDto(orderItem));
+            LocalDateTime orderingTime = customerOrderRepository.findByOrderItem(orderItem.getId()).getOrderingTime();
+            orderedItems.add(new OrderKitchenDto(orderItem,orderingTime));
         }
         return orderedItems;
     }
@@ -148,6 +148,27 @@ public class OrderServiceImpl extends AbstractService implements OrderService {
             }
         }
     }
+
+    public List<OrderKitchenDto> setOrderKitchenDtoReady(OrderKitchenDto orderDto, String username) throws OrderItemNotFoundException {
+        OrderItem moddedOrderItem = orderDto.getOrderedItem();
+        Employee employee = employeeService.getByUsername(username);
+        moddedOrderItem.getItem().setRestaurant(employee.getRestaurant());
+        orderItemRepository.saveAndFlush(moddedOrderItem);
+
+        String category = null;
+
+        if(employee.getRole().equals(Role.CHEF)) {
+            category = Category.FOOD.toString();
+        } else if(employee.getRole().equals(Role.BARTENDER)){
+            category = Category.DRINK.toString();
+        } else {
+            throw new OrderItemNotFoundException();
+        }
+
+        return orderService.getNewOrderItems(category, username);
+
+    }
+
 
     // INVOICE SERVICES
 

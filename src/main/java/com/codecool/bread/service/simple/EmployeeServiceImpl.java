@@ -84,7 +84,7 @@ public class EmployeeServiceImpl extends AbstractService implements EmployeeServ
     @Override
     public Employee getByUsername(String username) throws EmployeeNotFoundException, UsernameNotFoundException {
         User user = userService.get(username);
-        Optional<Employee> employee = employeeRepository.findById(user.getId());
+        Optional<Employee> employee = employeeRepository.findByUserId(user.getId());
         if (!employee.isPresent()) {
             throw new EmployeeNotFoundException();
         } else {

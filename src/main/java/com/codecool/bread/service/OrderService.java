@@ -1,5 +1,6 @@
 package com.codecool.bread.service;
 
+import com.codecool.bread.exception.OrderItemNotFoundException;
 import com.codecool.bread.model.CustomerOrder;
 import com.codecool.bread.model.OrderItem;
 import com.codecool.bread.model.dto.*;
@@ -34,4 +35,6 @@ public interface OrderService {
     SeatDto getActiveOrdersBySeat(int seatId);
 
     void deleteOrderFromSeat(int seatId, int orderItemId);
+
+    List<OrderKitchenDto> setOrderKitchenDtoReady(OrderKitchenDto orderDto, String name) throws OrderItemNotFoundException;
 }

@@ -6,10 +6,7 @@ import com.codecool.bread.model.OrderItem;
 import com.codecool.bread.model.dto.OrderKitchenDto;
 import com.codecool.bread.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
@@ -27,6 +24,11 @@ public class RestChefController {
         return orderService.getNewOrderItems(category.toUpperCase(), principal.getName());
     }
 
+    @PutMapping("")
 
-
+    public List<OrderKitchenDto> setOrderedItemToReady(@RequestBody OrderKitchenDto orderDto, Principal principal) {
+        return orderService.setOrderKitchenDtoReady(orderDto, principal.getName());
+    }
 }
+
+
