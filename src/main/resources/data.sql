@@ -49,7 +49,7 @@ INSERT INTO employee(user_id, email, first_name, last_name, title,address_id, re
 	(6, 'maria.anders@gmail.com', 'Maria', 'Anders', 'WAITER',8, 1),--3
 	(8, 'thomas.hardy@gmail.com', 'Thomas', 'Hardy', 'BARTENDER',10, 1),--4
 	(7, 'antonio.moreno@gmail.com', 'Antonio', 'Moreno', 'BARTENDER',9, 1), --5
-    (5, 'stan.super@gmail.com', 'Stan', 'Super', 'WAITER',7, 3),--6
+    (5, 'stan.super@gmail.com', 'Stan', 'Super', 'WAITER',7, 2),--6
     (9, 'murvai.gergely@gmail.com', 'Murvai', 'Gergely', 'BARTENDER', 11, 3); --7
 
 INSERT INTO restaurant_table(name, active, restaurant_id, employee_id) VALUES
@@ -126,7 +126,12 @@ INSERT INTO item(name ,price ,category ,subcategory ,restaurant_id) VALUES
     ('Espresso', 290,'DRINK', 'COFFEE',1), --22
     ('Latte Machiato', 290,'DRINK', 'COFFEE',1), --23
     ('Earl Grey', 290,'DRINK', 'TEA',1), --24
-    ('Rooibos', 290,'DRINK', 'TEA',1); --25
+    ('Rooibos', 290,'DRINK', 'TEA',1), --25
+    ('Fanta', 390,'DRINK', 'BEVERAGE',2), --26
+    ('Espresso', 290,'DRINK', 'COFFEE',2), --27
+    ('Latte Machiato', 290,'DRINK', 'COFFEE',2), --28
+    ('Earl Grey', 290,'DRINK', 'TEA',2), --29
+    ('Rooibos', 290,'DRINK', 'TEA',2); --30
 
 INSERT INTO item_ingredient (item_id, ingredient_id) VALUES
      (15, 20),
@@ -149,8 +154,10 @@ INSERT INTO item_ingredient (item_id, ingredient_id) VALUES
      (15, 10),
      (15, 16),
      (23, 12),
+     (28, 12),
      (20, 15),
      (22, 9),
+     (27, 9),
      (19, 19),
      (3, 16),
      (17, 19),
@@ -163,11 +170,14 @@ INSERT INTO item_ingredient (item_id, ingredient_id) VALUES
      (15, 5),
      (13, 12),
      (22, 3),
+     (27, 3),
      (1, 15),
      (25, 14),
+     (30, 14),
      (4, 20),
      (17, 18),
      (22, 8),
+     (27, 8),
      (12, 6),
      (20, 5),
      (2, 19),
@@ -176,6 +186,7 @@ INSERT INTO item_ingredient (item_id, ingredient_id) VALUES
      (7, 8),
      (15, 9),
      (25, 13),
+     (30, 13),
      (2, 10),
      (12, 7),
      (4, 17),
@@ -184,7 +195,9 @@ INSERT INTO item_ingredient (item_id, ingredient_id) VALUES
      (3, 14),
      (16, 7),
      (24, 10),
+     (29, 10),
      (22, 16),
+     (27, 16),
      (5, 3),
      (7, 14),
      (12, 12),
@@ -193,17 +206,23 @@ INSERT INTO item_ingredient (item_id, ingredient_id) VALUES
      (15, 17),
      (10, 8),
      (25, 13),
+     (30, 13),
      (22, 11),
+     (27, 11),
      (7, 4),
      (12, 16),
      (22, 17),
+     (27, 17),
      (11, 13),
      (23, 12),
+     (28, 12),
      (6, 4),
      (4, 3),
      (5, 17),
      (24, 20),
      (24, 10),
+     (29, 20),
+     (29, 10),
      (8, 3),
      (20, 8),
      (19, 6),
@@ -211,13 +230,16 @@ INSERT INTO item_ingredient (item_id, ingredient_id) VALUES
      (3, 9),
      (3, 13),
      (23, 8),
+     (28, 8),
      (18, 7),
      (22, 7),
+     (27, 7),
      (12, 2),
      (5, 12),
      (17, 4),
      (1, 13),
      (22, 8),
+     (27, 8),
      (4, 1),
      (20, 7),
      (12, 17),
@@ -226,6 +248,7 @@ INSERT INTO item_ingredient (item_id, ingredient_id) VALUES
      (11, 20),
      (15, 20),
      (23, 3),
+     (28, 3),
      (13, 17),
      (5, 12),
      (3, 20);
