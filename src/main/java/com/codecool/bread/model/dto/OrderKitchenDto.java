@@ -9,13 +9,13 @@ public class OrderKitchenDto {
 
     private OrderItem orderedItem;
 
-    private LocalDateTime ordering_time;
+    private LocalDateTime orderingTime;
 
     public OrderKitchenDto() {}
 
-    public OrderKitchenDto(OrderItem orderItem, LocalDateTime ordering_time) {
+    public OrderKitchenDto(OrderItem orderItem, LocalDateTime orderingTime) {
         this.orderedItem = orderItem;
-        this.ordering_time = ordering_time;
+        this.orderingTime = orderingTime;
 
     }
 
@@ -27,11 +27,11 @@ public class OrderKitchenDto {
         this.orderedItem = orderedItem;
     }
 
-    public LocalDateTime getOrdering_time() {
-        return ordering_time;
+    public LocalDateTime getorderingTime() {
+        return orderingTime;
     }
 
-    public void setOrdering_time(LocalDateTime ordering_time) {
-        this.ordering_time = ordering_time;
+    public void setOrderingTime(LocalDateTime orderingTime) {
+        this.orderingTime = orderingTime;
     }
 }
