@@ -20,4 +20,6 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
     Optional<Employee> findByEmail(String email);
 
     Optional<Employee> findByIdAndRestaurantIdAndUserNull(Integer employeeId, Integer restaurantId);
+
+    Set<Employee> findByRestaurantId(int restaurantId);
 }

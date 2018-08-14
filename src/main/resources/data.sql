@@ -50,7 +50,7 @@ INSERT INTO employee(user_id, email, first_name, last_name, title,address_id, re
 	(8, 'thomas.hardy@gmail.com', 'Thomas', 'Hardy', 'BARTENDER',10, 1),--4
 	(7, 'antonio.moreno@gmail.com', 'Antonio', 'Moreno', 'BARTENDER',9, 1), --5
     (5, 'stan.super@gmail.com', 'Stan', 'Super', 'WAITER',7, 2),--6
-    (9, 'murvai.gergely@gmail.com', 'Murvai', 'Gergely', 'BARTENDER', 11, 3); --7
+    (9, 'murvai.gergely@gmail.com', 'Murvai', 'Gergely', 'MANAGER', 11, 1); --7
 
 INSERT INTO restaurant_table(name, active, restaurant_id, employee_id) VALUES
 	('Table ONE', TRUE, 1, 1), --1
