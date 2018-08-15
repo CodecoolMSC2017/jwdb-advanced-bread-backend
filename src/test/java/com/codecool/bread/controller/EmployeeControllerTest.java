@@ -133,7 +133,7 @@ public class EmployeeControllerTest extends AbstractTest {
                 .contentType("application/json;charset=UTF-8"))
                 .andDo(print()).andExpect(mvcMatcher.status().isOk())
                 .andExpect(mvcMatcher.content().contentType("application/json;charset=UTF-8"))
-                .andExpect(mvcMatcher.jsonPath("$.id", is(9)))
+                .andExpect(mvcMatcher.jsonPath("$.id", is(8)))
                 .andExpect(mvcMatcher.jsonPath("$.email", is("asd@asd.com")));
     }
 

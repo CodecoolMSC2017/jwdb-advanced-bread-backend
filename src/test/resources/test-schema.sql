@@ -129,7 +129,6 @@ CREATE TABLE restaurant_table (
 	id SERIAL PRIMARY KEY,
 	name TEXT NOT NULL,
 	active BOOLEAN DEFAULT FALSE,
-	arrival_time TIMESTAMP,
 	restaurant_id INTEGER NOT NULL,
 	employee_id INTEGER DEFAULT NULL,
 	enabled BOOLEAN DEFAULT TRUE,
@@ -159,6 +158,7 @@ CREATE TABLE order_item (
 	quantity INTEGER NOT NULL,
 	comment TEXT,
 	enabled BOOLEAN DEFAULT TRUE,
+	ready BOOLEAN DEFAULT FALSE,
 	FOREIGN KEY (item_id) REFERENCES item(id)
 );
 
