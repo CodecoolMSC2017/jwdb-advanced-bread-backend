@@ -7,6 +7,8 @@ import com.codecool.bread.service.SeatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @RestController
@@ -29,9 +31,10 @@ public class SeatController extends AbstractController {
     }
 
     @PostMapping("")
-    public Seat add(@RequestBody Seat seat,
-                    @PathVariable("tableId") int tableId) {
-        return seatService.add(seat, tableId);
+    public List<Seat> addMultipleSeats(@RequestBody Map<String, String> map,
+                          @PathVariable("tableId") int tableId) {
+        int value = Integer.parseInt(map.get("value"));
+        return seatService.addMultipleSeats(value, tableId);
     }
 
     @PutMapping("/{seatId}")
