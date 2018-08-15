@@ -124,7 +124,7 @@ public class EmployeeServiceImpl extends AbstractService implements EmployeeServ
 
         if (isOwner(principal)) {
             int ownerId = ownerService.getOwnerByUsername(principal.getName()).getId();
-            employee.setRestaurant(restaurantService.getById(restaurantId, ownerId));
+            employee.setRestaurant(restaurantService.getById(restaurantId, principal));
             result = employeeRepository.saveAndFlush(employee);
         }
 

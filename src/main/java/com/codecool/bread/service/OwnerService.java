@@ -15,5 +15,5 @@ public interface OwnerService {
 
     Owner getOwnerByUsername(String username) throws OwnerNotFoundException;
 
-
+    Owner getOwnerByRestaurantId(int restaurantId);
 }

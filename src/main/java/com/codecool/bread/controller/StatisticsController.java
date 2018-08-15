@@ -12,8 +12,13 @@ public class StatisticsController {
     @Autowired
     private StatisticsService statisticsService;
 
-    @GetMapping("/owner/{ownerId}")
+    @GetMapping("/owner/{ownerId}/restaurants/avg/income")
     public StatsDto getAllRestaurantIncomeAvg(@PathVariable("ownerId") int ownerId, @RequestParam("year") int year, @RequestParam("month") int month) {
         return statisticsService.getAllRestaurantIncomeAvgFromDb(ownerId, year, month);
+    }
+
+    @GetMapping("/owner/restaurant/{restaurantId}/avg/income")
+    public StatsDto getRestaurantIncome(@PathVariable("restaurantId") int restaurantId, @RequestParam("year") int year, @RequestParam("month") int month) {
+        return statisticsService.getRestaurantIncomeAvgFromDb(restaurantId, year, month);
     }
 }

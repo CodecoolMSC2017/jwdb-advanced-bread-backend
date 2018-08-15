@@ -6,16 +6,14 @@ public class StatsDto {
     private int incomeAvg;
     private int allIncomeAvg;
 
+    public StatsDto(){}
+
     public StatsDto(int allIncomeAvg) {
         this.allIncomeAvg = allIncomeAvg;
     }
 
     public int getRestaurantId() {
         return restaurantId;
-    }
-
-    public void setRestaurantId(int restaurantId) {
-        this.restaurantId = restaurantId;
     }
 
     public int getIncomeAvg() {
@@ -32,5 +30,9 @@ public class StatsDto {
 
     public void setAllIncomeAvg(int allIncomeAvg) {
         this.allIncomeAvg = allIncomeAvg;
+    }
+
+    public void setRestaurantId(int restaurantId) {
+        this.restaurantId = restaurantId;
     }
 }
