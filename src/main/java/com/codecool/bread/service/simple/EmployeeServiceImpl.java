@@ -196,10 +196,10 @@ public class EmployeeServiceImpl extends AbstractService implements EmployeeServ
 
     private Set<Employee> returnEmployeeSet(Principal principal, int restaurantId) throws RestaurantAccessDeniedException {
         User user = userService.get(principal.getName());
-        if (user.getAuthorities().contains("ROLE_ADMIN")) {
+        if (isOwner(principal)) {
             int ownerId = ownerService.getOwnerByUsername(principal.getName()).getId();
             return employeeRepository.findByEnabledTrueAndRestaurantIdAndRestaurantOwnerId(restaurantId, ownerId);
-        } else if (user.getAuthorities().contains("ROLE_USER")) {
+        } else if (isManager(principal, restaurantId)) {
             Employee loggedIn = employeeService.getByUsername(principal.getName());
             if (loggedIn.getRole().equals(Role.MANAGER)) {
                 return employeeRepository.findByRestaurantId(restaurantId);
