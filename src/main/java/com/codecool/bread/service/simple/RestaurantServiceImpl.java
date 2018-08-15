@@ -11,9 +11,8 @@ import com.codecool.bread.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.security.Principal;
+import java.util.*;
 
 @Service("restaurantService")
 public class RestaurantServiceImpl extends AbstractService implements RestaurantService {
@@ -31,8 +30,8 @@ public class RestaurantServiceImpl extends AbstractService implements Restaurant
     private SeatService seatService;
 
     @Override
-    public Restaurant getById(int restaurantId, int ownerId) throws RestaurantAccessDeniedException, RestaurantNotFoundException {
-        Restaurant restaurant =restaurantRepository.findByIdAndOwnerId(restaurantId, ownerId);
+    public Restaurant getById(int restaurantId, Principal principal) throws RestaurantAccessDeniedException, RestaurantNotFoundException {
+        Restaurant restaurant = returnRestaurant(principal, restaurantId);
         if(restaurant == null || restaurant.isEnabled() == false) {
             throw new RestaurantNotFoundException();
         }
@@ -56,8 +55,8 @@ public class RestaurantServiceImpl extends AbstractService implements Restaurant
         }
     }
 
-    public Set<Restaurant> getAllEnableByOwnerId(int ownerId) throws RestaurantNotFoundException {
-        Set<Restaurant> enableRestaurants = restaurantRepository.findByOwnerIdAndEnabledTrue(ownerId);
+    public Set<Restaurant> getAllEnableByOwnerId(Principal principal) throws RestaurantNotFoundException {
+        Set<Restaurant> enableRestaurants = getAllEnabledRestaurants(principal);
         if (enableRestaurants.isEmpty()) {
             throw new RestaurantNotFoundException();
         } else {
@@ -74,8 +73,18 @@ public class RestaurantServiceImpl extends AbstractService implements Restaurant
     }
 
     @Override
-    public Restaurant edit(Restaurant restaurant, int ownerId) throws RestaurantNotFoundException {
-        restaurant.setOwner(ownerService.getOwnerById(ownerId));
+    public Restaurant edit(Restaurant restaurant, Principal principal) throws RestaurantNotFoundException, RestaurantAccessDeniedException {
+        int restaurantId = restaurant.getId();
+        Owner owner = null;
+
+        if(isOwner(principal)) {
+            owner = ownerService.getOwnerByUsername(principal.getName());
+        } else if(isManager(principal,restaurantId)) {
+            owner = ownerService.getOwnerByRestaurantId(restaurantId);
+        } else {
+            throw new RestaurantAccessDeniedException();
+        }
+        restaurant.setOwner(owner);
         return restaurantRepository.saveAndFlush(restaurant);
     }
 
@@ -93,5 +102,31 @@ public class RestaurantServiceImpl extends AbstractService implements Restaurant
         }
         restaurant.get().setEnabled(false);
         restaurantRepository.saveAndFlush(restaurant.get());
+    }
+
+    private Restaurant returnRestaurant(Principal principal, int restaurantId) throws RestaurantAccessDeniedException {
+        Restaurant restaurant = null;
+
+        if(isOwner(principal)) {
+            int ownerId = ownerService.getOwnerByUsername(principal.getName()).getId();
+            restaurant = restaurantRepository.findByIdAndOwnerId(restaurantId, ownerId);
+        }
+        if(isManager(principal, restaurantId)) {
+            restaurant = restaurantRepository.findById(restaurantId).get();
+            System.out.println(restaurant.getName());
+        }
+        return restaurant;
+    }
+
+    private Set<Restaurant> getAllEnabledRestaurants(Principal principal) {
+        Set<Restaurant> restaurants = null;
+        if(isOwner(principal)) {
+            int ownerId = ownerService.getOwnerByUsername(principal.getName()).getId();
+            restaurants = restaurantRepository.findByOwnerIdAndEnabledTrue(ownerId);
+        } else if(isManager(principal)) {
+            int restaurantId = employeeService.getByUsername(principal.getName()).getRestaurant().getId();
+            restaurants = new HashSet<>(Arrays.asList(restaurantRepository.findById(restaurantId).get()));
+        }
+        return restaurants;
     }
 }

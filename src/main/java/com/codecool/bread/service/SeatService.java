@@ -1,15 +1,19 @@
 package com.codecool.bread.service;
 
 import com.codecool.bread.exception.NoSeatsFoundException;
+import com.codecool.bread.exception.RestaurantNotFoundException;
 import com.codecool.bread.exception.SeatNotFoundException;
 import com.codecool.bread.model.Seat;
 import com.codecool.bread.model.Table;
 
+import java.util.List;
 import java.util.Set;
 
 public interface SeatService {
 
-    Seat add(Seat seat, int restaurantId);
+    List<Seat> addMultipleSeats(int value, int tableId) throws RestaurantNotFoundException;
+
+    Seat add(Seat seat, int restaurantId) throws RestaurantNotFoundException;
 
     Set<Seat> getAllSeatsByTableId(int tableId);
 

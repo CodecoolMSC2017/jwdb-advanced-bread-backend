@@ -37,4 +37,13 @@ public class OwnerServiceImpl extends AbstractService implements OwnerService {
             throw new OwnerNotFoundException();
         }
     }
+
+    public Owner getOwnerByRestaurantId(int restaurantId) {
+        Optional<Owner> owner = ownerRepository.findByRestaurantId(restaurantId);
+        if (owner.isPresent()) {
+            return owner.get();
+        } else {
+            throw new OwnerNotFoundException();
+        }
+    }
 }

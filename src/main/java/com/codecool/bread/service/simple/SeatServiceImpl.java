@@ -11,6 +11,8 @@ import com.codecool.bread.service.TableService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -56,6 +58,24 @@ public class SeatServiceImpl extends AbstractService implements SeatService {
             return seat.get();
         }
         throw new SeatNotFoundException();
+    }
+
+    @Override
+    public List<Seat> addMultipleSeats(int value, int tableId) throws RestaurantNotFoundException {
+        Optional<Table> table = tableRepository.findById(tableId);
+        if (!table.isPresent()) {
+            throw new RestaurantNotFoundException();
+        }
+        List<Seat> seatList = new ArrayList<>();
+        for (int i = 0; i < value; i++) {
+            Seat seat = new Seat();
+            seat.setTable(table.get());
+            seat.setActive(true);
+            seat = seatRepository.save(seat);
+            table.get().getSeats().add(seat);
+            seatList.add(seat);
+        }
+        return seatList;
     }
 
     @Override

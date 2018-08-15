@@ -19,16 +19,12 @@ public class RestaurantController extends AbstractController {
 
     @GetMapping("")
     public Set<Restaurant> findAllByOwnerId(Principal principal) {
-        return restaurantService.getAllEnableByOwnerId(getLoggedInOwnerId(principal));
+        return restaurantService.getAllEnableByOwnerId(principal);
     }
 
     @GetMapping("/{restaurantId}")
-    public Restaurant findById(@PathVariable("restaurantId") int restaurantId, Principal principal) throws RestaurantNotFoundException {
-        Restaurant restaurant = restaurantService.getById(restaurantId, getLoggedInOwnerId(principal));
-        if (restaurant == null) {
-            throw new RestaurantNotFoundException();
-        } else
-            return restaurant;
+    public Restaurant findById(@PathVariable("restaurantId") int restaurantId, Principal principal) {
+        return restaurantService.getById(restaurantId, principal);
     }
 
     @PostMapping("")
@@ -38,8 +34,8 @@ public class RestaurantController extends AbstractController {
 
     @PutMapping("/{restaurantId}")
     public Restaurant editDetails(@RequestBody Restaurant restaurant, Principal principal) {
-        if(restaurantService.getById(restaurant.getId(), getLoggedInOwnerId(principal)) != null) {
-            return restaurantService.edit(restaurant, getLoggedInOwnerId(principal));
+        if(restaurantService.getById(restaurant.getId(), principal) != null) {
+            return restaurantService.edit(restaurant,principal);
         } else {
             throw new RestaurantNotFoundException();
         }
