@@ -123,7 +123,7 @@ public class RestaurantServiceImpl extends AbstractService implements Restaurant
         if(isOwner(principal)) {
             int ownerId = ownerService.getOwnerByUsername(principal.getName()).getId();
             restaurants = restaurantRepository.findByOwnerIdAndEnabledTrue(ownerId);
-        } else if(isManager(principal, employeeService.getByUsername(principal.getName()).getRestaurant().getId())) {
+        } else if(isManager(principal)) {
             int restaurantId = employeeService.getByUsername(principal.getName()).getRestaurant().getId();
             restaurants = new HashSet<>(Arrays.asList(restaurantRepository.findById(restaurantId).get()));
         }

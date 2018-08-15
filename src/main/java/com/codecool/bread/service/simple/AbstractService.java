@@ -71,5 +71,14 @@ public class AbstractService {
         return false;
     }
 
+    protected boolean isManager(Principal principal) {
+        User user = userRepository.findByUsername(principal.getName()).get();
+        if (!user.getAuthorities().contains("ROLE_USER")) {
+            return false;
+        }
+        return true;
+
+    }
+
 }
 
