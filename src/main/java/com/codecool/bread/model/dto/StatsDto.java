@@ -5,6 +5,8 @@ public class StatsDto {
     private int restaurantId;
     private int incomeAvg;
     private int allIncomeAvg;
+    private int incomeSum;
+    private int allIncomeSum;
 
     public StatsDto(){}
 
@@ -34,5 +36,21 @@ public class StatsDto {
 
     public void setRestaurantId(int restaurantId) {
         this.restaurantId = restaurantId;
+    }
+
+    public int getIncomeSum() {
+        return incomeSum;
+    }
+
+    public void setIncomeSum(int incomeSum) {
+        this.incomeSum = incomeSum;
+    }
+
+    public int getAllIncomeSum() {
+        return allIncomeSum;
+    }
+
+    public void setAllIncomeSum(int allIncomeSum) {
+        this.allIncomeSum = allIncomeSum;
     }
 }

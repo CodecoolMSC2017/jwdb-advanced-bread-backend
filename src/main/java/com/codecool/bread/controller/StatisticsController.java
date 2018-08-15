@@ -21,4 +21,9 @@ public class StatisticsController {
     public StatsDto getRestaurantIncome(@PathVariable("restaurantId") int restaurantId, @RequestParam("year") int year, @RequestParam("month") int month) {
         return statisticsService.getRestaurantIncomeAvgFromDb(restaurantId, year, month);
     }
+
+    @GetMapping("/owner/{ownerId}/restaurants/sum/income")
+    public StatsDto getAllRestaurantIncomeSum(@PathVariable("ownerId") int ownerId, @RequestParam("year") int year, @RequestParam("month") int month) {
+        return statisticsService.getAllRestaurantIncomeSumFromDb(ownerId, year, month);
+    }
 }
