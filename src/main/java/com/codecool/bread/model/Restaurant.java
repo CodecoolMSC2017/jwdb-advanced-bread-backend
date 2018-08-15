@@ -2,6 +2,7 @@ package com.codecool.bread.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import javax.persistence.Table;
@@ -10,6 +11,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "restaurant")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Restaurant extends POSObject {
 
     private String name;
