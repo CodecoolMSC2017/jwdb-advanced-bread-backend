@@ -9,4 +9,6 @@ public interface StatisticsService {
     StatsDto getRestaurantIncomeAvgFromDb(int restaurantId, int year, int month);
 
     StatsDto getAllRestaurantIncomeSumFromDb(int ownerId, int year, int month);
+
+    StatsDto getRestaurantIncomeSumFromDb(int restaurantId, int year, int month);
 }

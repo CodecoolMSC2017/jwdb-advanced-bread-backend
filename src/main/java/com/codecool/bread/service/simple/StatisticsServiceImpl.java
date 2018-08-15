@@ -30,4 +30,12 @@ public class StatisticsServiceImpl extends AbstractService implements Statistics
         statsDto.setAllIncomeSum(invoiceRepository.findInvoiceSumByOwnerId(ownerId, year, month));
         return statsDto;
     }
+
+    @Override
+    public StatsDto getRestaurantIncomeSumFromDb(int restaurantId, int year, int month) {
+        StatsDto statsDto = new StatsDto();
+        statsDto.setRestaurantId(restaurantId);
+        statsDto.setIncomeSum(invoiceRepository.findInvoiceSumByRestaurantId(restaurantId, year, month));
+        return statsDto;
+    }
 }
