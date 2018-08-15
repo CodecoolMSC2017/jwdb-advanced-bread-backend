@@ -11,6 +11,7 @@ import com.codecool.bread.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -31,8 +32,8 @@ public class RestaurantServiceImpl extends AbstractService implements Restaurant
     private SeatService seatService;
 
     @Override
-    public Restaurant getById(int restaurantId, int ownerId) throws RestaurantAccessDeniedException, RestaurantNotFoundException {
-        Restaurant restaurant =restaurantRepository.findByIdAndOwnerId(restaurantId, ownerId);
+    public Restaurant getById(int restaurantId, Principal principal) throws RestaurantAccessDeniedException, RestaurantNotFoundException {
+        Restaurant restaurant = returnRestaurant(principal, restaurantId);
         if(restaurant == null || restaurant.isEnabled() == false) {
             throw new RestaurantNotFoundException();
         }
@@ -74,9 +75,22 @@ public class RestaurantServiceImpl extends AbstractService implements Restaurant
     }
 
     @Override
-    public Restaurant edit(Restaurant restaurant, int ownerId) throws RestaurantNotFoundException {
-        restaurant.setOwner(ownerService.getOwnerById(ownerId));
+    public Restaurant edit(Restaurant restaurant, Principal principal) throws RestaurantNotFoundException, RestaurantAccessDeniedException {
+        int restaurantId = restaurant.getId();
+        Owner owner = null;
+
+        if(isOwner(principal)) {
+            owner = ownerService.getOwnerByUsername(principal.getName());
+        } else if(isManager(principal,restaurantId)) {
+            owner = ownerService.getOwnerByRestaurantId(restaurantId);
+        } else {
+            throw new RestaurantAccessDeniedException();
+        }
+        restaurant.setOwner(owner);
         return restaurantRepository.saveAndFlush(restaurant);
+
+
+
     }
 
     @Override
@@ -93,5 +107,19 @@ public class RestaurantServiceImpl extends AbstractService implements Restaurant
         }
         restaurant.get().setEnabled(false);
         restaurantRepository.saveAndFlush(restaurant.get());
+    }
+
+    private Restaurant returnRestaurant(Principal principal, int restaurantId) throws RestaurantAccessDeniedException {
+        Restaurant restaurant = null;
+
+        if(isOwner(principal)) {
+            int ownerId = ownerService.getOwnerByUsername(principal.getName()).getId();
+            restaurant = restaurantRepository.findByIdAndOwnerId(restaurantId, ownerId);
+        }
+        if(isManager(principal, restaurantId)) {
+            restaurant = restaurantRepository.findById(restaurantId).get();
+            System.out.println(restaurant.getName());
+        }
+        return restaurant;
     }
 }
