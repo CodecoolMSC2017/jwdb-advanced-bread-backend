@@ -1,12 +1,14 @@
 package com.codecool.bread.service.simple;
 
 import com.codecool.bread.model.Employee;
+import com.codecool.bread.model.Owner;
 import com.codecool.bread.model.Role;
 import com.codecool.bread.model.User;
 import com.codecool.bread.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.security.Principal;
+import java.util.Optional;
 
 public class AbstractService {
 
@@ -49,6 +51,14 @@ public class AbstractService {
     @Autowired
     UserRepository userRepository;
 
+
+    protected boolean isOwner(Principal principal, int restaurantId) {
+        Optional<Owner> owner = ownerRepository.findByRestaurantId(restaurantId);
+        if(principal.getName().equals(owner.get().getUser().getUsername())) {
+            return true;
+        }
+        return false;
+    }
 
     protected boolean isOwner(Principal principal) {
         User user = userRepository.findByUsername(principal.getName()).get();

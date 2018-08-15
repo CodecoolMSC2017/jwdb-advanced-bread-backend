@@ -152,7 +152,7 @@ public class EmployeeServiceImpl extends AbstractService implements EmployeeServ
 
     @Override
     public Employee editChanges(Employee employee, int restaurantId, Principal principal) throws EmployeeNotFoundException, RestaurantAccessDeniedException {
-        if(isOwner(principal) || isManager(principal, restaurantId)) {
+        if(isOwner(principal, restaurantId) || isManager(principal, restaurantId)) {
             return employeeRepository.saveAndFlush(employee);
         }  else {
             throw new RestaurantAccessDeniedException();
