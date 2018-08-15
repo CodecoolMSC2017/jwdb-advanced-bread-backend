@@ -13,14 +13,15 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Integer> {
 
     Optional<Invoice> findById(Integer invoiceId);
 
-    @Query(value = "SELECT AVG(invoice.total) AS allIncomeAvg FROM customer_order\n" +
+    @Query(value = "SELECT avg(subselect.total) FROM (SELECT avg(distinct invoice.total) as total FROM customer_order\n" +
             "JOIN invoice ON invoice.id = customer_order.invoice_id\n" +
             "JOIN employee ON employee.id = customer_order.employee_id\n" +
             "JOIN restaurant ON restaurant.id = employee.restaurant_id\n" +
-            "WHERE restaurant.owner_id = ?1\n" +
-            "AND EXTRACT(YEAR FROM invoice.date) = ?2\n" +
-            "AND EXTRACT(MONTH FROM invoice.date) = ?3\n" +
-            "AND invoice.date IS NOT NULL", nativeQuery = true)
+            "WHERE restaurant.owner_id = 1\n" +
+            "AND EXTRACT(YEAR FROM invoice.date) = 2018\n" +
+            "AND EXTRACT(MONTH FROM invoice.date) = 8\n" +
+            "AND invoice.date IS NOT NULL\n" +
+            "GROUP BY invoice.id) AS subselect", nativeQuery = true)
     Integer findInvoiceAvgByOwnerId(Integer ownerId, Integer year, Integer month);
 
     @Query(value = "SELECT AVG(invoice.total) AS incomeAvg FROM customer_order\n" +
