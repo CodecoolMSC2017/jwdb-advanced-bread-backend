@@ -12,9 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service("restaurantService")
 public class RestaurantServiceImpl extends AbstractService implements RestaurantService {
@@ -57,8 +55,8 @@ public class RestaurantServiceImpl extends AbstractService implements Restaurant
         }
     }
 
-    public Set<Restaurant> getAllEnableByOwnerId(int ownerId) throws RestaurantNotFoundException {
-        Set<Restaurant> enableRestaurants = restaurantRepository.findByOwnerIdAndEnabledTrue(ownerId);
+    public Set<Restaurant> getAllEnableByOwnerId(Principal principal) throws RestaurantNotFoundException {
+        Set<Restaurant> enableRestaurants = getAllEnabledRestaurants(principal);
         if (enableRestaurants.isEmpty()) {
             throw new RestaurantNotFoundException();
         } else {
@@ -88,9 +86,6 @@ public class RestaurantServiceImpl extends AbstractService implements Restaurant
         }
         restaurant.setOwner(owner);
         return restaurantRepository.saveAndFlush(restaurant);
-
-
-
     }
 
     @Override
@@ -121,5 +116,17 @@ public class RestaurantServiceImpl extends AbstractService implements Restaurant
             System.out.println(restaurant.getName());
         }
         return restaurant;
+    }
+
+    private Set<Restaurant> getAllEnabledRestaurants(Principal principal) {
+        Set<Restaurant> restaurants = null;
+        if(isOwner(principal)) {
+            int ownerId = ownerService.getOwnerByUsername(principal.getName()).getId();
+            restaurants = restaurantRepository.findByOwnerIdAndEnabledTrue(ownerId);
+        } else if(isManager(principal, employeeService.getByUsername(principal.getName()).getRestaurant().getId())) {
+            int restaurantId = employeeService.getByUsername(principal.getName()).getRestaurant().getId();
+            restaurants = new HashSet<>(Arrays.asList(restaurantRepository.findById(restaurantId).get()));
+        }
+        return restaurants;
     }
 }
