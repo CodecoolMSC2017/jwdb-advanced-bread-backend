@@ -89,7 +89,10 @@ public class RestaurantServiceImpl extends AbstractService implements Restaurant
     }
 
     @Override
-    public void deleteRestaurant(int restaurantId) throws RestaurantNotFoundException {
+    public void deleteRestaurant(int restaurantId, Principal principal) throws RestaurantNotFoundException, RestaurantAccessDeniedException {
+        if(!isOwner(principal, restaurantId)) {
+            throw new RestaurantAccessDeniedException();
+        }
         Optional<Restaurant> restaurant = restaurantRepository.findById(restaurantId);
         if (!restaurant.isPresent()) {
             throw new RestaurantNotFoundException();

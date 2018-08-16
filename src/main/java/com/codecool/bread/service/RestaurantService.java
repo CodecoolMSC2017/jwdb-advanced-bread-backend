@@ -24,5 +24,5 @@ public interface RestaurantService {
 
     Restaurant edit(Restaurant restaurant, Principal principal) throws RestaurantNotFoundException, RestaurantAccessDeniedException;
 
-    void deleteRestaurant(int restaurantId) throws RestaurantNotFoundException;
+    void deleteRestaurant(int restaurantId, Principal principal) throws RestaurantNotFoundException, RestaurantAccessDeniedException;
 }

@@ -42,7 +42,7 @@ public class RestaurantController extends AbstractController {
     }
 
     @DeleteMapping("/{restaurantId}")
-    public void deleteRestaurant(@PathVariable("restaurantId") int restaurantId) {
-        restaurantService.deleteRestaurant(restaurantId);
+    public void deleteRestaurant(@PathVariable("restaurantId") int restaurantId, Principal principal) {
+        restaurantService.deleteRestaurant(restaurantId, principal);
     }
 }
