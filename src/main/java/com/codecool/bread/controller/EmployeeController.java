@@ -38,11 +38,7 @@ public class EmployeeController extends AbstractController {
     public Employee getByIdAndRestaurantId(@PathVariable("restaurantId") int restaurantId,
                                            @PathVariable("employeeId") int employeeId,
                                            Principal principal) {
-        User user = userService.get(principal.getName());
-        if(user.getAuthorities().contains("ROLE_ADMIN")) {
-            return employeeService.getByIdAndRestaurantIdAndOwnerId(employeeId, restaurantId, getLoggedInOwnerId(principal));
-        }
-        return employeeService.getByIdAndRestaurantIdforManager(employeeId, restaurantId, principal);
+        return employeeService.getByIdAndRestaurantId(employeeId, restaurantId, principal);
     }
 
     @PostMapping(path = "")
@@ -62,8 +58,8 @@ public class EmployeeController extends AbstractController {
 
     @DeleteMapping("/{employeeId}")
     public void delete(@PathVariable("restaurantId") int restaurantId,
-                       @PathVariable("employeeId") int employeeId) {
-        employeeService.delete(restaurantId, employeeId);
+                       @PathVariable("employeeId") int employeeId, Principal principal) {
+        employeeService.delete(restaurantId, employeeId, principal);
     }
 
     @PutMapping("/{employeeId}")
