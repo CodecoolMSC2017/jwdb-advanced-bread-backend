@@ -116,7 +116,6 @@ public class RestaurantServiceImpl extends AbstractService implements Restaurant
         }
         if(isManager(principal, restaurantId)) {
             restaurant = restaurantRepository.findById(restaurantId).get();
-            System.out.println(restaurant.getName());
         }
         return restaurant;
     }
