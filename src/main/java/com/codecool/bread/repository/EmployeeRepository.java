@@ -21,5 +21,5 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 
     Optional<Employee> findByIdAndRestaurantIdAndUserNull(Integer employeeId, Integer restaurantId);
 
-    Set<Employee> findByRestaurantId(int restaurantId);
+    Set<Employee> findByRestaurantIdAndEnabledTrue(int restaurantId);
 }
