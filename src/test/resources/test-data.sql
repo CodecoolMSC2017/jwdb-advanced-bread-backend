@@ -31,7 +31,8 @@ INSERT INTO address(street, city, postal_code, state, country) VALUES
     ('120 Hanover Sq.', 'Strasbourg', '67000', '', 'France'), --8
     ('Berkeley Gardens 12  Brewery', 'London', 'WX1 6LT', '', 'UK'), -- 9
     ('Berliner Platz 43', 'Berlin', '80805', '', 'Germany'), --10
-    ('Barna Street 2','Debrecen', '4025', '','Hungary'); --11
+    ('Barna Street 2','Debrecen', '4025', '','Hungary'), --11
+    ('Nagysándor József utca','Debrecen', '4031', '','Hungary'); --12
 
 INSERT INTO owner(user_id, first_name, last_name, address_id ,email) VALUES
 	(1, 'Robert', 'King', 1,'robert.king@gmail.com'), --1
@@ -50,7 +51,8 @@ INSERT INTO employee(user_id, email, first_name, last_name, title,address_id, re
 	(8, 'thomas.hardy@gmail.com', 'Thomas', 'Hardy', 'BARTENDER',10, 1),--4
 	(7, 'antonio.moreno@gmail.com', 'Antonio', 'Moreno', 'BARTENDER',9, 1), --5
     (5, 'stan.super@gmail.com', 'Stan', 'Super', 'WAITER',7, 2),--6
-    (9, 'murvai.gergely@gmail.com', 'Murvai', 'Gergely', 'MANAGER', 11, 1); --7
+    (9, 'murvai.gergely@gmail.com', 'Murvai', 'Gergely', 'MANAGER', 11, 1), --7
+    (null,'notregistered@gmail.com', 'Lakatos', 'Pista', 'CHEF', 12, 1);  --8
 
 INSERT INTO restaurant_table(name, active, restaurant_id, employee_id) VALUES
 	('Table ONE', TRUE, 1, 1), --1
