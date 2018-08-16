@@ -109,13 +109,16 @@ public class EmployeeServiceImpl extends AbstractService implements EmployeeServ
         }
     }
 
-    public Employee getByIdAndRestaurantIdforManager(int employeeId, int restaurantId, Principal principal) throws RestaurantAccessDeniedException {
-        Employee manager = employeeService.getByUsername(principal.getName());
-        int managerRestaurantId = manager.getRestaurant().getId();
-        if (!manager.getRole().equals(Role.MANAGER) || managerRestaurantId != restaurantId) {
+    public Employee getByIdAndRestaurantId(int employeeId, int restaurantId, Principal principal) throws RestaurantAccessDeniedException {
+        if(!isOwner(principal, restaurantId) && !isManager(principal, restaurantId)) {
             throw new RestaurantAccessDeniedException();
         }
-        return employeeRepository.findByIdAndRestaurantId(employeeId, restaurantId);
+
+        Employee employee = employeeRepository.findByIdAndRestaurantId(employeeId, restaurantId);
+        if(employee == null) {
+            throw new EmployeeNotFoundException();
+        }
+        return employee;
     }
 
     @Override
@@ -133,26 +136,29 @@ public class EmployeeServiceImpl extends AbstractService implements EmployeeServ
             result = employeeRepository.saveAndFlush(employee);
         }
         return result;
-
     }
 
     @Override
-    public void delete(int restaurantId, int employeeId) throws RestaurantAccessDeniedException, EmployeeNotFoundException {
-        Optional<User> user = userService.get(employeeRepository.findByIdAndRestaurantId(employeeId, restaurantId).getUser().getId());
-        if (!user.isPresent()) {
-            throw new EmployeeNotFoundException();
-        } else {
-            userService.get(user.get().getUsername()).setEnabled(false);
-            Employee employee = getById(employeeId);
-            employee.setEnabled(false);
-            employeeRepository.saveAndFlush(employee);
-            userRepository.saveAndFlush(user.get());
+    public void delete(int restaurantId, int employeeId, Principal principal) throws RestaurantAccessDeniedException, EmployeeNotFoundException {
+        if(!isOwner(principal, restaurantId)
+            && !isManager(principal, restaurantId)) {
+            throw new RestaurantAccessDeniedException();
         }
+        Employee employee = employeeRepository.findByIdAndRestaurantId(employeeId, restaurantId);
+        if (employee == null) {
+            throw new EmployeeNotFoundException();
+        }
+        if(employee.getUser()!=null) {
+            employee.getUser().setEnabled(false);
+        }
+        employee.setEnabled(false);
+        employeeRepository.saveAndFlush(employee);
     }
 
     @Override
     public Employee editChanges(Employee employee, int restaurantId, Principal principal) throws EmployeeNotFoundException, RestaurantAccessDeniedException {
         if(isOwner(principal, restaurantId) || isManager(principal, restaurantId)) {
+            employee.setRestaurant(restaurantService.getById(restaurantId,principal));
             return employeeRepository.saveAndFlush(employee);
         }  else {
             throw new RestaurantAccessDeniedException();

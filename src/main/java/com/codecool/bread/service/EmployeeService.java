@@ -28,11 +28,11 @@ public interface EmployeeService {
 
     Employee getByIdAndRestaurantIdAndOwnerId(int employeeId, int restaurantId, int ownerId) throws RestaurantAccessDeniedException, EmployeeNotFoundException;
 
-    Employee getByIdAndRestaurantIdforManager(int employeeId, int restaurantId, Principal principal) throws RestaurantAccessDeniedException;
+    public Employee getByIdAndRestaurantId(int employeeId, int restaurantId, Principal principal) throws RestaurantAccessDeniedException;
 
     Employee add(Employee employee, int restaurantId, Principal principal);
 
-    void delete(int restaurantId, int employeeId) throws RestaurantAccessDeniedException, EmployeeNotFoundException;
+    void delete(int restaurantId, int employeeId, Principal principal) throws RestaurantAccessDeniedException, EmployeeNotFoundException;
 
     Employee editChanges(Employee employee, int restaurantId, Principal principal) throws EmployeeNotFoundException, RestaurantAccessDeniedException;
 
