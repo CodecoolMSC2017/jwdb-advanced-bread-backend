@@ -208,7 +208,7 @@ public class EmployeeServiceImpl extends AbstractService implements EmployeeServ
         } else if (isManager(principal, restaurantId)) {
             Employee loggedIn = employeeService.getByUsername(principal.getName());
             if (loggedIn.getRole().equals(Role.MANAGER)) {
-                return employeeRepository.findByRestaurantIdAndEnabledTrue(restaurantId);
+                return employeeRepository.findByRestaurantIdAndUserIdNotEnabledTrue(restaurantId,user.getId());
             }
         } else {
             throw new RestaurantAccessDeniedException();
