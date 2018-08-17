@@ -20,6 +20,6 @@ public interface CustomerOrderRepository extends JpaRepository<CustomerOrder, In
 
     List<CustomerOrder> findByInvoiceId(int invoiceId);
 
-    @Query(value = "SELECT * FROM customer_order WHERE order_item_id = 3 and invoice_id IS null", nativeQuery = true)
+    @Query(value = "SELECT * FROM customer_order WHERE order_item_id = ?1 and invoice_id IS null", nativeQuery = true)
     CustomerOrder findByOrderItem(Integer orderItemId);
 }

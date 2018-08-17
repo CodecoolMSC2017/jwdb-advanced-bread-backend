@@ -13,9 +13,10 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Integer> {
 
     Optional<OrderItem> findByIdAndEnabledTrue(Integer orderItemId);
 
-    @Query(value = "Select order_item.id AS id, item_id, quantity, comment, ready,order_item.enabled from item\n" +
-            "inner JOIN order_item\n" +
-            "on item.id = order_item.item_id\n" +
-            "where ready = false and restaurant_id = ?1 And category = ?2",nativeQuery = true)
+    @Query(value = "Select order_item.id AS id, item_id, quantity, comment, ready,order_item.enabled    from order_item\n" +
+            "inner JOIN customer_order\n" +
+            "on order_item.id = customer_order.order_item_id\n" +
+            "inner join item on order_item.item_id = item.id\n" +
+            "where item.restaurant_id = 1 AND category = 'FOOD' AND invoice_id is null AND ready IS FALSE",nativeQuery = true)
     List<OrderItem> findByItemTypeAndRestaurantId(Integer restaurantId, String category);
 }
