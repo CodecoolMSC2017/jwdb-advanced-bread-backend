@@ -12,17 +12,19 @@ import java.util.Set;
 
 public interface RestaurantService {
 
-    Restaurant getById(int restaurantId, Principal principal) throws RestaurantAccessDeniedException, RestaurantNotFoundException;
+    Restaurant getById(int restaurantId, int ownerId) throws RestaurantAccessDeniedException, RestaurantNotFoundException;
 
     Restaurant getById(int restaurantId);
 
     Set<Restaurant> getAllByOwnerId(int ownerId);
 
-    Set<Restaurant> getAllEnableByOwnerId(Principal principal) throws RestaurantNotFoundException;
+    Set<Restaurant> getAllEnableByEmployeeId(int employeeId) throws RestaurantNotFoundException;
+
+    Restaurant getByIdAndAuthorizedEmployee(int restaurantId, int employeeId) throws RestaurantNotFoundException, RestaurantAccessDeniedException;
 
     Restaurant add(Restaurant restaurant, int ownerId);
 
-    Restaurant edit(Restaurant restaurant, Principal principal) throws RestaurantNotFoundException, RestaurantAccessDeniedException;
+    Restaurant edit(Restaurant restaurant, int ownerId, int restaurantId) throws RestaurantNotFoundException;
 
-    void deleteRestaurant(int restaurantId, Principal principal) throws RestaurantNotFoundException, RestaurantAccessDeniedException;
+    void deleteRestaurant(int restaurantId) throws RestaurantNotFoundException;
 }

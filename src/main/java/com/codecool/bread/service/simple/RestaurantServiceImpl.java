@@ -11,14 +11,12 @@ import com.codecool.bread.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.security.Principal;
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @Service("restaurantService")
 public class RestaurantServiceImpl extends AbstractService implements RestaurantService {
-
-    @Autowired
-    private OwnerService ownerService;
 
     @Autowired
     private TableService tableService;
@@ -30,12 +28,12 @@ public class RestaurantServiceImpl extends AbstractService implements Restaurant
     private SeatService seatService;
 
     @Override
-    public Restaurant getById(int restaurantId, Principal principal) throws RestaurantAccessDeniedException, RestaurantNotFoundException {
-        Restaurant restaurant = returnRestaurant(principal, restaurantId);
-        if(restaurant == null || restaurant.isEnabled() == false) {
+    public Restaurant getById(int restaurantId, int ownerId) throws RestaurantAccessDeniedException, RestaurantNotFoundException {
+        Optional<Restaurant> restaurant =restaurantRepository.findById(restaurantId);
+        if(!restaurant.isPresent() || !restaurant.get().isEnabled()) {
             throw new RestaurantNotFoundException();
         }
-        return restaurant;
+        return restaurant.get();
     }
 
     public Restaurant getById(int id) {
@@ -55,8 +53,8 @@ public class RestaurantServiceImpl extends AbstractService implements Restaurant
         }
     }
 
-    public Set<Restaurant> getAllEnableByOwnerId(Principal principal) throws RestaurantNotFoundException {
-        Set<Restaurant> enableRestaurants = getAllEnabledRestaurants(principal);
+    public Set<Restaurant> getAllEnableByEmployeeId(int employeeId) throws RestaurantNotFoundException {
+        Set<Restaurant> enableRestaurants = restaurantRepository.findByEmployeesIdAndEnabledTrue(employeeId);
         if (enableRestaurants.isEmpty()) {
             throw new RestaurantNotFoundException();
         } else {
@@ -64,47 +62,55 @@ public class RestaurantServiceImpl extends AbstractService implements Restaurant
         }
     }
 
+    /**
+     *
+     * @param restaurantId
+     * @param employeeId
+     * @return Restaurant
+     * @throws RestaurantNotFoundException
+     * @throws RestaurantAccessDeniedException
+     * Returns a Restaurant object if the given employeeId belongs to it
+     */
     @Override
-    public Restaurant add(Restaurant restaurant, int ownerId) {
-        addressRepository.saveAndFlush(restaurant.getAddress());
-        restaurant.setOwner(ownerService.getOwnerById(ownerId));
-        ownerService.getOwnerById(ownerId).getRestaurants().add(restaurant);
-        return restaurantRepository.saveAndFlush(restaurant);
-    }
-
-    @Override
-    public Restaurant edit(Restaurant restaurant, Principal principal) throws RestaurantNotFoundException, RestaurantAccessDeniedException {
-        int restaurantId = restaurant.getId();
-        Owner owner = null;
-
-        if(isOwner(principal)) {
-            owner = ownerService.getOwnerByUsername(principal.getName());
-        } else if(isManager(principal,restaurantId)) {
-            owner = ownerService.getOwnerByRestaurantId(restaurantId);
+    public Restaurant getByIdAndAuthorizedEmployee(int restaurantId, int employeeId) throws RestaurantNotFoundException, RestaurantAccessDeniedException {
+        Restaurant restaurant = getById(restaurantId);
+        Employee employee = employeeService.getById(employeeId);
+        if (restaurant.getOwner().equals(employee) || (restaurant.getEmployees().contains(employee) && employee.getRole().equals(Role.MANAGER))) {
+            return restaurant;
         } else {
             throw new RestaurantAccessDeniedException();
         }
-        restaurant.setOwner(owner);
+    }
+
+    @Override
+    public Restaurant add(Restaurant restaurant, int ownerId) {
+        addressRepository.saveAndFlush(restaurant.getAddress());
+        restaurant.setOwner(employeeService.getOwnerById(ownerId));
         return restaurantRepository.saveAndFlush(restaurant);
     }
 
     @Override
-    public void deleteRestaurant(int restaurantId, Principal principal) throws RestaurantNotFoundException, RestaurantAccessDeniedException {
-        if(!isOwner(principal, restaurantId)) {
-            throw new RestaurantAccessDeniedException();
-        }
-        Optional<Restaurant> restaurant = restaurantRepository.findById(restaurantId);
-        if (!restaurant.isPresent()) {
+    public Restaurant edit(Restaurant restaurant, int employeeId, int restaurantId) throws RestaurantNotFoundException {
+        if(getById(restaurant.getId()).getOwner().equals(employeeService.getById(employeeId)) && restaurant.getId() == restaurantId) {
+            restaurant.setOwner(employeeService.getOwnerById(employeeId));
+            return restaurantRepository.saveAndFlush(restaurant);
+        } else {
             throw new RestaurantNotFoundException();
         }
-        employeeService.setAllEmployeeRestaurantNull(restaurant.get().getOwner().getId());
+
+    }
+
+    @Override
+    public void deleteRestaurant(int restaurantId) throws RestaurantNotFoundException {
+        Restaurant restaurant = getById(restaurantId);
+        employeeService.setAllEmployeeRestaurantNull(restaurant.getOwner().getId());
         tableService.deleteAllTableByRestaurantId(restaurantId);
-        Set<Table> tables = restaurant.get().getTables();
+        Set<Table> tables = restaurant.getTables();
         for(Table table : tables) {
             seatService.deleteAllSeatsByTableId(table);
         }
-        restaurant.get().setEnabled(false);
-        restaurantRepository.saveAndFlush(restaurant.get());
+        restaurant.setEnabled(false);
+        restaurantRepository.saveAndFlush(restaurant);
     }
 
     private Restaurant returnRestaurant(Principal principal, int restaurantId) throws RestaurantAccessDeniedException {

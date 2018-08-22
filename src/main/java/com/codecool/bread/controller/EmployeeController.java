@@ -2,7 +2,6 @@ package com.codecool.bread.controller;
 
 import com.codecool.bread.exception.EmployeeNotFoundException;
 import com.codecool.bread.model.Employee;
-import com.codecool.bread.model.User;
 import com.codecool.bread.repository.EmployeeRepository;
 import com.codecool.bread.service.EmailService;
 import com.codecool.bread.service.EmployeeService;
@@ -31,21 +30,21 @@ public class EmployeeController extends AbstractController {
     @GetMapping("")
     public Set<Employee> getEmployeesByRestaurantId(@PathVariable("restaurantId") int restaurantId,
                                                     Principal principal) {
-        return employeeService.getAllByRestaurantId(principal, restaurantId);
+        return employeeService.getAllByRestaurantId(getLoggedInEmployeeId(principal), restaurantId);
     }
 
     @GetMapping("/{employeeId}")
     public Employee getByIdAndRestaurantId(@PathVariable("restaurantId") int restaurantId,
                                            @PathVariable("employeeId") int employeeId,
                                            Principal principal) {
-        return employeeService.getByIdAndRestaurantId(employeeId, restaurantId, principal);
+        return employeeService.getByIdAndRestaurantIdAndOwnerId(employeeId, restaurantId, getLoggedInOwnerId(principal));
     }
 
     @PostMapping(path = "")
     public Employee add(@RequestBody Employee employee,
                         @PathVariable("restaurantId") int restaurantId,
                         Principal principal) {
-        Employee newEmployee = employeeService.add(employee, restaurantId, principal);
+        Employee newEmployee = employeeService.add(employee, restaurantId, getLoggedInOwnerId(principal));
         try {
             emailService.sendSimpleMessage(emailService.createEmail(newEmployee));
         } catch (SendFailedException e) {
@@ -58,15 +57,20 @@ public class EmployeeController extends AbstractController {
 
     @DeleteMapping("/{employeeId}")
     public void delete(@PathVariable("restaurantId") int restaurantId,
-                       @PathVariable("employeeId") int employeeId, Principal principal) {
-        employeeService.delete(restaurantId, employeeId, principal);
+                       @PathVariable("employeeId") int employeeId) {
+        employeeService.delete(restaurantId, employeeId);
     }
 
     @PutMapping("/{employeeId}")
     public Employee editDetails(@RequestBody Employee employee,
                                 @PathVariable("restaurantId") int restaurantId,
                                 Principal principal) {
-            return employeeService.editChanges(employee, restaurantId, principal);
+        if (employeeService.getByIdAndRestaurantIdAndOwnerId(employee.getId(), restaurantId,
+                getLoggedInOwnerId(principal)) != null) {
+            return employeeService.editChanges(employee, restaurantId, getLoggedInOwnerId(principal));
+        } else {
+            throw new EmployeeNotFoundException();
+        }
     }
 
     @PutMapping("/{employeeId}/addusername")

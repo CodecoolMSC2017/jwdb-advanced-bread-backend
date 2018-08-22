@@ -4,12 +4,8 @@ import com.codecool.bread.exception.PasswordNotMatchException;
 import com.codecool.bread.exception.UserNotFoundException;
 import com.codecool.bread.exception.UsernameTakenException;
 import com.codecool.bread.model.Employee;
-import com.codecool.bread.model.Owner;
 import com.codecool.bread.model.User;
 import com.codecool.bread.model.dto.ChangePasswordDto;
-import com.codecool.bread.repository.EmployeeRepository;
-import com.codecool.bread.repository.OwnerRepository;
-import com.codecool.bread.repository.UserRepository;
 import com.codecool.bread.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -17,7 +13,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -52,7 +47,7 @@ public class UserServiceImpl extends AbstractService implements UserService {
 
     public User getUserByEmail(String email) throws UserNotFoundException {
         Optional<Employee> employeeOptional = employeeRepository.findByEmail(email);
-        Optional<Owner> ownerOptional = ownerRepository.findByEmail(email);
+        Optional<Employee> ownerOptional = employeeRepository.findByEmail(email);
 
         if(employeeOptional.isPresent()) {
             return employeeOptional.get().getUser();

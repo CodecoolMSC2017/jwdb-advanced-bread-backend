@@ -27,7 +27,7 @@ public class Restaurant extends POSObject {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "owner_id", nullable = false)
     @JsonIgnore
-    private Owner owner;
+    private Employee owner;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
     @JsonIgnore
@@ -73,12 +73,12 @@ public class Restaurant extends POSObject {
         this.phone = phone;
     }
 
-    public Owner getOwner() {
+    public Employee getOwner() {
         return owner;
     }
 
-    public void setOwner(Owner owner) {
-        this.owner = owner;
+    public void setOwner(Employee employee) {
+        this.owner = employee;
     }
 
     public Set<com.codecool.bread.model.Table> getTables() {

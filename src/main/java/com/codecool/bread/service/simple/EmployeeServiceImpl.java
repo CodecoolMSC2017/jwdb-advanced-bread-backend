@@ -1,19 +1,16 @@
 package com.codecool.bread.service.simple;
 
 import com.codecool.bread.exception.*;
-import com.codecool.bread.model.*;
-import com.codecool.bread.repository.EmployeeRepository;
-import com.codecool.bread.repository.UserRepository;
+import com.codecool.bread.model.Employee;
+import com.codecool.bread.model.Restaurant;
+import com.codecool.bread.model.Role;
+import com.codecool.bread.model.User;
 import com.codecool.bread.service.EmployeeService;
-import com.codecool.bread.service.OwnerService;
 import com.codecool.bread.service.RestaurantService;
 import com.codecool.bread.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import java.security.Principal;
-import java.sql.SQLException;
 
 import java.util.*;
 
@@ -28,21 +25,16 @@ public class EmployeeServiceImpl extends AbstractService implements EmployeeServ
     private UserService userService;
 
     @Autowired
-    private OwnerService ownerService;
-
-    @Autowired
     private RestaurantService restaurantService;
 
-    @Autowired
-    private EmployeeService employeeService;
-
     @Override
-    public Set<Employee> getAllByRestaurantId(Principal principal, int restaurantId) throws NoEmployeeForRestaurantException {
-        Set<Employee> employees = returnEmployeeSet(principal, restaurantId);
+    public Set<Employee> getAllByRestaurantId(int employeeId, int restaurantId) throws NoEmployeeForRestaurantException {
 
-        if (employees == null || employees.isEmpty()) {
+        Set<Employee> employees = employeeRepository.findByEnabledTrueAndRestaurantIdAndRestaurantOwnerId(restaurantId, employeeId);
+        if (employees.isEmpty()) {
             throw new NoEmployeeForRestaurantException();
         } else {
+            employees.remove(getOwnerById(employeeId));
             return employees;
         }
     }
@@ -65,7 +57,7 @@ public class EmployeeServiceImpl extends AbstractService implements EmployeeServ
     }
 
     @Override
-    public Employee getById(int employeeId) throws EmployeeNotFoundException {
+    public  Employee getById(int employeeId) throws EmployeeNotFoundException {
         Optional<Employee> employee = employeeRepository.findById(employeeId);
         if (employee.isPresent()) {
             return employee.get();
@@ -75,9 +67,19 @@ public class EmployeeServiceImpl extends AbstractService implements EmployeeServ
     }
 
     @Override
+    public Employee getOwnerById(int ownerId) throws OwnerNotFoundException {
+        Optional<Employee> result = employeeRepository.findById(ownerId);
+        if (result.isPresent() && result.get().getRole().equals(Role.OWNER)) {
+            return result.get();
+        } else {
+            throw new OwnerNotFoundException();
+        }
+    }
+
+    @Override
     public Employee getByIdAndUserIdNull(int employeeId, int restaurantId) throws EmployeeNotFoundException {
-        Optional<Employee> employee = employeeRepository.findByIdAndRestaurantIdAndUserNull(employeeId, restaurantId);
-        if (!employee.isPresent()) {
+        Optional<Employee> employee =  employeeRepository.findByIdAndRestaurantIdAndUserNull(employeeId, restaurantId);
+        if(!employee.isPresent()) {
             throw new EmployeeNotFoundException();
         }
         return employee.get();
@@ -109,61 +111,30 @@ public class EmployeeServiceImpl extends AbstractService implements EmployeeServ
         }
     }
 
-    public Employee getByIdAndRestaurantId(int employeeId, int restaurantId, Principal principal) throws RestaurantAccessDeniedException {
-        if(!isOwner(principal, restaurantId) && !isManager(principal, restaurantId)) {
-            throw new RestaurantAccessDeniedException();
-        }
+    @Override
+    public Employee add(Employee employee, int restaurantId, int ownerId) {
+        employee.setRestaurant(restaurantService.getById(restaurantId, ownerId));
 
-        Employee employee = employeeRepository.findByIdAndRestaurantId(employeeId, restaurantId);
-        if(employee == null) {
+        return employeeRepository.saveAndFlush(employee);
+    }
+
+    @Override
+    public void delete(int restaurantId, int employeeId) throws RestaurantAccessDeniedException, EmployeeNotFoundException {
+        Optional<User> user = userService.get(employeeRepository.findByIdAndRestaurantId(employeeId, restaurantId).getUser().getId());
+        if (!user.isPresent()) {
             throw new EmployeeNotFoundException();
+        } else {
+            userService.get(user.get().getUsername()).setEnabled(false);
+            Employee employee = getById(employeeId);
+            employee.setEnabled(false);
+            employeeRepository.saveAndFlush(employee);
+            userRepository.saveAndFlush(user.get());
         }
-        return employee;
     }
 
     @Override
-    public Employee add(Employee employee, int restaurantId, Principal principal) {
-        Employee result = null;
-
-        if (isOwner(principal)) {
-            int ownerId = ownerService.getOwnerByUsername(principal.getName()).getId();
-            employee.setRestaurant(restaurantService.getById(restaurantId, principal));
-            result = employeeRepository.saveAndFlush(employee);
-        }
-
-        if (isManager(principal, restaurantId)) {
-            employee.setRestaurant(restaurantService.getById(restaurantId));
-            result = employeeRepository.saveAndFlush(employee);
-        }
-        return result;
-    }
-
-    @Override
-    public void delete(int restaurantId, int employeeId, Principal principal) throws RestaurantAccessDeniedException, EmployeeNotFoundException {
-        if(!isOwner(principal, restaurantId)
-            && !isManager(principal, restaurantId)) {
-            throw new RestaurantAccessDeniedException();
-        }
-        Employee employee = employeeRepository.findByIdAndRestaurantId(employeeId, restaurantId);
-        if (employee == null) {
-            throw new EmployeeNotFoundException();
-        }
-        if(employee.getUser()!=null) {
-            employee.getUser().setEnabled(false);
-        }
-        employee.setEnabled(false);
-        employeeRepository.saveAndFlush(employee);
-    }
-
-    @Override
-    public Employee editChanges(Employee employee, int restaurantId, Principal principal) throws EmployeeNotFoundException, RestaurantAccessDeniedException {
-        if(isOwner(principal, restaurantId) || isManager(principal, restaurantId)) {
-            employee.setRestaurant(restaurantService.getById(restaurantId,principal));
-            return employeeRepository.saveAndFlush(employee);
-        }  else {
-            throw new RestaurantAccessDeniedException();
-        }
-
+    public Employee editChanges(Employee employee, int restaurantId, int ownerId) throws EmployeeNotFoundException{
+        return employeeRepository.saveAndFlush(employee);
     }
 
     @Override
@@ -192,27 +163,11 @@ public class EmployeeServiceImpl extends AbstractService implements EmployeeServ
 
     @Override
     public void setAllEmployeeRestaurantNull(int ownerId) {
-        Owner owner = ownerService.getOwnerById(ownerId);
+        Employee owner = getById(ownerId);
         List<Employee> employees = getAllEmployees(owner.getId());
-        for (Employee employee : employees) {
+        for(Employee employee : employees) {
             employee.setRestaurant(null);
         }
         employeeRepository.saveAll(employees);
-    }
-
-    private Set<Employee> returnEmployeeSet(Principal principal, int restaurantId) throws RestaurantAccessDeniedException {
-        User user = userService.get(principal.getName());
-        if (isOwner(principal)) {
-            int ownerId = ownerService.getOwnerByUsername(principal.getName()).getId();
-            return employeeRepository.findByEnabledTrueAndRestaurantIdAndRestaurantOwnerId(restaurantId, ownerId);
-        } else if (isManager(principal, restaurantId)) {
-            Employee loggedIn = employeeService.getByUsername(principal.getName());
-            if (loggedIn.getRole().equals(Role.MANAGER)) {
-                return employeeRepository.findByRestaurantIdAndUserIdNotEnabledTrue(restaurantId,user.getId());
-            }
-        } else {
-            throw new RestaurantAccessDeniedException();
-        }
-        return null;
     }
 }

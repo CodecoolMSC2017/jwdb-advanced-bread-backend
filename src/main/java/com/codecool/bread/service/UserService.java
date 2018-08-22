@@ -2,11 +2,9 @@ package com.codecool.bread.service;
 
 import com.codecool.bread.exception.PasswordNotMatchException;
 import com.codecool.bread.exception.UserNotFoundException;
-import com.codecool.bread.model.Owner;
 import com.codecool.bread.model.User;
 import com.codecool.bread.model.dto.ChangePasswordDto;
 
-import java.util.Map;
 import java.util.Optional;
 
 public interface UserService {

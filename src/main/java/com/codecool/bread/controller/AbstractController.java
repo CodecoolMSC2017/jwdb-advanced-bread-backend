@@ -6,13 +6,9 @@ import com.codecool.bread.repository.EmployeeRepository;
 import com.codecool.bread.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.nio.file.attribute.UserPrincipalLookupService;
 import java.security.Principal;
 
 public abstract class AbstractController {
-
-    @Autowired
-    OwnerService ownerService;
 
     @Autowired
     EmailService emailService;
@@ -52,7 +48,7 @@ public abstract class AbstractController {
     }
 
     int getLoggedInOwnerId(Principal principal) {
-        return ownerService.getOwnerById(ownerService.getOwnerByUsername(principal.getName()).getId()).getId();
+        return employeeService.getOwnerById(employeeService.getByUsername(principal.getName()).getId()).getId();
     }
 
     boolean checkIdMatch(POSObject posObject, int id) {
