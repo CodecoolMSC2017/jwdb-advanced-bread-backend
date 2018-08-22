@@ -4,10 +4,8 @@ import com.codecool.bread.exception.*;
 import com.codecool.bread.model.Category;
 import com.codecool.bread.model.Item;
 import com.codecool.bread.model.Restaurant;
-import com.codecool.bread.repository.ItemRepository;
 import com.codecool.bread.service.IngredientService;
 import com.codecool.bread.service.ItemService;
-import com.codecool.bread.service.OwnerService;
 import com.codecool.bread.service.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,10 +20,6 @@ public class ItemServiceImpl extends AbstractService implements ItemService {
 
     @Autowired
     private IngredientService ingredientService;
-
-    @Autowired
-    private OwnerService ownerService;
-
 
     public List<Item> getItemsByRestaurantId(Integer restaurantId) throws NoItemsFoundException {
         List<Item> items =itemRepository.findByRestaurantId(restaurantId);

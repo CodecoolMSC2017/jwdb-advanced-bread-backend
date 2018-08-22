@@ -8,7 +8,7 @@ DROP TABLE IF EXISTS order_item;
 DROP TABLE IF EXISTS item;
 DROP TABLE IF EXISTS ingredient;
 DROP TABLE IF EXISTS invoice;
-DROP TABLE IF EXISTS employee;
+DROP TABLE IF EXISTS employee CASCADE;
 DROP TABLE IF EXISTS restaurant;
 DROP TABLE IF EXISTS owner;
 DROP TABLE IF EXISTS address;
@@ -40,32 +40,14 @@ CREATE TABLE address (
 	enabled BOOLEAN DEFAULT TRUE
 );
 
-CREATE TABLE owner (
-	id SERIAL PRIMARY KEY,
-	user_id INTEGER NOT NULL,
-	first_name TEXT NOT NULL,
-	last_name TEXT NOT NULL,
-	address_id INTEGER,
-	email TEXT NOT NULL,
-	phone TEXT,
-	enabled BOOLEAN DEFAULT TRUE,
-	CONSTRAINT email_not_empty CHECK (email <> ''),
-	CONSTRAINT first_name_not_empty CHECK (first_name <> ''),
-	CONSTRAINT last_name_not_empty CHECK (last_name <> ''),
-	FOREIGN KEY (user_id) REFERENCES users(id),
-	FOREIGN KEY (address_id) REFERENCES address(id)
-);
-
 CREATE TABLE restaurant (
 	id SERIAL PRIMARY KEY,
 	name TEXT NOT NULL,
 	address_id INTEGER NOT NULL,
 	email TEXT NOT NULL,
 	phone TEXT NOT NULL,
-	owner_id INTEGER NOT NULL,
 	enabled BOOLEAN default true,
 	CONSTRAINT email_not_empty CHECK (email <> ''),
-	FOREIGN KEY (owner_id) REFERENCES owner(id),
 	FOREIGN KEY (address_id) REFERENCES address(id)
 );
 
@@ -77,6 +59,7 @@ CREATE TABLE employee (
 	last_name TEXT NOT NULL,
 	title TEXT NOT NULL,
 	address_id INTEGER NOT NULL,
+	phone TEXT,
 	restaurant_id INTEGER,
 	hour_rate INTEGER DEFAULT NULL,
 	enabled BOOLEAN DEFAULT TRUE,
@@ -129,6 +112,7 @@ CREATE TABLE restaurant_table (
 	id SERIAL PRIMARY KEY,
 	name TEXT NOT NULL,
 	active BOOLEAN DEFAULT FALSE,
+	arrival_time TIMESTAMP,
 	restaurant_id INTEGER NOT NULL,
 	employee_id INTEGER DEFAULT NULL,
 	enabled BOOLEAN DEFAULT TRUE,
@@ -149,7 +133,7 @@ CREATE TABLE invoice (
 	total NUMERIC NOT NULL,
 	paid BOOLEAN DEFAULT FALSE,
 	enabled BOOLEAN DEFAULT TRUE,
-	date TIMESTAMP
+	date TIMESTAMP DEFAULT current_date
 );
 
 CREATE TABLE order_item (
@@ -158,7 +142,6 @@ CREATE TABLE order_item (
 	quantity INTEGER NOT NULL,
 	comment TEXT,
 	enabled BOOLEAN DEFAULT TRUE,
-	ready BOOLEAN DEFAULT FALSE,
 	FOREIGN KEY (item_id) REFERENCES item(id)
 );
 
@@ -175,3 +158,9 @@ CREATE TABLE customer_order (
 	FOREIGN KEY (order_item_id) REFERENCES order_item(id),
 	FOREIGN KEY (invoice_id) REFERENCES invoice(id)
 );
+
+ALTER TABLE restaurant
+ADD COLUMN owner_id INTEGER,
+ADD CONSTRAINT owner_id FOREIGN KEY (owner_id) REFERENCES employee(id);
+
+

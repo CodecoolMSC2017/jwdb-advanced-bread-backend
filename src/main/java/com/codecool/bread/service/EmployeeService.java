@@ -2,6 +2,7 @@ package com.codecool.bread.service;
 
 import com.codecool.bread.exception.EmployeeNotFoundException;
 import com.codecool.bread.exception.NoEmployeeForRestaurantException;
+import com.codecool.bread.exception.OwnerNotFoundException;
 import com.codecool.bread.exception.RestaurantAccessDeniedException;
 import com.codecool.bread.model.Employee;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -13,13 +14,15 @@ import java.util.Set;
 
 public interface EmployeeService {
 
-    Set<Employee> getAllByRestaurantId(int ownerId, int restaurantId) throws NoEmployeeForRestaurantException;
+    Set<Employee> getAllByRestaurantId(int employeeId, int restaurantId) throws NoEmployeeForRestaurantException;
 
     List<Employee> getAllEmployees(int ownerId);
 
     Employee getById(int employeeId, int restaurantId) throws RestaurantAccessDeniedException, EmployeeNotFoundException;
 
     Employee getById(int employeeId) throws EmployeeNotFoundException;
+
+    Employee getOwnerById( int ownerId) throws OwnerNotFoundException;
 
     Employee getByIdAndUserIdNull(int employeeId, int restaurantId) throws EmployeeNotFoundException;
 

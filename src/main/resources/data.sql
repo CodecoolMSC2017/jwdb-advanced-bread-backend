@@ -7,7 +7,7 @@ INSERT INTO users(username, password, enabled) VALUES
     ('anders', '$2a$04$mrVOIvQZKlIPW0BYXwtaWuV1sZDsoSLSixtxYUhRZh3jpjfKDf736', true), --6
     ('moreno', '$2a$04$mrVOIvQZKlIPW0BYXwtaWuV1sZDsoSLSixtxYUhRZh3jpjfKDf736', true), --7
     ('hardy', '$2a$04$mrVOIvQZKlIPW0BYXwtaWuV1sZDsoSLSixtxYUhRZh3jpjfKDf736', true), --8
-    ('murvai', '$2a$04$mrVOIvQZKlIPW0BYXwtaWuV1sZDsoSLSixtxYUhRZh3jpjfKDf736', true);  --9
+    ('murvai', '$2a$04$mrVOIvQZKlIPW0BYXwtaWuV1sZDsoSLSixtxYUhRZh3jpjfKDf736', true); --9
 
 INSERT INTO authorities(username, authority) VALUES
 	('robking', 'ROLE_ADMIN'),
@@ -18,7 +18,7 @@ INSERT INTO authorities(username, authority) VALUES
 	('moreno', 'ROLE_USER'),
 	('anders', 'ROLE_USER'),
 	('hardy', 'ROLE_USER'),
-	('murvai', 'ROLE_USER');
+	('murvai', 'ROLE_MANAGER');
 
 INSERT INTO address(street, city, postal_code, state, country) VALUES
 	('4110 Old Redmond Rd.', 'Redmond', '98502', 'Washington', 'USA'), --1
@@ -33,29 +33,33 @@ INSERT INTO address(street, city, postal_code, state, country) VALUES
     ('Berliner Platz 43', 'Berlin', '80805', '', 'Germany'), --10
     ('Barna Street 2','Debrecen', '4025', '','Hungary'); --11
 
-INSERT INTO owner(user_id, first_name, last_name, address_id ,email) VALUES
-	(1, 'Robert', 'King', 1,'robert.king@gmail.com'), --1
-	(2, 'Nancy', 'Davolio', 6, 'nancy.davolio@gmail.com'); --2
+INSERT INTO restaurant(name, email, address_id, phone) VALUES
+	('King Bistro', 'info@kingbistro.com', 1, '5558121'), --1
+	('Restaurant Rex', 'contact@restaurantrex.com', 2, '5553119'), --2
+	('Davolio Cafe', 'contact@davoliocafe.com', 7, '5553119'); --3
 
+INSERT INTO employee(user_id, email, first_name, last_name, title, address_id, restaurant_id) VALUES
+	(1, 'robert.king@gmail.com', 'Robert', 'King', 'OWNER', 1, 1), --1
+	(2, 'nancy.davolio@gmail.com', 'Nancy', 'Davolio', 'OWNER', 6, 3), --2
+	(3, 'andrew.fuller@gmail.com', 'Andrew', 'Fuller', 'CHEF',5, 1), --3
+	(4, 'janet.leverling@gmail.com', 'Janet', 'Leverling', 'WAITER',6, 1), --4
+	(6, 'maria.anders@gmail.com', 'Maria', 'Anders', 'WAITER',8, 1),--5
+	(8, 'thomas.hardy@gmail.com', 'Thomas', 'Hardy', 'BARTENDER',10, 1),--6
+	(7, 'antonio.moreno@gmail.com', 'Antonio', 'Moreno', 'BARTENDER',9, 1), --7
+    (5, 'stan.super@gmail.com', 'Stan', 'Super', 'WAITER',7, 3), --8
+    (9, 'murvai.gergely@gmail.com', 'Murvai', 'Gergely', 'MANAGER', 11, 1);
 
-INSERT INTO restaurant(owner_id, name, email, address_id, phone) VALUES
-	(1, 'King Bistro', 'info@kingbistro.com', 1, '5558121'), --1
-	(1, 'Restaurant Rex', 'contact@restaurantrex.com', 2, '5553119'), --2
-	(2, 'Davolio Cafe', 'contact@davoliocafe.com', 7, '5553119'); --3
+UPDATE restaurant SET owner_id = 1 WHERE restaurant.id = 1;
 
-INSERT INTO employee(user_id, email, first_name, last_name, title,address_id, restaurant_id) VALUES
-	(3, 'andrew.fuller@gmail.com', 'Andrew', 'Fuller', 'CHEF',5, 1), --1
-	(4, 'janet.leverling@gmail.com', 'Janet', 'Leverling', 'WAITER',6, 1), --2
-	(6, 'maria.anders@gmail.com', 'Maria', 'Anders', 'WAITER',8, 1),--3
-	(8, 'thomas.hardy@gmail.com', 'Thomas', 'Hardy', 'BARTENDER',10, 1),--4
-	(7, 'antonio.moreno@gmail.com', 'Antonio', 'Moreno', 'BARTENDER',9, 1), --5
-    (5, 'stan.super@gmail.com', 'Stan', 'Super', 'WAITER',7, 2),--6
-    (9, 'murvai.gergely@gmail.com', 'Murvai', 'Gergely', 'MANAGER', 11, 1); --7
+UPDATE restaurant SET owner_id = 1 WHERE restaurant.id = 2;
+
+UPDATE restaurant SET owner_id = 2 WHERE restaurant.id = 3;
+
 
 INSERT INTO restaurant_table(name, active, restaurant_id, employee_id) VALUES
-	('Table ONE', TRUE, 1, 1), --1
-	('Table TWO', TRUE, 1, 1), --2
-	('Table THREE', TRUE, 1, 4); --3
+	('Table ONE', TRUE, 1, 3), --1
+	('Table TWO', TRUE, 1, 3), --2
+	('Table THREE', TRUE, 1, 5); --3
 
 INSERT INTO restaurant_table(name, active, restaurant_id) VALUES
 	('Bar', TRUE, 1), --4
@@ -102,36 +106,31 @@ INSERT INTO ingredient(name) VALUES
     ('smoked cheese'); --20
 
 INSERT INTO item(name ,price ,category ,subcategory ,restaurant_id) VALUES
-    ('Pizza Margareta', 1150,'FOOD','PIZZA',1), --1
-    ('Pizza Prosciutto',1350,'FOOD','PIZZA',1), --2
-    ('Pizza Funghi', 1150,'FOOD','PIZZA',1), --3
-    ('Pizza Salami', 1350,'FOOD','PIZZA',1), --4
-    ('Pizza Hawaii', 1350,'FOOD','PIZZA',1), --5
-    ('Tárkonyos vadmalac leves', 1290,'FOOD','SOUP',1), --6
-    ('Jókai bableves', 1100,'FOOD','SOUP',1), --7
-    ('Harcsapaprikás kapros túrós sztrapacskával', 2590,'FOOD','FISH_MAIN',1), --8
-    ('Rántott halfilé, rizs, tartármártás', 1900,'FOOD','FISH_MAIN',1), --9
-    ('Rántott csirkemell hasábburgonyával', 1750,'FOOD','CHICKEN_DISH',1), --10
-    ('Juhtúróval-baconnel töltött csirkemell parázs burgonya', 2200,'FOOD','CHICKEN_DISH',1), --11
-    ('Zöldséges marharagu óriás zsemlegombóccal', 1900,'FOOD','BEEF_DISH',1), --12
-    ('Töltott káposzta', 1900,'FOOD','BEEF_DISH',1), --13
-    ('Rántott szelet, hasábburgonyával', 1690,'FOOD','PORK_DISH',1), --14
-    ('Pizza kenyérben sült kemencés csülök lyoni hagymával', 2390,'FOOD','PORK_DISH',1), --15
-    ('Rántott gomba, rizs, tartármártás', 1690,'FOOD','VEGETARIAN',1), --16
-    ('Rántott sajt, hasábburgonya, tartár mártás', 1690,'FOOD','VEGETARIAN',1), --17
-    ('Coors Light Lager', 390,'DRINK', 'ALCOHOLIC',1), --18
-    ('Chivas Regal', 790,'DRINK', 'ALCOHOLIC',1), --19
-    ('Coca Cola', 390,'DRINK', 'BEVERAGE',1), --20
-    ('Fanta', 390,'DRINK', 'BEVERAGE',1), --21
-    ('Espresso', 290,'DRINK', 'COFFEE',1), --22
-    ('Latte Machiato', 290,'DRINK', 'COFFEE',1), --23
-    ('Earl Grey', 290,'DRINK', 'TEA',1), --24
-    ('Rooibos', 290,'DRINK', 'TEA',1), --25
-    ('Fanta', 390,'DRINK', 'BEVERAGE',2), --26
-    ('Espresso', 290,'DRINK', 'COFFEE',2), --27
-    ('Latte Machiato', 290,'DRINK', 'COFFEE',2), --28
-    ('Earl Grey', 290,'DRINK', 'TEA',2), --29
-    ('Rooibos', 290,'DRINK', 'TEA',2); --30
+    ('Pizza Margareta', 1150,'FOOD','PIZZA',1),
+    ('Pizza Prosciutto',1350,'FOOD','PIZZA',1),
+    ('Pizza Funghi', 1150,'FOOD','PIZZA',1),
+    ('Pizza Salami', 1350,'FOOD','PIZZA',1),
+    ('Pizza Hawaii', 1350,'FOOD','PIZZA',1),
+    ('Tárkonyos vadmalac leves', 1290,'FOOD','SOUP',1),
+    ('Jókai bableves', 1100,'FOOD','SOUP',1),
+    ('Harcsapaprikás kapros túrós sztrapacskával', 2590,'FOOD','FISH_MAIN',1),
+    ('Rántott halfilé, rizs, tartármártás', 1900,'FOOD','FISH_MAIN',1),
+    ('Rántott csirkemell hasábburgonyával', 1750,'FOOD','CHICKEN_DISH',1),
+    ('Juhtúróval-baconnel töltött csirkemell parázs burgonya', 2200,'FOOD','CHICKEN_DISH',1),
+    ('Zöldséges marharagu óriás zsemlegombóccal', 1900,'FOOD','BEEF_DISH',1),
+    ('Zöldséges marharagu óriás zsemlegombóccal', 1900,'FOOD','BEEF_DISH',1),
+    ('Rántott szelet, hasábburgonyával', 1690,'FOOD','PORK_DISH',1),
+    ('Pizza kenyérben sült kemencés csülök lyoni hagymával', 2390,'FOOD','PORK_DISH',1),
+    ('Rántott gomba, rizs, tartármártás', 1690,'FOOD','VEGETARIAN',1),
+    ('Rántott sajt, hasábburgonya, tartár mártás', 1690,'FOOD','VEGETARIAN',1),
+    ('Coors Light Lager', 390,'DRINK', 'ALCOHOLIC',1),
+    ('Chivas Regal', 790,'DRINK', 'ALCOHOLIC',1),
+    ('Coca Cola', 390,'DRINK', 'BEVERAGE',1),
+    ('Fanta', 390,'DRINK', 'BEVERAGE',1),
+    ('Espresso', 290,'DRINK', 'COFFEE',1),
+    ('Latte Machiato', 290,'DRINK', 'COFFEE',1),
+    ('Earl Grey', 290,'DRINK', 'TEA',1),
+    ('Rooibos', 290,'DRINK', 'TEA',1);
 
 INSERT INTO item_ingredient (item_id, ingredient_id) VALUES
      (15, 20),
@@ -154,10 +153,8 @@ INSERT INTO item_ingredient (item_id, ingredient_id) VALUES
      (15, 10),
      (15, 16),
      (23, 12),
-     (28, 12),
      (20, 15),
      (22, 9),
-     (27, 9),
      (19, 19),
      (3, 16),
      (17, 19),
@@ -170,14 +167,11 @@ INSERT INTO item_ingredient (item_id, ingredient_id) VALUES
      (15, 5),
      (13, 12),
      (22, 3),
-     (27, 3),
      (1, 15),
      (25, 14),
-     (30, 14),
      (4, 20),
      (17, 18),
      (22, 8),
-     (27, 8),
      (12, 6),
      (20, 5),
      (2, 19),
@@ -186,7 +180,6 @@ INSERT INTO item_ingredient (item_id, ingredient_id) VALUES
      (7, 8),
      (15, 9),
      (25, 13),
-     (30, 13),
      (2, 10),
      (12, 7),
      (4, 17),
@@ -195,9 +188,7 @@ INSERT INTO item_ingredient (item_id, ingredient_id) VALUES
      (3, 14),
      (16, 7),
      (24, 10),
-     (29, 10),
      (22, 16),
-     (27, 16),
      (5, 3),
      (7, 14),
      (12, 12),
@@ -206,23 +197,17 @@ INSERT INTO item_ingredient (item_id, ingredient_id) VALUES
      (15, 17),
      (10, 8),
      (25, 13),
-     (30, 13),
      (22, 11),
-     (27, 11),
      (7, 4),
      (12, 16),
      (22, 17),
-     (27, 17),
      (11, 13),
      (23, 12),
-     (28, 12),
      (6, 4),
      (4, 3),
      (5, 17),
      (24, 20),
      (24, 10),
-     (29, 20),
-     (29, 10),
      (8, 3),
      (20, 8),
      (19, 6),
@@ -230,16 +215,13 @@ INSERT INTO item_ingredient (item_id, ingredient_id) VALUES
      (3, 9),
      (3, 13),
      (23, 8),
-     (28, 8),
      (18, 7),
      (22, 7),
-     (27, 7),
      (12, 2),
      (5, 12),
      (17, 4),
      (1, 13),
      (22, 8),
-     (27, 8),
      (4, 1),
      (20, 7),
      (12, 17),
@@ -248,7 +230,6 @@ INSERT INTO item_ingredient (item_id, ingredient_id) VALUES
      (11, 20),
      (15, 20),
      (23, 3),
-     (28, 3),
      (13, 17),
      (5, 12),
      (3, 20);
@@ -306,37 +287,30 @@ INSERT INTO order_item (item_id, quantity, comment) VALUES
     (2, 1,null),
     (16, 1,null);
 
-INSERT INTO invoice (total) VALUES
-    (6530),
-    (1290),
-    (12450);
-
-INSERT INTO customer_order (seat_id, employee_id, ordering_time , order_item_id, invoice_id) VALUES
-    (1, 1, '2018-03-05 20:22:49', 7, 3),
-    (1, 4, '2018-03-05 20:32:49', 38, 3),
-    (2, 2, '2018-03-05 20:23:49', 11, 3),
-    (2, 4, '2018-03-05 20:24:49', 3, 3),
-    (3, 1, '2018-03-05 20:25:49', 9, 3),
-    (3, 3, '2018-03-05 20:26:49', 3, 3),
-    (4, 3, '2018-03-05 20:26:49', 1, 3),
-    (4, 3, '2018-03-05 20:27:49', 20, 3),
-    (5, 3, '2018-01-05 04:29:38', 9, null),
-    (5, 3, '2018-02-02 15:35:40', 3, null),
-    (7, 2, '2018-03-14 04:02:55', 39, null),
-    (12, 3, '2018-06-12 12:38:49', 16, 1),
-    (5, 3, '2018-03-25 04:56:18', 29, null),
-    (12, 1, '2018-04-30 00:20:34', 37, 1),
-    (1, 2, '2018-03-05 20:52:49', 12, 3),
-    (8, 4, '2018-03-24 03:42:56', 12, null),
-    (10, 1, '2018-01-05 14:37:54', 9, null),
-    (12, 3, '2018-06-20 17:25:16', 34, 1),
-    (14, 4, '2018-02-13 02:16:24', 36, 2),
-    (12, 3, '2018-07-15 07:04:50', 47, 1);
-
-INSERT INTO menu (title, active) VALUES
-    ('Monday', true); --1
+INSERT INTO customer_order (seat_id, employee_id, ordering_time , order_item_id) VALUES
+    (1, 3, '2018-03-05 20:22:49', 7),
+    (1, 6, '2018-03-05 20:32:49', 38),
+    (2, 4, '2018-03-05 20:23:49', 11),
+    (2, 6, '2018-03-05 20:24:49', 3),
+    (3, 3, '2018-03-05 20:25:49', 9),
+    (3, 5, '2018-03-05 20:26:49', 3),
+    (4, 5, '2018-03-05 20:26:49', 1),
+    (4, 5, '2018-03-05 20:27:49', 20),
+    (5, 5, '2018-01-05 04:29:38', 9),
+    (5, 5, '2018-02-02 15:35:40', 3),
+    (7, 4, '2018-03-14 04:02:55', 39),
+    (12, 5, '2018-06-12 12:38:49', 16),
+    (5, 5, '2018-03-25 04:56:18', 29),
+    (12, 3, '2018-04-30 00:20:34', 37),
+    (1, 4, '2018-03-05 20:52:49', 12),
+    (8, 6, '2018-03-24 03:42:56', 12),
+    (10, 3, '2018-01-05 14:37:54', 9),
+    (12, 5, '2018-06-20 17:25:16', 34),
+    (14, 6, '2018-02-13 02:16:24', 36),
+    (12, 5, '2018-07-15 07:04:50', 47);
 
 INSERT INTO menu (title) VALUES
+    ('Monday'), --1
     ('Tuesday'), --2
     ('Wednesday'), --3
     ('Thursday'), --4
@@ -348,24 +322,6 @@ INSERT INTO menu_item (menu_id, item_id) VALUES
     (1, 1),
     (1, 2),
     (1, 3),
-    (1, 4),
-    (1, 5),
-    (1, 6),
-    (1, 7),
-    (1, 8),
-    (1, 9),
-    (1, 10),
-    (1, 11),
-    (1, 12),
-    (1, 13),
-    (1, 18),
-    (1, 19),
-    (1, 20),
-    (1, 21),
-    (1, 22),
-    (1, 23),
-    (1, 24),
-    (1, 25),
     (2, 4),
     (2, 5),
     (2, 6),

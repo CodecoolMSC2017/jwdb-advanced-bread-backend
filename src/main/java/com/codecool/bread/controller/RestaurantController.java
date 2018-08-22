@@ -2,12 +2,6 @@ package com.codecool.bread.controller;
 
 import com.codecool.bread.exception.RestaurantNotFoundException;
 import com.codecool.bread.model.Restaurant;
-import com.codecool.bread.service.OwnerService;
-import com.codecool.bread.service.RestaurantService;
-import com.codecool.bread.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -24,25 +18,20 @@ public class RestaurantController extends AbstractController {
 
     @GetMapping("/{restaurantId}")
     public Restaurant findById(@PathVariable("restaurantId") int restaurantId, Principal principal) throws RestaurantNotFoundException {
-        Restaurant restaurant = restaurantService.getById(restaurantId, getLoggedInOwnerId(principal));
-        if (restaurant == null) {
-            throw new RestaurantNotFoundException();
-        } else
-            return restaurant;
+        return restaurantService.getByIdAndAuthorizedEmployee(restaurantId, getLoggedInEmployeeId(principal));
     }
 
     @PostMapping("")
     public Restaurant add(@RequestBody Restaurant restaurant, Principal principal) {
-        return restaurantService.add(restaurant, getLoggedInOwnerId(principal));
+        return restaurantService.add(restaurant, getLoggedInEmployeeId(principal));
     }
 
     @PutMapping("/{restaurantId}")
-    public Restaurant editDetails(@RequestBody Restaurant restaurant, Principal principal) {
-        if(restaurantService.getById(restaurant.getId(), getLoggedInOwnerId(principal)) != null) {
-            return restaurantService.edit(restaurant, getLoggedInOwnerId(principal));
-        } else {
-            throw new RestaurantNotFoundException();
-        }
+    public Restaurant editDetails(@RequestBody Restaurant restaurant,
+                                  @PathVariable("restaurantId") int restaurantId,
+                                  Principal principal) {
+        return restaurantService.edit(restaurant, getLoggedInEmployeeId(principal), restaurantId);
+
     }
 
     @DeleteMapping("/{restaurantId}")

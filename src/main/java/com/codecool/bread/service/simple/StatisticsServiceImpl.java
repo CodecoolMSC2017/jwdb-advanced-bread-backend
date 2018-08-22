@@ -9,6 +9,6 @@ public class StatisticsServiceImpl extends AbstractService implements Statistics
 
     @Override
     public StatsDto getAllRestaurantIncomeAvgFromDb(int ownerId, int year, int month) {
-        return new StatsDto(invoiceRepository.findInvoiceSumsByOwnerId(ownerId, year, month));
+        return new StatsDto(invoiceRepository.findInvoiceSumsByEmployeeId(ownerId, year, month));
     }
 }

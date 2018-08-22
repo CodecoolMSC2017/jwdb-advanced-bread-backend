@@ -19,9 +19,6 @@ import java.util.Set;
 public class RestaurantServiceImpl extends AbstractService implements RestaurantService {
 
     @Autowired
-    private OwnerService ownerService;
-
-    @Autowired
     private TableService tableService;
 
     @Autowired
@@ -32,11 +29,11 @@ public class RestaurantServiceImpl extends AbstractService implements Restaurant
 
     @Override
     public Restaurant getById(int restaurantId, int ownerId) throws RestaurantAccessDeniedException, RestaurantNotFoundException {
-        Restaurant restaurant =restaurantRepository.findByIdAndOwnerId(restaurantId, ownerId);
-        if(restaurant == null || restaurant.isEnabled() == false) {
+        Optional<Restaurant> restaurant =restaurantRepository.findById(restaurantId);
+        if(!restaurant.isPresent() || !restaurant.get().isEnabled()) {
             throw new RestaurantNotFoundException();
         }
-        return restaurant;
+        return restaurant.get();
     }
 
     public Restaurant getById(int id) {
@@ -65,33 +62,54 @@ public class RestaurantServiceImpl extends AbstractService implements Restaurant
         }
     }
 
+    /**
+     *
+     * @param restaurantId
+     * @param employeeId
+     * @return Restaurant
+     * @throws RestaurantNotFoundException
+     * @throws RestaurantAccessDeniedException
+     * Returns a Restaurant object if the given employeeId belongs to it
+     */
+    @Override
+    public Restaurant getByIdAndAuthorizedEmployee(int restaurantId, int employeeId) throws RestaurantNotFoundException, RestaurantAccessDeniedException {
+        Restaurant restaurant = getById(restaurantId);
+        Employee employee = employeeService.getById(employeeId);
+        if (restaurant.getOwner().equals(employee) || (restaurant.getEmployees().contains(employee) && employee.getRole().equals(Role.MANAGER))) {
+            return restaurant;
+        } else {
+            throw new RestaurantAccessDeniedException();
+        }
+    }
+
     @Override
     public Restaurant add(Restaurant restaurant, int ownerId) {
         addressRepository.saveAndFlush(restaurant.getAddress());
-        restaurant.setOwner(ownerService.getOwnerById(ownerId));
-        ownerService.getOwnerById(ownerId).getRestaurants().add(restaurant);
+        restaurant.setOwner(employeeService.getOwnerById(ownerId));
         return restaurantRepository.saveAndFlush(restaurant);
     }
 
     @Override
-    public Restaurant edit(Restaurant restaurant, int ownerId) throws RestaurantNotFoundException {
-        restaurant.setOwner(ownerService.getOwnerById(ownerId));
-        return restaurantRepository.saveAndFlush(restaurant);
+    public Restaurant edit(Restaurant restaurant, int employeeId, int restaurantId) throws RestaurantNotFoundException {
+        if(getById(restaurant.getId()).getOwner().equals(employeeService.getById(employeeId)) && restaurant.getId() == restaurantId) {
+            restaurant.setOwner(employeeService.getOwnerById(employeeId));
+            return restaurantRepository.saveAndFlush(restaurant);
+        } else {
+            throw new RestaurantNotFoundException();
+        }
+
     }
 
     @Override
     public void deleteRestaurant(int restaurantId) throws RestaurantNotFoundException {
-        Optional<Restaurant> restaurant = restaurantRepository.findById(restaurantId);
-        if (!restaurant.isPresent()) {
-            throw new RestaurantNotFoundException();
-        }
-        employeeService.setAllEmployeeRestaurantNull(restaurant.get().getOwner().getId());
+        Restaurant restaurant = getById(restaurantId);
+        employeeService.setAllEmployeeRestaurantNull(restaurant.getOwner().getId());
         tableService.deleteAllTableByRestaurantId(restaurantId);
-        Set<Table> tables = restaurant.get().getTables();
+        Set<Table> tables = restaurant.getTables();
         for(Table table : tables) {
             seatService.deleteAllSeatsByTableId(table);
         }
-        restaurant.get().setEnabled(false);
-        restaurantRepository.saveAndFlush(restaurant.get());
+        restaurant.setEnabled(false);
+        restaurantRepository.saveAndFlush(restaurant);
     }
 }

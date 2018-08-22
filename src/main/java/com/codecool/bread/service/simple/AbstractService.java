@@ -30,9 +30,6 @@ public class AbstractService {
     OrderItemRepository orderItemRepository;
 
     @Autowired
-    OwnerRepository ownerRepository;
-
-    @Autowired
     RestaurantRepository restaurantRepository;
 
     @Autowired

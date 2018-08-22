@@ -2,20 +2,15 @@ package com.codecool.bread.service.simple;
 
 import com.codecool.bread.exception.*;
 import com.codecool.bread.model.Employee;
-import com.codecool.bread.model.Owner;
 import com.codecool.bread.model.Restaurant;
+import com.codecool.bread.model.Role;
 import com.codecool.bread.model.User;
-import com.codecool.bread.repository.EmployeeRepository;
-import com.codecool.bread.repository.UserRepository;
 import com.codecool.bread.service.EmployeeService;
-import com.codecool.bread.service.OwnerService;
 import com.codecool.bread.service.RestaurantService;
 import com.codecool.bread.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import java.sql.SQLException;
 
 import java.util.*;
 
@@ -30,17 +25,16 @@ public class EmployeeServiceImpl extends AbstractService implements EmployeeServ
     private UserService userService;
 
     @Autowired
-    private OwnerService ownerService;
-
-    @Autowired
     private RestaurantService restaurantService;
 
     @Override
-    public Set<Employee> getAllByRestaurantId(int ownerId, int restaurantId) throws NoEmployeeForRestaurantException {
-        Set<Employee> employees = employeeRepository.findByEnabledTrueAndRestaurantIdAndRestaurantOwnerId(restaurantId, ownerId);
+    public Set<Employee> getAllByRestaurantId(int employeeId, int restaurantId) throws NoEmployeeForRestaurantException {
+
+        Set<Employee> employees = employeeRepository.findByEnabledTrueAndRestaurantIdAndRestaurantOwnerId(restaurantId, employeeId);
         if (employees.isEmpty()) {
             throw new NoEmployeeForRestaurantException();
         } else {
+            employees.remove(getOwnerById(employeeId));
             return employees;
         }
     }
@@ -69,6 +63,16 @@ public class EmployeeServiceImpl extends AbstractService implements EmployeeServ
             return employee.get();
         } else {
             throw new EmployeeNotFoundException();
+        }
+    }
+
+    @Override
+    public Employee getOwnerById(int ownerId) throws OwnerNotFoundException {
+        Optional<Employee> result = employeeRepository.findById(ownerId);
+        if (result.isPresent() && result.get().getRole().equals(Role.OWNER)) {
+            return result.get();
+        } else {
+            throw new OwnerNotFoundException();
         }
     }
 
@@ -159,7 +163,7 @@ public class EmployeeServiceImpl extends AbstractService implements EmployeeServ
 
     @Override
     public void setAllEmployeeRestaurantNull(int ownerId) {
-        Owner owner = ownerService.getOwnerById(ownerId);
+        Employee owner = getById(ownerId);
         List<Employee> employees = getAllEmployees(owner.getId());
         for(Employee employee : employees) {
             employee.setRestaurant(null);

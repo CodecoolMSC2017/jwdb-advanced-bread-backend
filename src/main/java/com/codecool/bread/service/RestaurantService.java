@@ -20,9 +20,11 @@ public interface RestaurantService {
 
     Set<Restaurant> getAllEnableByOwnerId(int ownerId) throws RestaurantNotFoundException;
 
+    Restaurant getByIdAndAuthorizedEmployee(int restaurantId, int employeeId) throws RestaurantNotFoundException, RestaurantAccessDeniedException;
+
     Restaurant add(Restaurant restaurant, int ownerId);
 
-    Restaurant edit(Restaurant restaurant, int ownerId) throws RestaurantNotFoundException;
+    Restaurant edit(Restaurant restaurant, int ownerId, int restaurantId) throws RestaurantNotFoundException;
 
     void deleteRestaurant(int restaurantId) throws RestaurantNotFoundException;
 }

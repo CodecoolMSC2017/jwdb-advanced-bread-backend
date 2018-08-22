@@ -1,7 +1,6 @@
 package com.codecool.bread.repository;
 
 import com.codecool.bread.model.Invoice;
-import com.codecool.bread.model.dto.StatsDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -20,5 +19,5 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Integer> {
             "WHERE restaurant.owner_id = ?1\n" +
             "AND EXTRACT(YEAR FROM invoice.date) = ?2\n" +
             "AND EXTRACT(MONTH FROM invoice.date) = ?3", nativeQuery = true)
-    Integer findInvoiceSumsByOwnerId(Integer ownerId, Integer year, Integer month);
+    Integer findInvoiceSumsByEmployeeId(Integer employeeId, Integer year, Integer month);
 }
