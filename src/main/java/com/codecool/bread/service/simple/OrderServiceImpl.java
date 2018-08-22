@@ -53,7 +53,7 @@ public class OrderServiceImpl extends AbstractService implements OrderService {
 
     @Override
     public OrderItem getOrderItem(int seatId, int customerOrderId) {
-        return customerOrderRepository.findByIdAndSeatId(customerOrderId, seatId).get().getOrderItem();
+        return getCustomerOrderById(seatId, customerOrderId).getOrderItem();
     }
 
     @Override
@@ -184,7 +184,7 @@ public class OrderServiceImpl extends AbstractService implements OrderService {
         moddedOrderItem.getItem().setRestaurant(employee.getRestaurant());
         orderItemRepository.saveAndFlush(moddedOrderItem);
 
-        String category = null;
+        String category ;
 
         if(employee.getRole().equals(Role.CHEF)) {
             category = Category.FOOD.toString();

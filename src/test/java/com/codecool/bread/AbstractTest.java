@@ -38,7 +38,7 @@ public class AbstractTest {
     private FilterChainProxy springSecurityFilterChain;
 
     @Autowired
-    protected UserDetailsService userDetailsService;
+    private UserDetailsService userDetailsService;
 
     @Autowired
     protected WebApplicationContext webappContext;
@@ -57,20 +57,17 @@ public class AbstractTest {
     //protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     //Returns Authentication token to the mock Session
-    protected UsernamePasswordAuthenticationToken getPrincipal(String username) {
+    private UsernamePasswordAuthenticationToken getPrincipal(String username) {
 
         UserDetails user = this.userDetailsService.loadUserByUsername(username);
 
-        UsernamePasswordAuthenticationToken authentication =
-                new UsernamePasswordAuthenticationToken(
+        return new UsernamePasswordAuthenticationToken(
                         user,
                         user.getPassword(),
                         user.getAuthorities());
-
-        return authentication;
     }
 
-    public static String asJsonString(final Object obj) {
+    protected static String asJsonString(final Object obj) {
         try {
             final ObjectMapper mapper = new ObjectMapper();
             final String jsonContent = mapper.writeValueAsString(obj);

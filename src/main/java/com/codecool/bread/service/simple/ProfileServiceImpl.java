@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 public class ProfileServiceImpl extends AbstractService implements ProfileService {
 
     @Autowired
-    EmployeeService employeeService;
+    private EmployeeService employeeService;
 
     @Override
     public ProfileDto get(int userId) throws EmployeeNotFoundException {

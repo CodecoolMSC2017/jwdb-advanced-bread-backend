@@ -7,7 +7,7 @@ public class MockSecurityContext implements SecurityContext {
 
     private Authentication authentication;
 
-    public MockSecurityContext(Authentication authentication) {
+    MockSecurityContext(Authentication authentication) {
         this.authentication = authentication;
     }
 

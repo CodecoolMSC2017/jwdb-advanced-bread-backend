@@ -17,7 +17,7 @@ public class ChefController {
 
 
     @Autowired
-    OrderService orderService;
+    private OrderService orderService;
 
     @GetMapping("")
     public List<OrderKitchenDto> getPendingOrders(Principal principal, @RequestParam("category") String category) {
