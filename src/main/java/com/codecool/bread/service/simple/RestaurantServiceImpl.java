@@ -112,29 +112,4 @@ public class RestaurantServiceImpl extends AbstractService implements Restaurant
         restaurant.setEnabled(false);
         restaurantRepository.saveAndFlush(restaurant);
     }
-
-    private Restaurant returnRestaurant(Principal principal, int restaurantId) throws RestaurantAccessDeniedException {
-        Restaurant restaurant = null;
-
-        if(isOwner(principal)) {
-            int ownerId = ownerService.getOwnerByUsername(principal.getName()).getId();
-            restaurant = restaurantRepository.findByIdAndOwnerId(restaurantId, ownerId);
-        }
-        if(isManager(principal, restaurantId)) {
-            restaurant = restaurantRepository.findById(restaurantId).get();
-        }
-        return restaurant;
-    }
-
-    private Set<Restaurant> getAllEnabledRestaurants(Principal principal) {
-        Set<Restaurant> restaurants = null;
-        if(isOwner(principal)) {
-            int ownerId = ownerService.getOwnerByUsername(principal.getName()).getId();
-            restaurants = restaurantRepository.findByOwnerIdAndEnabledTrue(ownerId);
-        } else if(isManager(principal)) {
-            int restaurantId = employeeService.getByUsername(principal.getName()).getRestaurant().getId();
-            restaurants = new HashSet<>(Arrays.asList(restaurantRepository.findById(restaurantId).get()));
-        }
-        return restaurants;
-    }
 }
