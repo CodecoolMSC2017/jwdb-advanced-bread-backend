@@ -13,5 +13,5 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Integer>
 
     Set<Restaurant> findByOwnerId(Integer ownerId);
 
-    Set<Restaurant> findByOwnerIdAndEnabledTrue(Integer ownerId);
+    Set<Restaurant> findByEmployeesIdAndEnabledTrue(Integer employeeId);
 }

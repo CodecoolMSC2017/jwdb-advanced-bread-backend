@@ -53,8 +53,8 @@ public class RestaurantServiceImpl extends AbstractService implements Restaurant
         }
     }
 
-    public Set<Restaurant> getAllEnableByOwnerId(int ownerId) throws RestaurantNotFoundException {
-        Set<Restaurant> enableRestaurants = restaurantRepository.findByOwnerIdAndEnabledTrue(ownerId);
+    public Set<Restaurant> getAllEnableByEmployeeId(int employeeId) throws RestaurantNotFoundException {
+        Set<Restaurant> enableRestaurants = restaurantRepository.findByEmployeesIdAndEnabledTrue(employeeId);
         if (enableRestaurants.isEmpty()) {
             throw new RestaurantNotFoundException();
         } else {

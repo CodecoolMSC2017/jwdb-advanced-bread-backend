@@ -13,7 +13,7 @@ public class RestaurantController extends AbstractController {
 
     @GetMapping("")
     public Set<Restaurant> findAllByOwnerId(Principal principal) {
-        return restaurantService.getAllEnableByOwnerId(getLoggedInOwnerId(principal));
+        return restaurantService.getAllEnableByEmployeeId(getLoggedInEmployeeId(principal));
     }
 
     @GetMapping("/{restaurantId}")
