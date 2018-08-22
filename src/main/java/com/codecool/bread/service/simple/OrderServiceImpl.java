@@ -77,25 +77,54 @@ public class OrderServiceImpl extends AbstractService implements OrderService {
         Seat seat = seatService.getById(seatId);
         Table table = seat.getTable();
         Restaurant restaurant = table.getRestaurant();
+        int quantity = orderDto.getQuantity();
+        String comment = orderDto.getComment();
         int restaurantId = restaurant.getId();
+        OrderItem orderItem = new OrderItem();
+
         if (table.getEmployee() == null) {
             table.setEmployee(employeeService.getById(loggedInEmployeeId));
         }
+
         Item item = itemService.getByIdAndRestaurantId(orderDto.getItemId(), restaurantId);
+
+        if (isOrderItemExistsInCustomerOrder(seat.getCustomerOrders(), orderDto.getItemId())) {
+            for (CustomerOrder customerOrder: seat.getCustomerOrders()) {
+                if ( customerOrder.getOrderItem().getItem().getId().equals(orderDto.getItemId())) {
+                    int currentQuantity = customerOrder.getOrderItem().getQuantity();
+                    customerOrder.getOrderItem().setQuantity(currentQuantity + orderDto.getQuantity());
+                    orderItem = customerOrderRepository.saveAndFlush(customerOrder).getOrderItem();
+                }
+            }
+        } else {
+            CustomerOrder customerOrder = new CustomerOrder();
+            orderItem = saveOrderItem(quantity, comment, item);
+            customerOrder.setSeat(seat);
+            customerOrder.setEmployee(employeeService.getById(table.getEmployee().getId(), restaurantId));
+            customerOrder.setOrderItem(orderItem);
+            customerOrderRepository.saveAndFlush(customerOrder);
+            seat.getCustomerOrders().add(customerOrder);
+            seatRepository.saveAndFlush(seat);
+        }
+        return orderItem;
+    }
+
+    private boolean isOrderItemExistsInCustomerOrder(List<CustomerOrder> customerOrderList, int itemId) {
+        for (CustomerOrder customerOrder: customerOrderList) {
+            if ( customerOrder.getOrderItem().getItem().getId().equals(itemId)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private OrderItem saveOrderItem(int quantity, String comment, Item item) {
         OrderItem orderItem = new OrderItem();
-        CustomerOrder customerOrder = new CustomerOrder();
         orderItem.setItem(item);
-        orderItem.setQuantity(orderDto.getQuantity());
-        orderItem.setComment(orderDto.getComment());
+        orderItem.setQuantity(quantity);
+        orderItem.setComment(comment);
         orderItem.setEnabled(true);
-        OrderItem savedOrderItem = orderItemRepository.saveAndFlush(orderItem);
-        customerOrder.setSeat(seat);
-        customerOrder.setEmployee(employeeService.getById(table.getEmployee().getId(), restaurantId));
-        customerOrder.setOrderItem(orderItem);
-        customerOrderRepository.saveAndFlush(customerOrder);
-        seat.getCustomerOrders().add(customerOrder);
-        seatRepository.saveAndFlush(seat);
-        return savedOrderItem;
+        return orderItemRepository.saveAndFlush(orderItem);
     }
 
     @Override

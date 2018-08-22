@@ -309,8 +309,10 @@ INSERT INTO customer_order (seat_id, employee_id, ordering_time , order_item_id)
     (14, 6, '2018-02-13 02:16:24', 36),
     (12, 5, '2018-07-15 07:04:50', 47);
 
+INSERT INTO menu (title, active) VALUES
+    ('Monday', true); --1
+
 INSERT INTO menu (title) VALUES
-    ('Monday'), --1
     ('Tuesday'), --2
     ('Wednesday'), --3
     ('Thursday'), --4
@@ -322,6 +324,24 @@ INSERT INTO menu_item (menu_id, item_id) VALUES
     (1, 1),
     (1, 2),
     (1, 3),
+    (1, 4),
+    (1, 5),
+    (1, 6),
+    (1, 7),
+    (1, 8),
+    (1, 9),
+    (1, 10),
+    (1, 11),
+    (1, 12),
+    (1, 13),
+    (1, 18),
+    (1, 19),
+    (1, 20),
+    (1, 21),
+    (1, 22),
+    (1, 23),
+    (1, 24),
+    (1, 25),
     (2, 4),
     (2, 5),
     (2, 6),
