@@ -1,18 +1,12 @@
 package com.codecool.bread.controller;
 
 import com.codecool.bread.model.CustomerOrder;
-import com.codecool.bread.model.Invoice;
 import com.codecool.bread.model.OrderItem;
 import com.codecool.bread.model.dto.*;
-import com.codecool.bread.service.OrderService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/order")

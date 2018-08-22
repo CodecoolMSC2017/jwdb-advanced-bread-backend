@@ -5,7 +5,6 @@ import com.codecool.bread.exception.ItemNotFoundException;
 import com.codecool.bread.exception.NoItemsFoundException;
 import com.codecool.bread.exception.RestaurantAccessDeniedException;
 import com.codecool.bread.model.Category;
-import com.codecool.bread.model.Employee;
 import com.codecool.bread.model.Item;
 
 import java.util.List;

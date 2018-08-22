@@ -3,7 +3,6 @@ package com.codecool.bread.service;
 import com.codecool.bread.exception.IngredientNotFoundException;
 import com.codecool.bread.model.Ingredient;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 

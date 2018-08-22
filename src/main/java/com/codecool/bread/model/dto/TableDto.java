@@ -10,7 +10,6 @@ public class TableDto {
     private int id;
     private String name;
     private Employee employee;
-    private LocalDateTime arrivalTime;
     private List<SeatDto> seatDtoSet;
 
     public TableDto() {
@@ -25,7 +24,7 @@ public class TableDto {
     public TableDto(int id, String name, LocalDateTime arrivalTime, List<SeatDto> seatDtoSet) {
         this.id = id;
         this.name = name;
-        this.arrivalTime = arrivalTime;
+        LocalDateTime arrivalTime1 = arrivalTime;
         this.seatDtoSet = seatDtoSet;
     }
 

@@ -3,15 +3,10 @@ package com.codecool.bread.service.simple;
 import com.codecool.bread.exception.RestaurantAccessDeniedException;
 import com.codecool.bread.exception.RestaurantNotFoundException;
 import com.codecool.bread.model.*;
-import com.codecool.bread.repository.AddressRepository;
-import com.codecool.bread.repository.RestaurantRepository;
-import com.codecool.bread.repository.SeatRepository;
-import com.codecool.bread.repository.TableRepository;
 import com.codecool.bread.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 

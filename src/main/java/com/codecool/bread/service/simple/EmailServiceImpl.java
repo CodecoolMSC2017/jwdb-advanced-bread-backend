@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 
 import javax.mail.SendFailedException;
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.Map;
 
 @Component

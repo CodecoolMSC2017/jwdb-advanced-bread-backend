@@ -6,8 +6,6 @@ import com.codecool.bread.exception.ItemNotFoundException;
 import com.codecool.bread.exception.NoItemsFoundException;
 import com.codecool.bread.model.Category;
 import com.codecool.bread.model.Item;
-import com.codecool.bread.service.ItemService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;

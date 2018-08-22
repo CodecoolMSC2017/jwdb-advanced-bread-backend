@@ -2,7 +2,6 @@ package com.codecool.bread.controller;
 
 import com.codecool.bread.AbstractTest;
 import com.codecool.bread.Application;
-import com.codecool.bread.MockSecurityContext;
 import com.codecool.bread.model.Address;
 import com.codecool.bread.model.Employee;
 import com.codecool.bread.model.Role;
@@ -19,10 +18,7 @@ import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockHttpSession;
 import org.springframework.mock.web.MockServletContext;
-import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;

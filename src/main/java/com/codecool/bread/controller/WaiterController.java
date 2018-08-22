@@ -1,13 +1,10 @@
 package com.codecool.bread.controller;
 
-import com.codecool.bread.model.Employee;
-import com.codecool.bread.model.Table;
 import com.codecool.bread.model.dto.TableDto;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/waiter")

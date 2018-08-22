@@ -2,9 +2,6 @@ package com.codecool.bread.controller;
 
 import com.codecool.bread.exception.IngredientNotFoundException;
 import com.codecool.bread.model.Ingredient;
-import com.codecool.bread.repository.IngredientRepository;
-import com.codecool.bread.service.IngredientService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 

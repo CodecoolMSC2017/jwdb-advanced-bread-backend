@@ -1,7 +1,5 @@
 package com.codecool.bread.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import javax.persistence.Table;
 import java.util.HashSet;

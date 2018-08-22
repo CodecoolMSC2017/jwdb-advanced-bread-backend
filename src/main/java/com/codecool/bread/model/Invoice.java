@@ -1,12 +1,9 @@
 package com.codecool.bread.model;
 
-import org.hibernate.annotations.JoinColumnOrFormula;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.math.BigDecimal;
-import java.sql.Date;
 import java.time.LocalDateTime;
 
 @Entity

@@ -1,7 +1,6 @@
 package com.codecool.bread.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import javax.persistence.Table;
@@ -9,8 +8,6 @@ import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-
-import static org.hibernate.annotations.QueryHints.READ_ONLY;
 
 @Entity
 @Table(name = "item")

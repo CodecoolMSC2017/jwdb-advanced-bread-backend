@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.persistence.Table;
-import java.sql.Date;
 import java.time.LocalDateTime;
 
 @Entity

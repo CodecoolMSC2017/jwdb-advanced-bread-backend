@@ -1,7 +1,6 @@
 package com.codecool.bread.model.dto;
 
 import com.codecool.bread.model.Address;
-import com.codecool.bread.model.Employee;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

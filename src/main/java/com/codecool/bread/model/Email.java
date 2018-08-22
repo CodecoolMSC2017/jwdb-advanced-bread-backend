@@ -1,7 +1,5 @@
 package com.codecool.bread.model;
 
-import org.springframework.context.annotation.Bean;
-
 
 public class Email {
 

@@ -1,6 +1,5 @@
 package com.codecool.bread.model.dto;
 
-import com.codecool.bread.model.Item;
 import com.codecool.bread.model.OrderItem;
 
 import java.time.LocalDateTime;

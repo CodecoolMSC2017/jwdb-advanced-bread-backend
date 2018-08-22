@@ -4,8 +4,6 @@ import com.codecool.bread.model.dto.StatsDto;
 import com.codecool.bread.service.StatisticsService;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-
 @Service
 public class StatisticsServiceImpl extends AbstractService implements StatisticsService {
 
