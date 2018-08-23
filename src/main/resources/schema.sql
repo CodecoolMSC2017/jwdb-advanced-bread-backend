@@ -62,7 +62,7 @@ CREATE TABLE employee (
 	phone TEXT,
 	restaurant_id INTEGER,
 	hour_rate INTEGER DEFAULT NULL,
-	enabled BOOLEAN DEFAULT TRUE,
+	enabled BOOLEAN DEFAULT FALSE,
 	CONSTRAINT email_not_empty CHECK (email <> ''),
 	CONSTRAINT first_name_not_empty CHECK (first_name <> ''),
 	CONSTRAINT last_name_not_empty CHECK (last_name <> ''),

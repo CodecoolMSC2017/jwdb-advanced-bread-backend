@@ -121,7 +121,7 @@ public class EmployeeServiceImpl extends AbstractService implements EmployeeServ
     @Override
     public Employee add(Employee employee, int restaurantId, int ownerId) {
         employee.setRestaurant(restaurantService.getById(restaurantId, ownerId));
-
+        employee.setEnabled(false);
         return employeeRepository.saveAndFlush(employee);
     }
 
@@ -155,6 +155,7 @@ public class EmployeeServiceImpl extends AbstractService implements EmployeeServ
             throw new EmployeeNotFoundException();
         } else {
             employeeOptional.get().setUser(userService.get(username));
+            employeeOptional.get().setEnabled(true);
         }
         return employeeRepository.saveAndFlush(employeeOptional.get());
     }
