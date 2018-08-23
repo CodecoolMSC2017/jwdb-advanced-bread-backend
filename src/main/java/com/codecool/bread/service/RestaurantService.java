@@ -4,6 +4,7 @@ import com.codecool.bread.exception.RestaurantAccessDeniedException;
 import com.codecool.bread.exception.RestaurantNotFoundException;
 import com.codecool.bread.model.Restaurant;
 
+import java.util.List;
 import java.util.Set;
 
 public interface RestaurantService {
@@ -14,7 +15,7 @@ public interface RestaurantService {
 
     Set<Restaurant> getAllByOwnerId(int ownerId);
 
-    Set<Restaurant> getAllEnableByEmployeeId(int employeeId) throws RestaurantNotFoundException;
+    List<Restaurant> getAllEnableByEmployeeId(int employeeId) throws RestaurantNotFoundException;
 
     Restaurant getByIdAndAuthorizedEmployee(int restaurantId, int employeeId) throws RestaurantNotFoundException, RestaurantAccessDeniedException;
 

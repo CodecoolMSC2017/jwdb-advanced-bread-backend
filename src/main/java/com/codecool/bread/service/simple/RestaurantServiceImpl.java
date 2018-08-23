@@ -7,6 +7,8 @@ import com.codecool.bread.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -48,12 +50,12 @@ public class RestaurantServiceImpl extends AbstractService implements Restaurant
         }
     }
 
-    public Set<Restaurant> getAllEnableByEmployeeId(int employeeId) throws RestaurantNotFoundException {
-        Set<Restaurant> enableRestaurants = restaurantRepository.findByEmployeesIdAndEnabledTrue(employeeId);
-        if (enableRestaurants.isEmpty()) {
-            throw new RestaurantNotFoundException();
+    public List<Restaurant> getAllEnableByEmployeeId(int employeeId) throws RestaurantNotFoundException {
+        Employee employee = employeeService.getById(employeeId);
+        if (employee.getRole().equals(Role.OWNER)) {
+            return restaurantRepository.findByOwnerIdAndEnabledTrue(employeeId);
         } else {
-            return enableRestaurants;
+            return restaurantRepository.findByEmployeesIdAndEnabledTrue(employeeId);
         }
     }
 

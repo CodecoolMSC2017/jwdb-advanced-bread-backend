@@ -11,7 +11,7 @@ import java.util.Set;
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 
-    Set<Employee> findByEnabledTrueAndRestaurantIdAndRestaurantOwnerId(Integer restaurantId, Integer restaurantOwnerId);
+    Set<Employee> findByEnabledTrueAndRestaurantId(Integer restaurantId);
 
     Employee findByIdAndRestaurantId(Integer id, Integer restaurantId);
 
