@@ -5,6 +5,7 @@ import com.codecool.bread.model.Restaurant;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -12,7 +13,7 @@ import java.util.Set;
 public class RestaurantController extends AbstractController {
 
     @GetMapping("")
-    public Set<Restaurant> findAllByOwnerId(Principal principal) {
+    public List<Restaurant> findAllByOwnerId(Principal principal) {
         return restaurantService.getAllEnableByEmployeeId(getLoggedInEmployeeId(principal));
     }
 
