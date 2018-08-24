@@ -3,6 +3,7 @@ package com.codecool.bread.service.simple;
 import com.codecool.bread.exception.MenuNotFoundException;
 import com.codecool.bread.model.Item;
 import com.codecool.bread.model.Menu;
+import com.codecool.bread.service.ItemService;
 import com.codecool.bread.service.MenuService;
 import com.codecool.bread.service.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,9 @@ public class MenuServiceImpl extends AbstractService implements MenuService {
 
     @Autowired
     private RestaurantService restaurantService;
+
+    @Autowired
+    private ItemService itemService;
 
     @Override
     public Set<Menu> getAllEnabledMenuFromDb(int restaurantId) {
@@ -98,5 +102,13 @@ public class MenuServiceImpl extends AbstractService implements MenuService {
         Menu menu = menuRepository.findByIdAndEnabledTrue(menuId);
         menu.getItems().add(item);
         return menuRepository.saveAndFlush(menu);
+    }
+
+    @Override
+    public void deleteItem(int menuId, int itemId) {
+        Menu menu = getEnabledMenuFromDb(menuId);
+        Item itemToDelete = itemService.getById(itemId);
+        menu.getItems().remove(itemToDelete);
+        menuRepository.saveAndFlush(menu);
     }
 }

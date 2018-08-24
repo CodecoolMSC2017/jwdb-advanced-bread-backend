@@ -59,4 +59,10 @@ public class MenuController extends AbstractController {
     public Menu addItemToMenu(@RequestBody Item item, @PathVariable("menuId") int menuId) {
         return menuService.addItemToMenuInDb(item, menuId);
     }
+
+    @DeleteMapping("/{menuId}/item")
+    public void deleteItem(@PathVariable("menuId") int menuId,
+                           @RequestParam("itemId") int itemId) {
+        menuService.deleteItem(menuId, itemId);
+    }
 }

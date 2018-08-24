@@ -60,4 +60,9 @@ public class ItemController extends AbstractController {
         return itemService.saveItemChanges(item, restaurantId);
     }
 
+    @GetMapping("{menuId}/noitems")
+    public List<Item> getNotContainingItemsByMenuId(@PathVariable("menuId") int menuId, @PathVariable("restaurantId") int restaurantId) {
+        return itemService.getNotContainingItemsByMenuIdFromDb(menuId, restaurantId);
+    }
+
 }

@@ -26,4 +26,6 @@ public interface MenuService {
     Menu getActiveMenu(int restaurantId) throws MenuNotFoundException;
 
     Menu addItemToMenuInDb(Item item, int menuId);
+
+    void deleteItem(int menuId, int itemId);
 }
