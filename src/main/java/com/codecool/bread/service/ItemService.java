@@ -21,4 +21,6 @@ public interface ItemService {
     Item addNewItem(Item item, int restaurantId);
     void deleteItem(int restaurantId, int itemId) throws RestaurantAccessDeniedException, ItemNotFoundException;
     Item saveItemChanges(Item item, int restaurantId);
+
+    List<Item> getNotContainingItemsByMenuIdFromDb(int menuId, int restaurantId);
 }
