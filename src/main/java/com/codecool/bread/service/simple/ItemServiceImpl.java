@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ItemServiceImpl extends AbstractService implements ItemService {
@@ -43,6 +44,17 @@ public class ItemServiceImpl extends AbstractService implements ItemService {
             throw new NoItemsFoundException();
         }
         return items;
+    }
+
+    @Override
+    public Item getById(Integer itemId) throws ItemNotFoundException {
+        Optional<Item> item = itemRepository.findById(itemId);
+        if (!item.isPresent()) {
+            throw new ItemNotFoundException();
+        } else {
+            return item.get();
+        }
+
     }
 
     public Item getByIdAndRestaurantId(Integer id, Integer restaurantId) throws ItemAccessDeniedException, NoItemsFoundException {
