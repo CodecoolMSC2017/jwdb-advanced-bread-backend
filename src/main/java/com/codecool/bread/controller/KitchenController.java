@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/kitchen")
-public class ChefController {
+public class KitchenController {
 
 
     @Autowired
