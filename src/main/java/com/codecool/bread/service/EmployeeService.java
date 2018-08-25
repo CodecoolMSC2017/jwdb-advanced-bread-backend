@@ -13,7 +13,7 @@ import java.util.Set;
 
 public interface EmployeeService {
 
-    Set<Employee> getAllByRestaurantId(int employeeId, int restaurantId) throws NoEmployeeForRestaurantException;
+    List<Employee> getAllByRestaurantId(int employeeId, int restaurantId) throws NoEmployeeForRestaurantException;
 
     List<Employee> getAllEmployees(int ownerId);
 

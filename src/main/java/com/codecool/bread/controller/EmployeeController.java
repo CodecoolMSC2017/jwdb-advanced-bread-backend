@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.mail.SendFailedException;
 import java.io.UnsupportedEncodingException;
 import java.security.Principal;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -28,8 +29,8 @@ public class EmployeeController extends AbstractController {
     private EmailService emailService;
 
     @GetMapping("")
-    public Set<Employee> getEmployeesByRestaurantId(@PathVariable("restaurantId") int restaurantId,
-                                                    Principal principal) {
+    public List<Employee> getEmployeesByRestaurantId(@PathVariable("restaurantId") int restaurantId,
+                                                     Principal principal) {
         return employeeService.getAllByRestaurantId(getLoggedInEmployeeId(principal), restaurantId);
     }
 

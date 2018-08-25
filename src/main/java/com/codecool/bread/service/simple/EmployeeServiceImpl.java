@@ -24,8 +24,8 @@ public class EmployeeServiceImpl extends AbstractService implements EmployeeServ
     private RestaurantService restaurantService;
 
     @Override
-    public Set<Employee> getAllByRestaurantId(int employeeId, int restaurantId) throws NoEmployeeForRestaurantException {
-        Set<Employee> employees = employeeRepository.findByEnabledTrueAndRestaurantId(restaurantId);
+    public List<Employee> getAllByRestaurantId(int employeeId, int restaurantId) throws NoEmployeeForRestaurantException {
+        List<Employee> employees = employeeRepository.findByEnabledTrueAndRestaurantIdOrderByLastName(restaurantId);
         if (employees.isEmpty()) {
             throw new NoEmployeeForRestaurantException();
         } else {
@@ -35,8 +35,8 @@ public class EmployeeServiceImpl extends AbstractService implements EmployeeServ
         }
     }
 
-    private Set<Employee> removeManagerRoleEmployees(Set<Employee> employees) {
-        Set<Employee> result = new HashSet<>();
+    private List<Employee> removeManagerRoleEmployees(List<Employee> employees) {
+        List<Employee> result = new ArrayList<>();
         for (Employee employee : employees) {
             if (!employee.getRole().equals(Role.MANAGER) && !employee.getRole().equals(Role.OWNER)) {
                 result.add(employee);
@@ -106,7 +106,7 @@ public class EmployeeServiceImpl extends AbstractService implements EmployeeServ
     public Employee getByIdAndRestaurantIdAndOwnerId(int employeeId, int restaurantId, int ownerId) throws
             RestaurantAccessDeniedException, EmployeeNotFoundException {
         if (employeeRepository.findById(employeeId).isPresent()) {
-            if (employeeRepository.findByEnabledTrueAndRestaurantId(ownerId)
+            if (employeeRepository.findByEnabledTrueAndRestaurantIdOrderByLastName(ownerId)
                     .contains(employeeRepository.findById(employeeId).get())) {
                 return employeeRepository.findByIdAndRestaurantId(employeeId, restaurantId);
             } else {
