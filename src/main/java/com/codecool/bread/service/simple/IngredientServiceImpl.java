@@ -2,6 +2,7 @@ package com.codecool.bread.service.simple;
 
 import com.codecool.bread.exception.IngredientAlreadyExistsException;
 import com.codecool.bread.exception.IngredientNotFoundException;
+import com.codecool.bread.exception.ItemNotFoundException;
 import com.codecool.bread.model.Ingredient;
 import com.codecool.bread.model.Item;
 import com.codecool.bread.service.IngredientService;
@@ -51,8 +52,12 @@ public class IngredientServiceImpl extends AbstractService implements Ingredient
     }
 
     @Override
-    public Set<Ingredient> getIngredientsByItemIdFromDb(int itemId, int restaurantId) {
-        Item item = itemRepository.findByIdAndRestaurantId(itemId, restaurantId);
-        return item.getIngredients();
+    public Set<Ingredient> getIngredientsByItemIdFromDb(int itemId, int restaurantId) throws ItemNotFoundException {
+        Optional<Item> item = itemRepository.findByIdAndRestaurantId(itemId, restaurantId);
+        if (!item.isPresent()) {
+            throw new ItemNotFoundException();
+        } else {
+            return item.get().getIngredients();
+        }
     }
 }

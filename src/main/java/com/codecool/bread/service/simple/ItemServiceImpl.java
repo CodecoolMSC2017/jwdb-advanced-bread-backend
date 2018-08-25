@@ -61,19 +61,21 @@ public class ItemServiceImpl extends AbstractService implements ItemService {
     }
 
     public Item getByIdAndRestaurantId(Integer id, Integer restaurantId) throws ItemAccessDeniedException, NoItemsFoundException {
-        Item item = itemRepository.findByIdAndRestaurantId(id, restaurantId);
-        if (item == null) {
+        Optional<Item> item = itemRepository.findByIdAndRestaurantId(id, restaurantId);
+        if (!item.isPresent()) {
             throw new NoItemsFoundException();
+        } else {
+            return item.get();
         }
-        return item;
     }
 
     public Item getEnableItemById(Integer id, Integer restaurantId) throws ItemAccessDeniedException, NoItemsFoundException {
-        Item item = itemRepository.findByIdAndRestaurantIdAndEnabledTrue(id, restaurantId);
-        if (item == null) {
+        Optional<Item> item = itemRepository.findByIdAndRestaurantIdAndEnabledTrue(id, restaurantId);
+        if (!item.isPresent()) {
             throw new NoItemsFoundException();
+        } else {
+            return item.get();
         }
-        return item;
     }
 
     @Override
@@ -88,10 +90,7 @@ public class ItemServiceImpl extends AbstractService implements ItemService {
 
     @Override
     public void deleteItem(int restaurantId, int itemId) throws RestaurantAccessDeniedException, ItemNotFoundException {
-        Item item = itemRepository.findByIdAndRestaurantId(itemId, restaurantId);
-        if (item == null) {
-            throw new ItemNotFoundException();
-        }
+        Item item = getByIdAndRestaurantId(itemId, restaurantId);
         item.setEnabled(false);
         itemRepository.saveAndFlush(item);
     }
