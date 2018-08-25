@@ -1,6 +1,8 @@
 package com.codecool.bread.controller;
 
 
+import com.codecool.bread.exception.ProfileNotFoundException;
+import com.codecool.bread.exception.UserNotFoundException;
 import com.codecool.bread.model.POSObject;
 import com.codecool.bread.repository.EmployeeRepository;
 import com.codecool.bread.service.*;
@@ -43,7 +45,10 @@ public abstract class AbstractController {
     @Autowired
     TableService tableService;
 
-    int getUserId(Principal principal) {
+    int getUserId(Principal principal) throws UserNotFoundException {
+        if (principal == null) {
+            throw new UserNotFoundException();
+        }
         return userService.get(principal.getName()).getId();
     }
 

@@ -36,7 +36,7 @@ public class UserServiceImpl extends AbstractService implements UserService {
         return userRepository.findAll();
     }
 
-    public User get(String username) {
+    public User get(String username) throws UserNotFoundException {
         Optional<User> user = userRepository.findByUsername(username);
         if(user.isPresent()) {
             return user.get();

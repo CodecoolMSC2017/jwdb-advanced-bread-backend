@@ -15,7 +15,7 @@ public interface UserService {
 
     Iterable<User> getAll();
 
-    User get(String username);
+    User get(String username) throws UserNotFoundException;
 
     User getUserByEmail(String email) throws UserNotFoundException;
 
