@@ -25,7 +25,6 @@ public class EmployeeServiceImpl extends AbstractService implements EmployeeServ
 
     @Override
     public Set<Employee> getAllByRestaurantId(int employeeId, int restaurantId) throws NoEmployeeForRestaurantException {
-
         Set<Employee> employees = employeeRepository.findByEnabledTrueAndRestaurantId(restaurantId);
         if (employees.isEmpty()) {
             throw new NoEmployeeForRestaurantException();
@@ -39,7 +38,7 @@ public class EmployeeServiceImpl extends AbstractService implements EmployeeServ
     private Set<Employee> removeManagerRoleEmployees(Set<Employee> employees) {
         Set<Employee> result = new HashSet<>();
         for (Employee employee : employees) {
-            if (!employee.getRole().equals(Role.MANAGER) || employee.getRole().equals(Role.OWNER)) {
+            if (!employee.getRole().equals(Role.MANAGER) && !employee.getRole().equals(Role.OWNER)) {
                 result.add(employee);
             }
         }

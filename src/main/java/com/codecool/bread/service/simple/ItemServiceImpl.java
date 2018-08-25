@@ -81,11 +81,20 @@ public class ItemServiceImpl extends AbstractService implements ItemService {
     @Override
     public Item addNewItem(Item item, int restaurantId) {
         Restaurant restaurant = restaurantService.getById(restaurantId);
-        item.setRestaurant(restaurant);
-        if (itemRepository.findById(item.getId()).isPresent() || itemRepository.findByName(item.getName()).isPresent()) {
+        if (isItemNameExists(item.getName(), restaurantId)) {
             throw new ItemAlreadyExistsException();
         }
+        item.setRestaurant(restaurant);
         return itemRepository.saveAndFlush(item);
+    }
+
+    public boolean isItemNameExists (String itemName, int restaurantId) {
+        for (Item item : getItemsByRestaurantId(restaurantId)) {
+            if (itemName.toLowerCase().equals(item.getName())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
