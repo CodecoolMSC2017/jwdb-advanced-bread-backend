@@ -26,10 +26,14 @@ public class EmployeeServiceImpl extends AbstractService implements EmployeeServ
     @Override
     public List<Employee> getAllByRestaurantId(int employeeId, int restaurantId) throws NoEmployeeForRestaurantException {
         List<Employee> employees = employeeRepository.findByEnabledTrueAndRestaurantIdOrderByLastName(restaurantId);
+        Employee employee = getById(employeeId);
         if (employees.isEmpty()) {
             throw new NoEmployeeForRestaurantException();
+        } else if(employee.getRole().equals(Role.OWNER)){
+            employees.remove(employee);
+            return employees;
         } else {
-            employees.remove(getById(employeeId));
+            employees.remove(employee);
             return removeManagerRoleEmployees(employees);
 
         }
@@ -118,10 +122,17 @@ public class EmployeeServiceImpl extends AbstractService implements EmployeeServ
     }
 
     @Override
-    public Employee add(Employee employee, int restaurantId, int ownerId) {
-        employee.setRestaurant(restaurantService.getById(restaurantId, ownerId));
-        employee.setEnabled(false);
-        return employeeRepository.saveAndFlush(employee);
+    public Employee add(Employee employee, int restaurantId, int loggedInEmployeeId) throws RestaurantAccessDeniedException {
+        Employee loggedInEmployee = getById(loggedInEmployeeId);
+        Restaurant restaurant = restaurantService.getById(restaurantId);
+        if (loggedInEmployee.getRole().equals(Role.OWNER) && restaurant.getOwner().equals(loggedInEmployee) ||
+                restaurant.getEmployees().contains(loggedInEmployee)) {
+            employee.setRestaurant(restaurantService.getById(restaurantId));
+            employee.setEnabled(false);
+            return employeeRepository.saveAndFlush(employee);
+        } else {
+            throw new RestaurantAccessDeniedException();
+        }
     }
 
     @Override

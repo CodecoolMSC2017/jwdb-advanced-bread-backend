@@ -29,7 +29,7 @@ public interface EmployeeService {
 
     Employee getByIdAndRestaurantIdAndOwnerId(int employeeId, int restaurantId, int ownerId) throws RestaurantAccessDeniedException, EmployeeNotFoundException;
 
-    Employee add(Employee employee, int restaurantId, int ownerId);
+    Employee add(Employee employee, int restaurantId, int loggedInEmployeeId) throws RestaurantAccessDeniedException;
 
     void delete(int restaurantId, int employeeId) throws RestaurantAccessDeniedException, EmployeeNotFoundException;
 

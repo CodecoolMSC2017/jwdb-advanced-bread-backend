@@ -45,7 +45,7 @@ public class EmployeeController extends AbstractController {
     public Employee add(@RequestBody Employee employee,
                         @PathVariable("restaurantId") int restaurantId,
                         Principal principal) {
-        Employee newEmployee = employeeService.add(employee, restaurantId, getLoggedInOwnerId(principal));
+        Employee newEmployee = employeeService.add(employee, restaurantId, getLoggedInEmployeeId(principal));
         try {
             emailService.sendSimpleMessage(emailService.createEmail(newEmployee));
         } catch (SendFailedException e) {
