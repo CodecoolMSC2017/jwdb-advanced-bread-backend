@@ -26,16 +26,6 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Integer> {
             "GROUP BY (subselect.restaurantId)", nativeQuery = true)
     List<StatsDto> findInvoiceAvgByOwnerId(Integer ownerId, Date start, Date end);
 
-    @Query(value = "SELECT avg(subselect.total) FROM (SELECT avg(distinct invoice.total) as total FROM customer_order\n" +
-            "JOIN invoice ON invoice.id = customer_order.invoice_id\n" +
-            "JOIN employee ON employee.id = customer_order.employee_id\n" +
-            "JOIN restaurant ON restaurant.id = employee.restaurant_id\n" +
-            "WHERE restaurant.id = ?1\n" +
-            "AND invoice.date BETWEEN ?2 AND ?3\n" +
-            "AND invoice.date IS NOT NULL\n" +
-            "GROUP BY invoice.id) AS subselect", nativeQuery = true)
-    Integer findInvoiceAvgByRestaurantId(Integer restaurantId, Date start, Date end);
-
     @Query(value = "SELECT subselect.restaurantId, sum(subselect.total) AS incomeSum FROM (SELECT restaurant.id as restaurantId, sum(distinct invoice.total) as total FROM customer_order\n" +
             "JOIN invoice ON invoice.id = customer_order.invoice_id\n" +
             "JOIN employee ON employee.id = customer_order.employee_id\n" +
@@ -46,14 +36,4 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Integer> {
             "GROUP BY restaurant.id, invoice.id) AS subselect\n" +
             "GROUP BY (subselect.restaurantId)", nativeQuery = true)
     List<StatsDto> findInvoiceSumByOwnerId(Integer ownerId, Date start, Date end);
-
-    @Query(value = "SELECT sum(subselect.total) FROM (SELECT sum(distinct invoice.total) as total FROM customer_order\n" +
-            "JOIN invoice ON invoice.id = customer_order.invoice_id\n" +
-            "JOIN employee ON employee.id = customer_order.employee_id\n" +
-            "JOIN restaurant ON restaurant.id = employee.restaurant_id\n" +
-            "WHERE restaurant.id = ?1\n" +
-            "AND invoice.date BETWEEN ?2 AND ?3\n" +
-            "AND invoice.date IS NOT NULL\n" +
-            "GROUP BY invoice.id) AS subselect", nativeQuery = true)
-    Integer findInvoiceSumByRestaurantId(Integer restaurantId, Date start, Date end);
 }
