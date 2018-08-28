@@ -28,9 +28,9 @@ public class StatisticsController {
         return statisticsService.getAllRestaurantIncomeSumFromDb(ownerId, start, end);
     }
 
-    @GetMapping("/order/orderitemquantity/{orderItemId}")
-    public List<StatsDto> getOrderQuantityByItemId(@PathVariable("orderItemId") int orderItemId,
+    @GetMapping("/order/orderitemquantity/{restaurantId}")
+    public List<StatsDto> getOrderQuantityByItemId(@PathVariable("restaurantId") int restaurantId,
     @DateTimeFormat(pattern = "yyyy-MM-dd") Date start, @RequestParam("end") @DateTimeFormat(pattern = "yyyy-MM-dd") Date end) {
-        return statisticsService.getOrderQuantityByItemIdFromDb(orderItemId, start, end);
+        return statisticsService.getOrderQuantityByItemIdFromDb(restaurantId, start, end);
     }
 }
