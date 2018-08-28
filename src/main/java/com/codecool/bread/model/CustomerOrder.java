@@ -1,5 +1,6 @@
 package com.codecool.bread.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -21,6 +22,7 @@ public class CustomerOrder extends POSObject implements Comparable<CustomerOrder
     private Employee employee;
 
     @Column(name = "ordering_time")
+    @JsonFormat(pattern = "yyyy-mm-dd-KK:mm:ss")
     private LocalDateTime orderingTime = LocalDateTime.now();
 
     @ManyToOne(fetch = FetchType.EAGER)

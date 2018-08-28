@@ -1,6 +1,7 @@
 package com.codecool.bread.model.dto;
 
 import com.codecool.bread.model.Address;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -9,6 +10,7 @@ import java.util.List;
 public class InvoiceDto {
 
     private int id;
+    @JsonFormat(pattern = "yyyy-mm-dd-KK:mm:ss")
     private LocalDateTime created;
     private int employeeId;
     private Address restaurantAddress;

@@ -1,6 +1,7 @@
 package com.codecool.bread.model.dto;
 
 import com.codecool.bread.model.OrderItem;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.LocalDateTime;
 
@@ -8,6 +9,7 @@ public class OrderKitchenDto {
 
     private OrderItem orderedItem;
 
+    @JsonFormat(pattern = "yyyy-mm-dd-KK:mm:ss")
     private LocalDateTime orderingTime;
 
     public OrderKitchenDto() {}
