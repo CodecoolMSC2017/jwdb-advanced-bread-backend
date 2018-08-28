@@ -3,6 +3,7 @@ package com.codecool.bread.service;
 import com.codecool.bread.model.dto.StatsDto;
 
 import java.util.Date;
+import java.util.List;
 
 public interface StatisticsService {
 
@@ -14,5 +15,5 @@ public interface StatisticsService {
 
     StatsDto getRestaurantIncomeSumFromDb(int restaurantId, Date start, Date end);
 
-    StatsDto getOrderQuantityByItemIdFromDb(int orderItemId, Date start, Date end);
+    List<StatsDto> getOrderQuantityByItemIdFromDb(int orderItemId, Date start, Date end);
 }

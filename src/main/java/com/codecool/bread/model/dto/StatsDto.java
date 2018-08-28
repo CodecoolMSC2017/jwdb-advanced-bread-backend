@@ -1,83 +1,20 @@
 package com.codecool.bread.model.dto;
 
-public class StatsDto {
+public interface StatsDto {
 
-    private int ownerId;
-    private int restaurantId;
-    private int incomeAvg;
-    private int allIncomeAvg;
-    private int incomeSum;
-    private int allIncomeSum;
-    private int orderItemId;
-    private int orderItemQuantity;
+    Integer getOwnerId();
 
-    public StatsDto(){}
+    Integer getRestaurantId();
 
-    public int getOwnerId() {
-        return ownerId;
-    }
+    Integer getIncomeAvg();
 
-    public void setOwnerId(int ownerId) {
-        this.ownerId = ownerId;
-    }
+    Integer getAllIncomeAvg();
 
-    public StatsDto(int allIncomeAvg) {
-        this.allIncomeAvg = allIncomeAvg;
-    }
+    Integer getIncomeSum();
 
-    public int getRestaurantId() {
-        return restaurantId;
-    }
+    Integer getAllIncomeSum();
 
-    public int getIncomeAvg() {
-        return incomeAvg;
-    }
+    Integer getOrderItemId();
 
-    public void setIncomeAvg(int incomeAvg) {
-        this.incomeAvg = incomeAvg;
-    }
-
-    public int getAllIncomeAvg() {
-        return allIncomeAvg;
-    }
-
-    public void setAllIncomeAvg(int allIncomeAvg) {
-        this.allIncomeAvg = allIncomeAvg;
-    }
-
-    public void setRestaurantId(int restaurantId) {
-        this.restaurantId = restaurantId;
-    }
-
-    public int getIncomeSum() {
-        return incomeSum;
-    }
-
-    public void setIncomeSum(int incomeSum) {
-        this.incomeSum = incomeSum;
-    }
-
-    public int getAllIncomeSum() {
-        return allIncomeSum;
-    }
-
-    public void setAllIncomeSum(int allIncomeSum) {
-        this.allIncomeSum = allIncomeSum;
-    }
-
-    public int getOrderItemId() {
-        return orderItemId;
-    }
-
-    public void setOrderItemId(int orderItemId) {
-        this.orderItemId = orderItemId;
-    }
-
-    public int getOrderItemQuantity() {
-        return orderItemQuantity;
-    }
-
-    public void setOrderItemQuantity(int orderItemQuantity) {
-        this.orderItemQuantity = orderItemQuantity;
-    }
+    Integer getOrderItemQuantity();
 }
