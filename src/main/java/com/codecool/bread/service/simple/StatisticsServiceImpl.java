@@ -16,18 +16,8 @@ public class StatisticsServiceImpl extends AbstractService implements Statistics
     }
 
     @Override
-    public StatsDto getRestaurantIncomeAvgFromDb(int restaurantId, Date start, Date end) {
-        return null;
-    }
-
-    @Override
     public List<StatsDto> getAllRestaurantIncomeSumFromDb(int ownerId, Date start, Date end) {
         return invoiceRepository.findInvoiceSumByOwnerId(ownerId, start, end);
-    }
-
-    @Override
-    public StatsDto getRestaurantIncomeSumFromDb(int restaurantId, Date start, Date end) {
-        return null;
     }
 
     @Override
