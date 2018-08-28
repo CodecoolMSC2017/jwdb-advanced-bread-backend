@@ -48,9 +48,7 @@ public class EmployeeController extends AbstractController {
         Employee newEmployee = employeeService.add(employee, restaurantId, getLoggedInEmployeeId(principal));
         try {
             emailService.sendSimpleMessage(emailService.createEmail(newEmployee));
-        } catch (SendFailedException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
+        } catch (SendFailedException | UnsupportedEncodingException e) {
             e.printStackTrace();
         }
         return newEmployee;

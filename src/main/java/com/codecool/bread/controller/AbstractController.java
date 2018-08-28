@@ -1,7 +1,5 @@
 package com.codecool.bread.controller;
 
-
-import com.codecool.bread.exception.ProfileNotFoundException;
 import com.codecool.bread.exception.UserNotFoundException;
 import com.codecool.bread.model.POSObject;
 import com.codecool.bread.repository.EmployeeRepository;
