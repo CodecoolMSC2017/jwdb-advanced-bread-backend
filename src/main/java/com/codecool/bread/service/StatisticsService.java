@@ -13,4 +13,6 @@ public interface StatisticsService {
     StatsDto getAllRestaurantIncomeSumFromDb(int ownerId, Date start, Date end);
 
     StatsDto getRestaurantIncomeSumFromDb(int restaurantId, Date start, Date end);
+
+    StatsDto getOrderQuantityByItemIdFromDb(int orderItemId, Date start, Date end);
 }

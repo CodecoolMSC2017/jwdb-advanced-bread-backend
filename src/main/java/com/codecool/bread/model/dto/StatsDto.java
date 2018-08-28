@@ -8,6 +8,8 @@ public class StatsDto {
     private int allIncomeAvg;
     private int incomeSum;
     private int allIncomeSum;
+    private int orderItemId;
+    private int orderItemQuantity;
 
     public StatsDto(){}
 
@@ -61,5 +63,21 @@ public class StatsDto {
 
     public void setAllIncomeSum(int allIncomeSum) {
         this.allIncomeSum = allIncomeSum;
+    }
+
+    public int getOrderItemId() {
+        return orderItemId;
+    }
+
+    public void setOrderItemId(int orderItemId) {
+        this.orderItemId = orderItemId;
+    }
+
+    public int getOrderItemQuantity() {
+        return orderItemQuantity;
+    }
+
+    public void setOrderItemQuantity(int orderItemQuantity) {
+        this.orderItemQuantity = orderItemQuantity;
     }
 }
