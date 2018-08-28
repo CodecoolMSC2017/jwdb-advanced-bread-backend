@@ -287,6 +287,14 @@ INSERT INTO order_item (item_id, quantity, comment) VALUES
     (2, 1,null),
     (16, 1,null);
 
+INSERT INTO invoice(total, date) VALUES
+    (1000, '2017-01-01 01:01:01'),
+    (2000, '2017-02-01 01:01:01'),
+    (3000, '2017-02-01 01:01:01'),
+    (3000, '2017-03-01 01:01:01'),
+    (2000, '2018-03-01 01:01:01'),
+    (5000, '2018-04-01 01:01:01');
+
 INSERT INTO customer_order (seat_id, employee_id, ordering_time , order_item_id) VALUES
     (1, 3, '2018-03-05 20:22:49', 7),
     (1, 6, '2018-03-05 20:32:49', 38),
