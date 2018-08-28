@@ -59,9 +59,9 @@ public class EmployeeControllerTest extends AbstractTest {
                 "Lakatos", "Nintendo",
                 Role.BARTENDER, null, address);
 
-        moddedEmployee = new Employee(8, true, null, "notregistered@gmail.com",
+        moddedEmployee = new Employee(10, true, null, "notregistered@gmail.com",
                 "Not", "Pista", Role.WAITER,
-                restaurantService.getById(3), address);
+                restaurantService.getById(1), address);
 
         wrongRegister = new JSONObject(Map.ofEntries(
                 entry("username", "murvai"),
@@ -95,7 +95,7 @@ public class EmployeeControllerTest extends AbstractTest {
 
     @Test
     public void testC_shouldReturnNoEmployeeForRestaurantException_NOT_FOUND() throws Exception {
-        this.mvc.perform(get("/owner/restaurant/{restaurantId}/employee", "3")
+        this.mvc.perform(get("/owner/restaurant/{restaurantId}/employee", "2")
                 .principal(principal)
                 .session(session))
                 .andDo(print()).andExpect(mvcMatcher.status().isNotFound());
@@ -103,12 +103,12 @@ public class EmployeeControllerTest extends AbstractTest {
 
     @Test
     public void testD_ShouldReturnAnEmployee() throws Exception {
-        this.mvc.perform(get("/owner/restaurant/{restaurantId}/employee/{employeeId}", 1, 1)
+        this.mvc.perform(get("/owner/restaurant/{restaurantId}/employee/{employeeId}", 1, 3)
                 .principal(principal)
                 .session(session))
                 .andDo(print()).andExpect(mvcMatcher.status().isOk())
                 .andExpect(mvcMatcher.content().contentType("application/json;charset=UTF-8"))
-                .andExpect(mvcMatcher.jsonPath("$.id", is(1)))
+                .andExpect(mvcMatcher.jsonPath("$.id", is(3)))
                 .andExpect(mvcMatcher.jsonPath("$.email", is("andrew.fuller@gmail.com")));
     }
 
@@ -129,7 +129,7 @@ public class EmployeeControllerTest extends AbstractTest {
                 .contentType("application/json;charset=UTF-8"))
                 .andDo(print()).andExpect(mvcMatcher.status().isOk())
                 .andExpect(mvcMatcher.content().contentType("application/json;charset=UTF-8"))
-                .andExpect(mvcMatcher.jsonPath("$.id", is(9)))
+                .andExpect(mvcMatcher.jsonPath("$.id", is(11)))
                 .andExpect(mvcMatcher.jsonPath("$.email", is("asd@asd.com")));
     }
 
@@ -163,7 +163,7 @@ public class EmployeeControllerTest extends AbstractTest {
 
     @Test
     public void testI_shouldModifyEmployeeLastName() throws Exception {
-        this.mvc.perform(put("/owner/restaurant/{restaurantId}/employee/{employeeId}", 1, 8)
+        this.mvc.perform(put("/owner/restaurant/{restaurantId}/employee/{employeeId}", 1, 10)
                 .principal(principal)
                 .session(session)
                 .content(asJsonString(moddedEmployee))
