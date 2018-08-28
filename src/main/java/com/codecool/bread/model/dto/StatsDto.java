@@ -2,6 +2,7 @@ package com.codecool.bread.model.dto;
 
 public class StatsDto {
 
+    private int ownerId;
     private int restaurantId;
     private int incomeAvg;
     private int allIncomeAvg;
@@ -9,6 +10,14 @@ public class StatsDto {
     private int allIncomeSum;
 
     public StatsDto(){}
+
+    public int getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(int ownerId) {
+        this.ownerId = ownerId;
+    }
 
     public StatsDto(int allIncomeAvg) {
         this.allIncomeAvg = allIncomeAvg;

@@ -4,36 +4,40 @@ import com.codecool.bread.model.dto.StatsDto;
 import com.codecool.bread.service.StatisticsService;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 @Service
 public class StatisticsServiceImpl extends AbstractService implements StatisticsService {
 
     @Override
-    public StatsDto getAllRestaurantIncomeAvgFromDb(int ownerId, int year, int month) {
+    public StatsDto getAllRestaurantIncomeAvgFromDb(int ownerId, Date start, Date end) {
         StatsDto statsDto = new StatsDto();
-        statsDto.setAllIncomeAvg(invoiceRepository.findInvoiceAvgByOwnerId(ownerId, year, month));
+        statsDto.setOwnerId(ownerId);
+        statsDto.setAllIncomeAvg(invoiceRepository.findInvoiceAvgByOwnerId(ownerId, start, end));
         return statsDto;
     }
 
     @Override
-    public StatsDto getRestaurantIncomeAvgFromDb(int restaurantId, int year, int month) {
+    public StatsDto getRestaurantIncomeAvgFromDb(int restaurantId, Date start, Date end) {
         StatsDto statsDto = new StatsDto();
         statsDto.setRestaurantId(restaurantId);
-        statsDto.setIncomeAvg(invoiceRepository.findInvoiceAvgByRestaurantId(restaurantId, year, month));
+        statsDto.setIncomeAvg(invoiceRepository.findInvoiceAvgByRestaurantId(restaurantId, start, end));
         return statsDto;
     }
 
     @Override
-    public StatsDto getAllRestaurantIncomeSumFromDb(int ownerId, int year, int month) {
+    public StatsDto getAllRestaurantIncomeSumFromDb(int ownerId, Date start, Date end) {
         StatsDto statsDto = new StatsDto();
-        statsDto.setAllIncomeSum(invoiceRepository.findInvoiceSumByOwnerId(ownerId, year, month));
+        statsDto.setOwnerId(ownerId);
+        statsDto.setAllIncomeSum(invoiceRepository.findInvoiceSumByOwnerId(ownerId, start, end));
         return statsDto;
     }
 
     @Override
-    public StatsDto getRestaurantIncomeSumFromDb(int restaurantId, int year, int month) {
+    public StatsDto getRestaurantIncomeSumFromDb(int restaurantId, Date start, Date end) {
         StatsDto statsDto = new StatsDto();
         statsDto.setRestaurantId(restaurantId);
-        statsDto.setIncomeSum(invoiceRepository.findInvoiceSumByRestaurantId(restaurantId, year, month));
+        statsDto.setIncomeSum(invoiceRepository.findInvoiceSumByRestaurantId(restaurantId, start, end));
         return statsDto;
     }
 }
