@@ -11,8 +11,8 @@ import java.util.List;
 public class StatisticsServiceImpl extends AbstractService implements StatisticsService {
 
     @Override
-    public StatsDto getAllRestaurantIncomeAvgFromDb(int ownerId, Date start, Date end) {
-        return null;
+    public List<StatsDto> getAllRestaurantIncomeAvgFromDb(int ownerId, Date start, Date end) {
+        return invoiceRepository.findInvoiceAvgByOwnerId(ownerId, start, end);
     }
 
     @Override
@@ -21,8 +21,8 @@ public class StatisticsServiceImpl extends AbstractService implements Statistics
     }
 
     @Override
-    public StatsDto getAllRestaurantIncomeSumFromDb(int ownerId, Date start, Date end) {
-        return null;
+    public List<StatsDto> getAllRestaurantIncomeSumFromDb(int ownerId, Date start, Date end) {
+        return invoiceRepository.findInvoiceSumByOwnerId(ownerId, start, end);
     }
 
     @Override

@@ -17,7 +17,7 @@ public class StatisticsController {
     private StatisticsService statisticsService;
 
     @GetMapping("/owner/{ownerId}/restaurants/avg/income")
-    public StatsDto getAllRestaurantIncomeAvg(@PathVariable("ownerId") int ownerId, @RequestParam("start")
+    public List<StatsDto> getAllRestaurantIncomeAvg(@PathVariable("ownerId") int ownerId, @RequestParam("start")
     @DateTimeFormat(pattern = "yyyy-MM-dd") Date start, @RequestParam("end") @DateTimeFormat(pattern = "yyyy-MM-dd") Date end) {
         return statisticsService.getAllRestaurantIncomeAvgFromDb(ownerId, start, end);
     }
@@ -29,7 +29,7 @@ public class StatisticsController {
     }
 
     @GetMapping("/owner/{ownerId}/restaurants/sum/income")
-    public StatsDto getAllRestaurantIncomeSum(@PathVariable("ownerId") int ownerId, @RequestParam("start")
+    public List<StatsDto> getAllRestaurantIncomeSum(@PathVariable("ownerId") int ownerId, @RequestParam("start")
     @DateTimeFormat(pattern = "yyyy-MM-dd") Date start, @RequestParam("end") @DateTimeFormat(pattern = "yyyy-MM-dd") Date end) {
         return statisticsService.getAllRestaurantIncomeSumFromDb(ownerId, start, end);
     }

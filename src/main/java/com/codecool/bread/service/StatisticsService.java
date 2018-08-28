@@ -7,11 +7,11 @@ import java.util.List;
 
 public interface StatisticsService {
 
-    StatsDto getAllRestaurantIncomeAvgFromDb(int ownerId, Date start, Date end);
+    List<StatsDto> getAllRestaurantIncomeAvgFromDb(int ownerId, Date start, Date end);
 
     StatsDto getRestaurantIncomeAvgFromDb(int restaurantId, Date start, Date end);
 
-    StatsDto getAllRestaurantIncomeSumFromDb(int ownerId, Date start, Date end);
+    List<StatsDto> getAllRestaurantIncomeSumFromDb(int ownerId, Date start, Date end);
 
     StatsDto getRestaurantIncomeSumFromDb(int restaurantId, Date start, Date end);
 
