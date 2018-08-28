@@ -8,11 +8,7 @@ public interface StatsDto {
 
     Integer getIncomeAvg();
 
-    Integer getAllIncomeAvg();
-
     Integer getIncomeSum();
-
-    Integer getAllIncomeSum();
 
     Integer getOrderItemId();
 
