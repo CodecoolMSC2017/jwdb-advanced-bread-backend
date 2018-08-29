@@ -15,25 +15,29 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Integer> {
 
     Optional<Invoice> findById(Integer invoiceId);
 
-    @Query(value = "SELECT subselect.restaurantId, avg(subselect.total) AS incomeAvg FROM (SELECT restaurant.id as restaurantId, avg(distinct invoice.total) as total FROM customer_order\n" +
+    @Query(value = "SELECT subselect.restaurantId, AVG(subselect.total) AS incomeAvg, subselect.invoiceDate AS date\n" +
+            "FROM (SELECT restaurant.id AS restaurantId, AVG(DISTINCT invoice.total) AS total, invoice.date AS invoiceDate \n" +
+            "FROM customer_order\n" +
             "JOIN invoice ON invoice.id = customer_order.invoice_id\n" +
             "JOIN employee ON employee.id = customer_order.employee_id\n" +
             "JOIN restaurant ON restaurant.id = employee.restaurant_id\n" +
-            "WHERE restaurant.owner_id = ?1\n" +
-            "AND invoice.date BETWEEN ?2 AND ?3\n" +
+            "WHERE restaurant.owner_id = 1\n" +
+            "AND invoice.date BETWEEN '2010-01-01' AND '2020-01-01'\n" +
             "AND invoice.date IS NOT NULL\n" +
-            "GROUP BY restaurant.id, invoice.id) AS subselect\n" +
-            "GROUP BY (subselect.restaurantId)", nativeQuery = true)
+            "GROUP BY restaurant.id, invoice.id, invoice.date) AS subselect\n" +
+            "GROUP BY (subselect.restaurantId, subselect.invoiceDate)", nativeQuery = true)
     List<StatsDto> findInvoiceAvgByOwnerId(Integer ownerId, Date start, Date end);
 
-    @Query(value = "SELECT subselect.restaurantId, sum(subselect.total) AS incomeSum FROM (SELECT restaurant.id as restaurantId, sum(distinct invoice.total) as total FROM customer_order\n" +
+    @Query(value = "SELECT subselect.restaurantId, SUM(subselect.total) AS incomeAvg, subselect.invoiceDate AS date\n" +
+            "FROM (SELECT restaurant.id AS restaurantId, SUM(DISTINCT invoice.total) AS total, invoice.date AS invoiceDate \n" +
+            "FROM customer_order\n" +
             "JOIN invoice ON invoice.id = customer_order.invoice_id\n" +
             "JOIN employee ON employee.id = customer_order.employee_id\n" +
             "JOIN restaurant ON restaurant.id = employee.restaurant_id\n" +
-            "WHERE restaurant.owner_id = ?1\n" +
-            "AND invoice.date BETWEEN ?2 AND ?3\n" +
+            "WHERE restaurant.owner_id = 1\n" +
+            "AND invoice.date BETWEEN '2010-01-01' AND '2020-01-01'\n" +
             "AND invoice.date IS NOT NULL\n" +
-            "GROUP BY restaurant.id, invoice.id) AS subselect\n" +
-            "GROUP BY (subselect.restaurantId)", nativeQuery = true)
+            "GROUP BY restaurant.id, invoice.id, invoice.date) AS subselect\n" +
+            "GROUP BY (subselect.restaurantId, subselect.invoiceDate)", nativeQuery = true)
     List<StatsDto> findInvoiceSumByOwnerId(Integer ownerId, Date start, Date end);
 }

@@ -1,5 +1,7 @@
 package com.codecool.bread.model.dto;
 
+import java.util.Date;
+
 public interface StatsDto {
 
     Integer getOwnerId();
@@ -15,4 +17,6 @@ public interface StatsDto {
     Integer getItemQuantity();
 
     Integer getNumOfGuests();
+
+    Date getDate();
 }
