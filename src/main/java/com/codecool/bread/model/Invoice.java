@@ -1,6 +1,7 @@
 package com.codecool.bread.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,8 +15,8 @@ public class Invoice extends POSObject {
 
     @Column(columnDefinition = "DECIMAL(9,2)")
     private BigDecimal total;
-
-    @JsonFormat(pattern = "yyyy-mm-dd-KK:mm:ss")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime date = LocalDateTime.now();
 
     @Column(name = "paid", columnDefinition = "boolean default false")

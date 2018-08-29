@@ -2,6 +2,7 @@ package com.codecool.bread.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.persistence.Table;
@@ -22,7 +23,8 @@ public class CustomerOrder extends POSObject implements Comparable<CustomerOrder
     private Employee employee;
 
     @Column(name = "ordering_time")
-    @JsonFormat(pattern = "yyyy-mm-dd-KK:mm:ss")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime orderingTime = LocalDateTime.now();
 
     @ManyToOne(fetch = FetchType.EAGER)
