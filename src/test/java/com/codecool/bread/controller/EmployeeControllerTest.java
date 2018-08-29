@@ -54,7 +54,6 @@ public class EmployeeControllerTest extends AbstractTest {
     @Before
     public void mockEmployee() throws JSONException {
         Address address = new Address(0, true, "3 Asd Street", "AsdTown", "4025", "Asd", "Hungary");
-
         newEmployee = new Employee(0, true, null, "asd@asd.com",
                 "Lakatos", "Nintendo",
                 Role.BARTENDER, null, address);

@@ -21,8 +21,12 @@ public class StatisticsServiceImpl extends AbstractService implements Statistics
     }
 
     @Override
-    public List<StatsDto> getOrderQuantityByItemIdFromDb(int restaurantId, Date start, Date end) {
+    public List<StatsDto> getAllOrderQuantityByFromDb(int restaurantId, Date start, Date end) {
         return customerOrderRepository.findOrderItemQuantityById(restaurantId, start, end);
+    }
+
+    public List<StatsDto> getOrderQuantityByItemIdFromDb(int restaurantId,int itemId, Date start, Date end) {
+        return customerOrderRepository.findOrderItemQuantityByIdAndItemId(restaurantId,itemId, start, end);
     }
 
     @Override

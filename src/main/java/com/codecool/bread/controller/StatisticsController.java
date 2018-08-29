@@ -32,7 +32,13 @@ public class StatisticsController extends AbstractController {
     @GetMapping("/order/orderitemquantity/{restaurantId}")
     public List<StatsDto> getOrderQuantity(@PathVariable("restaurantId") int restaurantId,
                                            @DateTimeFormat(pattern = "yyyy-MM-dd") Date start, @RequestParam("end") @DateTimeFormat(pattern = "yyyy-MM-dd") Date end) {
-        return statisticsService.getOrderQuantityByItemIdFromDb(restaurantId, start, end);
+        return statisticsService.getAllOrderQuantityByFromDb(restaurantId, start, end);
+    }
+
+    @GetMapping("/order/orderitemquantity/{restaurantId}/{itemId}")
+    public List<StatsDto> getOrderQuantityByItemId(@PathVariable("restaurantId") int restaurantId,
+                                           @DateTimeFormat(pattern = "yyyy-MM-dd") Date start, @RequestParam("end") @DateTimeFormat(pattern = "yyyy-MM-dd") Date end, @PathVariable("itemId") int itemId) {
+        return statisticsService.getOrderQuantityByItemIdFromDb(restaurantId,itemId, start, end);
     }
 
     @GetMapping("/numofguests/{restaurantId}")
