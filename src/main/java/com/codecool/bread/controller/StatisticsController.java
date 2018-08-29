@@ -29,7 +29,7 @@ public class StatisticsController {
     }
 
     @GetMapping("/order/orderitemquantity/{restaurantId}")
-    public List<StatsDto> getOrderQuantityByItemId(@PathVariable("restaurantId") int restaurantId,
+    public List<StatsDto> getOrderQuantity(@PathVariable("restaurantId") int restaurantId,
     @DateTimeFormat(pattern = "yyyy-MM-dd") Date start, @RequestParam("end") @DateTimeFormat(pattern = "yyyy-MM-dd") Date end) {
         return statisticsService.getOrderQuantityByItemIdFromDb(restaurantId, start, end);
     }

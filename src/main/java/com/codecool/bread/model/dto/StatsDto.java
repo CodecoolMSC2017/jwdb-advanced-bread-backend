@@ -10,7 +10,7 @@ public interface StatsDto {
 
     Integer getIncomeSum();
 
-    Integer getOrderItemId();
+    Integer getItemId();
 
-    Integer getOrderItemQuantity();
+    Integer getItemQuantity();
 }
