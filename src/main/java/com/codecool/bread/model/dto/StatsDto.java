@@ -13,4 +13,6 @@ public interface StatsDto {
     Integer getItemId();
 
     Integer getItemQuantity();
+
+    Integer getNumOfGuests();
 }

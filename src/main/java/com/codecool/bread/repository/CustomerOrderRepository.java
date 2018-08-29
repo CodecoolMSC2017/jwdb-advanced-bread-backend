@@ -31,4 +31,12 @@ public interface CustomerOrderRepository extends JpaRepository<CustomerOrder, In
             "WHERE restaurant.id = ?1\n" +
             "AND customer_order.ordering_time BETWEEN ?2 AND ?3", nativeQuery = true)
     List<StatsDto> findOrderItemQuantityById(Integer restaurantId, Date start, Date end);
+
+    @Query(value = "SELECT restaurant.id AS restaurantId, COUNT(seat_id) AS numOfGuests FROM customer_order\n" +
+            "JOIN employee ON employee.id = customer_order.employee_id\n" +
+            "JOIN restaurant ON restaurant.id = employee.restaurant_id\n" +
+            "WHERE restaurant.id = ?1\n" +
+            "AND customer_order.ordering_time BETWEEN ?2 AND ?3\n" +
+            "GROUP BY (restaurant.id)", nativeQuery = true)
+    List<StatsDto> findNumOfGuests(Integer restaurantId, Date start, Date end);
 }
