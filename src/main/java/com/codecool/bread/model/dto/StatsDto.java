@@ -16,6 +16,8 @@ public interface StatsDto {
 
     Integer getItemQuantity();
 
+    String getItemName();
+
     Integer getNumOfGuests();
 
     Date getDate();
