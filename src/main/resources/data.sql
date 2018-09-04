@@ -117,7 +117,7 @@ INSERT INTO item(name ,price ,category ,subcategory ,restaurant_id) VALUES
     ('Rántott halfilé, rizs, tartármártás', 1900,'FOOD','FISH_MAIN',1),
     ('Rántott csirkemell hasábburgonyával', 1750,'FOOD','CHICKEN_DISH',1),
     ('Juhtúróval-baconnel töltött csirkemell parázs burgonya', 2200,'FOOD','CHICKEN_DISH',1),
-    ('Zöldséges marharagu óriás zsemlegombóccal', 1900,'FOOD','BEEF_DISH',1),
+    ('Túrós sztrapacska szalonnával', 1590,'FOOD','BEEF_DISH',1),
     ('Zöldséges marharagu óriás zsemlegombóccal', 1900,'FOOD','BEEF_DISH',1),
     ('Rántott szelet, hasábburgonyával', 1690,'FOOD','PORK_DISH',1),
     ('Pizza kenyérben sült kemencés csülök lyoni hagymával', 2390,'FOOD','PORK_DISH',1),
@@ -287,13 +287,13 @@ INSERT INTO order_item (item_id, quantity, comment) VALUES
     (2, 1,null),
     (16, 1,null);
 
-INSERT INTO invoice(total, date) VALUES
-    (1000, '2017-01-01 01:01:01'),
-    (2000, '2017-01-01 01:01:01'),
-    (3000, '2017-02-01 01:01:01'),
-    (3000, '2017-02-01 01:01:01'),
-    (2000, '2018-03-01 01:01:01'),
-    (5000, '2018-03-01 01:01:01');
+INSERT INTO invoice(total, date, paid) VALUES
+    (1000, '2017-01-01 01:01:01', true),
+    (2000, '2017-01-01 01:01:01', true),
+    (3000, '2017-02-01 01:01:01', true),
+    (3000, '2017-02-01 01:01:01', true),
+    (2000, '2018-03-01 01:01:01', true),
+    (5000, '2018-03-01 01:01:01', true);
 
 INSERT INTO customer_order (seat_id, employee_id, ordering_time , order_item_id, invoice_id) VALUES
     (1, 3, '2018-03-05 20:22:49', 7, 1),
